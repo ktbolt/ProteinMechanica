@@ -1,0 +1,12 @@
+look at fitting linear spring to LJ potential
+
+
+ 1) gen data
+
+    p > energy.dat
+
+
+ 2) plot data
+ 
+    gp plot.gp  
+

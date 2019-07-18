@@ -1,0 +1,340 @@
+#============================================================#
+# rigid body simulation of peptide units.                    # 
+#                                                            #
+# define rigid bodies for peptide plane and sidechains.      #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1 format=pdb file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read name=m1 database=db1
+
+# create helix domain
+#--------------------
+domain create helix=C
+
+#============================================================#
+#   create domains.                                          #
+#============================================================#
+
+# peptide/sidechain 1 
+#--------------------
+domain create d1=C[783-784]  peptide=true
+domain d1 bonds atoms=true atom_color=element \
+                bond_color=[ 1 0 0 ]  render=line show=true
+domain d1 backbone color=[ 1 0.61 0 ] planes=true  width=2 show=true
+#-----
+domain create d2=C[784]  sidechain_group=true
+domain d2 bonds atoms=true atom_color=[ 1 0 0 ] bond_color=[ 0.5 0 0 ] show=true
+
+# peptide/sidechain 2 
+#--------------------
+domain create d3=C[784-785]  peptide=true
+domain d3 bonds atoms=true atom_color=element  bond_color=element   \
+          render=line  show=true
+domain d3 backbone  color=[ 0 1 0 ]  planes=true  
+#-----
+domain create d4=C[785]  sidechain_group=true
+domain d4 bonds atoms=true atom_color=[ 0 1 0 ] bond_color=[ 0 0.5 0 ] show=true
+
+
+# peptide/sidechain 3 
+#--------------------
+domain create d5=C[785-786]  peptide=true
+domain d5 bonds atoms=true atom_color=element  bond_color=element   \
+          render=line  show=true
+domain d5 backbone  color=[ 0 1 0 ]  planes=true
+#-----
+domain create d6=C[786]  sidechain_group=true
+domain d6 bonds atoms=true atom_color=[ 1 1 0 ] bond_color=[ 0.5 0.5 0 ] show=true
+
+# peptide/sidechain 4 
+#--------------------
+domain create d7=C[786-787]  peptide=true
+domain d7 bonds atoms=true atom_color=element bond_color=element  \
+                render=line  show=true
+domain d7 backbone  color=[ 0 1 0 ]  planes=true
+#-----
+domain create d8=C[787]  sidechain_group=true
+domain d8 bonds atoms=true atom_color=[ 1 0 1 ] bond_color=[ 0.5 0 0.5 ] show=true
+
+
+# peptide/sidechain 5 
+#--------------------
+domain create d9=C[787-788]  peptide=true
+domain d9 bonds atoms=true atom_color=element bond_color=element  \
+                render=line  show=true
+domain d9 backbone  color=[ 0 1 0 ]  planes=true
+
+domain create d10=C[788]  sidechain_group=true
+domain d10 bonds atoms=true atom_color=[ 0 0 1 ] bond_color=[ 0.0 0 0.5 ] show=true
+
+
+# peptide/sidechain 6
+#--------------------
+domain create d11=C[788-789]  peptide=true
+domain d11 bonds atoms=true atom_color=element bond_color=element  \
+                render=line  show=true
+domain d11 backbone  color=[ 0 1 0 ]  planes=true
+
+domain create d12=C[789]  sidechain_group=true
+domain d12 bonds atoms=true atom_color=[ 1 0.8 0 ] bond_color=[ 0.5 0.3 0 ] show=true
+
+
+# peptide/sidechain 7
+#--------------------
+domain create d13=C[789-790]  peptide=true
+domain d13 bonds atoms=true atom_color=element bond_color=element  \
+                render=line  show=true
+domain d13 backbone  color=[ 0 1 0 ]  planes=true
+
+domain create d14=C[790]  sidechain_group=true
+domain d14 bonds atoms=true atom_color=[ 0 1 1 ] bond_color=[ 0 0.5 0.5 ] show=true
+
+
+# peptide/sidechain 8
+#--------------------
+domain create d15=C[790-791]  peptide=true
+domain d15 bonds atoms=true atom_color=element bond_color=element  \
+                render=line  show=true
+domain d15 backbone  color=[ 0 1 0 ]  planes=true
+
+domain create d16=C[791]  sidechain_group=true
+domain d16 bonds atoms=true atom_color=[ 0.6 1 0 ] bond_color=[ 0.3 0.5 0 ] show=true
+
+#============================================================#
+# define cg model                                            #
+#============================================================#
+
+# add rigid bodies 
+#-----------------
+body create  name=ground    type=ground
+body create  name=d1b  type=rigid  domain=d1
+body create  name=d2b  type=rigid  domain=d2
+body create  name=d3b  type=rigid  domain=d3
+body create  name=d4b  type=rigid  domain=d4
+body create  name=d5b  type=rigid  domain=d5
+body create  name=d6b  type=rigid  domain=d6
+body create  name=d7b  type=rigid  domain=d7
+body create  name=d8b  type=rigid  domain=d8
+body create  name=d9b  type=rigid  domain=d9
+body create  name=d10b type=rigid  domain=d10
+body create  name=d11b type=rigid  domain=d11
+body create  name=d12b type=rigid  domain=d12
+body create  name=d13b type=rigid  domain=d13
+body create  name=d14b type=rigid  domain=d14
+body create  name=d15b type=rigid  domain=d15
+body create  name=d16b type=rigid  domain=d16
+
+# create joints  
+#--------------
+
+#----------- jnt 1 ---------------
+joint create  name=jnt1  type=weld position=d1:C[783]:C
+joint jnt1 color=[ 1 1 1 ] msize=0.01 shading=color show=true
+joint jnt1 bodies={ ground d1b }
+
+#----------- jnt 2&3 ---------------
+joint create  name=jnt2  type=hinge  position=d2:C[784]:N      \
+              use_bond=true  bond={ d2:C[784]:CA  d1:C[784]:N }
+joint jnt2 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt2 bodies={ d1b d2b }
+joint jnt2 force_constant=1.0 
+
+joint create  name=jnt3  type=hinge  position=d3:C[784]:C      \
+              use_bond=true  bond={ d2:C[784]:CA  d3:C[784]:C }
+joint jnt3 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt3 bodies={ d2b d3b }
+joint jnt3 force_constant=1.0 
+
+#----------- jnt 4 & 5 ---------------
+joint create  name=jnt4  type=hinge  position=d4:C[785]:N      \
+              use_bond=true  bond={ d3:C[785]:N  d4:C[785]:CA }
+joint jnt4 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt4 bodies={ d3b d4b }
+joint jnt4 force_constant=1.0 
+
+joint create  name=jnt5  type=hinge  position=d5:C[785]:C      \
+              use_bond=true  bond={ d4:C[785]:CA  d5:C[785]:C }
+joint jnt5 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt5 bodies={ d4b d5b }
+joint jnt5 force_constant=1.0 
+
+#----------- jnt 6 & 7 ---------------
+joint create  name=jnt6  type=hinge  position=d6:C[786]:N      \
+              use_bond=true  bond={ d5:C[786]:N  d6:C[786]:CA }
+joint jnt6 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt6 bodies={ d5b d6b }
+joint jnt6 force_constant=1.0 
+
+joint create  name=jnt7  type=hinge  position=d7:C[786]:C      \
+              use_bond=true  bond={ d6:C[786]:CA  d7:C[786]:C }
+joint jnt7 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt7 bodies={ d6b d7b }
+joint jnt7 force_constant=1.0 
+
+#----------- jnt 8 & 9 ---------------
+joint create  name=jnt8  type=hinge  position=d8:C[787]:N      \
+              use_bond=true  bond={ d7:C[787]:N  d8:C[787]:CA }
+joint jnt8 color=[ 0 1 0 ] msize=0.01 shading=flat  show=true
+joint jnt8 bodies={ d7b d8b }
+joint jnt8 force_constant=1.0 
+
+joint create  name=jnt9  type=hinge  position=d9:C[787]:C      \
+              use_bond=true  bond={ d8:C[787]:CA  d9:C[787]:C }
+joint jnt9 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt9 bodies={ d8b d9b }
+joint jnt9 force_constant=1.0 
+
+#----------- jnt 10 & 11 ---------------
+joint create  name=jnt10 type=hinge  position=d10:C[788]:N      \
+              use_bond=true  bond={ d9:C[788]:N  d10:C[788]:CA }
+joint jnt10 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt10 bodies={ d9b d10b }
+joint jnt10 force_constant=1.0 
+
+joint create  name=jnt11  type=hinge  position=d11:C[788]:C      \
+              use_bond=true  bond={ d10:C[788]:CA  d11:C[788]:C }
+joint jnt11 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt11 bodies={ d10b d11b }
+joint jnt11 force_constant=1.0 
+
+#----------- jnt 12 & 13 ---------------
+joint create  name=jnt12 type=hinge  position=d12:C[789]:N      \
+              use_bond=true  bond={ d11:C[789]:N  d12:C[789]:CA }
+joint jnt12 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt12 bodies={ d11b d12b }
+joint jnt12 force_constant=1.0 
+
+joint create  name=jnt13  type=hinge  position=d13:C[789]:C      \
+              use_bond=true  bond={ d12:C[789]:CA  d13:C[789]:C }
+joint jnt13 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt13 bodies={ d12b d13b }
+joint jnt13 force_constant=1.0 
+
+#----------- jnt 14 & 15 ---------------
+joint create  name=jnt14 type=hinge  position=d14:C[790]:N      \
+              use_bond=true  bond={ d13:C[790]:N  d14:C[790]:CA }
+joint jnt14 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt14 bodies={ d13b d14b }
+joint jnt14 force_constant=1.0 
+
+joint create  name=jnt15  type=hinge  position=d15:C[790]:C      \
+              use_bond=true  bond={ d14:C[790]:CA  d15:C[790]:C }
+joint jnt15 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt15 bodies={ d14b d15b }
+joint jnt15 force_constant=1.0 
+
+#----------- jnt 16 ---------------
+joint create  name=jnt16 type=hinge  position=d16:C[791]:N      \
+              use_bond=true  bond={ d15:C[791]:N  d16:C[791]:CA }
+joint jnt16 color=[ 1 1 1 ] msize=0.01 shading=flat  show=true
+joint jnt16 bodies={ d15b d16b }
+joint jnt16 force_constant=1.0 
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+#simulation rsim print  bodies=true  joints=true
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create  name=force1             \
+              type=explicit           \
+              point=d16:C[791]:CB     \
+              global_frame=true       \
+              direction=[ 0 0.1 0 ]   \
+              scale=1.0
+
+simulation rsim add force=force1     \
+                    body=d16b        \
+                    time={ 0 1000 }
+
+#============================================================#
+# add interaction spring potentials for sidechains           #
+#                                                            #
+# use cutoff=1.0 nm                                        #
+#     force_const=4.0                                      #
+#============================================================#
+domain d4  define region=d4r  residues=C[785]  use_sidechains=true
+domain d12 define region=d12r residues=C[789]  use_sidechains=true
+
+body d4b add potential=d4_spring1     \
+         type=spring                  \
+         region=d4r                   \
+         geometry=points              \
+         force_const=4.0              \
+         cutoff=1.0                   \
+         show=true
+
+body d12b add potential=d12_spring1   \
+         type=spring                  \
+         region=d12r                  \
+         geometry=points              \
+         force_const=4.0              \
+         cutoff=1.0                   \
+         show=true
+
+simulation rsim add interaction=d4_d12_springs             \
+                    body1=d4b    potential1=d4_spring1   \
+                    body2=d12b   potential2=d12_spring1   \
+                    time={ 0.0 1000.0 }
+
+#------------------------------------------------------------------
+
+domain d6  define region=d6r  residues=C[786]  use_sidechains=true
+domain d14 define region=d14r residues=C[790]  use_sidechains=true
+
+body d6b add potential=d6_spring1     \
+         type=spring                  \
+         region=d6r                   \
+         geometry=points              \
+         force_const=4.0              \
+         cutoff=1.0                   \
+         show=true
+
+body d14b add potential=d14_spring1     \
+         type=spring                  \
+         region=d14r                   \
+         geometry=points              \
+         force_const=4.0              \
+         cutoff=1.0                   \
+         show=true
+
+simulation rsim add interaction=d6_d14_springs             \
+                    body1=d6b    potential1=d6_spring1   \
+                    body2=d14b   potential2=d14_spring1   \
+                    time={ 0.0 1000.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim momentum=on
+#simulation  state  save_frequency=250
+
+#----------------------------
+# print body masses         |
+#----------------------------
+#body  d1b  print  properties=mass
+#body  d2b  print  properties=mass
+
+
+graphics  center  point=[ 1.32939 2.57201 2.19204 ]

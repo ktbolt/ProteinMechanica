@@ -1,0 +1,32 @@
+#============================================================#
+# sphere using center on a protein.                          #
+#============================================================#
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck  format = pdb file =  ..//data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database = neck  name = m1  model = 1  type = protein
+
+# create domain
+#--------------
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show=true
+
+
+# create sphere 
+#--------------
+solid create  name = sp1  type = sphere \
+              radius = 0.1              \
+              center = hc:C[795]:CA     \
+              color = [ 1 1 0 ]         \
+              show = true
+

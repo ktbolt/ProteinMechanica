@@ -1,0 +1,19 @@
+#============================================================*
+#               test write change residue sequence           *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = C[760-770]
+
+variable res=CIKMQKTIRM
+
+domains write atoms list={iq1} start_res=C760  res_names=${res} file=t2.pdb
+
+

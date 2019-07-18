@@ -1,0 +1,170 @@
+#============================================================#
+# simulation of dna using rigid bodies for bases             #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=dna format=pdb file=../data/dna_strand.pdb 
+
+# read molecule
+#--------------
+molecule read database=dna name=m1 model=1 type=dna 
+
+# create domains 
+#---------------
+variable ren=line
+variable c1 =[ 0.6 0.6 0.6]
+variable cr =[ 1 0 0]
+variable cg =[ 0 1 0]
+
+domain create dnaC1=C[2-10]
+domain dnaC1 backbone color=${c1} planes=true show=true
+#domain dnaC1 atoms color=${c1} render=${ren} atom_names={ P }  show=true 
+domain dnaC1 bonds atoms=true atom_color=element bond_color=${cr}  show=true
+#
+domain create dnaD1=D[2-10]
+domain dnaD1 backbone color=${c1}     show=true
+domain dnaD1 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaD1 bonds  atoms=true atom_color=element  bond_color=${cr}  show=true
+#
+domain create dnaC2=C[10-19]
+domain dnaC2 backbone color=${c1}     show=true
+domain dnaC2 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaC2 bonds  atoms=true  atom_color=element bond_color=${cg}  show=true
+#
+domain create dnaD2=D[10-19]
+domain dnaD2 backbone color=${c1}     show=true
+domain dnaD2 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaD2 bonds  atoms=false  bond_color=${cg}  show=true
+#
+domain create dnaC3=C[19-28]
+domain dnaC3 backbone color=${c1}     show=true
+domain dnaC3 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaC3 bonds  atoms=false  bond_color=${cr}  show=true
+#
+domain create dnaD3=D[19-28]
+domain dnaD3 backbone color=${c1}     show=true
+domain dnaD3 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaD3 bonds  atoms=false  bond_color=${cr}  show=true
+#
+domain create dnaC4=C[28-37]
+domain dnaC4 backbone color=${c1}     show=true
+domain dnaC4 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaC4 bonds  atoms=false  bond_color=${cg}  show=true
+#
+domain create dnaD4=D[28-37]
+domain dnaD4 backbone color=${c1}     show=true
+domain dnaD4 atoms  color=${c1}     atom_names={ P }  render=${ren} show=true 
+domain dnaD4 bonds  atoms=false  bond_color=${cg}  show=true
+
+# create bodies
+#--------------
+body create  name=ground    type=ground
+
+body create  type=rigid                                       \
+             names  ={ dnaC1Body dnaD1Body dnaC2Body dnaD2Body dnaC3Body dnaD3Body \
+                         dnaC4Body dnaD4Body }  \
+             domains={ dnaC1 dnaD1   dnaC2 dnaD2  dnaC3 dnaD3  dnaC4 dnaD4 }
+
+
+#        create joints
+#-------------------------------
+variable jc =[ 1 1 0]
+#--- ground ---
+joint create  name=groundCJnt  type=weld  position=dnaC1:C[2]:P
+joint groundCJnt color=${jc}     msize=0.1 shading=color show=true
+joint groundCJnt bodies={ ground dnaC1Body }
+#
+joint create  name=groundDJnt  type=weld  position=dnaD1:D[2]:P
+joint groundDJnt color=${jc}     msize=0.1 shading=color show=true
+joint groundDJnt bodies={ ground dnaD1Body }
+
+#--- 1-2 ---
+joint create  name=dnaC12Jnt  type=ball  position=dnaC2:C[10]:P 
+joint dnaC12Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaC12Jnt bodies={ dnaC1Body dnaC2Body }
+#
+joint create  name=dnaD12Jnt  type=ball  position=dnaD2:D[10]:P 
+joint dnaD12Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaD12Jnt bodies={ dnaD1Body dnaD2Body }
+
+#--- 2-3 ---
+joint create  name=dnaC23Jnt  type=ball  position=dnaC3:C[19]:P
+joint dnaC23Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaC23Jnt bodies={ dnaC2Body dnaC3Body }
+#
+joint create  name=dnaD23Jnt  type=ball  position=dnaD3:D[19]:P
+joint dnaD23Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaD23Jnt bodies={ dnaD2Body dnaD3Body }
+
+#--- 3-4 ---
+joint create  name=dnaC34Jnt  type=ball  position=dnaC4:C[28]:P    
+joint dnaC34Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaC34Jnt bodies={ dnaC3Body dnaC4Body }
+#
+joint create  name=dnaD34Jnt  type=ball  position=dnaD4:D[28]:P    
+joint dnaD34Jnt color=${jc}     msize=0.1 shading=color show=true
+joint dnaD34Jnt bodies={ dnaD3Body dnaD4Body }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+simulation rsim momentum=on 
+simulation rsim damping=on 
+
+body dnaC1Body damping=1.0
+body dnaC2Body damping=1.0
+body dnaC3Body damping=1.0
+body dnaC4Body damping=1.0
+
+body dnaD1Body damping=1.0
+body dnaD2Body damping=1.0
+body dnaD3Body damping=1.0
+body dnaD4Body damping=1.0
+
+
+
+# add bodies and joints
+#----------------------
+simulation rsim add bodies=all
+simulation rsim add joints=all 
+
+# add potential 
+#--------------
+read dna3Pot.pmc
+
+# add forces
+#-----------
+force create  name=force1           \
+              type=explicit         \
+              global_frame=false    \
+              point=[ 0 0 0 ]       \
+              direction=[ 0 2  0 ]  \
+              scale=1.0
+
+simulation rsim add force=force1    \
+                    body=dnaD4Body  \
+                    time={ 0 4 }
+
+#----------------------
+simulation rsim initialize
+
+# step simulation
+#----------------
+simulation rsim step=500
+
+
+
+#graphics background color=[ 1 1 1 ]

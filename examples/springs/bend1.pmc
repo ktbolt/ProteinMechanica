@@ -1,0 +1,103 @@
+#============================================================#
+# bend spring potential.                                     #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck  format=pdb file= ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database=neck  name=m1  
+
+# create domains
+#---------------
+domain create hc=C
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 1 0 0 ] width=2 show=true
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 1 0 ] width=2 show=true
+
+# create bodies 
+#--------------
+body create  name=ground    type=ground
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create joints 
+#--------------
+joint create  name=ground_jnt  type=weld  position=hc:C[788]:CA   \
+              bodies={ ground iq2Body }
+
+joint create  name=jnt1  type=ball  position=hc:C[814]:CA  \
+      bodies={ iq2Body iq3Body }                               \
+      color=[ 0 0 1 ] msize=0.04 shading=color show=true 
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+
+# add joints
+#-----------
+simulation rsim add joint=ground_jnt
+simulation rsim add joint=jnt1
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1            \
+             type=explicit          \
+             global_frame=true      \
+             point=hc:C[836]:CA     \
+             direction=[ 1 0 0 ]    \
+             scale=1.0
+
+simulation rsim add force=force1   \
+                    body=iq3Body   \
+                    time={ 0 100 }
+
+
+# add bend spring
+#----------------
+domain iq2 define region=iq2_rgn residues=C[810,814]  atom_names={ CA }
+domain iq3 define region=iq3_rgn residues=C[824]  atom_names={ CA }
+
+body iq2Body add potential_geometry=iq2Iq3Pot1  \
+   region=iq2_rgn geometry=points           \
+   color=[ 0.6 0.6 0.6 ]                        \
+   width=2.0  show=true  
+
+body iq3Body add potential_geometry=iq2Iq3Pot2  \
+   region=iq3_rgn geometry=points             \
+   color=[1 0.6 0.6]                            \
+   width=2.0   show=false
+
+simulation rsim add interaction=helix1Helix2Int \
+  type=bend force_const=100.0                   \
+  list={iq2Iq3Pot1 iq2Iq3Pot2}                  \
+  show=true time={ 0 10000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim step=10000
+
+

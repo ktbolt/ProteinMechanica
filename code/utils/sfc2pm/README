@@ -1,0 +1,30 @@
+
+ #-------------------#
+ # Program sfc2pm    #
+ #-------------------#
+
+ The Swiss-PDB Viewer program (http://spdbv.vital-it.ch/) can create a solvent accessible 
+ surface of a protein. The surface is stored in a .sfc file. The surface can also
+ contain charges at the vertices an electrostatics computation. 
+
+ The sfc2pm program will read in the .sfc file write out a Protein Mechanica format .pm 
+ file. The surface vertices and triangle connectivity are stored in binary format.
+
+
+ Build
+ -----
+ gcc -o sfc2pm sfc2pm.c poly.c
+
+
+ Usage
+ -----
+ sfc2pm  <name>  >  <name>_surf.pm 
+
+
+ Example
+ -------
+ sfc2pm 1ei1 > 1ei1_surf.pm
+
+ reads in 1ei1.sfc file and outputs the PM file 1ei1_surf.pm 
+
+

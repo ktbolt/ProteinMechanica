@@ -1,0 +1,25 @@
+
+#============================================================*
+#               test reading dna                             *
+#============================================================*
+
+# set units
+#-----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = 1ej9  format = pdb  file = ../data/1EJ9.pdb
+
+
+# read dna molecule
+#------------------
+molecule read  name = dna  database = 1ej9  type = dna
+domain create dna_c = C
+#domain dna_c atoms color = element  show = true
+domain dna_c backbone color = [ 1 0 0 ] show = true
+#domain dna_c bonds atoms = true  bond_color = element show = true
+
+#domain create dna_d = D
+#domain dna_d backbone color = [ 0 1 0 ] show = true
+

@@ -1,0 +1,33 @@
+
+#============================================================*
+#           test picking atoms, backbone and bonds           *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/two_necks.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create domains
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = C
+#domain create iq2 = B[40-50]
+domain iq2 bonds \
+          bond_color = [ 1 0 0 ] \
+          atom_color = [ 0 1 0 ]
+
+domain create iq3 = D[1-20]
+domain iq3 atoms color = element show
+
+
+

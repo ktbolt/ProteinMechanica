@@ -1,0 +1,12 @@
+! This file can be modified and used as a command file (named diagrtb.dat) for diagrtb.
+ MATRix filename            =   pdbmat.sdijb
+ COORdinates filename       =   neck_xform.pdb
+ Eigenvector OUTPut filename= diagrtb.eigenfacs
+ Nb of VECTors required     =         56
+ EigeNVALues chosen         =       LOWE   ! LOWEst, HIGHest.
+ Type of SUBStructuring     =       NONE   ! RESIdues, SECOndary, SUBUnits, DOMAins, NONE.
+ Nb of residues per BLOck   =          1
+ Origin of MASS values      =       CONS   ! CONStant, COORdinate, PDB.
+ Temporary files cleaning   =       ALL    ! ALL, NOne.
+ MATRix FORMat              =       BINARY ! FREE, BINAry.
+ Output PRINting level      =          0   ! =1: More detailed; =2: Debug level.

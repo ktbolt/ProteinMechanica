@@ -1,0 +1,33 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Creating domains from secondary structure.                 #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=headDb format=pdb  file=1W7I.pdb
+
+# read molecule
+#--------------
+molecule read  name=headMol  database=headDb  type=protein
+molecule headMol print=secondary_structure 
+
+# create head domain
+#--------------------
+domain  create  head=A 
+domain head h1 backbone color=[0.6 0.6 0.6] width=1 show=true
+
+# create helix domains
+#---------------------
+domain  create  h17=helix17
+domain h17 backbone color=[0 1 0] width=3 show=true
+
+domain  create  shAA=sheetAB
+domain shAA backbone color=[1 1 0] width=3 show=true
+
+# rotate scene for a better view
+#-------------------------------
+graphics rotate=[90 0 20] 
+
+

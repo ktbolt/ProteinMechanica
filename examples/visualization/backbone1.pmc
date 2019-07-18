@@ -1,0 +1,30 @@
+#============================================================#
+# visualize domain backbone                                  #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create helix = C
+domain helix backbone color = [ 0.6 0.6 0.6 ] width = 3 show=true
+
+domain create camA = A
+domain camA backbone color = [ 0.7 0 0 ] width = 3 show=true
+
+domain create camB = B
+domain camB backbone color = [ 0 0.7 0 ] width = 3 show=true
+
+domain create camD = D
+domain camD backbone color = [ 0.7 0.7 0 ] width = 3 show=true
+
+
+graphics  background  color = [1 1 1]
+
+

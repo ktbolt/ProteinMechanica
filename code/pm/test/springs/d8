@@ -1,0 +1,150 @@
+#============================================================#
+#                  test entropic spring potential            #
+#                                                            #
+# graph and wlc                                              #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+
+domain create iq2 = BC[788-806]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 2 show
+domain create iq2h = C[788-806]
+domain create iq2helix = C[806-814]
+domain iq2helix backbone color = [ 1 0.7 0 ] width = 2 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0.7 0 ] width = 2 show
+#domain iq3 atoms color = [ 0 0 1 ] render = line show
+
+domain create iq3h = C[814-836]
+#domain iq3h bonds  atoms = true bond_color = [ 0 0.7 0 ] atom_color = [ 0 0.7 0 ] show
+
+#domain create camb = B
+#domain camb  bonds  atoms = true bond_color = [ 0.7 0 0 ] atom_color = [ 1 0 0 ] show
+#domain create camc = C
+#domain camc  bonds  atoms = true bond_color = [ 0 0.7 0 ] atom_color = [ 0 1 0 ] show
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+joint create  name = ground_jnt  type = weld  domain = hc    res = C[788]     use = CA \
+joint ground_jnt bodies = { ground iq2_body }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+# add joints
+#-----------
+simulation rsim add joint = ground_jnt
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             global_frame = true     \
+             point = hc:C[836]       \
+             direction = [ 1 0 0 ]   \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 2 }
+
+
+# add interaction potentials
+#---------------------------
+domain iq2 define region = iq2_rgn residues = C[806]  atom_names = { CA }
+domain iq3 define region = iq3_rgn residues = C[814]  atom_names = { CA }
+
+body iq2_body add potential_geometry = iq2_spring_h  \
+                  region = iq2_rgn                   \
+                  geometry = points                  \
+                  color = [ 1 0 1 ]                  \
+                  show = true 
+
+body iq3_body add potential_geometry = iq3_spring_h  \
+                  region = iq3_rgn                   \
+                  geometry = points                  \
+                  show = true  
+
+#simulation rsim add interaction = hspring1                      \
+                    type = entropic-spring                      \
+                    function = graph                            \
+                    graph_data = { 1.5 5.0  3.2 10.0  4.5 50 }  \
+                    list = { iq2_spring_h iq3_spring_h }        \
+                    time = { 0.0 1000.0 }
+
+simulation rsim add interaction = hspring1                      \
+                    type = entropic-spring                      \
+                    function = wlc                              \
+                    persistence_length = 100.0                  \
+                    num_res = 8                                 \
+                    list = { iq2_spring_h iq3_spring_h }        \
+                    time = { 0.0 1000.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+simulation rsim momentum = on
+#simulation  state  save_frequency = 10
+
+#----------------------------
+# output simulation results |
+#----------------------------
+
+simulation  rsim  write  file_name = rsim
+#simulation  rsim  write  energy = true  strain = true  file_name = rsim
+simulation  rsim  write  energy = true  file_name = rsim
+#simulation  rsim  write  trace = tr2  file_name = tr2
+
+
+simulation  rsim  interactions  print = true
+
+
+#graphics background  color = [ 1 1 1 ]
+graphics center point = [ 3.77781 5.96775 3.98927 ] 
+
+

@@ -1,0 +1,34 @@
+#============================================================#
+#                  test binding simulation                   #
+#============================================================#
+system echo=off
+system verbose=false
+
+variable rwidth=3
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# create a binding simulation 
+#----------------------------
+binding_simulation create name=myosin6BindingSim  \
+   structure_file=structure.pdb                   \
+   pm_program_name=p                              \
+   motor_name=motor                               \
+   filament_name=actin                            \
+   target_name=targetBind                         \ 
+   binding_sites={7 8 9 10}                       \
+   binding_heads={ppsHead}                        \
+   domain_cmd_files={domains.pmc}                 \
+   model_cmd_files={model.pmc}                    \     
+   potential_cmd_files={potentials.pmc}           \              
+   simulation_cmd_files={sim.pmc}                 \
+   target_restraints_cmd_files={target.pmc}       \
+   run_cmd_file=run.pmc
+
+binding_simulation myosin6BindingSim  execute=true
+
+#binding_simulation myosin6BindingSim  print_summary=true
+
+

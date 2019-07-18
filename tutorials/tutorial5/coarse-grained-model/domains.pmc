@@ -1,0 +1,70 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building a Coarse-grained Model of the Myosin V Dimer     #
+#                                                           #
+# Define rigid domains.                                     #
+#-----------------------------------------------------------#
+
+# read myosin v dimer model
+#--------------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+# post-stroke monomer
+#--------------------
+domain create rigorHead=C[2-766]
+domain create rigorIq1=AC[766-788]
+domain create rigorIq2=BC[788-814]
+domain create rigorIq3=DC[814-836]
+domain create rigorIq4=EC[836-862]
+domain create rigorIq5=FC[862-884]
+domain create rigorIq6=GC[884-913]
+domain create rigorHcr1=C[913-924]
+domain create rigorHcr2=C[924-939]
+domain create rigorHcr3=C[939-956]
+domain create rigorHcr4=C[956-970]
+domain create rigorHcr5=C[970-1051]
+
+domain rigorHead backbone color=[0.6 0.6 0.6] width=2 show=true
+domain rigorIq1 backbone color=[1 0 0] width=2 show=true
+domain rigorIq2 backbone color=[0 1 0] width=2 show=true
+domain rigorIq3 backbone color=[1 0.8 0] width=2 show=true
+domain rigorIq4 backbone color=[0 1 1] width=2 show=true
+domain rigorIq5 backbone color=[0.8 0.8 0] width=2 show=true
+domain rigorIq6 backbone color=[0 0 1] width=2 show=true
+domain rigorHcr1 backbone color=[1 0 0] width=2 show=true
+domain rigorHcr2 backbone color=[0 1 1] width=2 show=true
+domain rigorHcr3 backbone color=[0 1 0] width=2 show=true
+domain rigorHcr4 backbone color=[0.8 0.8 0] width=2 show=true
+domain rigorHcr5 backbone color=[1 0.6 0] width=2 show=true
+
+# pre-stroke monomer
+#-------------------
+domain create ppsHead=J[2-766]
+domain create ppsIq1=HJ[766-788]
+domain create ppsIq2=IJ[788-814]
+domain create ppsIq3=KJ[814-836]
+domain create ppsIq4=LJ[836-862]
+domain create ppsIq5=MJ[862-884]
+domain create ppsIq6=NJ[884-913]
+domain create ppsHcr1=J[913-924]
+domain create ppsHcr2=J[924-939]
+domain create ppsHcr3=J[939-956]
+domain create ppsHcr4=J[956-970]
+domain create ppsHcr5=J[970-1051]
+
+domain ppsHead backbone color=[1 0.6 0.6] width=2 show=true
+domain ppsIq1 backbone color=[1 0 0] width=2 show=true
+domain ppsIq2 backbone color=[0 1 0] width=2 show=true
+domain ppsIq3 backbone color=[1 0.8 0] width=2 show=true
+domain ppsIq4 backbone color=[0 1 1] width=2 show=true
+domain ppsIq5 backbone color=[0.8 0.8 0] width=2 show=true
+domain ppsIq6 backbone color=[0 0 1] width=2 show=true
+domain ppsHcr1 backbone color=[1 0 0] width=2 show=true
+domain ppsHcr2 backbone color=[0 1 1] width=2 show=true
+domain ppsHcr3 backbone color=[0 1 0] width=2 show=true
+domain ppsHcr4 backbone color=[0.8 0.8 0] width=2 show=true
+domain ppsHcr5 backbone color=[1 0.6 0] width=2 show=true
+
+

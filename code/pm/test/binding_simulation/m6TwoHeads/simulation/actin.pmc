@@ -1,0 +1,68 @@
+#------------------------------------------------------#
+# read actin filament                                  #
+#------------------------------------------------------#
+molecule read name=structuresMol database=structuresDb model_name=${actin_name}
+
+domain create actin1=ACEGIKMOQSUWY
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+domain create actinG=G
+domain create actinH=H
+domain create actinI=I
+domain create actinJ=J
+domain create actinK=K
+domain create actinL=L
+domain create actinM=M
+domain create actinN=N
+domain create actinO=O
+domain create actinP=P
+domain create actinQ=Q
+domain create actinR=R
+domain create actinS=S
+domain create actinT=T
+
+variable aspcolor=[0.5 0.5 0]
+
+solid create name=actinSpG type=sphere domain=actinG region=G atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpH type=sphere domain=actinH region=H atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpI type=sphere domain=actinI region=I atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpJ type=sphere domain=actinJ region=J atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpK type=sphere domain=actinK region=K atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpL type=sphere domain=actinL region=L atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpM type=sphere domain=actinM region=M atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpN type=sphere domain=actinN region=N atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpO type=sphere domain=actinO region=O atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpP type=sphere domain=actinP region=P atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpQ type=sphere domain=actinQ region=Q atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpR type=sphere domain=actinR region=R atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpS type=sphere domain=actinS region=S atoms={CA}   \
+   color=${aspcolor} render=line show=true
+
+solid create name=actinSpT type=sphere domain=actinT region=T atoms={CA}   \
+   color=${aspcolor} render=line show=true

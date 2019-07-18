@@ -1,0 +1,122 @@
+#============================================================*
+#            test simulation of cylinders from domain        *
+#                                                            *
+# allign cylinders with previous one.                        *
+#============================================================*
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# create cylinder
+#----------------
+solid create name=cyl1 type=cylinder         \
+  radius=0.22 point1=[0 0 0] point2=[2 0 0]  \
+  color=[1 0 0] display=line show=true
+
+solid create name=cyl2 type=cylinder         \
+  radius=0.22 point1=[0 0 0] point2=[-2 0 0] \
+  color=[0 1 0] display=line show=true
+
+solid create name=cyl3 type=cylinder         \
+  radius=0.22 point1=[0 0 0] point2=[0 2 0]  \
+  color=[0 1 1] display=line show=true
+
+solid create name=cyl4 type=cylinder           \
+  radius=0.12 point1=[-1 0 0] point2=[-1 1 0]  \
+  color=[1 0 1] display=line show=true
+
+solid create name=cyl5 type=cylinder           \
+  radius=0.12 point1=[1 0 0] point2=[1 1 0]  \
+  color=[1 1 0] display=line show=true
+
+
+# create bodies                           
+#--------------
+body create name=ground type=ground
+body create name=cyl1_body type=rigid solid=cyl1
+body create name=cyl2_body type=rigid solid=cyl2
+body create name=cyl3_body type=rigid solid=cyl3
+body create name=cyl4_body type=rigid solid=cyl4
+body create name=cyl5_body type=rigid solid=cyl5
+
+# create joints
+#--------------
+joint create name=jnt1 type=hinge point=[0 0 0] axis=[1 0 0] 
+joint jnt1 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jnt1 bodies={cyl1_body cyl3_body}
+
+joint create name=jnts1 type=ball position=[2 0 0] 
+joint jnts1 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jnts1 bodies={cyl1_body ground}
+
+joint create name=jnts2 type=ball position=[-2 0 0] 
+joint jnts2 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jnts2 bodies={cyl2_body ground}
+
+joint create name=jnt2 type=hinge point=[0 0 0] axis=[1 0 0] 
+joint jnt2 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jnt2 bodies={cyl2_body cyl3_body}
+
+joint create name=jntw1 type=weld position=[-1 0 0] 
+joint jntw1 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jntw1 bodies={cyl2_body cyl4_body}
+
+joint create name=jntw2 type=weld position=[1 0 0] 
+joint jntw2 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+joint jntw2 bodies={cyl1_body cyl5_body}
+
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=cyl1_body
+simulation rsim add body=cyl2_body
+simulation rsim add body=cyl3_body
+simulation rsim add body=cyl4_body
+simulation rsim add body=cyl5_body
+
+# add joints
+#-----------
+simulation rsim add joint=jnt1
+simulation rsim add joint=jnt2
+simulation rsim add joint=jnts1
+simulation rsim add joint=jnts2
+simulation rsim add joint=jntw1
+simulation rsim add joint=jntw2
+
+# add forces
+#-----------
+force create name=force1 type=explicit point=[-1 1 0] direction=[0 0 1] \
+      global_frame=true show=true
+#simulation rsim add force=force1 body=cyl4_body time={0 1000}
+
+force create name=force2 type=explicit point=[1 1 0] direction=[0 0 1] \
+      global_frame=true show=true
+#simulation rsim add force=force2 body=cyl5_body time={0 1000}
+
+force create name=force3 type=explicit point=[0 2 0] direction=[0 0 1] \
+      global_frame=true show=true
+simulation rsim add force=force3 body=cyl3_body time={0 1000}
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+# step simulation
+#----------------
+#simulation rsim step=100
+

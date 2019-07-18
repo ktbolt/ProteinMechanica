@@ -1,0 +1,125 @@
+#============================================================#
+#          test peptide rigid body model of a gsg            #
+#                                                            #
+# use c-alpha chain.                                         #
+#============================================================#
+system echo=off
+#system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=db1 format=pdb file=gsg.pdb
+molecule read name=m1 database=db1
+
+domain create gsg1=C[1-5] last_nca_atoms=true
+domain gsg1 bonds atoms=true atom_color=[1 1 1] bond_color=[1 1 1] render=line \
+   width=2 show=true
+
+domain create gsg2=C[15-18]
+domain gsg2 bonds atoms=true atom_color=[0.7 0.7 0.7 ] bond_color=[0.7 0.7 0.7] \
+   render=line width=2 show=true
+
+# create multibody model at peptide level
+#----------------------------------------
+domain create mgsg=C[5-15]
+multibody create name=ca domain=mgsg type=c_alpha_chain 
+
+# add ground body and joint
+#--------------------------
+body create name=ground type=ground
+body create name=gsg1Body type=rigid domain=gsg1
+body create name=gsg2Body type=rigid domain=gsg2
+
+joint create name=groundJnt type=weld position=gsg1:C[1]:CA  \
+   color=[0 1 1] msize=0.05 shading=color show=true          \
+   bodies={ground gsg1Body}
+
+# connect gsg1 to chain
+#-----------------------
+joint create name=gsg1Jnt type=ball position=gsg1:C[5]:CA        \
+   color=[1 0 1] msize=0.01 shading=color display=line show=true \
+   bodies={gsg1Body caCa5Body}
+
+# connect chain to gsg2
+#-----------------------
+joint create name=gsg2Jnt type=ball position=gsg2:C[15]:CA        \
+   color=[1 0 1] msize=0.01 shading=color display=line show=true  \
+   bodies={caCa14Body gsg2Body}
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all 
+simulation rsim add joints=all 
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+simulation rsim state save_frequency=10
+
+# add forces
+#-----------
+force create name=force1 \
+   type=explicit point=gsg2:C[18]:CA global_frame=true \ 
+   direction=[0 -0.2 0] scale=1.0
+simulation rsim add force=force1 body=gsg2Body time={0 1000}
+
+force create name=force2 \
+   type=explicit point=caCa14:C[14]:O global_frame=true \
+   direction=[0  0.2 0] scale=1.0
+#simulation rsim add force=force2 body=caCa14Body time={0 1000}
+
+# define potentials 
+#------------------
+macro addPot(b1, b2, atoms)
+simulation rsim add interaction=${b1}${b2}Springs        \
+   type=spring  ${spring_type}=true force_const=${pot_k} \
+   atom_names={$atoms}}                                  \
+   bodies={${b1}Body ${b2}Body}                          \
+   cutoff=${cutoff} time={0.0 ${pot_t}}                  \
+   map_energy=true  map_scale={ ${emin} ${emax} }        \
+   color=[0 0 0] show=true
+end macro
+
+variable map_energy=true
+variable emin=0.0
+variable emax=1.0
+
+variable cutoff=0.8
+variable pot_k=35.0
+variable pot_t=inf
+variable pot_show=true
+
+variable spring_type=ljspring
+variable spring_atoms=atom_names={mc}
+#variable spring_atoms=atom_names={CA}
+
+addPot(gsg1, caCa5, mc)
+
+addPot(caCa5, caCa6, mc)
+addPot(caCa6, caCa7, mc)
+addPot(caCa7, caCa8, mc)
+addPot(caCa8, caCa9, mc)
+addPot(caCa9, caCa10, mc)
+addPot(caCa10, caCa11, mc)
+addPot(caCa11, caCa12, mc)
+addPot(caCa12, caCa13, mc)
+addPot(caCa13, caCa14, mc)
+addPot(caCa14, gsg2, mc)
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.001
+
+# set some graphics things
+#-------------------------
+graphics center point=gsg1:C[5]:N
+graphics background color=[0.5 0.5 0.7] 
+

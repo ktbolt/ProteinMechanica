@@ -1,0 +1,45 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Coarse-Grained Models of the Myosin V Dimer      #
+#                                                           #
+# Defining Rigid Bodies                                     #
+#                                                           #
+# Create some rigid bodies from molecular domains.          #
+#-----------------------------------------------------------#
+#system echo=off
+#system verbose=false
+
+# read monomer model
+#-------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+# create some domains
+#--------------------
+domain create postHead=C[2-770]
+domain create postCamA=C[770-790]A
+domain create postCamB=C[790-815]B
+
+domain postHead backbone color=[1 0 0] width=2 show=true
+domain postCamA backbone color=[0 1 0] width=2 show=true
+domain postCamB backbone color=[0 1 1] width=2 show=true
+
+# create rigid bodies
+#--------------------
+body create name=postHeadBody type=rigid domain=postHead
+body create name=postCamABody type=rigid domain=postCamA
+body create name=postCamBBody type=rigid domain=postCamB
+
+# an alternate form for the body create command
+#----------------------------------------------
+#body create type=rigid domain_prefix=post
+
+
+# print mass properties
+#----------------------
+body postHeadBody print properties=mass
+body postCamABody print properties=mass
+body postCamBBody print properties=mass
+
+

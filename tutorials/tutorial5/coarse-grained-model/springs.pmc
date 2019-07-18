@@ -1,0 +1,74 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Creating a Coarse-grained Energy Potential for the        #
+# Myosin V Dimer                                            #
+#                                                           #
+# create spring potentials between rigid domains.           #
+#-----------------------------------------------------------#
+
+# define create potential macro
+#-------------------------------
+variable map_energy=true
+variable emin=1.0
+variable emax=4.0
+
+variable cutoff=1.0
+variable pot_k=35.0
+variable pot_t=inf
+variable pot_show=true
+
+# define spring potential macro
+#------------------------------
+macro createPotential(name, b1, b2)
+simulation rsim add interaction=${name}${b1}${b2}Springs  \
+   type=spring atom_names={CA}  force_const=${pot_k}      \
+   bodies={${name}${b1}Body ${name}${b2}Body}             \
+   cutoff=${cutoff} time={0.0 ${pot_t}}                   \
+   map_energy=true  map_scale={ ${emin} ${emax} }         \
+   color=[0 0 0] show=true
+end macro
+
+# define rigor potentials 
+#------------------------
+createPotential(rigor, Head, Iq1)
+createPotential(rigor, Iq1,  Iq2)
+createPotential(rigor, Iq2,  Iq3)
+createPotential(rigor, Iq3,  Iq4)
+createPotential(rigor, Iq4,  Iq5)
+createPotential(rigor, Iq5,  Iq6)
+createPotential(rigor, Iq6,  Hcr1)
+createPotential(rigor, Hcr1, Hcr2)
+createPotential(rigor, Hcr2, Hcr3)
+createPotential(rigor, Hcr3, Hcr4)
+createPotential(rigor, Hcr4, Hcr5)
+
+# define pps potentials
+#----------------------
+createPotential(pps, Head, Iq1)
+createPotential(pps, Iq1,  Iq2)
+createPotential(pps, Iq2,  Iq3)
+createPotential(pps, Iq3,  Iq4)
+createPotential(pps, Iq4,  Iq5)
+createPotential(pps, Iq5,  Iq6)
+createPotential(pps, Iq6,  Hcr1)
+createPotential(pps, Hcr1, Hcr2)
+createPotential(pps, Hcr2, Hcr3)
+createPotential(pps, Hcr3, Hcr4)
+createPotential(pps, Hcr4, Hcr5)
+
+# define potentials between rigor and pps coiled-coils
+#-----------------------------------------------------
+simulation rsim add interaction=coiledCoilSprings     \
+   type=spring atom_names={CA}  force_const=${pot_k}  \
+   bodies={rigorHcr5Body ppsHcr5Body}                 \
+   cutoff=${cutoff} time={0.0 ${pot_t}}               \
+   map_energy=true  map_scale={ ${emin} ${emax} }     \
+   color=[0 0 0] show=true
+
+
+# print interactions
+#-------------------
+#simulation rsim interactions print 
+
+

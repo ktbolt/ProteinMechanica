@@ -1,0 +1,17 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing volumes using slicing.                         #
+#============================================================#
+
+# read grid
+#----------
+grid  read  name =  helicase  format = pm  file = emd_1134.pm        
+
+
+# extract and visualize slices 
+#-----------------------------
+grid  helicase slice  k = 50  vmin = -0.092504  vmax = 0.075945
+grid  helicase slice  i = 50  vmin = -0.092504  vmax = 0.075945
+grid  helicase slice  j = 50  vmin = -0.092504  vmax = 0.075945
+

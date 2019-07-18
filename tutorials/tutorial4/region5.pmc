@@ -1,0 +1,30 @@
+#============================================================#
+# Tutorial 4 - Modeling Interactions                         #
+#                                                            #
+# Regions                                                    #
+#                                                            #
+# Create regions for a solid.                                #
+#============================================================#
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# create a ellipsoid
+#-------------------
+solid create  name=ellpisoid1  type=ellipsoid  center =[ 0.0 0.0 0.0]  \
+              radius1=0.3  axis1=[1 0 0]           \
+              radius2=0.6  axis2=[0 1 0]           \
+              radius3=0.3  axis3=[0 0 1]           \
+              color=[ 1 0 0 ] shading=flat  show=true
+
+# define a region using a point
+# picked on its surface
+#------------------------------
+solid  ellpisoid1  define  region=rgn1 \ 
+            point=[0.00652027 -0.592957 0.0218544 ]   distance=0.5 \
+            use_spheres=true  show=true
+
+
+graphics  scale=1.5
+

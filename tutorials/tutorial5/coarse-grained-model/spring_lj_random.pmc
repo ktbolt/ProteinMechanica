@@ -1,0 +1,149 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Lennard-Jones Springs.                                    #
+#-----------------------------------------------------------#
+#system echo=off
+system verbose=false
+
+# define joint macro
+#-------------------
+macro crJnt(name, dom, res, body1, body2)
+  joint create name=${name} type=ball position=${dom}:${res}:CA  \
+     color=[0 0 0] msize=0.15 shading=color show=true            \
+     bodies={ ${body1} ${body2} }
+end macro
+
+# define spring potential macro
+#------------------------------
+macro createPotential(name, b1, b2, lj, atoms, color)
+simulation ${name}rsim add interaction=${name}${b1}${b2}Springs  \
+   type=spring ljspring=${lj} atom_names={${atoms}}              \
+   force_const=${pot_k}                                          \
+   bodies={${name}${b1}Body ${name}${b2}Body}                    \
+   cutoff=${pot_cutoff} time={0.0 ${pot_t}}                      \
+   map_energy=false map_scale={ ${emin} ${emax} }                \
+   color=${color} show=false
+end macro
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read myosin v dimer model
+#--------------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+#-----------------------------------------------------------#
+#                    create simulations                     #
+#-----------------------------------------------------------#
+
+for i=1:3
+
+# create rigid domains
+#--------------------
+domain create m${i}Iq1=AC[766-788]
+domain create m${i}Iq2=BC[788-814]
+domain create m${i}Iq3=DC[814-836]
+domain create m${i}Iq4=EC[836-862]
+domain m${i}Iq1 backbone color=[0.5 0.5 0.5] width=1 show=true
+domain m${i}Iq2 backbone color=[0.5 0.5 0.5] width=1 show=true
+domain m${i}Iq3 backbone color=[0.5 0.5 0.5] width=1 show=true
+domain m${i}Iq4 backbone color=[0.5 0.5 0.5] width=1 show=true
+
+# create rigid bodies and joints
+#-------------------------------
+body create type=rigid domain_prefix=m${i}
+body create name=m${i}ground type=ground
+
+joint create name=m${i}groundJnt type=weld position=m${i}Iq1:C[768]:CA \
+   bodies={m${i}ground m${i}Iq1Body}                              \
+   color=[0.5 0.5 0.5] msize=0.2 show=true      
+
+crJnt(m${i}Iq1Iq2Jnt, m${i}Iq2, C[788], m${i}Iq1Body, m${i}Iq2Body)
+crJnt(m${i}Iq2Iq3Jnt, m${i}Iq3, C[814], m${i}Iq2Body, m${i}Iq3Body)
+crJnt(m${i}Iq3Iq4Jnt, m${i}Iq4, C[836], m${i}Iq3Body, m${i}Iq4Body)
+
+# create simulation
+#------------------
+simulation create name=m${i}rsim type=rigid
+simulation m${i}rsim solver=ode
+simulation m${i}rsim add bodies=prefix prefix=m${i}
+simulation m${i}rsim add body=m${i}ground
+simulation m${i}rsim add joints=prefix prefix=m${i}
+
+# add force
+#----------
+force create name=m${i}force \
+   type=explicit global_frame=true point=m${i}Iq4:E[2]:CA  direction=[-4 0 0 ]
+#simulation m${i}rsim add force=m${i}force body=m${i}Iq4Body time={0 100}
+
+force create name=m${i}rforce4             \
+   type=random mean=0.0 sd=4.0 seed=147321 \
+   scale=1.0
+simulation m${i}rsim add force=m${i}rforce4 body=m${i}Iq4Body time={ 0 inf}
+
+force create name=m${i}rforce3             \
+   type=random mean=0.0 sd=4.0 seed=147321 \
+   scale=1.0
+simulation m${i}rsim add force=m${i}rforce3 body=m${i}Iq3Body time={ 0 inf}
+
+simulation m${i}rsim initialize
+simulation m${i}rsim time step=0.01
+simulation m${i}rsim damping=on    
+simulation m${i}rsim state save_frequency=10
+#simulation m${i}rsim write energy=true file_name=m${i}rsim_ljspring
+
+end for
+
+#-----------------------------------------------------------#
+#                    create potentials                      #
+#-----------------------------------------------------------#
+variable map_energy=true
+variable emin=1.0
+variable emax=4.0
+variable pot_t=inf
+variable pot_show=true
+variable pot_cutoff=1.0
+variable pot_k=35.0
+
+createPotential(m1, Iq1, Iq2, false, CA, [0.5 0 0])
+createPotential(m1, Iq2, Iq3, false, CA, [0.5 0 0])
+createPotential(m1, Iq3, Iq4, false, CA, [0.5 0 0])
+
+createPotential(m2, Iq1, Iq2, true, sc, [0 0.5 0])
+createPotential(m2, Iq2, Iq3, true, sc, [0 0.5 0])
+createPotential(m2, Iq3, Iq4, true, sc, [0 0.5 0])
+
+createPotential(m3, Iq1, Iq2, true, all, [0 0 0.5])
+createPotential(m3, Iq2, Iq3, true, all, [0 0 0.5])
+createPotential(m3, Iq3, Iq4, true, all, [0 0 0.5])
+
+# add traces
+#------------
+simulation m1rsim add trace name=m1trace                \
+   global_frame=true point=m1Iq4:C[862] body=m1Iq4Body  \
+   color=[1 0 0] width=2 show=true
+
+simulation m2rsim add trace name=m2trace                \
+   global_frame=true point=m2Iq4:C[862] body=m2Iq4Body  \
+   color=[0 0.7 0] width=2 show=true
+
+simulation m3rsim add trace name=m3trace                 \
+   global_frame=true point=m3Iq4:C[862] body=m3Iq4Body   \
+   color=[0 0 1] width=2 show=true
+
+#simulation m1rsim print joints=true
+
+# print interactions
+#-------------------
+simulation m1rsim interactions print
+simulation m2rsim interactions print
+simulation m3rsim interactions print
+
+simulation step 1000000
+
+
+graphics background color=[1 1 1]
+

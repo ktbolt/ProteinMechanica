@@ -1,0 +1,111 @@
+
+#============================================================#
+#          test rigid body simulation of a helix             #
+#                                                            #
+# define rigid bodies for peptide plane and sidechains.      #
+#                                                            #
+# use multibody command.                                     #
+#                                                            #
+# use ball joints                                            #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+#units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1  format=pdb  file=../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name=m1   database=db1
+
+# create helix domain
+#--------------------
+domain create helix1=C[766-770]
+domain helix1 backbone color=[1 0 0] width=1 show
+
+domain create mhelix=C[770-800]
+
+domain create helix2=C[800-813]
+domain helix2 backbone color=[1 0 1] width=3 show
+domain helix2 bonds atoms=true atom_color=[1 0 1] render=line show=true
+
+#--------------------------------------------------------------#
+#                 create kinematic chain                       #
+#--------------------------------------------------------------#
+#multibody create name=kc domain=mhelix type=kinematic_chain 
+multibody create name=kc domain=mhelix type=kinematic_chain last=peptide
+
+
+# add ground body and joint
+#--------------------------
+body create  name=ground  type=ground
+body create  name=helix1Body type=rigid  domain=helix1
+body create  name=helix2Body type=rigid  domain=helix2
+
+#joint create  name=groundJnt  type=weld  domain=helix1 res=C[766] 
+#joint groundJnt color=[1 1 1] msize=0.01 shading=color show=true
+#joint groundJnt bodies={ground  helix1Body}
+
+# connect chain to helix2
+#------------------------
+joint create name=helix3Jnt type=hinge position=helix2:C[800]:CA   \
+   use_bond=true bond={kcPt30:C[799]:CA  helix2:C[800]:C}
+joint helix3Jnt color=[1 1 1] msize=0.01 shading=flat show=true
+joint helix3Jnt bodies={kcPtBody30 helix2Body}
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+
+# set solver
+#-----------
+simulation rsim solver=ode
+
+# add forces
+#-----------
+force create  name=force1             \
+              type=explicit           \
+              point=[ 0 0 0 ]         \
+              global_frame=false      \
+              direction=[ 2 0 0 ]     \
+              scale=1.0
+
+simulation rsim add force=force1     \
+                    body=helix2Body  \
+                    time={ 0 1000 }
+
+
+#--------------------------------------------------------------#
+#                 add spring potentials                        #
+#--------------------------------------------------------------#
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+simulation rsim momentum=on
+#simulation  state  save_frequency=10
+
+simulation rsim  add trace  name=trace1  color=[ 1 0 1 ]  \
+           global_frame=true    \
+           point=helix2:C[813]  \
+           body=helix2Body  show=true
+
+#----------------------------
+# print body masses         |
+#----------------------------
+#body  d1b  print  properties=mass
+#body  d2b  print  properties=mass
+
+
+graphics  center  point=[2.66377 4.32 3.00584]

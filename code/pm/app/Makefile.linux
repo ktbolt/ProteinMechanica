@@ -1,0 +1,29 @@
+
+SHELL = /usr/bin/sh
+
+src = main.cpp 
+obj = $(src:.cpp=.o) 
+
+# define include dirs
+#--------------------
+pm_dir = ../src/
+inc = -I$(pm_dir)  -I../include   -I../../common/include
+
+# objects
+#--------
+odeobj = ../../ode/ode-0.9_win32//ode/src/*.o
+grobj = ../../gr++/src/*.o
+comobj = ../../common/src/*.o
+pmobj = ../src/*.o
+
+copt = -O2
+flags = $(inc) $(copt) 
+
+obj: $(obj) 
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

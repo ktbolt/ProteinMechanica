@@ -1,0 +1,107 @@
+
+#============================================================*
+#               test simulation of peptide planes            *
+#                                                            *
+# use ball sockets.                                          *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+database open name = db1  format = pdb  file = d1.pdb
+molecule read  name = m1   database = db1
+domain create d1 = A
+domain d1 bonds  atoms = true  atom_color = [ 1 0 0 ] \
+                 bond_color = [ 1 0 0 ] width = 3 show
+
+database open name = db2  format = pdb  file = d2.pdb
+molecule read  name = m2   database = db2
+domain create d2 = A
+domain d2 bonds  atoms = true  atom_color = [ 0 1 0 ] \
+                 bond_color = [ 0 1 0 ] width = 3 show
+
+database open name = db3  format = pdb  file = d3.pdb
+molecule read  name = m3   database = db3
+domain create d3 = A
+domain d3 bonds  atoms = true  atom_color = [ 0 1 1 ] \
+                 bond_color = [ 0 1 1 ] width = 3 show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = d1b  type = rigid   domain = d1
+body create  name = d2b  type = rigid   domain = d2
+body create  name = d3b  type = rigid   domain = d3
+body create  name = ground type = rigid   
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+joint create  name = jnt1  type = ball  domain = d2  res = A3 use = N
+joint jnt1 color = [ 0 1 0 ] msize = 0.01 shading = color show = true
+joint jnt1 bodies = { d1b d2b }
+
+joint create  name = jnt2  type = ball  domain = d2  res = A3 use = C
+joint jnt2 color = [ 0 1 0 ] msize = 0.01 shading = color show = true
+joint jnt2 bodies = { d2b d3b }
+
+joint create  name = jntg  type = ball position = [ 7.40445 3.79659 -1.34826 ] 
+joint jntg color = [ 0 1 0 ] msize = 0.01 shading = color show = true
+joint jntg bodies = { ground d1b }
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add bodies
+#-----------
+simulation rsim add body = d1b
+simulation rsim add body = d2b
+simulation rsim add body = d3b
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+
+# add forces
+#-----------
+force create  name = force1                           \
+              type = explicit                         \
+              global_frame = true                     \
+              point = [ 7.26779 3.98016 -1.21133 ]    \
+              direction = [  0  -0.2 0 ]              \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = d1b        \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+
+
+
+
+graphics center point = [ 7.32988 3.85811 -0.972 ]
+
+   
+
+
+

@@ -1,0 +1,23 @@
+
+# initialize the simulation
+#--------------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim state save_frequency=10
+simulation rsim write energy=true file_name=rsim
+
+# add forces
+#-----------
+force create name=force1     \
+   type=explicit             \
+   global_frame=true         \
+   point=rigorHead:C[620]:CA \
+   direction=[0 4 0 ]
+
+simulation rsim add force=force1 body=rigorHeadBody time={0 100}
+
+# run simulation for 500 time steps
+#----------------------------------
+simulation rsim step=500 
+
+

@@ -1,0 +1,21 @@
+#============================================================#
+# visualize myosin v in folded state: isosurface             #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = mV  format = pm  file = ../data/emd_1201.pm 
+
+
+# extract isosurface
+#-------------------
+grid  mV  isosurface  level = 0.5  show = true
+
+
+
+
+

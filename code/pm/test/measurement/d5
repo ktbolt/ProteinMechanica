@@ -1,0 +1,128 @@
+#============================================================#
+#               test vector creation                         #
+#                                                            #
+# add vectors using residue atoms.                           #
+#============================================================*
+
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = rdb  format = pdb  file = rhodamineB.pdb 
+
+# read molecule
+#--------------
+molecule read  name = m1   database = rdb   type = miscellaneous
+
+
+# create a some domains
+#----------------------
+domain create rhodamine = A
+domain rhodamine  bonds  atom_color = element  atoms = true  render = line  show = true
+
+domain create rhodamines = A
+domain rhodamines  bonds  atom_color = [ 0 1 0 ]  atoms = true  render = line  show = true
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground    type = ground
+body create  name = rhodamineBody   type = rigid   domain = rhodamine
+body create  name = rhodaminesBody  type = static  domain = rhodamines
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+# joint 1
+#--------
+joint create  name = 1  type = ball  position = rhodamine:A[201]:C23 
+joint 1 color = [ 1 0 0 ] msize = 0.01 shading = color show = true
+joint 1 bodies = { ground rhodamineBody }
+
+joint create  name = 2  type = ball  position = rhodamines:A[201]:C25 
+joint 2 color = [ 1 0 0 ] msize = 0.01 shading = color show = true
+joint 2 bodies = { ground rhodamineBody }
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+
+# add bodies
+#-----------
+simulation rsim add body = rhodamineBody
+simulation rsim add body = rhodaminesBody
+simulation rsim add body = ground         
+simulation rsim add joint = 1 
+simulation rsim add joint = 2 
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create  name = force1         \
+              type = explicit         \
+              point = [ 0 0 0 ]    \
+              direction = [ 0.2 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1       \
+                    body = rhodamineBody \
+                    time = { 0 1000 }
+
+
+
+#--------------------------------------------#
+# add vectors using atoms of a residue       #
+#--------------------------------------------#
+
+vector create  name = vec1           \  
+       point1 = rhodamine:A[201]:C9  \ 
+       point2 = rhodamine:A[201]:C8  \ 
+       point3 = rhodamine:A[201]:C2  \ 
+       color = [ 1 0 1 ]             \
+       scale = 1.0                   \
+       show = true
+simulation rsim add geometry = vec1  body = rhodamineBody
+
+vector create  name = vec2           \
+       point1 = rhodamines:A[201]:N1  \
+       point2 = rhodamines:A[201]:N2  \
+       color = [ 1 1 0 ]             \
+       scale = 1.0                   \
+       show = true
+simulation rsim add geometry = vec2  body = rhodaminesBody
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.02 
+simulation  rsim  momentum = on 
+
+
+# add a measurement
+#------------------
+measurement  create  name = vang1   type = angle    \
+             vector1 = vec1   body1 = rhodamineBody \
+             vector2 = vec2   body2 = rhodaminesBody 
+
+simulation rsim add measurement = vang1
+simulation rsim  write  measurement = vang1  print = true  file_name = vang1
+

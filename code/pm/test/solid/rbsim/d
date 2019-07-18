@@ -1,0 +1,150 @@
+
+#============================================================*
+#            test simulation of cylinders from domain        *
+#                                                            *
+# allign cylinders with previous one.                        *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains 
+#---------------
+domain create hc = C
+# translate domain so that ground joint will be (0,0,0)
+domain hc  xform translation = [ 0.15334 -0.208601 -0.332707 ]
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 1 show
+
+# create cylinder
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[762-780]           \
+              atoms = { CA }                \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl2  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[780-796]           \
+              atoms = { CA }                \
+              allign = cyl1                 \
+              color = [ 0 1 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl3  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[796-814]           \
+              atoms = { CA }                \
+              allign = cyl2                 \
+              color = [ 1 1 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl4  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[814-832]           \
+              atoms = { CA }                \
+              allign = cyl3                 \
+              color = [ 0 1 1 ]             \
+              display = line                \
+              show = true
+
+# create bodies                           
+#--------------
+body create  name = ground    type = ground
+body create  name = cyl1_body type = rigid  solid = cyl1
+body create  name = cyl2_body type = rigid  solid = cyl2
+body create  name = cyl3_body type = rigid  solid = cyl3
+body create  name = cyl4_body type = rigid  solid = cyl4
+
+
+# create joints
+#--------------
+
+joint create  name = jnt1  type = ball  cylinder = cyl1  distance = 0.0
+joint jnt1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt1 bodies = { ground cyl1_body }
+
+joint create  name = jnt2  type = ball cylinder = cyl1  distance = 1.0 
+joint jnt2 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+joint jnt2 bodies = { cyl1_body cyl2_body }
+
+joint create  name = jnt3  type = ball cylinder = cyl2  distance = 1.0 
+joint jnt3 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+joint jnt3 bodies = { cyl2_body cyl3_body }
+
+joint create  name = jnt4  type = ball  cylinder = cyl3  distance = 1.0 
+joint jnt4 color = [ 1 1 0 ] msize = 0.1 shading = color show = true
+joint jnt4 bodies = { cyl3_body cyl4_body }
+
+
+# create a rigid simulation  
+#--------------------------
+
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = cyl1_body
+simulation rsim add body = cyl2_body
+simulation rsim add body = cyl3_body
+simulation rsim add body = cyl4_body
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+simulation rsim add joint = jnt3
+simulation rsim add joint = jnt4
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 0 0 0 ]       \
+              direction = [ 1 0 0 ]   \
+              scale = 1.0        
+
+simulation rsim add force = force1    \
+                    body = cyl4_body  \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+# step simulation
+#----------------
+simulation rsim step = 100
+

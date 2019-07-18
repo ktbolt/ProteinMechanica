@@ -1,0 +1,107 @@
+#============================================================#
+# test torsion spring on two cyls                            #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+#units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create cylinder
+#----------------
+solid create name = c1  type = cylinder  radius = 0.2  length = 1.0 \
+             center = [ 0 0.5 0 ]  axis = [ 0 1 0 ]
+solid c1  color = [ 1 1 0 ]  display = line
+
+solid create name = c2  type = cylinder  radius = 0.2  length = 1.0 \
+             center = [ 0 1.5 0 ]  axis = [ 0 1 0 ]
+solid c2  color = [ 1 0 1 ]  display = line
+
+solid create name = c3  type = cylinder  radius = 0.2  length = 1.0 \
+             center = [ 0 2.5 0 ]  axis = [ 0 1 0 ]
+solid c3  color = [ 0 1 1 ]  display = line
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = c1b type = rigid  solid = c1
+body create  name = c2b type = rigid  solid = c2
+body create  name = c3b type = rigid  solid = c3
+
+
+# create joints
+#--------------
+joint create  name = jnt1  type = weld  cylinder = c1  distance = 0.0 \
+              axis = [ 0 0 1 ]
+#joint create  name = jnt1  type = ball  cylinder = c1  distance = 0.0
+joint jnt1 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt1 bodies = { ground c1b }
+
+joint create  name = jnt2  type = ball  cylinder = c2  distance = 0.0 \
+              axis = [ 0 0 1 ]
+joint jnt2 color = [ 0 1 0 ] msize = 0.05 shading = flat show = true
+joint jnt2 bodies = { c1b c2b }
+
+joint create  name = jnt3  type = ball  cylinder = c3  distance = 0.0 \
+              axis = [ 0 0 1 ]
+joint jnt3 color = [ 0 0 1 ] msize = 0.05 shading = flat show = true
+joint jnt3 bodies = { c2b c3b }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim momentum = on
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+
+
+# add joints
+#-----------
+simulation rsim add joints = all 
+
+
+# add forces
+#-----------
+variable pt = [ 0.2 0.5 0 ] 
+variable dir = [ 2 0 0 ] 
+
+#variable pt = [ 0 0.5 0 ] 
+#variable dir = [ 0.1 0 0 ] 
+
+force create  name = force1          \
+              type = explicit        \
+              point = ${pt}          \
+              direction = ${dir}     \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = c3b        \
+                    time = { 0 1.0 }
+
+simulation rsim add trace name = trace1    \
+                    point = [ 0 0.5 0 ]    \
+                    body = c3b 
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+
+simulation rsim damping = on     
+body c1b  damping = 0.1
+body c2b  damping = 0.1
+body c3b  damping = 0.1
+
+graphics  center  point = [0.196045 1.36253 0.0197997]
+

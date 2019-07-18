@@ -1,0 +1,24 @@
+#------------------------------------------------------#
+# execute simulation                                   #
+#------------------------------------------------------#
+
+# initialize the simulation
+#--------------------------
+simulation ${simulation_name} initialize
+simulation ${simulation_name} time step=0.001
+simulation state save_frequency=100
+
+# output simulation results
+#--------------------------
+simulation ${simulation_name} write energy=true file_name=${simulation_file_name}
+
+s 5000
+
+wait
+
+simulation ${simulation_name} write domains=true current=true \
+   file_name=${simulation_file_name}
+
+q
+
+

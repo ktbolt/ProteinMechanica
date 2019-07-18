@@ -1,0 +1,32 @@
+
+#============================================================*
+#               test domain fitting                          *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/two_necks.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-798]
+domain iq1 backbone color = [ 0.7 0 0 ] width = 2 show
+
+domain create iq2 = IJ[760-788]
+domain iq2 backbone color = [ 0 0.7 0 ] width = 2 show
+
+
+# fit iq1 to iq2
+#---------------
+
+domain iq1 fit  sequence = C[795-798]               \
+                destination = iq2                   \
+                destination_sequence = J[760-763]   \
+                atom_names = { CA }         
+
+#domain iq1 backbone name = fit color = [ 0.7 0 0.7 ] width = 3 show
+
+graphics background color = [ 1 1 1 ]
+

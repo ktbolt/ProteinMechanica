@@ -1,0 +1,34 @@
+
+#============================================================*
+#               test domain copying from xform               *
+#============================================================*
+
+# open pdb file
+#---------------
+database open name = neck_xform format = pdb file = ../data/neck_xform.pdb
+
+
+# read molecule
+#---------------
+molecule read database = neck_xform  name = m1 
+
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+
+
+# copy a domain
+#---------------
+domain iq2  xform   translation = [ 0 10 0 ]  copy = iq2_copy
+domain iq2_copy backbone color = [ 0 1 0 ] width = 1 show
+
+ 
+

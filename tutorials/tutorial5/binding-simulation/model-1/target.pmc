@@ -1,0 +1,34 @@
+#------------------------------------------------------#
+# define binding targets                               #
+#------------------------------------------------------#
+
+# read pps target structure
+#--------------------------
+molecule read name=structuresMol database=structuresDb model_name=${target1_name}
+domain create target1=C[2-770]
+domain target1 backbone color=[1 0.5 0.5] width=1 show=true
+
+# create static rigid body 
+#-------------------------
+body create type=static domain=target1 name=target1Body
+simulation ${simulation_name} add body=target1Body 
+
+# create restraints between free pps dimer head and target
+#----------------------------------------------------------
+variable rseq=[5-600]
+variable ramp=100
+variable rfc=1.0
+variable target_t=0
+
+domain target1          define region=target1Rgn residues=C${rseq} atom_names={CA}
+domain ${binding_head1} define region=pps1Rgn    residues=J${rseq} atom_names={CA}
+
+simulation ${simulation_name} add restraint=head1Target  \
+   type=all                                   \
+   body1=${binding_head1}Body region1=pps1Rgn \
+   body2=target1Body region2=target1Rgn       \
+   force_const=${rfc} distance=0.99999        \
+   ramp=${ramp}                               \
+   compute_energy=false                       \
+   show=true                                  \
+   time={${target_t} inf}

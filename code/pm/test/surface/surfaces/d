@@ -1,0 +1,31 @@
+
+#============================================================*
+#             test surface read, display and props comp      *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read surfaces
+#--------------
+surface read  name = camA   format = pm  file = iq1_surf.pm  
+surface camA  color = [ 1 0 0]  display = line  show 
+
+
+# create bodies  
+#--------------
+body create  name = camA_body  type = rigid   surface = camA 
+
+
+#  create a course-grained model  
+#-------------------------------
+
+model create name = model_1
+
+# add bodies
+#-----------
+model model_1 add body = camA_body
+model model_1 bodies msize = 0.5 show = true
+

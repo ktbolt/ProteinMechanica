@@ -1,0 +1,35 @@
+#------------------------------------------------------#
+# define springs between side chain atoms.             #
+#------------------------------------------------------#
+variable map_energy3=true
+variable emin3=0.0
+variable emax3=1.0
+
+variable cutoff3=0.6
+variable pot_k3=1.0
+variable pot_cak3=100.0
+variable pot_t3=inf
+variable pot_show3=true
+
+#variable spring_atoms3=atom_names={CA}
+variable spring_atoms3=atom_names={sc}
+
+simulation rsim3 add interaction=a3Spings               \
+   type=spring  force_const=${pot_k3}  ${spring_atoms3} \
+   association=full                                     \
+   ljspring=true                                        \
+   bodies={a3b1Body a3b2Body a3b3Body a3b4Body a3b5Body a3b6Body a3b7Body a3b8Body \
+           a3b9Body a3b10Body a3b11Body a3b12Body } \ 
+   cutoff=${cutoff3} time={0.0 ${pot_t3}}           \
+   map_energy=true  map_scale={ ${emin3} ${emax3} } \
+   color=[0 0 0] show=true
+
+simulation rsim3 add interaction=a3CaSpings               \
+   type=spring  force_const=${pot_cak3}  atom_names={CA}  \
+   bodies={a3b1Body a3b2Body a3b3Body a3b4Body a3b5Body a3b6Body a3b7Body a3b8Body \
+           a3b9Body a3b10Body a3b11Body a3b12Body }  \
+   cutoff=${cutoff3} time={0.0 ${pot_t3}}            \
+   map_energy=true   map_scale={ ${emin3} ${emax3} } \
+   color=[1 1 0] width=2 show=true
+
+

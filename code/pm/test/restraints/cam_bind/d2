@@ -1,0 +1,260 @@
+
+#============================================================*
+#               test restraints                              *
+#                                                            *
+# rebind  nlobe of cam.                                      *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#---------------
+database open name = bneck format = pdb  file = ../../data/1M45.pdb                
+molecule read  name = m2   database = bneck
+domain create bound = AB
+
+
+# open pdb file
+#---------------
+database open name = neck format = pdb  file = ../../data/1M46.pdb                
+
+# read molecule
+#---------------
+molecule read  name = m1   database = neck
+molecule m1  xform transaltion = [ -2.01791 -3.05832 -0.54274 ] 
+domain create hc = A
+
+
+# show all helices
+#-----------------
+#domains  create  helices = true  prefix = h color = [ 1 0 0 ] \ width = 5
+
+# show all sheets
+#----------------
+#domains  create  sheets = true  prefix = sh color = [ 0 1 1 ]  width = 8
+
+# create helix domains
+#---------------------
+domain create h1 = A[3-15]
+domain h1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h2 = A[26-34]
+domain h2 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h3 = A[39-49]
+domain h3 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h4 = A[50-55]
+domain h4 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h5 = A[61-71]
+domain h5 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h6 = A[71-78]
+domain h6 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create h7 = A[82-92]
+domain h7 backbone color = [ 1 0 0 ] width = 2 show
+
+# create sheet domains
+#---------------------
+domain create sh = A[21-23,58-60]
+domain sh backbone color = [ 0 1 1 ] width = 2 show
+
+# create loop domains
+#--------------------
+domain create loop1 = A[15-21]
+domain loop1 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop2 = A[23-26]
+domain loop2 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop3 = A[34-39]
+domain loop3 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop4 = A[49-50]
+domain loop4 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop5 = A[55-58]
+domain loop5 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop6 = A[60-61]
+domain loop6 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create loop7 = A[78-82]
+domain loop7 backbone color = [ 0 1 0 ] width = 2 show
+
+
+# create cam domains
+#--------------------
+domain create camClobe = A[82-148]
+#domain create camClobe = A[100-148]
+domain camClobe backbone color = [ 1 1 0 ] width = 2 show
+
+# create iq domain
+#--------------------
+domain create iq = B
+domain iq backbone color = [ 0.6 0.6 0.6 ] width = 2 show
+
+
+# fit bound cam model
+#--------------------
+domain bound fit  sequence = B[814-817]             \
+                destination = iq                   \
+                destination_sequence = B[862-865]   \
+                atom_names = { O C CA }
+#domain bound backbone name = fit color = [ 1 1 1 ] width = 2 show
+domain bound backbone color = [ 1 0.7 0.7 ] width = 2 show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground  type = ground
+body create  name = h1Body  type = rigid  domain = h1
+body create  name = h2Body  type = rigid  domain = h2
+body create  name = h3Body  type = rigid  domain = h3
+body create  name = h4Body  type = rigid  domain = h4
+body create  name = h5Body  type = rigid  domain = h5
+body create  name = h6Body  type = rigid  domain = h6
+body create  name = h7Body  type = rigid  domain = h7
+
+body create  name = l1Body  type = rigid  domain = loop1
+body create  name = l2Body  type = rigid  domain = loop2
+body create  name = l3Body  type = rigid  domain = loop3
+body create  name = l4Body  type = rigid  domain = loop4
+body create  name = l5Body  type = rigid  domain = loop5
+body create  name = l6Body  type = rigid  domain = loop6
+body create  name = l7Body  type = rigid  domain = loop7
+
+body create  name = shBody  type = rigid  domain = sh
+
+body create  name = camClobeBody  type = rigid  domain = camClobe
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+joint  create  name = groundJnt  type = weld   position = [ 0 0 0 ] 
+joint groundJnt bodies = { ground camClobeBody }
+
+joint  create  name = h1L1Jnt  type = ball   domain = hc  res = A[15]  use = CA
+joint h1L1Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint h1L1Jnt bodies = { h1Body l1Body }
+
+joint  create  name = L1ShJnt  type = ball   domain = hc  res = A[21]  use = CA
+joint L1ShJnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L1ShJnt bodies = { l1Body shBody }
+
+joint  create  name = ShL2Jnt  type = ball   domain = hc  res = A[23]  use = CA
+joint ShL2Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint ShL2Jnt bodies = { shBody l2Body }
+
+joint  create  name = L2H2Jnt  type = ball   domain = hc  res = A[26]  use = CA
+joint L2H2Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L2H2Jnt bodies = { l2Body h2Body }
+
+joint create  name = H2L3Jnt  type = ball   domain = hc  res = A[34]  use = CA
+joint H2L3Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H2L3Jnt bodies = { h2Body l3Body }
+
+joint create  name = L3H3Jnt  type = ball   domain = hc  res = A[39]  use = CA
+joint L3H3Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L3H3Jnt bodies = { l3Body h3Body }
+
+joint create  name = H3L4Jnt  type = ball   domain = hc  res = A[49]  use = CA
+joint H3L4Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H3L4Jnt bodies = { h3Body l4Body }
+
+joint create  name = L4H4Jnt  type = ball   domain = hc  res = A[50]  use = CA
+joint L4H4Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L4H4Jnt bodies = { l4Body h4Body }
+
+joint create  name = H4L5Jnt  type = ball   domain = hc  res = A[55]  use = CA
+joint H4L5Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H4L5Jnt bodies = { h4Body l5Body }
+
+joint create  name = L5SHJnt  type = ball   domain = hc  res = A[58]  use = CA
+joint L5SHJnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L5SHJnt bodies = { l5Body shBody }
+
+joint create  name = SHL6Jnt  type = ball   domain = hc  res = A[60]  use = CA
+joint SHL6Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint SHL6Jnt bodies = { shBody l6Body }
+
+joint create  name = L6H5Jnt  type = ball   domain = hc  res = A[61]  use = CA
+joint L6H5Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L6H5Jnt bodies = { l6Body h5Body }
+
+joint create  name = H5H6Jnt  type = ball   domain = hc  res = A[71]  use = CA
+joint H5H6Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H5H6Jnt bodies = { h5Body h6Body }
+
+joint create  name = H6L7Jnt  type = ball   domain = hc  res = A[78]  use = CA
+joint H6L7Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H6L7Jnt bodies = { h6Body l7Body }
+
+joint create  name = L7H7Jnt  type = ball   domain = hc  res = A[82]  use = CA
+joint L7H7Jnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint L7H7Jnt bodies = { l7Body h7Body }
+
+joint create  name = H7CamJnt  type = ball   domain = hc  res = A[92]  use = CA
+joint H7CamJnt color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint H7CamJnt bodies = { l7Body camClobeBody }
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground h1Body h2Body h3Body h4Body h5Body h6Body \
+                               h7Body l1Body l2Body l3Body l4Body l5Body l6Body \
+                               l7Body shBody camClobeBody }
+
+
+
+# add joints
+#-----------
+simulation rsim add joints = { groundJnt h1L1Jnt  L1ShJnt ShL2Jnt L2H2Jnt H2L3Jnt \
+                               L3H3Jnt H3L4Jnt L4H4Jnt H4L5Jnt L5SHJnt SHL6Jnt \
+                               L6H5Jnt H5H6Jnt H6L7Jnt L7H7Jnt H7CamJnt }
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 1 0 0 ]   \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = h1Body     \
+                    time = { 0 20 }
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# A multibody model based on protein secondary structure.    #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=headDb  format=pdb  file=1W7I.pdb
+
+# read molecule
+#--------------
+molecule read  name=headMol   database=headDb
+molecule headMol print 
+
+# create head domain
+#-------------------
+domain create head=A[2-780]
+domain head backbone color=[ 0.6 0.6 0.6 ] width=1 show=true
+
+# create multibody
+#-----------------
+domain create headModel1=A[60-381]
+multibody  create  name=headMb1  domain=headModel1  type=secondary_structure \
+                   width=3  msize=0.05  joint_color=[1 1 0]
+
+
+# rotate scene for a better view
+#-------------------------------
+graphics  rotate=[ 90 0 20 ]
+
+
+

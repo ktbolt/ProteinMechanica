@@ -1,0 +1,69 @@
+#============================================================*
+#               test reading 2nd structure                   *
+#                                                            *
+# create multibody from secondary strucutre.                 *
+#============================================================*
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/1W7I.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1  
+
+# create a some domains
+#-------------------
+domain create head = A[2-780]
+#domain head backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+
+
+# create multibody
+#-----------------
+domain create headModel_1 = A[60-381]
+multibody  create  name=hm1b  domain=headModel_1  type=secondary_structure 
+
+domain create headModel_2 = A[386-594]
+multibody  create  name=hm2b  domain=headModel_2  type=secondary_structure 
+
+domain create headModel_3 = A[632-792]
+multibody  create  name=hm2b  domain=headModel_3  type=secondary_structure 
+
+body create  name=ground    type=ground
+
+joint create  name = groundJnt  type = ball domain = hm1b_helix1  res = A[65] use = CA
+joint groundJnt color = [ 1 1 1 ] msize = 0.02 shading = color show = true
+joint groundJnt bodies = { ground hm1b_helix1Body }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name = rsim  type = rigid
+simulation rsim add bodies = all
+simulation rsim add joints = all
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force2             \
+   type=explicit  point = [ 0 0 0 ] direction = [ 0 0 10.2 ]  \
+   scale = 1.0
+
+simulation rsim add force=force2  body=hm1b_loop7Body \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.01
+
+

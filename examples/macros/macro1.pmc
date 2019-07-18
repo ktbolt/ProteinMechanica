@@ -1,0 +1,28 @@
+#============================================================#
+# define macro for creating domains.                         #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# define macro
+#-------------
+
+macro createDomain(name, seq, color)
+  domain create ${name} = C[${seq}]
+  domain ${name} backbone color = ${color}  width = 2 show
+end macro
+
+# create a some domains
+#----------------------
+createDomain(d1, 760-770, [1 0 0])
+createDomain(d2, 770-780, [0 1 0])
+createDomain(d3, 780-790, [0 1 1])
+createDomain(d4, 790-800, [1 1 0])
+
+

@@ -1,0 +1,29 @@
+#============================================================#
+# create an ellipsoid                                        #
+#============================================================#
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+solid create  name = ellpisoid1  type = ellipsoid      \
+              center =[ 0.0 0.0 0.0]                   \
+              radius1 = 0.3  axis1 = [1 0 0]           \
+              radius2 = 0.6  axis2 = [0 1 0]           \
+              radius3 = 0.3  axis3 = [0 0 1]           \
+              color = [ 1 0 0 ]                        \
+              shading = flat                           \
+              show = true
+
+solid create  name = ellpisoid2  type = ellipsoid      \
+              center =[ 0.0 1.2 0.0]                   \
+              radius1 = 0.3  axis1 = [1 0 0]           \
+              radius2 = 0.6  axis2 = [0 1 0]           \
+              radius3 = 0.3  axis3 = [0 0 1]           \
+              color = [ 1 1 0 ]                        \
+              shading = flat                           \
+              show = true
+
+
+

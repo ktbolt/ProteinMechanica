@@ -1,0 +1,15 @@
+Tue Dec  2 16:21:29 PST 2008
+----------------------------
+
+  test spring potential.
+
+
+1)  d1 script 
+
+    two bodies connected by a ball joint with spring potential defined around joint. 
+
+    use springs on all atoms.
+
+    output strain.
+
+

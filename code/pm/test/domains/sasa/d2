@@ -1,0 +1,24 @@
+
+#============================================================*
+#               show surface                                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = t.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+molecule m1  xform  rotation = [ 45  15  -60 ]
+
+# create a some domains
+domain create d1 = C[760-815]
+domain d1 surface read format = pm file = t_surf.pm
+domain d1 surface color = [ 1 0 0 ] render = color  show
+
+graphics background color = [ 1 1 1 ]
+
+

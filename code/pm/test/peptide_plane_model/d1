@@ -1,0 +1,59 @@
+
+#============================================================*
+#               test simulation of peptide planes            *
+#                                                            *
+#                                                            *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.01   \
+              point1 =[ 0.222053 1.188089 1.121011 ] \
+              point2 =[ 0.211113 1.102048 1.041949 ] \
+              color = [ 1 0 0 ] \
+              show = true
+
+solid create  name = cyl2  type = cylinder  \
+              radius = 0.01   \
+              point1 =[ 0.211113 1.102048 1.041949 ] \
+              point2 =[ 0.076120 1.088825 0.963005 ] \
+              color = [ 0 1 0 ] \
+              show = true
+
+solid create  name = cyl3  type = cylinder  \
+              radius = 0.01   \
+              point1 =[ 0.076120 1.088825 0.963005 ] \
+              point2 =[ 0.099871 1.046291 0.808211 ] \
+              color = [ 1 1 0 ] \
+              show = true
+   
+solid create  name = cyl4  type = cylinder  \
+              radius = 0.01   \
+              point1 =[ 0.099871 1.046291 0.808211 ] \
+              point2 =[ 0.169011 1.134784 0.729881 ] \
+              color = [ 0 1 1 ] \
+              show = true
+
+solid create  name = cyl5  type = cylinder  \
+              radius = 0.01   \
+              point2 =[ 0.169011 1.134784 0.729881 ] \
+              point1 =[ 0.099871 1.046291 0.808211 ] \
+              color = [ 0 1 1 ] \
+              show = true
+   
+   
+   
+   
+
+#solid create  name = cyl4  type = cylinder  \
+              radius = 0.1   \
+              point1 =[ ] \
+              point2 =[ ] \
+              color = [ 1 1 0 ] \
+              show = true
+
+
+

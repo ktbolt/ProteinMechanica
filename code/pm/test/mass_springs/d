@@ -1,0 +1,118 @@
+#============================================================*
+#                     test mass spring with spheres          *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 100.0
+
+
+# create two spheres
+#-------------------
+solid create  name = sp1  type = sphere radius = 0.4 center = [ 0.0 0.0 0.0 ] 
+solid create  name = sp2  type = sphere radius = 0.8  center = [ 10.0 0.0 0.0 ] 
+
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = sp1b  type = static solid = sp1
+body create  name = sp2b  type = rigid  solid = sp2
+
+body sp2b   damping = 0.1 
+
+
+#----- ground joint -----#
+joint create  name = groundJnt  type = ball  solid = sp1  
+joint groundJnt color = [ 1 1 1 ] msize = 0.08 shading = color show = true
+joint groundJnt bodies = { ground sp1b }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+simulation rsim add joints = all 
+
+
+# add potential 
+#--------------
+solid  sp1  define region = sp1Rgn   use_center = true
+solid  sp2  define region = sp2Rgn   use_center = true
+
+body sp1b  add potential_geometry = sp1Pot  region = sp1Rgn  \
+               geometry = points  color = [ 0 1 0 ]               \
+               show = true 
+
+body sp2b  add potential_geometry = sp2Pot  region = sp2Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               show = true 
+
+simulation rsim add interaction = sp1Sp2Pot  \
+   type = spring                             \          
+   force_const = 8.0  cutoff = 20.8          \
+   list = { sp1Rgn sp2Rgn }                  \
+   time = { 0.0 1000.0 }                     \
+   show = true
+
+
+# add forces
+#-----------
+force create  name = force1  type = explicit point = [ 0 0 0 ]       \
+              direction = [ -18 0 0 ]  scale = 1.0
+simulation rsim add force = force1   body = sp2b   time = { 0 4.0 }
+
+#force create  name = force2  type = explicit point = [ 0 0 0 ]       \
+              direction = [  8 0 0 ]  scale = 1.0
+#simulation rsim add force = force2   body = sp2b   time = { 0 4.0 }
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.004
+#simulation rsim time step = 0.002
+#simulation  state  save_frequency = 10
+
+#simulation rsim momentum = on
+simulation rsim momentum = off
+#simulation rsim damping = on
+
+
+# add trace
+#----------
+simulation rsim  add trace  name = trace1  color = [ 1 1 0 ]  \
+           global_frame = false   point = [ 0 0 0 ]           \
+           body = sp2b  show = true
+
+
+# write energy 
+#-------------
+simulation  rsim  write  energy = true  file_name = rsim
+simulation  rsim  write  strain = true  file_name = rsim_strain
+simulation  rsim  write  kinetic_energy = true  file_name = rsim_ke
+simulation  rsim  write  trace = trace1  file_name = rsim_trace
+
+
+# print body masses
+#------------------
+#body  sp1b  print  properties = mass
+body  sp2b  print  properties = mass
+
+
+
+

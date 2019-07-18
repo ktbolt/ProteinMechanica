@@ -1,0 +1,98 @@
+#============================================================#
+# linear explicit force.                                     #
+#============================================================#
+
+# set units
+#---------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck format=pdb  file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=m1   database=neck
+
+# create a some domains
+#----------------------
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+
+# domain for creating joints
+#---------------------------
+domain create hc=C
+
+# create bodies
+#--------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add force at center of mass
+#----------------------------
+force create  name=force1  type=explicit    \
+      point=[ 0 0 0 ] direction=[ 4 0 0 ]  show=true
+simulation rsim add force=force1  body=iq2Body  time={ 0 1000 }
+
+# add force at residue C835
+#--------------------------
+force create  name=force2  type=explicit                             \
+      global_frame=true  point=iq3:C[835]:CA  direction=[ 0 2 0 ]  \
+      color=[ 1 1 0] show=true
+simulation rsim add force=force2  body=iq3Body  time={ 0 1000 }
+
+# add force at center of N-term lobe
+#-----------------------------------
+force create  name=force3  type=explicit                            \
+      global_frame=true  point=iq1:A[1-90]  direction=[ -2 0 0 ]  \
+      color=[ 0 1 0] show=true
+simulation rsim add force=force3  body=iq1Body  time={ 0 1000 }
+
+
+# add traces 
+#-----------
+simulation rsim  add trace  name=trace1  color=[ 1 0 0 ]  \
+           global_frame=true  point=iq1                   \
+           body=iq1Body   show=true
+
+simulation rsim  add trace  name=trace2  color=[ 0 1 0 ]  \
+           global_frame=true  point=iq2                   \
+           body=iq2Body   show=true
+
+simulation rsim  add trace  name=trace3  color=[ 0 0 1 ]  \
+           global_frame=true  point=iq3                   \
+           body=iq3Body   show=true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+
+
+# step simulation
+#----------------
+simulation rsim step=10000
+
+

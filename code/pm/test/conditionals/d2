@@ -1,0 +1,21 @@
+#============================================================#
+# test conditional variable                                  #
+#============================================================#
+#system echo=off
+#system verbose=false
+
+database open name=neck_xform format=pdb file=../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+domain create hc=C
+domain create cam=A
+
+variable v1 = 1.0 
+variable v2 = 1.0 
+
+variable echeck = (potential_energy < 1.0) & (step < 10000)
+#variable echeck = (potential_energy < ${v1})
+
+print ${echeck}
+
+
+

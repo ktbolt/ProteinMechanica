@@ -1,0 +1,31 @@
+
+#============================================================*
+#               output pdb                                   *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+molecule m1  xform  rotation = [ 45  15  -60 ]
+
+# create a some domains
+domain create helix = C[760-815]
+domain helix backbone color = [ 0.0 0.0 0.7 ] width = 3 show
+
+domain create camA = A
+domain camA backbone color = [ 0.7 0 0 ] width = 3 show
+
+domain create camB = B
+domain camB backbone color = [ 0 0.7 0 ] width = 3 show
+
+domains write atoms list = { helix camA camB }  file = t.pdb
+
+graphics background color = [ 1 1 1 ]
+
+

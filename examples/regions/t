@@ -1,0 +1,91 @@
+#============================================================#
+# use springs on all atoms.                                  #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck  format=pdb file= ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database=neck  name=m1  model=1  type=protein
+
+# create domains
+#---------------
+domain create hc=C
+
+domain create iq2=C[788-814]
+domain iq2 backbone color=[ 1 0 0 ] width=2 show=true
+domain iq2 bonds atoms=true atom_color=[0.6 0 0] bond_color=[0.6 0 0] show=true
+
+domain create iq3=C[814-836]
+domain iq3 backbone color=[ 0 1 0 ] width=2 show
+domain iq3 bonds atoms=true atom_color=[0 0.6 0] bond_color=[0 0.6 0] show=true
+
+# create bodies 
+#--------------
+body create name=ground   type=ground
+body create name=iq2_body type=rigid domain=iq2
+body create name=iq3_body type=rigid domain=iq3
+
+# create joints
+#--------------
+joint create  name=ground_jnt  type=weld  domain=hc    res=C[788]     use=CA \
+joint ground_jnt bodies={ ground iq2_body }
+
+joint create  name=jnt1  type=ball  domain=hc  res=C[814]  use=CA
+joint jnt1 bodies={ iq2_body iq3_body }
+joint jnt1 color=[ 0 0 1 ] msize=0.04 shading=color show=true 
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq2_body
+simulation rsim add body=iq3_body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# add spring potentials using the center of a sidechain as spring points
+#------------------------------------------------------------------------
+domain iq2 define region=iq2_rgn residues=C[814]  use_sidechains=true
+domain iq3 define region=iq3_rgn residues=C[815]  use_sidechains=true
+
+body iq2_body add potential_geometry=iq2_spring_h  \
+                  region=iq2_rgn                   \
+                  geometry=points                  \
+                  color=[1 1 1]                    \
+                  show=true 
+
+body iq3_body add potential_geometry=iq3_spring_h  \
+                  region=iq3_rgn                   \
+                  geometry=points                  \
+                  color=[1 1 1]                    \
+                  show=true  
+
+simulation rsim add interaction=hspring1  \
+   type=spring                            \
+   cutoff=1.2                             \
+   force_const=50.0                       \
+   list={iq2_spring_h iq3_spring_h}       \
+   show=true time={ 0.0 1000.0 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+
+

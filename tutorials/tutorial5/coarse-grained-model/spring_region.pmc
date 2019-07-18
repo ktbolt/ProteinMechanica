@@ -1,0 +1,120 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Choosing the Spring Potential Cutoff Value                #
+#-----------------------------------------------------------#
+#system echo=off
+#system verbose=false
+
+# define joint macro
+#-------------------
+macro crJnt(name, dom, res, body1, body2)
+  joint create name=${name} type=ball position=${dom}:${res}:CA  \
+     color=[0 0 0] msize=0.15 shading=color show=true            \
+     bodies={ ${body1} ${body2} }
+end macro
+
+# define spring potential macro
+#------------------------------
+macro createPotential(name, b1, b2, cutoff, color)
+simulation rsim add interaction=${name}${b1}${b2}Springs  \
+   type=spring atom_names={CA}  force_const=${pot_k}      \
+   bodies={${b1}Body ${b2}Body}                           \
+   cutoff=${cutoff} time={0.0 ${pot_t}}                   \
+   map_energy=true map_scale={ ${emin} ${emax} }          \
+   color=${color} show=true
+end macro
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read myosin v dimer model
+#--------------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+# create rigid domains
+#--------------------
+domain create Iq1=AC[766-788]
+domain create Iq2=BC[788-814]
+domain create Iq3=DC[814-836]
+domain create Iq4=EC[836-862]
+domain Iq1 backbone color=[0.5 0.0 0.0] width=2 show=true
+domain Iq2 backbone color=[0.0 0.5 0.0] width=2 show=true
+domain Iq3 backbone color=[0.7 0.5 0.0] width=2 show=true
+domain Iq4 backbone color=[0.0 0.5 0.5] width=2 show=true
+
+# create rigid bodies and joints
+#-------------------------------
+body create type=rigid domain_prefix=Iq
+body create name=ground type=ground
+
+joint create name=groundJnt type=weld position=Iq1:C[768]:CA \
+   bodies={ground Iq1Body}                              \
+   color=[0.5 0.5 0.5] msize=0.2 show=true      
+
+crJnt(Iq1Iq2Jnt, Iq2, C[788], Iq1Body, Iq2Body)
+crJnt(Iq2Iq3Jnt, Iq3, C[814], Iq2Body, Iq3Body)
+crJnt(Iq3Iq4Jnt, Iq4, C[836], Iq3Body, Iq4Body)
+
+# create simulation
+#------------------
+simulation create name=rsim type=rigid
+simulation rsim solver=ode
+simulation rsim add bodies=prefix prefix=Iq
+simulation rsim add body=ground
+simulation rsim add joints=prefix prefix=Iq
+simulation rsim add joint=groundJnt 
+
+# add force
+#----------
+force create name=force \
+   type=explicit global_frame=true point=Iq4:E[2]:CA  direction=[14 0 0 ]
+simulation rsim add force=force body=Iq4Body time={0 100}
+
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim state save_frequency=10
+
+# create potentials
+#------------------
+variable map_energy=true
+variable emin=1.0
+variable emax=4.0
+
+variable pot_k=35.0
+variable pot_t=inf
+variable pot_show=true
+
+ifdef ${regions}
+domain Iq3 define region=iq3Rgn residues=CD[9-22]   atom_names={CA}
+domain Iq4 define region=iq4Rgn residues=CE[87-93,95-116] atom_names={CA}
+
+body Iq3Body add potential_geometry=iq3Iq4Geom1  \
+   region=iq3Rgn geometry=points                 \
+   color=[1 0.6 0.6] show=true
+
+body Iq4Body add potential_geometry=iq3Iq4Geom2 \
+   region=iq4Rgn geometry=points                \
+   color=[0.6 0.6 0.6] show=true
+
+simulation rsim add interaction=iq3Iq4Springs    \
+   type=spring force_const=${pot_k} cutoff=1.0   \ 
+   list={iq3Iq4Geom1 iq3Iq4Geom2 }               \
+   map_energy=true map_scale={ ${emin} ${emax} } \
+   time={ 0 10000 } color=[1 1 0] show=true
+
+createPotential(m1, Iq1, Iq2, 1.0, [0 0.5 0])
+createPotential(m1, Iq2, Iq3, 1.0, [0 0.5 0])
+
+else
+createPotential(m1, Iq1, Iq2, 1.0, [0 0.5 0])
+createPotential(m1, Iq2, Iq3, 1.0, [0 0.5 0])
+createPotential(m1, Iq3, Iq4, 1.0, [0 0.5 0])
+end ifdef
+
+
+
+graphics background color=[1 1 1]
+

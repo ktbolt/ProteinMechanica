@@ -1,0 +1,30 @@
+#============================================================#
+#                  test variables                            #
+#============================================================#
+#system echo=off
+#system verbose=false
+
+# read molecule
+#--------------
+database open name= neck_xform  format=pdb file= ../data/neck_xform.pdb
+molecule read  database= neck_xform  name=m1  model=1  type=protein
+molecule m1 xform  rotation=[ 90  0 0 ]
+
+# define variables
+#-----------------
+variable iq2=BC[788-814]
+variable red=[ 1 0 0 ]
+variable green=[ 0 1 0 ]
+variable iq1=A
+variable width=2.0
+
+# create domains
+#---------------
+#domain create iq2=BC[788-814]
+domain create iq2=${iq2}
+domain iq2 backbone  color=${red}  width=2 show=true
+
+domain create iq1=${iq1} 
+domain iq1  backbone  color=${green}  width=${width} show=true
+
+

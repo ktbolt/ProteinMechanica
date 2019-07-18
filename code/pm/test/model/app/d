@@ -1,0 +1,67 @@
+
+###########################
+# test creating a model   #
+###########################
+
+# read molecule
+molecule read name = m1 format = pdb file = iq.pdb
+
+# create a some domains
+
+domain create iq1 = AC[762-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-813]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+
+# create bodies
+
+body create  name = ground   type = ground
+body create  name = 1        type = rigid   domain = iq1
+body create  name = 2        type = rigid   domain = iq2
+
+
+# create joints
+
+joint create            \
+      name = 1          \
+      type = ball       \
+      domain = iq1      \
+      res = C762        \
+      use = CA
+
+joint 1 color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+joint 1 bodies = { ground 1 }
+
+joint create            \
+      name = 2          \
+      type = pin        \
+      domain = iq1      \
+      res = C788        \
+      use = CA
+
+joint 2 color = [ 0 1 0 ] msize = 0.1 shading = flat display = line show = true 
+joint 2 bodies = { 1 2 }
+
+
+# create a course-grained model
+
+model create name = model_1
+
+# add joints
+model model_1 add joint = 1
+model model_1 add joint = 2
+
+# add bodies
+model model_1 add rigid body = 1
+model model_1 add rigid body = 2
+model model_1 add body = ground
+
+
+model model_1 joints msize = 0.5 show = true
+
+model model_1 bodies msize = 0.5 show = true
+
+
+

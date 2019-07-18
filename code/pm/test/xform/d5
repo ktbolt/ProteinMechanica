@@ -1,0 +1,42 @@
+#============================================================*
+#               test domain transformation                   *
+#                                                            *
+# rotate using pca.                                          *
+#============================================================*
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 1 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 1 show
+domain create iq2c = C[788-814]
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 1 0 1 ] width = 1 show
+
+domain create iq3C = C[814-836]
+domain iq3C pca  show=true 
+
+domain create iq3x = DC[814-836]
+
+
+# rotate about pca axis 1
+#------------------------
+domain iq3x xform  use_pca = true  pca_domain = iq2   \
+                   pca_res = C  atom_names = { CA }   \
+                   pca_axis = 1  angle = 45 
+
+domain iq3x backbone color = [ 1 1 0 ] width = 1 show
+
+
+

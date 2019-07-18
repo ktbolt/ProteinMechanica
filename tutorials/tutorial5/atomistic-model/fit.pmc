@@ -1,0 +1,49 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Neck Model                                   #
+#                                                           #
+# Test fiting models of IQ-pairs 1-2 and 3-4.               #
+#-----------------------------------------------------------#
+
+# read iq12 model
+#----------------
+database open name=iq12Db type=pdb file=../pdb_structures/iq12.pdb 
+molecule read name=iq12Mol database=iq12Db
+molecule iq12Mol print 
+molecule iq12Mol xform rotate=[0 120 -15] 
+
+domain create iq12C=C
+domain iq12C backbone color=[0.7 0 0] width=2 show=true
+domain create iq12B=B
+domain iq12B backbone color=[0.7 0.7 0] width=2 show=true
+
+domain create iq12_816=C[816]
+domain iq12_816 bonds atoms=true atom_color=[0.7 0 0] show=true 
+
+domain create iq12B_18=B[18]
+domain iq12B_18 bonds atoms=true atom_color=[0.7 0.7 0] show=true 
+
+# read iq34 model
+#----------------
+database open name=iq34Db type=pdb file=../pdb_structures/iq34.pdb 
+molecule read name=iq34Mol database=iq34Db
+molecule iq34Mol print 
+
+domain create iq34=C
+domain create iq34_816=C[816]
+
+# fit iq34 onto the end of iq12
+#------------------------------
+variable fs1=C[815-820]
+domain iq34 fit sequence=${fs1} \
+   destination=iq12C            \ 
+   destination_sequence=${fs1}  \
+   list={iq34_816}
+
+domain iq34 backbone color=[0 0.7 0] width=2 show=true
+domain iq34_816 bonds atoms=true atom_color=[0 0.7 0] show=true 
+
+

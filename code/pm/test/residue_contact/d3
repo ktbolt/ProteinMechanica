@@ -1,0 +1,34 @@
+
+#============================================================#
+#               test reading 2nd structure                   #
+#                                                            #
+# show topology.                                             #
+#============================================================#
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/1W7I.pdb
+
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1  
+
+# create a some domains
+#----------------------
+#domain create head = A[2-20]
+domain create head = A[2-780]
+domain head backbone color = [ 0.6 0 0 ] width = 3 show
+
+# show contact
+#-------------
+domain head contact  cutoff = 1.0  use_sidechains = true  show
+
+#graphics background color = [ 1 1 1 ]
+
+
+

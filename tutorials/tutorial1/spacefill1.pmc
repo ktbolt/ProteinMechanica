@@ -1,0 +1,32 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing domain atoms using the spacefilling method.    #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create neck domain
+#-------------------
+domain  create  neckHeavyChain=C  molecule=neckMol
+
+# copy domain twice
+#------------------
+domain neckHeavyChain  xform  translate=[ -5 0 0] copy=neckHeavyChain1 
+domain neckHeavyChain  xform  translate=[  5 0 0] copy=neckHeavyChain2 
+
+# visualize atoms using spacefill
+#--------------------------------
+domain neckHeavyChain1  atoms  color=element  show=true
+domain neckHeavyChain   atoms  color=[1 0 0]  show=true
+domain neckHeavyChain2  atoms  color=[0 1 0]  render=line  show=true
+
+ 
+

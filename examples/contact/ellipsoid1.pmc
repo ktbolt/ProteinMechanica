@@ -1,0 +1,172 @@
+#============================================================#
+# protein domain conact: ellipsoid-ellipsoid contact         # 
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck format=pdb file=../data/twoIq123.pdb 
+
+# read molecule
+#--------------
+molecule read database=neck name=m1 model=1 type=protein
+
+# create domains
+#---------------
+domain create hc=C
+domain hc  backbone  color=[ 0.6 0.6 0.6 ] width=2 show=true
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+
+domain create hcj=J
+domain hcj  backbone  color=[ 0.0 0.6 0.6 ] width=2 show=true
+domain create iq4=IJ[760-788]
+domain iq4 backbone color=[ 1 0 0.5 ] width=2 show=true
+domain create iq5=KJ[788-814]
+domain iq5 backbone color=[ 0 1 0.5 ] width=2 show=true
+domain create iq6=LJ[814-836]
+domain iq6 backbone color=[ 0.5 0 1 ] width=2 show=true
+
+# create bodies 
+#--------------
+# 1st group
+body create  name=ground    type=ground
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+# 2nd group
+body create  name=iq4Body  type=rigid   domain=iq4
+body create  name=iq5Body  type=rigid   domain=iq5
+body create  name=iq6Body  type=rigid   domain=iq6
+
+#body iq1Body  print  properties=mass 
+
+
+# create joints 
+#--------------
+# 1st group
+joint create  name=jnt1   type=ball position=hc:C[760]:CA \
+      bodies={ ground iq1Body }                              \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true  
+
+joint create  name=jnt2   type=ball  position=hc:C[788]:CA \
+      bodies={ iq1Body iq2Body }                             \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+joint create  name=jnt3   type=ball   position=hc:C[814]:CA \
+      bodies={ iq2Body iq3Body }                              \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true 
+
+# 2nd group
+joint create  name=jnt4   type=ball  position=hcj:J[760]:CA \
+      bodies={ ground iq4Body }                                \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+joint create  name=jnt5   type=ball    position=hcj:J[788]:CA \
+      bodies={ iq4Body iq5Body }                                \ 
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+joint create  name=jnt6   type=ball    position=hcj:J[814]:CA \
+      bodies={ iq5Body iq6Body }                                \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+simulation rsim add body=iq4Body
+simulation rsim add body=iq5Body
+simulation rsim add body=iq6Body
+
+
+# add joints
+#-----------
+simulation rsim add joint=jnt1
+simulation rsim add joint=jnt2
+simulation rsim add joint=jnt3
+simulation rsim add joint=jnt4
+simulation rsim add joint=jnt5
+simulation rsim add joint=jnt6
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             world_frame=true      \
+             point=iq3:C[835]      \
+             direction=[ 2 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=iq3Body   \
+                    time={ 0 2 }
+
+#------------------------#
+# add contact potentials #
+#------------------------#
+variable fs=100
+variable ds=line 
+#variable ds=solid 
+
+# define contact for c-term lobe of cam
+#---------------------------------------
+domain iq3 define region=iq3_rgn  residues=D[80-140]
+domain iq5 define region=iq5_rgn  residues=K[1-80]
+
+body iq3Body add potential_geometry=iq3_contact  \
+     geometry=ellipsoid region=iq3_rgn           \   
+     color=[1 0 0] display=${ds} show=true               
+
+body iq5Body add potential_geometry=iq5_contact \
+     geometry=ellipsoid  region=iq5_rgn         \
+     color=[0 1 0]  display=${ds} show=true                    
+
+simulation rsim add interaction=contact1   \
+     type=contact  strength=${fs}          \ 
+     list={iq3_contact iq5_contact}        \ 
+     time={ 0.0 10.0 }
+
+# define contact for n-term lobe of cam
+#---------------------------------------
+domain iq3 define region=iq3_rgn2  residues=D[1-80]
+domain iq5 define region=iq5_rgn   residues=K[1-80]
+
+body iq3Body add potential_geometry=iq3_contact2  \
+     geometry=ellipsoid  region=iq3_rgn2          \
+     color=[ 1 1 0 ]  display=${ds} show=true
+
+simulation rsim add interaction=contact2   \
+     type=contact  strength=${fs}          \ 
+     list={iq3_contact2 iq5_contact}       \ 
+     time={ 0.0 10.0 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+
+# step simulation
+#----------------
+simulation rsim step=1000
+

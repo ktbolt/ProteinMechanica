@@ -1,0 +1,47 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# Creating ball joints.                                      #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create a domain
+#----------------
+domain  create  iq1=C[760-788]
+domain  create  iq2=C[788-814]
+
+# visualize atoms
+#----------------
+domain  iq1  backbone  color=[1 0 0]  width=2  show=true
+domain  iq2  backbone  color=[0 1 0]  width=2  show=true
+
+# create rigid bodies  
+#--------------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+
+# create ball joints
+#-------------------
+joint  create  name=joint1  type=ball  position=iq1:C[788]:CA  \
+               bodies={ iq1Body iq2Body }                          \
+               color=[ 1 1 0] msize=0.05 display=line  show=true  
+
+
+# print information
+#------------------
+joint  joint1  print 
+
+# center view 
+#------------
+graphics  center  point=iq1:C[788]:CA
+
+
+

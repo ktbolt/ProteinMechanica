@@ -1,0 +1,38 @@
+#---------------------------------------------------------#
+#                makefile for cygwin mingw                #
+#---------------------------------------------------------#
+SHELL = /usr/bin/sh
+
+include pm_src.mk
+
+# ode path
+#---------
+ode_path = ../../ode/
+ode_libs = $(ode_path)/src/*.o
+ode_inc = $(ode_path)/include/
+
+# define include dirs
+#--------------------
+inc = -I.                    \
+      -I $(ode_inc)          \
+      -I../../gr/include     \
+      -I../include/          \
+      -I../../common/include/ 
+
+
+# special cywin flags for my pos computer
+#----------------------------------------
+cwf = -DUSE_CYGWIN_SPECIAL_HEADERS
+wflags = -mno-cygwin  -DWIN32
+
+copt = -O2
+flags = $(inc) $(copt) -DUSE_GRAPHICS   $(cwf)  $(wflags)
+
+obj: $(obj)
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

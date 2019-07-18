@@ -1,0 +1,31 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Reading and visualizing a protein structure.               #
+#                                                            #
+# Create three domains, each comprising a portion of chain C #
+# and a single calmodulin.                                   #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+
+# create three domains
+#---------------------
+domain  create  iq1=AC[760-788]   
+domain  create  iq2=BC[788-814]  
+domain  create  iq3=DC[814-836] 
+
+
+# visualize backbone atoms
+#-------------------------
+domain iq1 backbone color=[1 0 0] width=2  show=true
+domain iq2 backbone color=[0 1 0] width=2  show=true
+domain iq3 backbone color=[0 0 1] width=2  show=true
+
+

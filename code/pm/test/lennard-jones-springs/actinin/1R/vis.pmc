@@ -1,0 +1,44 @@
+#------------------------------------------------------#
+# vis model of 2R actinin                              #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=aactinin2R_xform.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+domain create actinin=A
+#domain actinin backbone color=[0.5 0.5 0.5] width=1
+
+domain create actinin1=A[748-882]
+domain actinin1 backbone color=[0.5 0.5 .5] width=1
+
+domain create a1d1=A[748-791]
+domain create a1d2=A[791-796]
+domain create a1d3=A[796-800]
+domain create a1d4=A[800-808]
+domain create a1d5=A[808-817]
+domain create a1d6=A[817-828]
+domain create a1d7=A[828-839]
+domain create a1d8=A[839-842]
+domain create a1d9=A[842-848]
+domain create a1d10=A[848-857]
+domain create a1d11=A[857-882]
+
+domain a1d1 backbone color=[1 0 0] width=2
+domain a1d2 backbone color=[0 1 0] width=2
+domain a1d3 backbone color=[1 0 0] width=2
+domain a1d4 backbone color=[0 1 0] width=2
+domain a1d5 backbone color=[1 0 0] width=2
+domain a1d6 backbone color=[0 1 0] width=2
+domain a1d7 backbone color=[1 0 0] width=2
+domain a1d8 backbone color=[0 1 0] width=2
+domain a1d9 backbone color=[1 0 0] width=2
+domain a1d10 backbone color=[0 1 0] width=2
+domain a1d11 backbone color=[1 0 0] width=2
+
+
+domain create actinin2=A[882-1010]
+domain actinin2 backbone color=[1 0.7 0] width=2
+

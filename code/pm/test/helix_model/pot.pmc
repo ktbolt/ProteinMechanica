@@ -1,0 +1,53 @@
+
+#============================================================#
+# add interaction spring potentials for sidechains           #
+#                                                            #
+# use cutoff = 1.0 nm                                        #
+#     force_const = 4.0                                      #
+#============================================================#
+
+domain d4  define region = d4r  residues = C[785]  use_sidechains = true
+domain d12 define region = d12r residues = C[789]  use_sidechains = true
+
+body d4b add potential_geometry = d4_spring1     \
+         region = d4r                   \
+         geometry = points              \
+         show = true
+
+body d12b add potential_geometry = d12_spring1     \
+         region = d12r                   \
+         geometry = points              \
+         show = true
+
+
+simulation rsim add interaction = d4_d12_springs             \
+                    type = spring                  \
+                    force_const = 4.0              \
+                    cutoff = 1.0                   \
+                    list = { d4_spring1  d12_spring1 } \ 
+                    time = { 0.0 1000.0 }
+
+#------------------------------------------------------------------
+
+domain d6  define region = d6r  residues = C[786]  use_sidechains = true
+domain d14 define region = d14r residues = C[790]  use_sidechains = true
+
+body d6b add potential_geometry = d6_spring1     \
+         region = d6r                   \
+         geometry = points              \
+         show = true
+
+body d14b add potential_geometry = d14_spring1     \
+         region = d14r                   \
+         geometry = points              \
+         show = true
+
+simulation rsim add interaction = d6_d14_springs             \
+                    type = spring                  \
+                    force_const = 4.0              \
+                    cutoff = 1.0                   \
+                    list = { d6_spring1 d14_spring1 } \ 
+                    time = { 0.0 1000.0 }             \
+                    show = true
+
+

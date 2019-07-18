@@ -1,0 +1,34 @@
+#============================================================*
+#               test simulation using ball joints            *
+#                                                            *
+# two bodies with 4 residues each.                           *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+molecule m1  xform  rotation = [ 45  15  -60 ]
+
+# create a some domains
+domain create helix = C[760-815]
+#domain helix backbone color = [ 0.0 0.0 0.7 ] width = 3 show
+domain helix bonds  atom_color = [ 0 0 0.7 ] bond_color = [ 0 0 1 ] \
+                    atoms = true show = true
+
+domain create camA = A
+domain camA bonds  atom_color = [ 0.7 0 0 ] bond_color = [ 1 0 0 ] \
+                   atoms = true show = true
+
+domain create camB = B
+domain camB bonds  atom_color = [ 0 0.7 0 ] bond_color = [ 0 1 0 ] \
+                   atoms = true show = true
+
+graphics background color = [ 1 1 1 ]
+
+

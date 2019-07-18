@@ -1,0 +1,26 @@
+#============================================================#
+#                   show using tube                          #
+#============================================================#
+
+variable w=2
+
+# set units
+units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read molecule
+#--------------
+database open name=neck format=pdb  file=../data/mv_head.pdb
+molecule read  name=m1   database=neck
+
+# create a some domains
+#----------------------
+domain create dom=C[35-40]
+domain create dom1=C[35-40]
+#domain create dom=CA
+domain dom backbone color=[0.0 1.0 0.0] tube=true width=${w} show=true
+domain dom1 backbone color=[0.0 1.0 1.0] width=${w} show=true
+
+graphics center point=[6.74977 5.43745 26.1256]
+
+

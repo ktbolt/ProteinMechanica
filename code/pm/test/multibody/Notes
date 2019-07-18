@@ -1,0 +1,15 @@
+  create multibody models using the "multibody" command.
+
+
+  1)  create kinematic chain for a loop
+
+      run d1
+
+
+  2)  create model from secondary structure 
+
+      run d2
+
+
+
+

@@ -1,0 +1,32 @@
+
+#============================================================*
+#            test create sphere using points                 *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../../../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+
+
+# create sphere 
+#--------------
+solid create  name = sp1  type = sphere \
+              radius = 0.1   \
+              center = [ -0.0220243 0.190928 0.451484] \
+              color = [ 1 1 0 ] \
+              show = true
+

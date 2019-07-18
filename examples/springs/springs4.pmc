@@ -1,0 +1,89 @@
+#============================================================#
+# Spring potential between surfaces.                         #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read surfaces
+#--------------
+surface read  name=camA   format=pm  file=../data/camA_surf.pm  
+surface camA  color=[ 0.6 0 0]  display=solid show 
+
+surface read  name=camB   format=pm  file=../data/camB_surf.pm  
+surface camB  color=[ 0 0 0.6]  display=solid show 
+
+# create bodies  
+#--------------
+body create  name=ground    type=ground
+body create  name=camABody  type=rigid   surface=camA 
+body create  name=camBBody  type=rigid   surface=camB 
+
+# create a rigid simulation
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=camABody
+simulation rsim add body=camBBody
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# create regions 
+#---------------
+surface camA  define  region=camARgn  \
+        point=[ 1.95111 3.5266 1.50821 ]   distance=0.5 \
+        color=[ 0 1 0 ] use_spheres=true  show=true
+
+surface camB  define  region=camBRgn  \
+        point=[ 1.95111 3.5266 1.50821 ]   distance=0.5 \
+        color=[ 1 1 0] use_spheres=true  show=true
+
+# add potentails to bodies
+#-------------------------
+body camABody add potential_geometry=camASpring  \
+     region=camARgn geometry=points              \
+     color=[1 1 1]   show=true
+
+body camBBody add potential_geometry=camBSpring   \
+     region=camBRgn geometry=points  \
+     color=[ 1 1 1] show=true
+
+
+# create the interaction
+#-----------------------
+simulation rsim add interaction=camAIq2Spring \
+   type=spring cutoff=0.5 force_const=0.5     \
+   list={camASpring camBSpring }              \
+   show=true time={ 0.0 1000.0 }
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             world_frame=true      \
+             point=[1.55321 6.13275 5.17129]         \
+             direction=[ 2 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=camBBody   \
+                    time={ 0 4 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+#simulation state  save_frequency=20
+
+graphics  rotate=[0 25 0]
+
+

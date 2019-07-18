@@ -1,0 +1,45 @@
+
+#============================================================*
+#               test simulation of peptide planes            *
+#                                                            *
+# look at model of two residues.                             *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+database open name = db1  format = pdb  file = d1.pdb
+molecule read  name = m1   database = db1
+domain create d1 = A
+#domain d1 xform  translation = [ 0.2 0 0 ] 
+domain d1 bonds  atoms = true  atom_color = [ 1 0 0 ] \
+                 render = line \
+                 bond_color = [ 1 0 0 ] width = 3 show
+
+database open name = db2  format = pdb  file = d2.pdb
+molecule read  name = m2   database = db2
+domain create d2 = A
+#domain d2 xform  translation = [ 0 0.2 0 ] 
+domain d2 bonds  atoms = true  atom_color = [ 0 1 0 ] \
+                 bond_color = [ 0 1 0 ] width = 3 show
+#domain d2 bonds  atoms = true  atom_color = element \
+                 bond_color = [ 0 1 0 ] width = 3 show
+
+database open name = db3  format = pdb  file = d3.pdb
+molecule read  name = m3   database = db3
+domain create d3 = A
+domain d3 bonds  atoms = true  atom_color = [ 0 1 1 ] \
+                 render = line \
+                 bond_color = [ 0 1 1 ] width = 3 show
+
+graphics center point = [ 7.32988 3.85811 -0.972 ]
+
+   
+
+
+

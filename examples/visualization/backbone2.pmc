@@ -1,0 +1,24 @@
+#============================================================#
+# visualize domain backbone: more complicated domains        #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show=true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show=true
+
+

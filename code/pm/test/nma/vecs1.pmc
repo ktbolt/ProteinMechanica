@@ -1,0 +1,33 @@
+#============================================================#
+#               test reading nma results                     #
+#============================================================#
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read molecule
+#--------------
+database open name=db1 format=pdb file=../data/neck_xform.pdb 
+molecule read name=m1 database=db1 
+
+# read modes
+#-----------
+molecule m1 read modes format=cerfacs file=diagrtb.eigenfacs 
+
+# create a some domains
+#----------------------
+domain create dom1=CADB
+domain create dom2=CADB
+domain create dom3=CADB
+domain dom1 backbone color=[0.6 0.6 0.6] width=2 show=true
+
+domain dom1 mode vectors number=7  \
+   scale=20.0 atom_names={CA} color=[1 0 0] show=on
+
+domain dom2 mode vectors number=8  \
+   scale=20.0 atom_names={CA} color=[0 1 0] show=on
+
+domain dom3 mode vectors number=9  \
+   scale=20.0 atom_names={CA} color=[1 1 0] show=on
+

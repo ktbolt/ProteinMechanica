@@ -1,0 +1,30 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# A multibody model of parametric solids.                    #
+#============================================================#
+
+# create cylinders
+#-----------------
+solid create name=cylinder1  type=cylinder  radius=0.2  length=1.0 \
+             center=[ 0 0.5 0 ]  axis=[ 0 1 0 ]                        \
+             color=[ 1 0 0 ]  display=line
+
+solid create name=cylinder2  type=cylinder  radius=0.2  length=2.0 \
+             center=[ 0 2.0 0 ]  axis=[ 0 1 0 ]                        \ 
+             color=[ 0 1 0 ]  display=line
+
+# create bodies
+#--------------
+body create  name=cylinder1Body  type=rigid  solid=cylinder1
+body create  name=cylinder2Body  type=rigid  solid=cylinder2
+
+# create joint
+#-------------
+joint create  name=cyl12Joint  type=hinge  cylinder=cylinder1  \ 
+              distance=1.0                                         \ 
+              axis=[ 1 0 0 ]                                       \
+              bodies={ cylinder1Body cylinder2Body }               \
+              color=[ 1 1 0 ] msize=0.5 shading=flat show=true
+
+

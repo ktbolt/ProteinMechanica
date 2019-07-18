@@ -1,0 +1,66 @@
+#============================================================*
+#               test rigid body simulation                   *
+#============================================================*
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read pdb file
+#--------------
+database open name=neck format=pdb file=../../data/neck_xform.pdb
+molecule read name=m1 database=neck
+
+# create a some domains
+#----------------------
+domain create iq1=AC[762-788]
+domain iq1 backbone color=[1 0 0] width=2 show=true
+
+domain create iq2=BC[788-813]
+domain iq2 backbone color=[0 1 0] width=2 show=true
+
+# create bodies 
+#--------------
+body create  name=iq1_body  type=rigid   domain=iq1
+body create  name=iq2_body  type=rigid   domain=iq2
+
+# create a rigid simulation  
+#---------------------------
+simulation create name=rsim1 type=rigid
+simulation create name=rsim2 type=rigid
+
+# add bodies
+#-----------
+simulation rsim1 add body=iq1_body
+simulation rsim2 add body=iq2_body
+
+# set solver 
+#-----------
+simulation rsim1 solver=ode   
+simulation rsim1 solver finite_rotation=on             
+simulation rsim2 solver=ode   
+simulation rsim2 solver finite_rotation=on             
+
+# add forces
+#-----------
+force create name=force1 type=explicit global_frame=true \
+   point=[1.63 1.47 2.25] direction=[1 0 0] scale=1.0
+simulation rsim1 add force=force1 body=iq1_body  time={0 1000}
+
+force create name=force2 type=explicit global_frame=true \
+   point=[0.68 6.04 2.695] direction=[-1 0 0] scale=1.0
+simulation rsim2 add force=force2 body=iq2_body  time={0 1000}
+
+# initialize simulation
+#----------------------
+simulation rsim1 initialize 
+simulation rsim2 initialize 
+
+simulation rsim1 step=1000
+simulation rsim2 step=1000
+
+wait 
+
+q
+
+

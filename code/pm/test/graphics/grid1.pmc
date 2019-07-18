@@ -1,0 +1,39 @@
+#============================================================#
+#                  test graphics grid                        #
+#============================================================#
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=neck_xform format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+
+# create domains
+#---------------
+domain create hc=C
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0.7 0 0 ] width=2 show=true
+domain create iq2h=C[788-814]
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0.7 0 ] width=2 show=true
+
+graphics grid  name=grid1   \
+  center=iq2:C[812]         \ 
+  number=[4 4 1]            \
+  spacing=[1.0 1.0 1.0]     \
+  color=[1 0.5 0.5]         \
+  msize=0.1                 \
+  show=true
+
+graphics grid  name=grid2   \
+  center=iq2:C[812]         \
+  number=[1 4 4]            \
+  spacing=[1.0 1.0 1.0]     \
+  color=[0.5 1 0.5]         \
+  msize=0.1                 \
+  show=true
+
+

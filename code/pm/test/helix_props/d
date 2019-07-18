@@ -1,0 +1,19 @@
+
+#============================================================*
+#               test domain fitting                          *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create d1 = C[760-788]
+domain d1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain d1 helix properties  show
+
+

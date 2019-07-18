@@ -1,0 +1,18 @@
+create target pps heads docked to actin
+---------------------------------------
+
+ dimer rigor head is fit to actin subunit D. number binding sites wrt to D:
+
+   E:1 F:2 G:3 H:4 I:5 J:6 K:7 L:8 M:9 N:10 O:11 P:12 Q:13 R:14 S:15 T:16 U:17 V:18 W:19
+
+
+ 1) create target pps heads docked to actin
+
+    use the PM variable "unit" to specify the actin subunit.
+
+    example:
+
+        pm unit=G fit_target_head.pmc ----> m5PreHead_dockedActin3.pdb 
+    
+
+

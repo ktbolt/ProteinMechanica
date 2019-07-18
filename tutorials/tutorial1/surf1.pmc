@@ -1,0 +1,35 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing domain surfaces.                               #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name= neckDb format=pdb file=iq123.pdb 
+
+# read molecule
+#--------------
+molecule read  database=neckDb  name=neckMol  
+
+# create domains
+#---------------
+domain create hc=C
+domain hc  atoms color=[ 1 1 1 ] 
+
+domain create iq1=AC[760-788]
+domain create iq2=BC[788-814]
+domain create iq3=DC[814-836]
+
+# read visualize surfaces
+#------------------------
+domain iq1 surface read format=pm file=camA_surf.pm
+domain iq1 surface color=[ 1.0 0.3 0.3 ] display=solid  shading=color 
+
+domain iq2 surface read format=pm file=camB_surf.pm
+domain iq2 surface color=[ 0.3 1.0 0.3 ] display=line 
+
+domain iq3 surface read format=pm file=camD_surf.pm
+domain iq3 surface color=[ 1 1 0.0 ] display=point  
+
+

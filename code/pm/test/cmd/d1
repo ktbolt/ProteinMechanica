@@ -1,0 +1,62 @@
+
+###############################
+# test create joints          #
+###############################
+
+# open pdb file
+database open name = neck format = pdb  file = iq.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+
+domain create iq1 = AC[762-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-813]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+
+# create joints
+
+joint create            \
+      name = 1          \
+      type = ball       \
+      domain = iq1      \
+      res = C762        \
+      use = CA
+
+joint create            \
+      name = 2          \
+      type = pin        \
+      domain = iq1      \
+      res = C788        \
+      use = CA
+
+joint create \
+      name = 3          \
+      type = universal  \
+      domain = iq2      \
+      res = C813        \
+      use = CA
+
+joint create \
+      name = 4          \
+      type = free       \
+      domain = iq2      \
+      res = C800        \
+      use = CA
+
+joint 1 color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+
+joint 2 color = [ 0 1 0 ] msize = 0.1 shading = flat display = line show = true 
+#joint 2 color = [ 0 1 0 ] msize = 0.1 shading = flat show = true 
+
+joint 3 color = [ 1 1 0 ] msize = 0.1 shading = flat  show = true 
+#joint 3 color = [ 1 1 0 ] msize = 0.1 shading = flat  display = line show = true 
+
+joint 4 color = [ 1 1 1 ] msize = 0.1 shading = flat  show = true 
+
+
+

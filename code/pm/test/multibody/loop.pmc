@@ -1,0 +1,84 @@
+#============================================================#
+#          test peptide rigid body model of a loop           #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=db1 format=pdb file=../data/loop_piece.pdb
+molecule read name=m1 database=db1
+
+domain create loop1=C[593-597]
+domain loop1 backbone planes color=[1 0 1] width=2 show=true
+domain loop1 bonds atoms=true atom_color=[1 0.8 0] bond_color=[1 0.8 0] render=line \
+   width=2 show=true
+
+domain create loop2=C[607-613]
+domain loop2 backbone planes=true color=[1 0.6 0] width=2 show=true
+domain loop2 bonds atoms=true atom_color=[1 0.8 0] bond_color=[1 0.8 0] render=line \
+   width=2 show=true
+
+domain create loop=C
+domain loop backbone color=[1 0 1] width=3 show=true
+
+# create multibody model at peptide level
+#----------------------------------------
+domain create mloop=C[597-607]
+multibody create name=kc domain=mloop type=kinematic_chain last=peptide
+
+# add ground body and joint
+#--------------------------
+body create name=ground type=ground
+body create name=loop1Body type=rigid domain=loop1
+body create name=loop2Body type=rigid domain=loop2
+
+joint create name=groundJnt type=weld position=loop1:C[593]:CA
+joint groundJnt color=[0 1 1] msize=0.05 shading=color show=true
+joint groundJnt bodies={ground loop1Body}
+
+# connect loop1 to chain
+#-----------------------
+joint create name=loop1Jnt type=ball position=loop1:C[597]:CA
+joint loop1Jnt color=[1 1 0] msize=0.05 shading=color display=line show=true
+joint loop1Jnt bodies={loop1Body kcSc597Body}
+
+# connect chain to loop2 
+#-----------------------
+joint create name=loop2Jnt type=ball position=loop2:C[607]:N 
+joint loop2Jnt color=[1 1 0] msize=0.05 shading=color display=line show=true
+joint loop2Jnt bodies={kcPt606Body loop2Body}
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all 
+simulation rsim add joints=all 
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force2 \
+   type=explicit point=loop2:C[613]:CA global_frame=true \ 
+   direction=[0 -0.2 0] scale=1.0
+simulation rsim add force=force2 body=loop2Body time={0 1000}
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.001
+
+# set some graphics things
+#-------------------------
+graphics center point=loop1:C[593]:CA
+graphics background color=[0.5 0.5 0.7] 
+graphics center point=loop1:C[593]:CA
+

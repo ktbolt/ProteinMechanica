@@ -1,0 +1,77 @@
+
+#============================================================*
+#               test rigid body simulation of a loop         *
+#                                                            *
+# res 593-613                                                *
+#                                                            *
+# define domains consisting of peptide and sidechain groups. *
+# use multibody command.                                     *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = db1  format = pdb  file = ../data/loop_piece.pdb
+
+# read molecule
+molecule read  name = m1   database = db1
+
+
+domain create loop  = C
+domain loop backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+
+#domain create loop1  = C[596-600]
+domain create loop1  = C[596-606]
+domain loop1 backbone color = [ 0.6 0.0 0.0 ] width = 2 show
+
+# create kinematic chain
+#-----------------------
+multibody  create  name = kc  domain = loop1  type = kinematic_chain
+
+body create  name = ground    type = ground
+
+joint create  name = groundJnt  type = ball domain = kcPt1 res = C[596] use = C
+joint groundJnt color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint groundJnt bodies = { ground kcPtBody1 }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+simulation rsim add bodies = all 
+simulation rsim add joints = all 
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+
+force create  name = force2             \
+              type = explicit           \
+              point = kcSc10:C[606]:C   \
+              global_frame = true       \
+              direction = [ 0 0 0.2 ]  \
+              scale = 1.0
+
+simulation rsim add force = force2    \
+                    body = kcScBody10  \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+simulation rsim time step = 0.001
+
+
+
+

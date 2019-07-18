@@ -1,0 +1,16 @@
+
+macro createDomain (name,color,seq) 
+
+  domain create actin_${name} = ${name}
+
+  domain  actin_${name}  color = ${color}  \
+          show = true
+
+  domain create sactin_${name} = ${name}[${seq}]
+
+end macro
+
+
+createDomain ( W, [ 1 0 1 ], 10-20)
+
+

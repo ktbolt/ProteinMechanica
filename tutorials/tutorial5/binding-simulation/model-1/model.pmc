@@ -1,0 +1,68 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Simulating Myosin V Binding to Actin                      #
+#                                                           #
+# Define rigid bodies and joints.                           #
+#-----------------------------------------------------------#
+
+# define joint macro
+#-------------------
+macro crJnt(name, dom, res, body1, body2)
+  joint create name=${name} type=ball position=${dom}:${res}:CA  \
+     color=[0 0 0] msize=0.25 shading=color show=true            \
+     bodies={ ${body1} ${body2} }
+end macro
+
+#-----------------------------------------------------------#
+#                 define rigid bodies                       #
+#-----------------------------------------------------------#
+body create name=ground type=ground
+body create type=rigid domain_prefix=rigor
+body create type=rigid domain_prefix=pps
+body rigorIq1Body print properties=mass
+
+#-----------------------------------------------------------#
+#                     define joints                         #
+#-----------------------------------------------------------#
+# ground joint
+#--------------
+joint create name=groundJnt type=weld position=rigorHead:C[523]:CA \
+   color=[0.7 0.7 0.7] msize=0.1 shading=color show=true           \
+   bodies={ground rigorHeadBody}
+
+# rigor joints
+#-------------
+crJnt(rigorHeadIq1Jnt, rigorIq1, C[766], rigorHeadBody, rigorIq1Body)
+crJnt(rigorIq1Iq2Jnt,  rigorIq2, C[788], rigorIq1Body,  rigorIq2Body)
+crJnt(rigorIq2Iq3Jnt,  rigorIq3, C[814], rigorIq2Body,  rigorIq3Body)
+crJnt(rigorIq3Iq4Jnt,  rigorIq4, C[836], rigorIq3Body,  rigorIq4Body)
+crJnt(rigorIq4Iq5Jnt,  rigorIq5, C[862], rigorIq4Body,  rigorIq5Body)
+crJnt(rigorIq45q6Jnt,  rigorIq6, C[884], rigorIq5Body,  rigorIq6Body)
+crJnt(rigorIq6Hcr1Jnt, rigorIq6,   C[913], rigorIq6Body,  rigorHcr1Body)
+crJnt(rigorHcr1Hcr2Jnt, rigorHcr1, C[924], rigorHcr1Body, rigorHcr2Body)
+crJnt(rigorHcr2Hcr3Jnt, rigorHcr2, C[939], rigorHcr2Body, rigorHcr3Body)
+crJnt(rigorHcr3Hcr4Jnt, rigorHcr3, C[956], rigorHcr3Body, rigorHcr4Body)
+crJnt(rigorHcr4Hcr5Jnt, rigorHcr4, C[970], rigorHcr4Body, rigorHcr5Body)
+
+# pps joints
+#-----------
+crJnt(ppsHeadIq1Jnt, ppsIq1, J[766], ppsHeadBody, ppsIq1Body)
+crJnt(ppsIq1Iq2Jnt,  ppsIq2, J[788], ppsIq1Body,  ppsIq2Body)
+crJnt(ppsIq2Iq3Jnt,  ppsIq3, J[814], ppsIq2Body,  ppsIq3Body)
+crJnt(ppsIq3Iq4Jnt,  ppsIq4, J[836], ppsIq3Body,  ppsIq4Body)
+crJnt(ppsIq4Iq5Jnt,  ppsIq5, J[862], ppsIq4Body,  ppsIq5Body)
+crJnt(ppsIq45q6Jnt,  ppsIq6, J[884], ppsIq5Body,  ppsIq6Body)
+crJnt(ppsIq6Hcr1Jnt,  ppsIq6,  J[913], ppsIq6Body,  ppsHcr1Body)
+crJnt(ppsHcr1Hcr2Jnt, ppsHcr1, J[924], ppsHcr1Body, ppsHcr2Body)
+crJnt(ppsHcr2Hcr3Jnt, ppsHcr2, J[939], ppsHcr2Body, ppsHcr3Body)
+crJnt(ppsHcr3Hcr4Jnt, ppsHcr3, J[956], ppsHcr3Body, ppsHcr4Body)
+crJnt(ppsHcr4Hcr5Jnt, ppsHcr4, J[970], ppsHcr4Body, ppsHcr5Body)
+
+#-----------------------------------------------------------#
+#                     add damping                           #
+#-----------------------------------------------------------#
+variable damp=1.0
+bodies prefix=rigor damping=${damp}
+bodies prefix=pps   damping=${damp}
+

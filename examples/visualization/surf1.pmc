@@ -1,0 +1,34 @@
+#============================================================#
+# domain surface read and display                            #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = db1 format = pdb file =  ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database = db1  name = m1  
+
+# create domains
+#---------------
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show=true
+domain hc  atoms color = [ 0.6 0.6 0.6 ] width = 2 show=true
+
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 1 0 ] width = 2 show=true
+domain iq1 surface read format = pm file = ../data/camA_surf.pm
+domain iq1 surface color = [ 1.0 0.3 0.3 ] display = line show=true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show=true
+domain iq2 surface read format = pm file = ../data/camB_surf.pm
+domain iq2 surface color = [ 0.3 1.0 0.3 ] display = solid show=true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show=true
+domain iq3 surface read format = pm file = ../data/camD_surf.pm
+domain iq3 surface color = [ 0.3 0.3 1.0 ] display = point show=true
+
+

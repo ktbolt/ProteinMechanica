@@ -1,0 +1,54 @@
+Thu Apr 16 11:20:20 PDT 2009
+----------------------------
+
+ look at models of an alpha helix.
+
+
+ 1) script d1
+
+    model peptide planes and sidechains as separate
+    rigid bodies connected by hinge joints.
+
+    set spring constant for hinge joints.
+
+    add spring potential btw residue sidechains.
+
+
+ 2) script d2
+
+    model peptide planes and sidechains as separate
+    rigid bodies connected by hinge joints.
+
+    set spring constant for hinge joints.
+
+    add spring potential btw residue sidechains.
+
+    add spring potential btw backbone hydrogen bonds.
+
+        note that peptide   domains have oxygens
+                  sidechain domains have nitrogens
+
+        residue 783 atom O  ----- residue 787 atom N
+
+     
+ 3) script d3
+
+    model peptide planes and sidechains as separate
+    rigid bodies connected by hinge joints.
+
+    use multibody command with hinge joints.
+
+    creates 95 rigid bodies.
+
+
+ 4) script d4
+
+    model peptide planes and sidechains as separate
+    rigid bodies connected by hinge joints.
+
+    use multibody command with ball joints.
+
+    creates 95 rigid bodies.
+
+
+

@@ -1,0 +1,132 @@
+#------------------------------------------------------#
+# vis structure                                        #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+variable structures_file=structure.pdb
+variable motor_name=motor
+
+# set units
+#----------
+units
+units scale name=mass uname=reducedMass value=10000.0
+
+# read atomistic model
+#---------------------
+database open name=structuresDb format=pdb file=../${structures_file}
+molecule read name=structuresMol database=structuresDb model_name=${motor_name}
+
+#------------------------------------------------------#
+# define rigid domains for rigor monomer               #
+#------------------------------------------------------#
+domain create rigor=A
+domain rigor backbone color=[0.5 0.5 0.5] width=1
+
+variable rwidth=3
+variable rigorHeadColor=[0.6 0 0]
+variable rigorActinin1Color=[0.6 0.6 0]
+variable rigorActinin2Color=[0 0.6 0]
+variable rigorGsg1Color=[0.6 0.6 0]
+variable rigorGsg2Color=[0.6 0 0.6]
+variable rigorGsg3Color=[0 0.6 0.6]
+variable rigorGsg4Color=[0.6 0.6 0]
+variable rigorZipperColor=[1 0 0.6]
+
+# rigor domains
+#--------------
+domain create rigorHead=A[2-770]
+domain rigorHead backbone color=${rigorHeadColor} width=${rwidth}
+
+domain create rigorActinin1=A[770-897]
+domain rigorActinin1 backbone color=${rigorActinin1Color} width=${rwidth}
+
+domain create rigorActinin2=A[897-1018]
+domain rigorActinin2 backbone color=${rigorActinin2Color} width=${rwidth}
+
+domain create rigorGsg1=A[1018-1021]
+domain rigorGsg1 backbone color=${rigorGsg1Color} width=2
+
+domain create rigorGsg2=A[1021-1024]
+domain rigorGsg2 backbone color=${rigorGsg2Color} width=2
+
+domain create rigorGsg3=A[1024-1027]
+domain rigorGsg3 backbone color=${rigorGsg3Color} width=2
+
+domain create rigorGsg4=A[1027-1029]
+domain rigorGsg4 backbone color=${rigorGsg4Color} width=2
+
+domain create rigorZipper=A[1029-1059]
+domain rigorZipper backbone color=${rigorZipperColor} width=2
+
+
+# pps head 1 domains
+#-------------------
+variable pps1HeadColor=[0.6 0 0]
+variable pps1Actinin1Color=[0.6 0.6 0]
+variable pps1Actinin2Color=[0 0.6 0]
+variable pps1Gsg1Color=[0.6 0.6 0]
+variable pps1Gsg2Color=[0.6 0 0.6]
+variable pps1Gsg3Color=[0 0.6 0.6]
+variable pps1Gsg4Color=[0.6 0.6 0]
+variable pps1ZipperColor=[1 0 0.6]
+
+domain create pps1Head=B[2-770]
+domain pps1Head backbone color=${pps1HeadColor} width=${rwidth}
+
+domain create pps1Actinin1=B[770-897]
+domain pps1Actinin1 backbone color=${pps1Actinin1Color} width=${rwidth}
+
+domain create pps1Actinin2=B[897-1018]
+domain pps1Actinin2 backbone color=${pps1Actinin2Color} width=${rwidth}
+
+domain create pps1Gsg1=B[1018-1021]
+domain pps1Gsg1 backbone color=${pps1Gsg1Color} width=2
+
+domain create pps1Gsg2=B[1021-1024]
+domain pps1Gsg2 backbone color=${pps1Gsg2Color} width=2
+
+domain create pps1Gsg3=B[1024-1027]
+domain pps1Gsg3 backbone color=${pps1Gsg3Color} width=2
+
+domain create pps1Gsg4=B[1027-1029]
+domain pps1Gsg4 backbone color=${pps1Gsg4Color} width=2
+
+domain create pps1Zipper=B[1029-1059]
+domain pps1Zipper backbone color=${pps1ZipperColor} width=2
+
+
+# pps head 2 domains
+#-------------------
+variable pps2HeadColor=[0.6 0 0]
+variable pps2Actinin1Color=[0.6 0.6 0]
+variable pps2Actinin2Color=[0 0.6 0]
+variable pps2Gsg1Color=[0.6 0.6 0]
+variable pps2Gsg2Color=[0.6 0 0.6]
+variable pps2Gsg3Color=[0 0.6 0.6]
+variable pps2Gsg4Color=[0.6 0.6 0]
+variable pps2ZipperColor=[1 0 0.6]
+
+domain create pps2Head=C[2-770]
+domain pps2Head backbone color=${pps2HeadColor} width=${rwidth}
+
+domain create pps2Actinin1=C[770-897]
+domain pps2Actinin1 backbone color=${pps2Actinin1Color} width=${rwidth}
+
+domain create pps2Actinin2=C[897-1018]
+domain pps2Actinin2 backbone color=${pps2Actinin2Color} width=${rwidth}
+
+domain create pps2Gsg1=C[1018-1021]
+domain pps2Gsg1 backbone color=${pps2Gsg1Color} width=2
+
+domain create pps2Gsg2=C[1021-1024]
+domain pps2Gsg2 backbone color=${pps2Gsg2Color} width=2
+
+domain create pps2Gsg3=C[1024-1027]
+domain pps2Gsg3 backbone color=${pps2Gsg3Color} width=2
+
+domain create pps2Gsg4=C[1027-1029]
+domain pps2Gsg4 backbone color=${pps2Gsg4Color} width=2
+
+domain create pps2Zipper=C[1029-1059]
+domain pps2Zipper backbone color=${pps2ZipperColor} width=2

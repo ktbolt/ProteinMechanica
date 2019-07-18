@@ -1,0 +1,99 @@
+#============================================================#
+#               test helix-helix interaction                 #
+#                                                            #
+# use bodies to define spring interaction sites.             #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=molDb format=pdb file=../../data/neck_xform.pdb
+molecule read name=Mol database=molDb 
+
+# create a some domains
+#----------------------
+domain create iq1=C[762-788]
+domain iq1 backbone color=[0.8 0.3 0.3] width=3 show=true
+domain iq1 bonds atoms=true atom_color=[1 0.5 0.5] bond_color=[1 0.5 0.5] show=true
+#domain iq1 atoms color=element show=true
+#domain iq1 atoms color=[1 0.5 0.5] show=true
+
+domain create iq2=C[788-813]
+domain iq2 backbone color=[0.3 0.8 0.3] width=3 show=true
+domain iq2 bonds atoms=true atom_color=[0.5 1 0.5] bond_color=[0.5 1 0.5] show=true
+#domain iq2 atoms color=[0.5 1 0.5] show=true
+
+# create bodies 
+#--------------
+body create  name=ground   type=ground
+body create  name=iq1      type=rigid   domain=iq1
+body create  name=iq2      type=rigid   domain=iq2
+
+# create joints 
+#--------------
+joint create name=jnt1 type=weld position=iq1:C[762]:CA  \
+   color=[1 1 1] msize=0.1 shading=color show=true       \
+   bodies={ground iq1}
+
+joint create name=jnt2 type=ball position=iq2:C[788]:CA  \
+   color=[0 1 0] msize=0.1 shading=color show=true       \
+   bodies={iq1 iq2}
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=iq1
+simulation rsim add body=iq2    
+simulation rsim add body=ground 
+
+# add joints 
+#-----------
+simulation rsim add joint=jnt1
+simulation rsim add joint=jnt2
+
+# create potential
+#-----------------
+variable map_energy=true
+variable emin=0.0
+variable emax=0.1
+
+variable cutoff=0.6
+variable pot_k=1.0
+variable pot_t=inf
+variable pot_show=true
+
+#variable atom_names=atom_names=mc
+#variable atom_names=atom_names=sc
+variable atom_names=use_sidechains=true
+
+simulation rsim add interaction=iq1iq2Spings      \
+   type=spring  force_const=${pot_k}              \
+   ljspring=true                                  \
+   ${atom_names}                                  \
+   bodies={iq1 iq2}                               \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+# add force
+#----------
+force create name=force1 type=explicit point=iq2:C[813]     \
+   global_frame=true direction=[2 0 0] scale=1.0 show=true
+simulation rsim add force=force1  body=iq2 time={0 1000}
+
+
+# set solver 
+#-----------
+simulation rsim solver=ode   
+simulation rsim solver finite_rotation=on             
+simulation rsim initialize 
+simulation rsim  time step=0.001 
+

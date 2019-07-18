@@ -1,0 +1,162 @@
+
+#============================================================*
+#                  test damping                              *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name =  neck_xform  format = pdb file =  ../data/neck_xform.pdb
+
+# read molecule
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+domain create hc = C
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 2 show
+domain create iq2h = C[788-814]
+#domain iq2h bonds  atoms = true bond_color = [ 0.7 0 0 ] atom_color = [ 0.7 0 0 ] show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0.7 0 ] width = 2 show
+#domain iq3 atoms color = [ 0 0 1 ] render = line show
+
+domain create iq3h = C[814-836]
+#domain iq3h bonds  atoms = true bond_color = [ 0 0.7 0 ] atom_color = [ 0 0.7 0 ] show
+
+#domain create camb = B
+#domain camb  bonds  atoms = true bond_color = [ 0.7 0 0 ] atom_color = [ 1 0 0 ] show
+#domain create camc = C
+#domain camc  bonds  atoms = true bond_color = [ 0 0.7 0 ] atom_color = [ 0 1 0 ] show
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+body iq2_body  damping = 1.0  
+body iq3_body  damping = 1.0  
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+# add joints
+#-----------
+simulation rsim add joint = ground_jnt
+simulation rsim add joint = jnt1
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             global_frame = true     \
+             point = hc:C[836]       \
+             direction = [ 8 0 0 ]   \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 1 }
+
+force create name = force2           \
+             type = explicit         \
+             global_frame = true     \
+             point = hc:C[790]       \
+             direction = [  -4 0 0 ]   \
+             scale = 1.0
+
+simulation rsim add force = force2    \
+                    body = iq2_body   \
+                    time = { 0 1 }
+
+
+# add interaction potentials
+#---------------------------
+
+domain iq2 define region = iq2_rgn  residues = B[102-113] 
+domain iq2 define region = iq2_hrgn residues = C[809-813] 
+#domain iq3 define region = iq3_hrgn residues = C[814-818]D[90-97] 
+domain iq3 define region = iq3_hrgn residues = C[814-818] 
+
+body iq2_body add potential = iq2_spring_h       \
+                  type = spring                  \
+                  region = iq2_hrgn              \
+                  geometry = points              \
+                  cutoff = 0.8                   \
+                  force_const = 1.0              \
+                  show = false
+
+body iq3_body add potential = iq3_spring_h       \
+                  type = spring                  \
+                  region = iq3_hrgn              \
+                  geometry = points              \
+                  cutoff = 0.8                   \
+                  force_const = 1.0              \
+                  show = false
+
+simulation rsim add interaction = hspring1                       \
+                    body1 = iq2_body  potential1 = iq2_spring_h  \
+                    body2 = iq3_body  potential2 = iq3_spring_h  \
+                    time = { 0.0 1000.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.01
+#simulation  state  save_frequency = 10 
+simulation rsim momentum = on
+simulation rsim damping = on
+
+
+simulation rsim  add trace  name = trace1  \
+           global_frame = false   \
+           point = [ 0 0 0 ]   \
+           color = [ 1 0 1 ]  \
+           body = iq3_body   show = true
+
+simulation rsim  add trace  name = trace2  \
+           global_frame = false   \
+           point = [ 0 0 0 ]   \
+           color = [ 1 1 0 ]  \
+           body = iq2_body   show = true
+
+
+#----------------------------
+# output simulation results |
+#----------------------------
+
+simulation  rsim  write  file_name = rsim
+simulation  rsim  write  energy = true  strain = true  file_name = rsim
+#simulation  rsim  write  energy = true  file_name = rsim
+#simulation  rsim  write  trace = tr2  file_name = tr2
+
+
+#graphics background  color = [ 1 1 1 ]
+graphics center point = [ 3.77781 5.96775 3.98927 ] 
+
+

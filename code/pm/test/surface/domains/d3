@@ -1,0 +1,126 @@
+
+#============================================================*
+#         test surface transofrmation                        *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name =  neck_xform  format = pdb file =  ../../data/two_necks.pdb
+
+# read molecule
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+domain create hc = C
+#domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+domain create iq1 = C[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+domain create iq2 = C[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+domain iq3 surface read format = pm file = sasa/camD_surf.pm
+domain iq3 surface color = [ 0.3 0.3 1.0 ] render = color show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+# 1st group
+joint create  name = jnt1   type = ball    domain = hc    res = C[760]    use = CA
+joint jnt1 bodies = { ground iq1_body }
+joint jnt1 color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+
+joint create  name = jnt2   type = ball    domain = hc    res = C[788]    use = CA
+joint jnt2 bodies = { iq1_body iq2_body }
+joint jnt2 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt3   type = ball    domain = hc    res = C[814]    use = CA
+joint jnt3 bodies = { iq2_body iq3_body }
+joint jnt3 color = [ 0 0 1 ] msize = 0.1 shading = color show = true 
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+simulation rsim add joint = jnt3
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add random forces
+#------------------
+force create name = force1        \
+             type = random        \
+             mean = 0.0           \
+             sd = 500.0           \
+             seed = 147321        \
+             scale = 0.1
+
+#simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 1000 }
+
+
+# add directed forces
+#--------------------
+force create name = force2           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 1 0 0 ]  \
+             scale = 0.01
+
+simulation rsim add force = force2    \
+                    body = iq3_body   \
+                    time = { 0 20 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+#simulation rsim momentum = off
+simulation rsim time step = 0.02
+simulation state save_frequency = 10 
+
+
+# step simulation
+#----------------
+#simulation rsim step = 200
+
+graphics background color = [ 1 1 1 ]
+
+
+

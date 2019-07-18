@@ -1,0 +1,36 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Replacing a missing section of helix with a cylinder.      #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+
+# create domains
+#---------------
+domain  create  iq1=C[760-788]
+domain  create  iq3=C[814-836]
+
+# visualize backbone
+#-------------------
+domain iq1 backbone  color=[1 0 0]  width=2 show=true
+domain iq3 backbone  color=[0 1 0]  width=2 show=true
+
+# create cylinder using two points
+#---------------------------------
+solid create  name=cyl2  type=cylinder    \
+              radius=0.1                  \
+              point1=iq1:C[784-788]:mc    \
+              point2=iq3:C[814-818]:mc    \
+              color=[ 1 1 0 ]             \
+              show=true
+
+
+
+

@@ -1,0 +1,94 @@
+#============================================================#
+# test force in dir of pca axis                              #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+
+# create a some domains
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+#domain iq1 atoms color = [ 1 0 0 ] show = true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+#domain iq2 bonds  atom_color = element  atoms = true show = true
+#domain iq2 atoms color = [ 0 1 0 ] show = true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+#domain iq3 bonds  atom_color = element  atoms = true show = true
+#domain iq3 atoms color = [ 0 0 1 ] show = true
+
+domain create iq3C = C[814-836]
+domain iq3C pca show=true 
+
+domain create hc = C
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add force
+#----------
+force create  name = force1            \
+              type = explicit          \
+              global_frame = true      \
+              point = iq3C:C           \
+              use_pca = true           \
+              pca_domain = iq3C        \
+              pca_res = C              \
+              direction = 2            \
+              magnitude = 2.0          \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.02 
+#simulation  state  save_frequency = 100
+
+
+#graphics write format = jpeg name = i1
+#graphics record format = jpeg name = i1  on = true
+
+

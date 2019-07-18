@@ -1,0 +1,43 @@
+
+#============================================================*
+#               test domain fitting                          *
+#                                                            *
+# using one residue and backbone atoms.                      *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = C[760-788]
+#domain create iq1 = AC[760-788]
+#domain iq1 backbone color = [ 1 0 0 ] width = 1 show
+domain iq1 bonds  bond_color = [ 1 0 0 ] show
+
+domain create iq1r = C773
+domain iq1r bonds  atoms = true atom_color = element bond_color = [ 1 0 0 ] show
+
+domain create iq3 = C[814-836]
+#domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 1 show
+
+
+# fit iq3 to iq1
+#---------------
+
+domain iq3 fit  sequence = C[821]               \
+                destination = iq1               \
+                destination_sequence = C[773]   \
+                atom_names = { N O C CA }         
+
+#domain iq3 backbone name = fit color = [ 1 1 1 ] width = 2 show
+domain iq3 bonds name = fit color = [ 1 1 1 ] width = 2 show
+
+graphics  center  domain = iq1
+
+
+

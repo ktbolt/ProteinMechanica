@@ -1,0 +1,43 @@
+
+#============================================================*
+#         test surface read and display for a domain         *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name =  neck_xform  format = pdb file =  ../../data/neck_xform.pdb
+
+# read molecule
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+domain hc  atoms color = [ 0.6 0.6 0.6 ] width = 2 show
+
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+#domain iq1 atoms color = [ 1 0 0 ] width = 2 show
+domain iq1 surface read format = pm file = sasa/camA_surf.pm
+domain iq1 surface color = [ 1.0 0.3 0.3 ] display = line show
+#domain iq1 surface color = [ 1 0 0 ] display = solid show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+#domain iq2 atoms color = [ 0 1 0 ] width = 2 show
+domain iq2 surface read format = pm file = sasa/camB_surf.pm
+#domain iq2 surface color = [ 0.3 1.0 0.3 ] display = line show
+domain iq2 surface color = [ 0.3 1.0 0.3 ] display = solid show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+#domain iq3 atoms color = [ 0 0 1 ] width = 2 show
+domain iq3 surface read format = pm file = sasa/camD_surf.pm
+#domain iq3 surface color = [ 0.3 0.3 1.0 ] display = line show
+domain iq3 surface color = [ 0.3 0.3 1.0 ] display = solid show
+
+

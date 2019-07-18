@@ -1,0 +1,16 @@
+#============================================================#
+# read and display a surface                                 #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+surface read name=1ei1  format = pm  file = 1ei1_surf.pm  \
+              color = charge  charge_range = { -10 0 } lighting=two-sided show=true
+
+#surface read name=1ei1  format = pm  file = 1ei1_surf.pm  \
+              color = charge  lighting=two-sided show=true
+

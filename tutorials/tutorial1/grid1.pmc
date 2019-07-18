@@ -1,0 +1,17 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing volumes using volume sampling.                 #
+#============================================================#
+
+# read grid
+#----------
+grid  read  name = myosinV  format = pm  file = emd_1201.pm
+
+
+# display voxel values
+#---------------------
+grid  myosinV points  vmin = 0.3  vmax = 0.7  color = [ 1 0 0] 
+
+
+

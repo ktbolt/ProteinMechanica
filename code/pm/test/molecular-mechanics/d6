@@ -1,0 +1,221 @@
+#============================================================*
+#               test lennard-jones potential                 *
+#                                                            *
+# use ca and just repulsive part.                            *
+#                                                            *
+# specify a single list of potentials.                       *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name=neck_xform  format=pdb file=../data/two_necks.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 1 0.6 0 ] width = 2 show
+
+
+domain create hcj = J
+domain hcj  backbone  color = [ 0.0 0.6 0.6 ] width = 2 show
+domain create iq4 = IJ[760-788]
+domain iq4 backbone color = [ 1 0 0.5 ] width = 2 show
+domain create iq5 = KJ[788-814]
+domain iq5 backbone color = [ 0 1 0.5 ] width = 2 show
+domain create iq6 = LJ[814-836]
+domain iq6 backbone color = [  1 0.6 0.5 ] width = 2 show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+# 2nd group
+body create  name = iq4_body  type = rigid   domain = iq4
+body create  name = iq5_body  type = rigid   domain = iq5
+body create  name = iq6_body  type = rigid   domain = iq6
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+# 1st group
+joint create  name = jnt1   type = ball    domain = hc    res = C[760]     use = CA
+joint jnt1 bodies = { ground iq1_body }
+joint jnt1 color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+
+joint create  name = jnt2   type = ball    domain = hc    res = C[788]     use = CA
+joint jnt2 bodies = { iq1_body iq2_body }
+joint jnt2 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt3   type = ball    domain = hc    res = C[814]     use = CA
+joint jnt3 bodies = { iq2_body iq3_body }
+joint jnt3 color = [ 0 0 1 ] msize = 0.1 shading = color show = true 
+
+# 2nd group
+joint create  name = jnt4   type = ball    domain = hcj  res = J[760]     use = CA
+joint jnt4 bodies = { ground iq4_body }
+joint jnt4 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt5   type = ball    domain = hcj  res = J[788]     use = CA
+joint jnt5 bodies = { iq4_body iq5_body }
+joint jnt5 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt6   type = ball    domain = hcj  res = J[814]     use = CA
+joint jnt6 bodies = { iq5_body iq6_body }
+joint jnt6 color = [ 0 0 1 ] msize = 0.1 shading = color show = true
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+simulation rsim add body = iq4_body
+simulation rsim add body = iq5_body
+simulation rsim add body = iq6_body
+
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+simulation rsim add joint = jnt3
+simulation rsim add joint = jnt4
+simulation rsim add joint = jnt5
+simulation rsim add joint = jnt6
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+
+force create name = force1           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 4 -4 0 ]  \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 10 }
+
+
+# add interaction potentials
+#---------------------------
+
+variable  show = true  
+
+domain iq1 define region = iq1_rgn  residues = A[1-148]  atom_names = { CA }
+domain iq2 define region = iq2_rgn  residues = B[1-148]  atom_names = { CA }  
+domain iq3 define region = iq3_rgn  residues = D[1-148]  atom_names = { CA }  
+
+domain iq4 define region = iq4_rgn  residues = I[1-148]  atom_names = { CA }  
+domain iq5 define region = iq5_rgn  residues = K[1-148]  atom_names = { CA }  
+domain iq6 define region = iq6_rgn  residues = L[1-148]  atom_names = { CA }  
+
+body iq1_body add potential_geometry = iq1_mm                                         \
+     region = iq1_rgn  geometry = points        \
+     display_spheres = true  display = solid color = [ 1 0 0 ]  show = ${show}
+
+body iq2_body add potential_geometry = iq2_mm                                         \
+     region = iq2_rgn  geometry = points        \
+     display_spheres = true  display = solid color = [ 0 1 0 ]  show = ${show}
+
+body iq3_body add potential_geometry = iq3_mm                                        \
+     region = iq3_rgn  geometry = points       \
+     display_spheres = true  display = solid  color = [ 1 0.7 0 ]   show = ${show}            
+#----------#
+
+body iq4_body add potential_geometry=iq4_mm  \
+     region=iq4_rgn  geometry=points         \
+     display_spheres=true  display=solid  color=[ 1 0 0.5 ] show=${show}            
+
+body iq5_body add potential_geometry=iq5_mm  \
+     region=iq5_rgn  geometry=points         \
+     display_spheres=true color=[ 0 1 0.5 ] show=${show}                 
+
+body iq6_body add potential_geometry=iq6_mm  \
+     region=iq6_rgn  geometry=points         \
+     display_spheres=true  color=[ 1 0.6 0.5 ] show=${show}                 
+
+simulation rsim add interaction=mm1            \
+                    type=molecular-mechanics   \
+                    terms={ lj-repulsive }     \
+                    strength=1.0               \
+                    maximum_force=100.0        \
+                    association=full           \
+                    list = { iq1_mm iq2_mm iq3_mm iq4_mm iq5_mm iq6_mm } \
+                    time = { 0.0 10.0 }
+
+
+# add springs
+#------------
+simulation rsim add interaction = hspring1           \
+                    type = spring                    \
+                    force_const = 10.0               \
+                    cutoff = 0.8                     \
+                    use_ca=true                      \
+                    bodies = { iq1_body iq2_body iq3_body iq4_body iq5_body iq6_body}  \
+                    time = { 0.0 1000.0 }            \
+                    color = [ 1 1 0 ]                \
+                    show = true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim momentum = on
+
+simulation rsim time step = 0.005
+simulation  state  save_frequency = 10
+#simulation  rsim  write  energy = true  contact = true  file_name = rsim
+
+# add traces
+#-----------
+simulation rsim  add trace  name=trace2                    \
+           global_frame=true  point=iq2:B  body=iq2_body   \
+           color=[ 0 1 0 ] show=true
+
+simulation rsim  add trace  name=trace3                    \
+           global_frame=true  point=iq3:D  body=iq3_body   \
+           color=[ 1 0.5 0 ] show=true
+
+simulation rsim  add trace  name=trace6                    \
+           global_frame=true  point=iq6:L  body=iq6_body   \
+           color=[1 0.6 0.5] show=true
+
+
+graphics  center  point = [ 4.64212, 5.15401, 5.41185 ]
+

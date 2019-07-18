@@ -1,0 +1,40 @@
+
+#============================================================*
+#               create model of powerstroke                  *
+#                                                            *
+# force converter rotation using a force vector.             *
+#============================================================*
+
+# read molecule and define domains
+#---------------------------------
+read mol.pmc
+
+
+# create CG model
+#----------------
+read model.pmc
+
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 0 0 -10 ]   \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = convBody   \
+                    time = { 0 20 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim momentum = off
+simulation rsim initialize
+simulation rsim time step = 0.02
+
+graphics center domain = pre_head
+domains pick
+
+

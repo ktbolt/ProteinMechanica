@@ -1,0 +1,36 @@
+
+#============================================================*
+#               test domain transformation                   *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# iq1 domain
+#-----------
+domain create iq1 = C[780-788]
+#domain create iq1 = C[760-788]
+#domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 1 show
+
+
+# iq2 domain
+#-----------
+domain create iq2 = C[788-798]
+#domain create iq2 = C[788-814]
+#domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 1 show
+domain iq2 backbone planes  show
+domain iq2 bonds  atoms = true  atom_color = element show
+
+
+# rotate about two atoms
+#-----------------------
+domain iq2 xform  atoms = { C[788] CA  C[788] C } angle = 90  copy = iq2Xform
+domain iq2Xform backbone name = xform color = [ 1 1 1 ] width = 2 show
+domain iq2Xform bonds    name = xform atoms = true  \
+                         atom_color = element render = line show
+

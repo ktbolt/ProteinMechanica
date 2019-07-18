@@ -1,0 +1,15 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing volumes using isosurfaces.                     #
+#============================================================#
+
+# read grid
+#----------
+grid  read  name = myosinV  format = pm  file = emd_1201.pm
+
+# display volume using sampleing 
+#-------------------------------
+grid  myosinV isosurface level = 0.5 
+
+

@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+ pdb_to_xyzr $1.pdb > $1.xyzr
+
+ msms255 -if $1.xyzr -probe_radius 1.5 -of $1 -surface tses
+
+ srf2pm $1 > $1_surf.pm
+
+

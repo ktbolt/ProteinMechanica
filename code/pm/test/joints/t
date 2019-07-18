@@ -1,0 +1,64 @@
+
+#============================================================*
+#                test universal joints                       *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read molecule 
+#--------------
+database open name = neck   format = pdb  file = neck_xform.pdb
+molecule read  name = protein  database = neck
+
+# create domains
+#---------------
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+domain iq1 atoms color = [ 1 0 0 ] show
+
+domain create iq1h = C[760-788]
+domain iq1h atoms color = [ 1 0 0 ] show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+domain iq2 atoms color = [ 0 1 0 ] render = line show
+domain create iq2h = C[788-814]
+domain iq2h atoms color = [ 0 1 0 ] render = line show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+domain iq3 atoms color = [ 0 0 1 ] render = solid show
+
+
+# create bodies from domains
+#---------------------------
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+# create joints 
+#--------------
+
+# 1st joint 
+# ---------
+#joint create  name = jnt1   type = universal position = hc:C[760]:CA   \
+              use_pca = true  pca_res = hc:C[760-775]                  \
+              axis1 = pca2  axis2 = pca3                               \
+              force_const1 = 20.0  force_const2 = 20.0
+
+#joint create  name = jnt1   type = universal position = hc:C[760]:CA   \
+              use_pca = true  pca_domain = hc  pca_res = C[760-775]    \
+              axis1 = pca2  axis2 = pca3                               \
+              force_const1 = 20.0  force_const2 = 20.0
+
+joint create  name = jnt1   type = universal domain = hc  res = C[760]  use = CA \
+              use_pca = true pca_res = C[760-775]  axis1 = pca2  axis2 = pca3  \
+              force_const1 = 20.0  force_const2 = 20.0
+
+joint jnt1 bodies = { ground iq1_body }
+

@@ -1,0 +1,31 @@
+
+#============================================================*
+#               test reading mcr density map.                *
+#                                                            *
+# myosin v in folded state.                                  *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = m1  format = pm  file = emd_1201.pm 
+
+
+# display voxel values
+#---------------------
+#grid m1 points  vmin = 0.3  vmax = 0.7  show = true
+#grid m1 points  vmin = 0.4  vmax = 0.5  show = true
+
+
+# isosurface 
+#-----------
+#grid m1  isosurface  level = 0.5  show = true
+
+# display volume
+#----------------
+grid m1 volume vmin = 0.4  vmax = 0.8  samples = 4 show = true
+
+

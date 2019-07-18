@@ -1,0 +1,92 @@
+
+#============================================================#
+#   create domains.                                          #
+#============================================================#
+
+# peptide/sidechain 1 
+#--------------------
+domain create d1 = C[783-784]  peptide = true
+domain d1 bonds atoms = true atom_color = element \
+                bond_color = [ 1 0 0 ]  render = line show
+domain d1 backbone color = [ 1 0.61 0 ] planes = true  width = 2 show
+#-----
+domain create d2 = C[784]  sidechain_group = true
+domain d2 bonds atoms = true atom_color = [ 1 0 0 ] bond_color = [ 0.5 0 0 ] show
+
+
+# peptide/sidechain 2 
+#--------------------
+domain create d3 = C[784-785]  peptide = true
+domain d3 bonds atoms = true atom_color = element  bond_color = element   \
+          render = line  show
+domain d3 backbone  color = [ 0 1 0 ]  planes = true  
+#-----
+domain create d4 = C[785]  sidechain_group = true
+domain d4 bonds atoms = true atom_color = [ 0 1 0 ] bond_color = [ 0 0.5 0 ] show
+
+
+# peptide/sidechain 3 
+#--------------------
+domain create d5 = C[785-786]  peptide = true
+domain d5 bonds atoms = true atom_color = element  bond_color = element   \
+          render = line  show
+domain d5 backbone  color = [ 0 1 0 ]  planes = true
+#-----
+domain create d6 = C[786]  sidechain_group = true
+domain d6 bonds atoms = true atom_color = [ 1 1 0 ] bond_color = [ 0.5 0.5 0 ] show
+
+
+# peptide/sidechain 4 
+#--------------------
+domain create d7 = C[786-787]  peptide = true
+domain d7 bonds atoms = true atom_color = element bond_color = element  \
+                render = line  show
+domain d7 backbone  color = [ 0 1 0 ]  planes = true
+#-----
+domain create d8 = C[787]  sidechain_group = true
+domain d8 bonds atoms = true atom_color = [ 1 0 1 ] bond_color = [ 0.5 0 0.5 ] show
+
+
+# peptide/sidechain 5 
+#--------------------
+domain create d9 = C[787-788]  peptide = true
+domain d9 bonds atoms = true atom_color = element bond_color = element  \
+                render = line  show
+domain d9 backbone  color = [ 0 1 0 ]  planes = true
+
+domain create d10 = C[788]  sidechain_group = true
+domain d10 bonds atoms = true atom_color = [ 0 0 1 ] bond_color = [ 0.0 0 0.5 ] show
+
+
+# peptide/sidechain 6
+#--------------------
+domain create d11 = C[788-789]  peptide = true
+domain d11 bonds atoms = true atom_color = element bond_color = element  \
+                render = line  show
+domain d11 backbone  color = [ 0 1 0 ]  planes = true
+
+domain create d12 = C[789]  sidechain_group = true
+domain d12 bonds atoms = true atom_color = [ 1 0.8 0 ] bond_color = [ 0.5 0.3 0 ] show
+
+
+# peptide/sidechain 7
+#--------------------
+domain create d13 = C[789-790]  peptide = true
+domain d13 bonds atoms = true atom_color = element bond_color = element  \
+                render = line  show
+domain d13 backbone  color = [ 0 1 0 ]  planes = true
+
+domain create d14 = C[790]  sidechain_group = true
+domain d14 bonds atoms = true atom_color = [ 0 1 1 ] bond_color = [ 0 0.5 0.5 ] show
+
+
+# peptide/sidechain 8
+#--------------------
+domain create d15 = C[790-791]  peptide = true
+domain d15 bonds atoms = true atom_color = element bond_color = element  \
+                render = line  show
+domain d15 backbone  color = [ 0 1 0 ]  planes = true
+
+domain create d16 = C[791]  sidechain_group = true
+domain d16 bonds atoms = true atom_color = [ 0.6 1 0 ] bond_color = [ 0.3 0.5 0 ] show
+

@@ -1,0 +1,34 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Reading and visualizing a protein structure.               #
+#                                                            #
+# Create four domains, one for each chain.                   #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create three domains
+#---------------------
+domain  create  neckHeavyChain=C  molecule=neckMol
+domain  create  cam1=A   molecule=neckMol
+domain  create  cam2=B   molecule=neckMol
+domain  create  cam3=D   molecule=neckMol
+
+
+# visualize backbone atoms
+#-------------------------
+domain neckHeavyChain  backbone color=[ 1 1 1 ] width=2  show=true
+domain cam1 backbone color=[1 0 0] width=2  show=true
+domain cam2 backbone color=[0 1 0] width=2  show=true
+domain cam3 backbone color=[ 0 0 1 ] width=2  show=true
+
+
+

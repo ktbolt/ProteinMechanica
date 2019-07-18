@@ -1,0 +1,10 @@
+
+# dna domain macro
+#-----------------
+macro dnaDomain (id, seq, color)
+  domain create dna${id} = ${seq}
+  domain dna${id} backbone color = ${color} show = true
+  domain dna${id} atoms  color = ${color}  atom_names = { P }  show = true
+end macro
+
+

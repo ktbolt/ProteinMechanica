@@ -1,0 +1,57 @@
+#------------------------------------------------------#
+# create a structure file                              #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# read actin-docked trimer 
+#------------------------
+database open name=trimerDb format=pdb file=./docked-to-actin/m6-780-2R-4gsg-trimer-dockedActin.pdb
+molecule read name=trimerMol database=trimerDb
+domain create trimer=ABC
+domain trimer backbone color=[1 0 0] show=true
+
+# read actin
+#-----------
+database open name=actinDb format=pdb file=${dpath}/actin/actinFilament25_md.pdb 
+molecule read name=actinMol database=actinDb
+domain create actin1=ACEGIKMOQSUWY
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+# read target macro
+#------------------
+variable path=./target_heads/
+variable tfn=m6PreHead_dockedActin
+
+macro readTarget(n)
+  database open name=target${n}Db format=pdb file=${path}${tfn}${n}.pdb
+  molecule read name=target${n}Mol database=target${n}Db
+  domain create target${n}=C
+  domain target${n} backbone show=true
+end macro
+
+# read target heads
+#------------------
+for i = 2:12
+  readTarget(${i})
+end for
+
+# output target macro
+#--------------------
+macro writeTarget(op, n, id, name)
+  domains ${op} atoms list=target${n} model=${id} model_name=${name} file=${fname}
+end macro
+
+# output structure file 
+#----------------------
+variable fname=structure.pdb 
+domains write  atoms list={trimer} model=1 model_name=motor file=${fname}
+domains append atoms list={actin1 actin2} model=2 model_name=actin file=${fname}
+
+for i = 2:12
+  writeTarget(append, ${i}, ${i}, targetBind${i})
+end for
+
+

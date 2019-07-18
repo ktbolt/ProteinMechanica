@@ -1,0 +1,18 @@
+#============================================================#
+# helicase: slices                                           #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = m1  format = pm  file = ../data/emd_1134.pm 
+
+# slice 
+#------
+grid m1  slice  k = 50  vmin = -0.092504  vmax = 0.075945 show = true
+grid m1  slice  i = 48  vmin = -0.092504  vmax = 0.075945 show = true
+grid m1  slice  j = 48  vmin = -0.092504  vmax = 0.075945 show = true
+

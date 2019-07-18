@@ -1,0 +1,31 @@
+#============================================================#
+# simulate surfces from a grid.                              #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = m1  format = pm  file = ../data/emd_1134.pm 
+
+# slice 
+#------
+grid m1  slice  k = 50  vmin = -0.092504  vmax = 0.075945 show = true
+
+# isosurface at a point; write out isosurface
+#--------------------------------------------
+variable pt1 = [13.4324 13.365 17.5 ]
+
+grid m1  isosurface  point = ${pt1}                                 \
+                     display = line  shading = color show = true    \
+                     color = [ 0.7 0.7 0]                           \
+                     file = grid1_p1_surf.pm
+
+variable pt2 = [17.0021 13.7018 17.5]
+grid m1  isosurface  point = ${pt2}                                 \
+                     display = line  shading = color show = true    \
+                     color = [ 0.7 0.7 0]                           \
+                     file = grid1_p2_surf.pm
+

@@ -1,0 +1,98 @@
+
+#============================================================*
+#                   test ball joint stops                    *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create cylinder
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.5   \
+              length = 2.0  \
+              center = [ 0 1 0 ]  \
+              axis = [ 0 1 0 ]  \
+              color = [ 1 0 0 ] \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl2  type = cylinder  \
+              radius = 0.5   \
+              length = 2.0  \
+              center = [ 0 3 0 ]  \
+              axis = [ 0 1 0 ]  \
+              color = [ 0 1 0 ] \
+              display = line  \
+              show = true
+
+solid create  name = cyl3  type = cylinder  \
+              radius = 0.5   \
+              length = 4.0  \
+              center = [ 0 4 0 ]  \
+              axis = [ 1 0 0 ]  \
+              color = [ 1 1 0 ] \
+              display = line  \
+              show = true
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = cyl1_body type = rigid  solid = cyl1
+body create  name = cyl2_body type = rigid  solid = cyl2
+body create  name = cyl3_body type = rigid  solid = cyl3
+
+
+# create joints
+#--------------
+joint create  name = jnt1  type = weld  cylinder = cyl1  distance = 0.0
+joint jnt1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt1 bodies = { ground cyl1_body }
+
+joint create  name = jnt2  type = hinge  cylinder = cyl1  distance = 1.0      \
+              axis = [ 0 0 1 ]  force_const = 10.0  
+joint jnt2 color = [ 1 0 1 ] msize = 0.15 shading = flat  show = true
+joint jnt2 bodies = { cyl1_body cyl2_body }
+
+joint create  name = jnt3  type = weld cylinder = cyl2  distance = 1.0
+joint jnt3 color = [ 1 0 1 ] msize = 0.1 shading = color show = true
+joint jnt3 bodies = { cyl2_body cyl3_body }
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground cyl1_body cyl2_body cyl3_body }
+
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 jnt2 jnt3 } 
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 2 0 0 ]       \
+              direction = [ 1 0 0 ]   \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = cyl3_body  \
+                    time = { 0 2.0 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+

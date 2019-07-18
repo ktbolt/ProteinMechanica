@@ -1,0 +1,33 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Reading and visualizing a protein structure.               #
+#                                                            #
+# Create two ellipsoids.                                     #
+#============================================================#
+
+
+# create first ellipsoid
+#-----------------------
+solid create  name=ellpisoid1  type=ellipsoid      \
+              center =[ 0.0 0.0 0.0]                   \
+              radius1=0.3  axis1=[1 0 0]           \
+              radius2=0.6  axis2=[0 1 0]           \
+              radius3=0.3  axis3=[0 0 1]           \
+              color=[ 1 0 0 ]                        \
+              shading=flat                           \
+              show=true
+
+
+# create second ellipsoid
+#------------------------
+solid create  name=ellpisoid2  type=ellipsoid  \
+              point1=[0.3 0 0]                   \ 
+              point2=[1.3 0 0]                   \ 
+              radius=0.3                         \
+              color=[ 0 1 0 ]                    \
+              shading=flat                       \
+              show=true
+
+
+

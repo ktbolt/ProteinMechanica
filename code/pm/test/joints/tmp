@@ -1,0 +1,5 @@
+
+joint create  name = jnt1 type = universal domain = hc  res = C760  use = CA      
+              use_pca = true  pca_res = C[760-775]  axis1 = pca2  axis2 = pca3
+
+

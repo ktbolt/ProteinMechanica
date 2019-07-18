@@ -1,0 +1,31 @@
+#============================================================#
+# hydrogen bonds.                                            #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1
+
+# create helix domain
+#--------------------
+domain create helix = C[780-790]
+domain helix backbone color = [ 1 1 1 ]  width = 3 show=true
+domain helix bonds atoms = true  atom_color = element  bond_color = [ 0 1 0 ] show 
+
+
+# display hydrogen bonds
+#-----------------------
+domain helix hbonds  show = true
+
+graphics  center  domain = helix  
+

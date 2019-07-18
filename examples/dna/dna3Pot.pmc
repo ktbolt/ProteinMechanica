@@ -1,0 +1,82 @@
+#============================================================#
+# define potential                                           #
+#============================================================#
+variable pot_t2 = 10000
+variable pot_k = 10.0
+variable pot_r = 1.5
+
+variable pot_k1 = 50.0
+variable pot_r1 = 1.5
+
+simulation rsim  add interactions = dna1Springs                        \
+           type = spring  atom_names = { N1 }  force_const = ${pot_k}   \
+           cutoff = ${pot_r} time = { 0.0 ${pot_t2}  }                 \
+           color = [ 0.5 0 0 ] show = true                               \
+           bodies = { dnaC1Body dnaD1Body  }
+
+simulation rsim  add interactions = dna2Springs                        \
+           type = spring  atom_names = { N1 }  force_const = ${pot_k}   \
+           cutoff = ${pot_r} time = { 0.0 ${pot_t2}  }                 \
+           color = [ 0 0.5 0 ] show = true                               \
+           bodies = { dnaC2Body dnaD2Body  }
+
+simulation rsim  add interactions = dna3Springs                        \
+           type = spring  atom_names = { N1 }  force_const = ${pot_k}   \
+           cutoff = ${pot_r} time = { 0.0 ${pot_t2}  }                 \
+           color = [ 0.5 0 0 ] show = true                               \
+           bodies = { dnaC3Body dnaD3Body  }
+
+simulation rsim  add interactions = dna4Springs                         \
+           type = spring  atom_names = { N1 }  force_const = ${pot_k}   \
+           cutoff = ${pot_r} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 0 0.5 0 ] show = true                              \
+           bodies = { dnaC4Body dnaD4Body  }
+
+
+#----- same chain C potential ---------------------#
+
+simulation rsim  add interactions = dnaS1Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaC1Body dnaC2Body  }
+
+simulation rsim  add interactions = dnaS2Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaC2Body dnaC3Body  }
+
+simulation rsim  add interactions = dnaS3Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaC3Body dnaC4Body  }
+
+
+#----- same chain D potential ---------------------#
+
+simulation rsim  add interactions = dnaS4Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaD1Body dnaD2Body  }
+
+simulation rsim  add interactions = dnaS5Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaD2Body dnaD3Body  }
+
+simulation rsim  add interactions = dnaS6Springs                         \
+           type = spring  atom_names = { P  }  force_const = ${pot_k1}   \
+           cutoff = ${pot_r1} time = { 0.0 ${pot_t2}  }                  \
+           color = [ 1 1 0 ] show = true                                 \
+           bodies = { dnaD3Body dnaD4Body  }
+
+
+
+
+
+
+

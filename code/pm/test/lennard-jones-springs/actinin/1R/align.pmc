@@ -1,0 +1,44 @@
+#------------------------------------------------------#
+# align structure to x-axis                            #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+#units
+units scale name=mass uname=reducedMass value=10000.0
+
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=../aactinin2R_ex.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+domain create actinin=A
+domain actinin backbone color=[0.5 0.5 0.5] width=1
+domain actinin pca show=true 
+
+variable axis=[1 0 0]
+#variable axis=[0 1 0]
+#variable axis=[0 0 1]
+variable origin=[15.6111 -0.588417 6.87112]
+
+domain create actininx=A
+domain actininx xform use_pca=true pca_domain=actinin align_pca=${axis}
+domain actininx backbone color=[1 0 0] width=2
+domain actininx pca show=true 
+
+vector create name=xaxis point1=${origin}  point2=[25.6111 -0.588417 6.87112] \
+       color=[1 1 0] width=1 show=true
+
+vector create name=yaxis point1=${origin}  point2=[15.6111 9.411583 6.87112] \
+       color=[1 1 0] width=1 show=true
+
+vector create name=zaxis point1=${origin}  point2=[15.6111 -0.588417 16.87112] \
+       color=[1 1 0] width=1 show=true
+
+domains write atoms list={actininx} file=aactinin2R_xform.pdb
+
+

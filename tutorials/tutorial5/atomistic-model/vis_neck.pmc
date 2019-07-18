@@ -1,0 +1,37 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Neck Model                                   #
+#                                                           #
+# Show neck model.                                          #
+#-----------------------------------------------------------#
+
+# read model
+#-----------
+database  open  name=neckDb  type=pdb  file=neck_model.pdb
+molecule read name=neckMol  database=neckDb
+molecule neckMol  print 
+
+domain create neckHelix=C
+domain neckHelix  backbone  color=[0.7 0.7 0.7 ]  width=2  show=true
+
+domain create camA=A
+domain camA backbone  color=[1 0 0 ]  width=2  show=true
+
+domain create camB=B
+domain camB backbone  color=[0 1 0 ]  width=2  show=true
+ 
+domain create camD=D
+domain camD backbone  color=[1 0.6 0 ]  width=2  show=true
+
+domain create camE=E
+domain camE backbone  color=[0 1 1 ]  width=2  show=true
+
+domain create camF=F
+domain camF backbone  color=[1 1 0 ]  width=2  show=true
+
+domain create camG=G
+domain camG backbone  color=[0 0 1 ]  width=2  show=true
+

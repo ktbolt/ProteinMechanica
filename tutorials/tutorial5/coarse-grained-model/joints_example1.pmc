@@ -1,0 +1,46 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Coarse-Grained Models of the Myosin V Dimer      #
+#                                                           #
+# Defining joints                                           #
+#                                                           #
+# Create some rigid bodies from molecular domains and       #
+# connect them with ball joints.                            #
+#-----------------------------------------------------------#
+#system echo=off
+#system verbose=false
+
+# read monomer model
+#-------------------
+database open name=dimerDb type=pdb file=dimer.pdb 
+molecule read name=dimerMol database=dimerDb
+
+# create some domains
+#--------------------
+domain create postHead=C[2-770]
+domain create postCamA=C[770-790]A
+domain create postCamB=C[790-815]B
+
+domain postHead backbone color=[1 0 0] width=2 show=true
+domain postCamA backbone color=[0 1 0] width=2 show=true
+domain postCamB backbone color=[0 1 1] width=2 show=true
+
+# create rigid bodies
+#--------------------
+body create name=postHeadBody type=rigid domain=postHead
+body create name=postCamABody type=rigid domain=postCamA
+body create name=postCamBBody type=rigid domain=postCamB
+
+# create joints
+#--------------
+joint create name=jntHeadCamA type=ball position=postHead:C[770]:CA \
+  bodies={postHeadBody postCamABody}                                \
+  color=[1 0 1] msize=0.1 display=line shading=color show=true 
+
+joint create name=jntCamACamB type=ball position=postCamA:C[790]:CA \
+  bodies={postCamABody postCamBBody}                                \
+  color=[1 0 1] msize=0.1 display=line shading=color show=true 
+
+joint jntHeadCamA print 
+

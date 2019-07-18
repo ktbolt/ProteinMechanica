@@ -1,0 +1,25 @@
+
+#============================================================*
+#               test domain fitting                          *
+#============================================================*
+
+# open pdb file
+database open name = head-neck format = pdb  file = fit.pdb 
+
+# read molecule
+molecule read  name = m1   database = head-neck
+molecule m1 xform rotation = [ 55 0 0 ]
+
+# create a some domains
+#----------------------
+domain create d1 = C
+domain d1 backbone color = [ 0 0.7 0 ] width = 2 show
+
+domain create d2 = A
+domain d2 backbone color = [ 0 0.7 0 ] width = 2 show
+
+domain create d3 = B
+domain d3 backbone color = [ 0 0.7 0 ] width = 2 show
+
+graphics background color = [ 1 1 1 ]
+

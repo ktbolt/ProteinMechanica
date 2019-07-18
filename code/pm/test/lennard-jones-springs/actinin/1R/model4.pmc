@@ -1,0 +1,64 @@
+#------------------------------------------------------#
+# define model of 2R actinin: use md model             #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=md/em_protn_A.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+multibody create name=a4b type=domains                                  \
+   bodies={ A[748-791], A[791-796], A[796-800], A[800-808], A[808-817], \ 
+            A[817-828], A[828-839], A[839-842], A[842-848], A[848-857], \
+            A[857-878], A[878-890] } \
+   domain_color=[1 0 1] width=2 \
+   joint_type=ball      \
+   joints={ A[791] A[796] A[800] A[808] A[817] A[828] A[839] A[842] A[848] \
+            A[857] A[878] A[880] }                           \
+   joint_color=[1 1 0] msize=0.05
+
+#--------------
+body create name=ground4 type=ground
+
+# create joints
+#--------------
+joint create name=a4GroundJoint type=weld position=a4b1:A[748]:CA  \
+              color=[1 0 0] msize=0.18 shading=color show=true     \
+              bodies={ground4 a4b1Body}
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim4 type=rigid
+simulation rsim4 solver=ode
+#simulation rsim4 damping=on
+
+# add bodies and joints
+#----------------------
+simulation rsim4 add body=ground4 
+simulation rsim4 add bodies=prefix  prefix=a4
+simulation rsim4 add joints=prefix  prefix=a4
+
+# initialize the simulation
+#--------------------------
+simulation rsim4 initialize
+simulation rsim4 time step=0.001
+simulation rsim4 state save_frequency=100
+
+# apply forces 
+#-------------
+force create name=a4force1 type=explicit  \
+   global_frame=true point=a4b12:A[890]  \
+   direction=[0 40 0] scale=1.0           \
+   color=[0 1 0] show=true
+simulation rsim4 add force=a4force1 body=a4b12Body time={0 500}
+
+# add trace
+#----------
+simulation rsim4  add trace name=trace4  \
+           global_frame=true    \
+           point=a4b12:A[890] color=[1 0 1]  \
+           body=a4b12Body  show=true
+
+simulation rsim4 write energy=true state=true file_name=rsim4
+

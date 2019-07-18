@@ -1,0 +1,26 @@
+#------------------------------------------------------#
+# test reading structure file                          #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# read structure file 
+#--------------------
+database open name=structureDb format=pdb file=structure.pdb
+
+molecule read name=structureMol database=structureDb model_name=motor
+domain create motor=ABCDEFGJHIKLMN
+domain motor backbone color=[1 1 1] show=true
+
+molecule read name=structureMol database=structureDb model_name=actin
+domain create actin1=ACEGIKMOQSUWY
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+for i = 2:19
+  molecule read name=structureMol database=structureDb model_name=targetBind${i}
+  domain create target${i}=C
+  domain target${i} backbone color=[1 0 0] show=true
+end for
+

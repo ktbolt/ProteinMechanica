@@ -1,0 +1,28 @@
+#------------------------------------------------------#
+# execute simulation                                   #
+#------------------------------------------------------#
+
+# initialize the simulation
+#--------------------------
+simulation ${simulation_name} initialize
+simulation ${simulation_name} time step=0.001
+simulation state save_frequency=1
+
+ifdef ${target2_name}
+  simulation ${simulation_name} read state=true file_name=simMotorBind9 time=last
+end ifdef
+
+# output simulation results
+#--------------------------
+simulation ${simulation_name} write energy=true state=true  \
+   file_name=${simulation_file_name}
+
+#simulation ${simulation_name} silent=true step=6000
+
+wait
+
+simulation ${simulation_name} write domains=true current=true \
+   file_name=${simulation_file_name}
+
+
+

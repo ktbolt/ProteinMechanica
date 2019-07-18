@@ -1,0 +1,54 @@
+look at coarse-grain modeling of actinin
+----------------------------------------
+
+ look at models of single 1R domains.
+
+ use Lennard-Jones springs.
+
+ have four models:
+
+   1) model1 - have springs btw all atoms
+
+   2) model2 - have springs btw sidechain atoms, no backbone CA-C, etc.
+
+   3) model3 - have springs btw sidechain atoms, and backbone CA-CA
+
+   4) model4 - use md em min structure; potential same as model3. 
+
+
+
+ 1) run simulation 
+
+
+    p model1=true run_sim.pmc
+
+      max=14.443972
+
+
+    p model2=true run_sim.pmc
+
+      max=43.642761
+
+
+    p model3=true run_sim.pmc
+
+      max=37.702705
+
+
+    p model4=true run_sim.pmc
+
+      max=35.402157
+
+
+
+ 2) compare model1 and model2
+
+    p model1=true model2=true run_sim.pmc
+
+
+ 3) compare model3 and model4
+
+    em md energy minimization produces atom distances that are closer to their 
+    equilibrium distance. this should produce a better approximation.
+
+

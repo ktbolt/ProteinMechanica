@@ -1,0 +1,89 @@
+#============================================================*
+#                   test restraints                          *
+# c-alpha type                                               *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/two_necks.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788] 
+domain iq1 backbone color = [ 0 0 1 ] width = 2 show
+
+domain create jiq3 = LJ[814-836]
+domain jiq3 backbone color = [ 1 1 0.7 ] width = 2 show
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name=iq1_body  type=rigid  domain=iq1
+body create  name=jiq3_body type=rigid  domain=jiq3
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body = iq1_body
+simulation rsim add body = jiq3_body
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+simulation rsim momentum = on
+
+# add restraints
+#----------------
+domain iq1  define region=iq1Rgn1  residues=A  atom_names={ CA }
+domain jiq3 define region=jiq3Rgn1 residues=L  atom_names={ CA }
+
+simulation rsim add restraint = res1   \
+   type=all                            \
+   body1=jiq3_body  region1=jiq3Rgn1   \
+   body2=iq1_body   region2=iq1Rgn1    \
+   force_const=1.0  distance=0.99      \
+   compute_energy=true                 \
+   show = true                         \
+   time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+simulation  rsim  write  energy = true  file_name = rsim
+
+# set damping
+#------------
+simulation rsim damping = on
+body iq1_body  damping = 10.0
+body jiq3_body damping = 10.0
+
+# step simulation
+#----------------
+#simulation rsim step = 400
+#simulation rsim step
+
+#s 1000
+#wait
+
+# check how close restraints are satisfied
+#-----------------------------------------
+#simulation rsim restraints  check 
+
+

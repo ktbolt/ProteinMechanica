@@ -1,0 +1,17 @@
+build structure file
+--------------------
+
+ structure file contains:
+    - m6 trimer bound to actin
+    - actin filament
+    - target heads
+
+ 1) create structure file
+
+    pm create_structure_file.pmc ----> structure.pdb
+
+
+ 2) test structure file
+
+    pm test.pmc
+

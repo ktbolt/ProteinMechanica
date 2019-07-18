@@ -1,0 +1,28 @@
+
+#============================================================*
+#               test simulation of peptide planes            *
+#                                                            *
+# look at model of two residues.                             *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+database open name = db1  format = pdb  file = iq.pdb
+molecule read  name = m1   database = db1
+
+domain create d1 = C
+domain d1 xform translation = [ -7.0453  -3.6504 1.0206 ]
+
+domain d1 bonds  atoms = true  atom_color = element  \
+                 render = solid \
+                 bond_color = [ 1 0 0 ] width = 3 show
+domain d1 backbone  color = [ 0 1 0 ] width = 2  show 
+
+domains write list = { d1 } chains = { C } file = iq_xform.pdb 
+

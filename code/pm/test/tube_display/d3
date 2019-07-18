@@ -1,0 +1,31 @@
+#============================================================#
+#                   show using tube                          #
+#============================================================#
+
+variable w=2
+
+# set units
+units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read molecule
+#--------------
+database open name=neck format=pdb  file=../data/mv_head.pdb
+molecule read  name=m1   database=neck
+
+# create a some domains
+#----------------------
+domain create m5=C
+domain m5 backbone color=[0.5 0.5 0.5] tube=true width=${w} show=true
+domain create cam1=A
+domain cam1 backbone color=[1.0 0.0 0.0] tube=true width=${w} show=true
+domain create cam2=B
+domain cam2 backbone color=[0.0 1.0 0.0] tube=true width=${w} show=true
+domain create cam3=D
+domain cam3 backbone color=[1.0 0.6 0.0] tube=true width=${w} show=true
+domain create cam4=E
+domain cam4 backbone color=[1.0 1.0 0.0] tube=true width=${w} show=true
+
+graphics center point=[6.74977 5.43745 26.1256]
+
+

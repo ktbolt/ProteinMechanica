@@ -1,0 +1,33 @@
+#============================================================#
+# helix properties: define a joint at helix center.          #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create hc = C[760-788]
+
+domain create h1 = C[760-769]
+domain h1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain create h2 = C[769-788]
+domain h2 backbone color = [ 0 1 0 ] width = 2 show=true
+
+# show helix properties: center line
+#-----------------------------------
+domain hc helix properties  msize = 0.01 color = [ 1 1 1]  show = true  print = true 
+
+# create a joint on the helix centerline (hc)
+#--------------------------------------------
+joint create  name = jnt1   type = ball  position = hc:C[768]:hc  \
+      color = [ 1 1 0 ]  msize = 0.1  display = line  show = true
+
+graphics  center  point = hc:C[768]:hc 
+

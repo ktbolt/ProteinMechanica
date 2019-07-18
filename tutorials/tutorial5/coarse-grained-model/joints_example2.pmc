@@ -1,0 +1,55 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Coarse-Grained Models of the Myosin V Dimer      #
+#                                                           #
+# Defining joints                                           #
+#                                                           #
+# Create some rigid bodies from molecular domains and       #
+# connect them with hinge joints.                           #
+#-----------------------------------------------------------#
+# read monomer model
+#-------------------
+database open name=dimerDb type=pdb file=dimer.pdb 
+molecule read name=dimerMol database=dimerDb
+
+# create some domains
+#--------------------
+variable ren=line
+domain create helix=C[770-772]  
+#domain helix bonds bond_color=[0 1 0] width=3 show=true 
+domain create helixp=C[770-772]  
+domain helixp backbone planes=true color=[0 0.5 0.5] show=true
+
+domain create pt770=C[770-771] peptide=true
+domain pt770 bonds atoms=true atom_color=element bond_color=[1 0 0] render=${ren} show=true
+
+domain create sc771=C[771] sidechain_group=true
+domain sc771 bonds atoms=true atom_color=element bond_color=[0 1 0] show=true
+
+domain create pt771=C[771-772] peptide=true
+domain pt771 bonds atoms=true atom_color=element bond_color=[1 0 0] render=${ren} show=true
+
+domain create sc772=C[772] sidechain_group=true
+domain sc772 bonds atoms=true atom_color=element bond_color=[0 1 0] show=true
+
+domain pt770 print 
+domain sc771 print 
+
+
+# create rigid bodies
+#--------------------
+body create name=pt770 type=rigid domain=pt770
+
+# create joints
+#--------------
+joint create name=jntNCA770 type=hinge  position=pt770:C[771]:N \
+   use_bond=true bond={pt770:C[771]:N  sc771:C[771]:CA}           \
+   color=[1 0 1] msize=0.10 display=solid shading=color show=true 
+
+joint create name=jntCAC771 type=hinge  position=sc771:C[771]:CA \
+   use_bond=true bond={sc771:C[771]:CA  pt771:C[771]:C}           \
+   color=[1 0 1] msize=0.10 display=solid shading=color show=true 
+
+graphics center point=pt770:C[770]:C
+

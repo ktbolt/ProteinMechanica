@@ -1,0 +1,15 @@
+
+variable  iq2 = BC[788-814]
+variable  red = [ 1 0 0 ]
+variable  green = [ 0 1 0 ]
+variable  iq1 = A
+variable  width = 4.0
+
+print 
+print iq2 = ${iq2}
+print width = ${width}
+
+width = 10
+print width = ${width}
+
+

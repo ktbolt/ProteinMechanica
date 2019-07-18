@@ -1,0 +1,34 @@
+
+#============================================================*
+#               test fitting peptide-glycans                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = dh138  format = pdb  file = dh138_conf1.pdb
+
+# read molecule
+molecule read  name = m1  database = dh138
+
+# create a some domains
+domain create d1 = A
+domain d1 bonds  bond_color = element  show = true
+
+domain create d2 = A
+#domain d2 bonds  atom_color = element  show = true
+
+domain d2  fit  sequence = A[1]                              \
+                atom_names = { C259 N227 C219 }              \
+                destination = d1                             \
+                destination_sequence = A[1]                  \
+                destination_atom_names = { C120 C117 N116 }  \
+                rotation = on                                \
+                copy = d2Fit  
+
+#domain create d2Fit = A
+#domain d2Fit  xform  translation = [ 10 0 0 ] 
+domain d2Fit  bonds  bond_color = [ 1 1 0 ] atoms = true show = true
+

@@ -1,0 +1,63 @@
+#------------------------------------------------------#
+# define model of 2R actinin                           #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=aactinin2R_xform.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+multibody create name=a2b type=domains                                  \
+   bodies={ A[748-791], A[791-796], A[796-800], A[800-808], A[808-817], \ 
+            A[817-828], A[828-839], A[839-842], A[842-848], A[848-857], \
+            A[857-878], A[878-890] } \
+   domain_color=[0 1 0] \
+   joint_type=ball      \
+   joints={ A[791] A[796] A[800] A[808] A[817] A[828] A[839] A[842] A[848] \
+            A[857] A[878] A[880] }                           \
+   joint_color=[1 0 1] msize=0.05
+
+#--------------
+body create name=ground2 type=ground
+
+# create joints
+#--------------
+joint create name=a2GroundJoint type=weld position=a2b1:A[748]:CA  \
+              color=[1 0 0] msize=0.18 shading=color show=true     \
+              bodies={ground2 a2b1Body}
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim2 type=rigid
+simulation rsim2 solver=ode
+#simulation rsim2 damping=on
+
+# add bodies and joints
+#----------------------
+simulation rsim2 add body=ground2 
+simulation rsim2 add bodies=prefix  prefix=a2
+simulation rsim2 add joints=prefix  prefix=a2
+
+# initialize the simulation
+#--------------------------
+simulation rsim2 initialize
+simulation rsim2 time step=0.001
+simulation rsim2 state save_frequency=100
+
+# apply forces 
+#-------------
+force create name=a2force1 type=explicit  \
+   global_frame=true point=a2b12:A[890]  \
+   direction=[0 40 0] scale=1.0           \
+   color=[0 1 0] show=true
+simulation rsim2 add force=a2force1 body=a2b12Body time={0 500}
+
+# add trace
+#----------
+simulation rsim2  add trace name=trace2  \
+           global_frame=true    \
+           point=a2b12:A[890] color=[0 1 0]  \
+           body=a2b12Body  show=true
+
+simulation rsim2 write energy=true state=true file_name=rsim2

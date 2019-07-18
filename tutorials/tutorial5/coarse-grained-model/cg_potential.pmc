@@ -1,0 +1,35 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Creating a Coarse-grained Energy Potential for the        #
+# Myosin V Dimer                                            #
+#-----------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# create rigid domains
+#---------------------
+read domains.pmc
+
+# create rigid bodies and joints
+#-------------------------------
+read model.pmc
+
+# create simulation
+#------------------
+read sim.pmc
+
+# read in spring potential 
+#-------------------------
+read springs.pmc
+
+# create run simulation
+#----------------------
+read run.pmc
+
+graphics background color=[1 1 1]
+

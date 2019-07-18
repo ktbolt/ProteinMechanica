@@ -1,0 +1,24 @@
+
+Hermann-Mauguin notation is used to represent the symmetry elements in point groups, 
+plane groups and space groups.
+
+Space groups can be defined by combining the point group identifier with the uppercase 
+P, C, I, or F for primitive, side-centered, body-centered, or face-centered lattices. 
+
+Translations within the lattice in the form of screw axes and glide planes are also 
+noted, giving a complete crystallographic space group.
+
+
+The screw axis is noted by a number, n, where the angle of rotation is 360/n. The 
+degree of translation is then added as a subscript showing how far along the axis 
+the translation is, as a portion of the parallel lattice vector.
+
+   In crystallography, a screw axis is a symmetry operation describing how a combination 
+   of rotation about an axis and a translation parallel to that axis leaves a crystal 
+   unchanged.
+
+
+   In crystallography, a glide plane is symmetry operation describing how a reflection 
+   in a plane, followed by a translation parallel with that plane, may leave the crystal 
+   unchanged.
+

@@ -1,0 +1,60 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# A multibody model of a section of the myosin V neck.       #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=mvNeckDb format=pdb  file=iq123.pdb 
+
+# read molecule
+#--------------
+molecule read  name=mvNeckMol  database=mvNeckDb  type=protein
+molecule mvNeckMol print 
+
+# visualize molecule (commented out)
+#-----------------------------------
+#domain create hc=C
+#domain hc backbone color=[ 0.6 0.6 0.6 ] width=2 show=true
+#domain create camA=A
+#domain camA backbone color=[ 1 0 0 ] width=2 show=true
+#domain create camB=B
+#domain camB backbone color=[ 0 1 0 ] width=2 show=true
+#domain create camD=D
+#domain camD backbone color=[ 1 1 0 ] width=2 show=true
+
+# create a domains
+#-----------------
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+
+# create rigid bodies 
+#--------------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create joints 
+#--------------
+joint  create  name=iq12Joint  type=ball  position=iq1:C[788]:CA  \
+               bodies={ iq1Body iq2Body }                             \
+               color=[ 1 1 1] msize=0.08 display=line  show=true
+
+joint  create  name=iq23Joint  type=ball  position=iq2:C[814]:CA  \
+               bodies={ iq2Body iq3Body }                             \
+               color=[ 1 1 1] msize=0.08 display=line  show=true
+
+
+# rotate the scene for a better view
+#-----------------------------------
+graphics  rotate=[ 0 45 0 ] 
+
+
+

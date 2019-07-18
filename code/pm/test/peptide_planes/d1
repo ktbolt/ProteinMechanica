@@ -1,0 +1,33 @@
+
+#============================================================#
+#          test visulaization of peptide planes.             #
+#============================================================#
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+#units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1
+
+
+# create domains
+#---------------
+
+domain create iq1 = C[766-783]
+domain iq1 backbone color = [ 1 0.61 0 ] planes = true  width = 2 show
+domain iq1 bonds  atom_color = element  bond_color = element  \
+                  render = solid  atoms = true show = true
+
+graphics  center  point = [ 0.84452 1.38638 1.2856 ]

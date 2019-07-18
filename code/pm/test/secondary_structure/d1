@@ -1,0 +1,66 @@
+#============================================================*
+#               test reading 2nd structure                   *
+#                                                            *
+# create domains from helix id.                              *
+#============================================================*
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+database open name=db1  format=pdb  file=../data/1W7I.pdb
+
+# read molecule
+molecule read  name=m1   database=db1  
+
+# create a some domains
+#-------------------
+domain create head=A[2-780]
+domain head backbone color=[ 0.6 0.6 0.6 ] width=1 show
+
+# select helix by id 
+#-------------------
+domain create h1=helix1
+domain h1 backbone color=[ 1 0 0 ] width=3 show=true
+
+domain create h2=helix2
+domain h2 backbone color=[ 0 1 0 ] width=3 show=true
+
+domain create h3=helix3
+domain h3 backbone color=[ 0 0 1 ] width=3 show=true
+
+domain create h4=helix4
+domain h4 backbone color=[ 1 1 0 ] width=3 show=true
+
+domain create h5=helix5
+domain h5 backbone color=[ 1 0 1 ] width=3 show=true
+
+domain create h6=helix6
+domain h6 backbone color=[ 0 1 1 ] width=3 show=true
+
+domain create h18=helix18
+domain h18 backbone color=[ 0 1 1 ] width=3 show=true
+
+domain create L18=loop18
+domain L18 backbone color=[ 1 1 1 ] width=3 show=true
+
+
+# select helix by residue 
+#------------------------
+domain create hA649=helixA649  
+domain hA649 backbone color=[ 1 0.7 0 ] width=3 show=true
+
+domain create hA404=helixA404  
+domain hA404 backbone color=[ 0 0.7 1 ] width=3 show=true
+
+# select sheet by id 
+#-------------------
+domain create sh1=sheetAA
+domain sh1 backbone color=[ 1 0 1 ] width=3 show=true
+
+domain create sh2=sheetAB
+domain sh2 backbone color=[ 1 0 1 ] width=3 show=true
+
+
+

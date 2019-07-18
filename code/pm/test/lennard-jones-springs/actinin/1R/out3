@@ -1,0 +1,2991 @@
+
+pm>  s
+pm>  ====== Protein Mechanica Oct 10 2011 10:17:39 ======
+>>> read D:/cygwin/home/dparker/.pm 
+pm> #system echo=off
+pm> #------------------------------------------------------#
+pm> # define some variables and configure pm               #
+pm> #------------------------------------------------------#
+pm> variable dpath=d:/cygwin/home/dparker/research
+pm> graphics window width=500 height=500
+pm> #graphics background color=[0.4 0.4 0.4]
+pm> #------------------------------------------------------#
+pm> # simulate coarse-grained model of 2R actinin          #
+pm> #------------------------------------------------------#
+pm> system echo=off
+
+    >>> create multibody from domains. 
+
+------ create domains ------ 
+>>> create domain name = a3b1 
+>>> create domain name = a3b2 
+>>> create domain name = a3b3 
+>>> create domain name = a3b4 
+>>> create domain name = a3b5 
+>>> create domain name = a3b6 
+>>> create domain name = a3b7 
+>>> create domain name = a3b8 
+>>> create domain name = a3b9 
+>>> create domain name = a3b10 
+>>> create domain name = a3b11 
+>>> create domain name = a3b12 
+
+------ create rigid bodies ------ 
+>>> create rigid body name=a3b1Body 
+>>> create rigid body name=a3b2Body 
+>>> create rigid body name=a3b3Body 
+>>> create rigid body name=a3b4Body 
+>>> create rigid body name=a3b5Body 
+>>> create rigid body name=a3b6Body 
+>>> create rigid body name=a3b7Body 
+>>> create rigid body name=a3b8Body 
+>>> create rigid body name=a3b9Body 
+>>> create rigid body name=a3b10Body 
+>>> create rigid body name=a3b11Body 
+>>> create rigid body name=a3b12Body 
+
+------ create joints ------ 
+>>> create ball joint name = a3b1Jnt1 
+>>> create ball joint name = a3b2Jnt2 
+>>> create ball joint name = a3b3Jnt3 
+>>> create ball joint name = a3b4Jnt4 
+>>> create ball joint name = a3b5Jnt5 
+>>> create ball joint name = a3b6Jnt6 
+>>> create ball joint name = a3b7Jnt7 
+>>> create ball joint name = a3b8Jnt8 
+>>> create ball joint name = a3b9Jnt9 
+>>> create ball joint name = a3b10Jnt10 
+>>> create ball joint name = a3b11Jnt11 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b2Rgna3b1Body-a3SpingsA3b2_A3b1Rgna3b2BodyPotential 
+>>> num pts1 14 
+>>> num pts2 20 
+>>> rgn1 atoms size=14 
+>>> rgn2 atoms size=20 
+>>> add spring=1 atoms=CB-CB dist=0.542555 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-NH1 dist=0.490308 k=62.748810 r0=0.373200 
+>>> add spring=3 atoms=CG-NH1 dist=0.532386 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CB-CB dist=0.539714 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-NH1 dist=0.527862 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CB-CB dist=0.542007 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-OD1 dist=0.504581 k=76.248734 r0=0.356920 
+>>> add spring=8 atoms=OG-CB dist=0.501894 k=76.248734 r0=0.356920 
+>>> add spring=9 atoms=OG-CB dist=0.407059 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=OG-CG dist=0.432109 k=76.248734 r0=0.356920 
+>>> add spring=11 atoms=OG-OD1 dist=0.373895 k=137.509079 r0=0.332240 
+>>> num springs = 11 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b1Rgna3b2Body-a3SpingsA3b1_A3b4Rgna3b1BodyPotential 
+>>> num pts1 20 
+>>> num pts2 13 
+>>> rgn1 atoms size=20 
+>>> rgn2 atoms size=13 
+>>> add spring=1 atoms=CB-CB dist=0.539714 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-OG dist=0.501894 k=76.248734 r0=0.356920 
+>>> add spring=3 atoms=NH1-CB dist=0.527862 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CB-CB dist=0.542007 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-OG dist=0.407059 k=76.248734 r0=0.356920 
+>>> add spring=6 atoms=CG-OG dist=0.432109 k=76.248734 r0=0.356920 
+>>> add spring=7 atoms=OD1-CB dist=0.504581 k=76.248734 r0=0.356920 
+>>> add spring=8 atoms=OD1-OG dist=0.373895 k=137.509079 r0=0.332240 
+>>> num springs = 8 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b4Rgna3b1Body-a3SpingsA3b4_A3b1Rgna3b4BodyPotential 
+>>> num pts1 13 
+>>> num pts2 14 
+>>> rgn1 atoms size=13 
+>>> rgn2 atoms size=14 
+>>> add spring=1 atoms=CG-CD2 dist=0.507832 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-NE2 dist=0.518079 k=62.748810 r0=0.373200 
+>>> add spring=3 atoms=CD1-CD2 dist=0.503644 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-NE2 dist=0.482348 k=62.748810 r0=0.373200 
+>>> add spring=5 atoms=CD2-CG dist=0.493137 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD2-CD2 dist=0.389966 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD2-CE1 dist=0.531665 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD2-NE2 dist=0.422561 k=62.748810 r0=0.373200 
+>>> num springs = 8 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b1Rgna3b4Body-a3SpingsA3b1_A3b5Rgna3b1BodyPotential 
+>>> num pts1 14 
+>>> num pts2 26 
+>>> rgn1 atoms size=14 
+>>> rgn2 atoms size=26 
+>>> add spring=1 atoms=CG-CD2 dist=0.493137 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CD2-CG dist=0.507832 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD2-CD1 dist=0.503644 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD2-CD2 dist=0.389966 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CE1-CD2 dist=0.531665 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=NE2-CG dist=0.518079 k=62.748810 r0=0.373200 
+>>> add spring=7 atoms=NE2-CD1 dist=0.482348 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=NE2-CD2 dist=0.422561 k=62.748810 r0=0.373200 
+>>> num springs = 8 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b5Rgna3b1Body-a3SpingsA3b5_A3b1Rgna3b5BodyPotential 
+>>> num pts1 26 
+>>> num pts2 31 
+>>> rgn1 atoms size=26 
+>>> rgn2 atoms size=31 
+>>> add spring=1 atoms=CE2-CD1 dist=0.544859 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CE2-CE1 dist=0.477434 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CE2-CB dist=0.540901 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CZ2-CG dist=0.544556 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CZ2-CD1 dist=0.421896 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CZ2-CE1 dist=0.344933 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CZ2-CE2 dist=0.542681 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CZ2-CZ dist=0.421918 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CZ2-OH dist=0.419026 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=CZ2-CB dist=0.461879 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CZ3-CE1 dist=0.454031 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CZ3-CZ dist=0.470264 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CZ3-OH dist=0.397951 k=76.248734 r0=0.356920 
+>>> add spring=14 atoms=CH2-CD1 dist=0.440255 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CH2-CE1 dist=0.329898 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CH2-CE2 dist=0.498982 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CH2-CZ dist=0.370503 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CH2-OH dist=0.329432 k=76.248734 r0=0.356920 
+>>> add spring=19 atoms=CH2-CB dist=0.537993 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CH2-CB dist=0.541554 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CE1 dist=0.517705 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CZ dist=0.498992 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CB-OH dist=0.482645 k=76.248734 r0=0.356920 
+>>> add spring=24 atoms=CG-CG dist=0.534548 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CG-CD1 dist=0.506182 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CG-CD2 dist=0.493299 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CG-CE1 dist=0.435295 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CG-CE2 dist=0.42104 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CG-CZ dist=0.388797 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CG-OH dist=0.379498 k=76.248734 r0=0.356920 
+>>> add spring=31 atoms=CD-CG dist=0.46587 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CD-CD1 dist=0.467608 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CD-CD2 dist=0.42671 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CD-CE1 dist=0.435162 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CD-CE2 dist=0.39176 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CD-CZ dist=0.397048 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CD-OH dist=0.433039 k=76.248734 r0=0.356920 
+>>> add spring=38 atoms=CE-CB dist=0.455792 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CE-CG dist=0.364764 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CE-CD1 dist=0.35709 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CE-CD2 dist=0.365681 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CE-CE1 dist=0.354252 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CE-CE2 dist=0.364118 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CE-CZ dist=0.3586 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CE-OH dist=0.429532 k=76.248734 r0=0.356920 
+>>> add spring=46 atoms=NZ-CB dist=0.53099 k=62.748810 r0=0.373200 
+>>> add spring=47 atoms=NZ-CG dist=0.450378 k=62.748810 r0=0.373200 
+>>> add spring=48 atoms=NZ-CD1 dist=0.407697 k=62.748810 r0=0.373200 
+>>> add spring=49 atoms=NZ-CD2 dist=0.482015 k=62.748810 r0=0.373200 
+>>> add spring=50 atoms=NZ-CE1 dist=0.402506 k=62.748810 r0=0.373200 
+>>> add spring=51 atoms=NZ-CE2 dist=0.479013 k=62.748810 r0=0.373200 
+>>> add spring=52 atoms=NZ-CZ dist=0.440894 k=62.748810 r0=0.373200 
+>>> add spring=53 atoms=CG-CD2 dist=0.507832 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CG-NE2 dist=0.518079 k=62.748810 r0=0.373200 
+>>> add spring=55 atoms=CG-CE2 dist=0.514057 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CD1-CD2 dist=0.503644 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CD1-NE2 dist=0.482348 k=62.748810 r0=0.373200 
+>>> add spring=58 atoms=CD1-CD2 dist=0.509263 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CD1-CE2 dist=0.444781 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CD1-CZ dist=0.510146 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CD1-OH dist=0.50741 k=76.248734 r0=0.356920 
+>>> add spring=62 atoms=CD2-CG dist=0.493137 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CD2-CD2 dist=0.389966 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CD2-CE1 dist=0.531665 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CD2-NE2 dist=0.422561 k=62.748810 r0=0.373200 
+>>> add spring=66 atoms=CD2-CD2 dist=0.506193 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CD2-CE2 dist=0.505538 k=42.687122 r0=0.381600 
+>>> num springs = 67 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b5_A3b1Rgna3b5Body-a3SpingsA3b1_A3b6Rgna3b1BodyPotential 
+>>> num pts1 31 
+>>> num pts2 59 
+>>> rgn1 atoms size=31 
+>>> rgn2 atoms size=59 
+>>> add spring=1 atoms=CB-CE dist=0.455792 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-NZ dist=0.53099 k=62.748810 r0=0.373200 
+>>> add spring=3 atoms=CG-CZ2 dist=0.544556 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CG dist=0.534548 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CD dist=0.46587 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CE dist=0.364764 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-NZ dist=0.450378 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=CD1-CE2 dist=0.544859 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-CZ2 dist=0.421896 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD1-CH2 dist=0.440255 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD1-CG dist=0.506182 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD1-CD dist=0.467608 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD1-CE dist=0.35709 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD1-NZ dist=0.407697 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CD2-CG dist=0.493299 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD2-CD dist=0.42671 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD2-CE dist=0.365681 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD2-NZ dist=0.482015 k=62.748810 r0=0.373200 
+>>> add spring=19 atoms=CE1-CE2 dist=0.477434 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CE1-CZ2 dist=0.344933 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CE1-CZ3 dist=0.454031 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CE1-CH2 dist=0.329898 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CE1-CB dist=0.517705 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CE1-CG dist=0.435295 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CE1-CD dist=0.435162 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CE1-CE dist=0.354252 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CE1-NZ dist=0.402506 k=62.748810 r0=0.373200 
+>>> add spring=28 atoms=CE2-CZ2 dist=0.542681 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CE2-CH2 dist=0.498982 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CE2-CG dist=0.42104 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CE2-CD dist=0.39176 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CE2-CE dist=0.364118 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CE2-NZ dist=0.479013 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=CZ-CZ2 dist=0.421918 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CZ-CZ3 dist=0.470264 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CZ-CH2 dist=0.370503 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CZ-CB dist=0.498992 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CZ-CG dist=0.388797 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CZ-CD dist=0.397048 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CZ-CE dist=0.3586 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CZ-NZ dist=0.440894 k=62.748810 r0=0.373200 
+>>> add spring=42 atoms=OH-CZ2 dist=0.419026 k=76.248734 r0=0.356920 
+>>> add spring=43 atoms=OH-CZ3 dist=0.397951 k=76.248734 r0=0.356920 
+>>> add spring=44 atoms=OH-CH2 dist=0.329432 k=76.248734 r0=0.356920 
+>>> add spring=45 atoms=OH-CB dist=0.482645 k=76.248734 r0=0.356920 
+>>> add spring=46 atoms=OH-CG dist=0.379498 k=76.248734 r0=0.356920 
+>>> add spring=47 atoms=OH-CD dist=0.433039 k=76.248734 r0=0.356920 
+>>> add spring=48 atoms=OH-CE dist=0.429532 k=76.248734 r0=0.356920 
+>>> add spring=49 atoms=CB-CE2 dist=0.540901 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CB-CZ2 dist=0.461879 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CB-CH2 dist=0.537993 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CB-CH2 dist=0.541554 k=42.687122 r0=0.381600 
+>>> num springs = 52 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b6Rgna3b1Body-a3SpingsA3b6_A3b1Rgna3b6BodyPotential 
+>>> num pts1 59 
+>>> num pts2 32 
+>>> rgn1 atoms size=59 
+>>> rgn2 atoms size=32 
+>>> add spring=1 atoms=CB-CD2 dist=0.491829 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CD2 dist=0.450349 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD1-CB dist=0.419892 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CG dist=0.438719 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD1-CD1 dist=0.493238 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD1-CD2 dist=0.347568 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CE1-CB dist=0.36761 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CE1-CG dist=0.418981 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CE1-CD1 dist=0.457518 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CE1-CD2 dist=0.372259 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CZ-CB dist=0.469223 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CZ-CG dist=0.523448 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CZ-CD1 dist=0.533165 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CZ-CD2 dist=0.488751 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=OH-CB dist=0.483851 k=76.248734 r0=0.356920 
+>>> add spring=16 atoms=CB-CG dist=0.539542 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CB-CD dist=0.490754 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CB-OE1 dist=0.382137 k=76.248734 r0=0.356920 
+>>> add spring=19 atoms=CB-CG dist=0.452951 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CB-CD1 dist=0.445163 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CD2 dist=0.363358 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG-CD dist=0.524928 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-OE1 dist=0.406253 k=76.248734 r0=0.356920 
+>>> add spring=24 atoms=CG-CD2 dist=0.46006 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD-CD dist=0.494038 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD-OE1 dist=0.384606 k=76.248734 r0=0.356920 
+>>> add spring=27 atoms=CD-CG dist=0.536136 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD-CD2 dist=0.429323 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=NE-CG dist=0.475698 k=62.748810 r0=0.373200 
+>>> add spring=30 atoms=NE-CD dist=0.361889 k=62.748810 r0=0.373200 
+>>> add spring=31 atoms=NE-OE2 dist=0.405432 k=112.433098 r0=0.348520 
+>>> add spring=32 atoms=NE-CG dist=0.468774 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=NE-CD1 dist=0.526248 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=NE-CD2 dist=0.392394 k=62.748810 r0=0.373200 
+>>> add spring=35 atoms=CZ-CG dist=0.488351 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CZ-CD dist=0.362033 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CZ-OE1 dist=0.295144 k=76.248734 r0=0.356920 
+>>> add spring=38 atoms=CZ-OE2 dist=0.36925 k=76.248734 r0=0.356920 
+>>> add spring=39 atoms=CZ-CB dist=0.520097 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CZ-OE1 dist=0.470209 k=76.248734 r0=0.356920 
+>>> add spring=41 atoms=CZ-CG dist=0.476067 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CZ-CD2 dist=0.41074 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=NH1-CD dist=0.484751 k=62.748810 r0=0.373200 
+>>> add spring=44 atoms=NH1-OE1 dist=0.423581 k=112.433098 r0=0.348520 
+>>> add spring=45 atoms=NH1-OE2 dist=0.47825 k=112.433098 r0=0.348520 
+>>> add spring=46 atoms=NH1-OE1 dist=0.458876 k=112.433098 r0=0.348520 
+>>> add spring=47 atoms=NH1-CD2 dist=0.457975 k=62.748810 r0=0.373200 
+>>> add spring=48 atoms=NH2-CB dist=0.491499 k=62.748810 r0=0.373200 
+>>> add spring=49 atoms=NH2-CG dist=0.408673 k=62.748810 r0=0.373200 
+>>> add spring=50 atoms=NH2-CB dist=0.42152 k=62.748810 r0=0.373200 
+>>> add spring=51 atoms=NH2-CG dist=0.49735 k=62.748810 r0=0.373200 
+>>> add spring=52 atoms=NH2-CD dist=0.445877 k=62.748810 r0=0.373200 
+>>> add spring=53 atoms=NH2-OE1 dist=0.38632 k=112.433098 r0=0.348520 
+>>> add spring=54 atoms=NH2-CG dist=0.462849 k=62.748810 r0=0.373200 
+>>> add spring=55 atoms=NH2-CD2 dist=0.437272 k=62.748810 r0=0.373200 
+>>> add spring=56 atoms=CB-CG dist=0.510521 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CB-CD1 dist=0.42109 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CB-CD2 dist=0.489188 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CB-CB dist=0.518301 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CB-CG dist=0.450354 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CB-CD1 dist=0.433036 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=CG-CD dist=0.515577 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CG-CB dist=0.473741 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CG-CG dist=0.447394 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CG-CG2 dist=0.466588 k=42.687122 r0=0.381600 
+>>> add spring=66 atoms=CG-CD1 dist=0.46756 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CD1-CB dist=0.436587 k=42.687122 r0=0.381600 
+>>> add spring=68 atoms=CD1-CG dist=0.474867 k=42.687122 r0=0.381600 
+>>> add spring=69 atoms=CD1-CD dist=0.38595 k=42.687122 r0=0.381600 
+>>> add spring=70 atoms=CD1-CE dist=0.493354 k=42.687122 r0=0.381600 
+>>> add spring=71 atoms=CD1-CB dist=0.383236 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CD1-CG dist=0.38581 k=42.687122 r0=0.381600 
+>>> add spring=73 atoms=CD1-CD dist=0.523667 k=42.687122 r0=0.381600 
+>>> add spring=74 atoms=CD1-CG2 dist=0.460776 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CD1-CD1 dist=0.531018 k=42.687122 r0=0.381600 
+>>> add spring=76 atoms=CD2-CB dist=0.457406 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CD2-CG dist=0.4365 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CD2-CB dist=0.456651 k=42.687122 r0=0.381600 
+>>> add spring=79 atoms=CD2-CG1 dist=0.527668 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CD2-CG2 dist=0.377105 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CD2-CG dist=0.50103 k=42.687122 r0=0.381600 
+>>> add spring=82 atoms=CD2-CD1 dist=0.381355 k=42.687122 r0=0.381600 
+>>> add spring=83 atoms=CB-CG dist=0.518542 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CB-CD dist=0.424421 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CB-CE dist=0.409352 k=42.687122 r0=0.381600 
+>>> add spring=86 atoms=CG-CB dist=0.53207 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CG-CG dist=0.432639 k=42.687122 r0=0.381600 
+>>> add spring=88 atoms=CG-CD dist=0.369622 k=42.687122 r0=0.381600 
+>>> add spring=89 atoms=CG-CE dist=0.346794 k=42.687122 r0=0.381600 
+>>> add spring=90 atoms=CG-NZ dist=0.479694 k=62.748810 r0=0.373200 
+>>> add spring=91 atoms=CD1-CG dist=0.456225 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CD1-CD dist=0.405388 k=42.687122 r0=0.381600 
+>>> add spring=93 atoms=CD1-CE dist=0.338972 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CD1-NZ dist=0.44749 k=62.748810 r0=0.373200 
+>>> add spring=95 atoms=CD2-CB dist=0.447297 k=42.687122 r0=0.381600 
+>>> add spring=96 atoms=CD2-CG dist=0.365381 k=42.687122 r0=0.381600 
+>>> add spring=97 atoms=CD2-CD dist=0.346115 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CD2-CE dist=0.365923 k=42.687122 r0=0.381600 
+>>> add spring=99 atoms=CD2-NZ dist=0.49215 k=62.748810 r0=0.373200 
+>>> add spring=100 atoms=NE1-CG dist=0.413639 k=62.748810 r0=0.373200 
+>>> add spring=101 atoms=NE1-CD dist=0.407456 k=62.748810 r0=0.373200 
+>>> add spring=102 atoms=NE1-CE dist=0.353073 k=62.748810 r0=0.373200 
+>>> add spring=103 atoms=NE1-NZ dist=0.439485 k=92.332428 r0=0.364800 
+>>> add spring=104 atoms=CE2-CB dist=0.454982 k=42.687122 r0=0.381600 
+>>> add spring=105 atoms=CE2-CG dist=0.353553 k=42.687122 r0=0.381600 
+>>> add spring=106 atoms=CE2-CD dist=0.372859 k=42.687122 r0=0.381600 
+>>> add spring=107 atoms=CE2-CE dist=0.369326 k=42.687122 r0=0.381600 
+>>> add spring=108 atoms=CE2-NZ dist=0.467385 k=62.748810 r0=0.373200 
+>>> add spring=109 atoms=CE3-CB dist=0.412366 k=42.687122 r0=0.381600 
+>>> add spring=110 atoms=CE3-CG dist=0.376123 k=42.687122 r0=0.381600 
+>>> add spring=111 atoms=CE3-CD dist=0.374179 k=42.687122 r0=0.381600 
+>>> add spring=112 atoms=CE3-CE dist=0.44051 k=42.687122 r0=0.381600 
+>>> add spring=113 atoms=CZ2-CB dist=0.432192 k=42.687122 r0=0.381600 
+>>> add spring=114 atoms=CZ2-CG dist=0.355012 k=42.687122 r0=0.381600 
+>>> add spring=115 atoms=CZ2-CD dist=0.423514 k=42.687122 r0=0.381600 
+>>> add spring=116 atoms=CZ2-CE dist=0.44563 k=42.687122 r0=0.381600 
+>>> add spring=117 atoms=CZ2-NZ dist=0.52172 k=62.748810 r0=0.373200 
+>>> add spring=118 atoms=CZ3-CB dist=0.384298 k=42.687122 r0=0.381600 
+>>> add spring=119 atoms=CZ3-CG dist=0.37453 k=42.687122 r0=0.381600 
+>>> add spring=120 atoms=CZ3-CD dist=0.421934 k=42.687122 r0=0.381600 
+>>> add spring=121 atoms=CZ3-CE dist=0.503807 k=42.687122 r0=0.381600 
+>>> add spring=122 atoms=CH2-CB dist=0.395221 k=42.687122 r0=0.381600 
+>>> add spring=123 atoms=CH2-CG dist=0.364137 k=42.687122 r0=0.381600 
+>>> add spring=124 atoms=CH2-CD dist=0.444026 k=42.687122 r0=0.381600 
+>>> add spring=125 atoms=CH2-CE dist=0.505418 k=42.687122 r0=0.381600 
+>>> add spring=126 atoms=CD1-CG2 dist=0.519469 k=42.687122 r0=0.381600 
+>>> num springs = 126 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b1Rgna3b6Body-a3SpingsA3b1_A3b7Rgna3b1BodyPotential 
+>>> num pts1 32 
+>>> num pts2 63 
+>>> rgn1 atoms size=32 
+>>> rgn2 atoms size=63 
+>>> add spring=1 atoms=CB-NH2 dist=0.491499 k=62.748810 r0=0.373200 
+>>> add spring=2 atoms=CG-CB dist=0.539542 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-NE dist=0.475698 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CG-CZ dist=0.488351 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-NH2 dist=0.408673 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CD-CB dist=0.490754 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD-CG dist=0.524928 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD-CD dist=0.494038 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD-NE dist=0.361889 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=CD-CZ dist=0.362033 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD-NH1 dist=0.484751 k=62.748810 r0=0.373200 
+>>> add spring=12 atoms=OE1-CB dist=0.382137 k=76.248734 r0=0.356920 
+>>> add spring=13 atoms=OE1-CG dist=0.406253 k=76.248734 r0=0.356920 
+>>> add spring=14 atoms=OE1-CD dist=0.384606 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=OE1-CZ dist=0.295144 k=76.248734 r0=0.356920 
+>>> add spring=16 atoms=OE1-NH1 dist=0.423581 k=112.433098 r0=0.348520 
+>>> add spring=17 atoms=OE2-NE dist=0.405432 k=112.433098 r0=0.348520 
+>>> add spring=18 atoms=OE2-CZ dist=0.36925 k=76.248734 r0=0.356920 
+>>> add spring=19 atoms=OE2-NH1 dist=0.47825 k=112.433098 r0=0.348520 
+>>> add spring=20 atoms=CB-CZ dist=0.520097 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-NH2 dist=0.42152 k=62.748810 r0=0.373200 
+>>> add spring=22 atoms=CG-NH2 dist=0.49735 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=CD-NH2 dist=0.445877 k=62.748810 r0=0.373200 
+>>> add spring=24 atoms=OE1-CZ dist=0.470209 k=76.248734 r0=0.356920 
+>>> add spring=25 atoms=OE1-NH1 dist=0.458876 k=112.433098 r0=0.348520 
+>>> add spring=26 atoms=OE1-NH2 dist=0.38632 k=112.433098 r0=0.348520 
+>>> add spring=27 atoms=CB-CD1 dist=0.419892 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CB-CE1 dist=0.36761 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CB-CZ dist=0.469223 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CB-OH dist=0.483851 k=76.248734 r0=0.356920 
+>>> add spring=31 atoms=CG-CD1 dist=0.438719 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CG-CE1 dist=0.418981 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CG-CZ dist=0.523448 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CG-CB dist=0.452951 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CG-CD dist=0.536136 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CG-NE dist=0.468774 k=62.748810 r0=0.373200 
+>>> add spring=37 atoms=CG-CZ dist=0.476067 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CG-NH2 dist=0.462849 k=62.748810 r0=0.373200 
+>>> add spring=39 atoms=CG-CB dist=0.510521 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CD1-CD1 dist=0.493238 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CD1-CE1 dist=0.457518 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CD1-CZ dist=0.533165 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CD1-CB dist=0.445163 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CD1-NE dist=0.526248 k=62.748810 r0=0.373200 
+>>> add spring=45 atoms=CD1-CB dist=0.42109 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CD2-CB dist=0.491829 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD2-CG dist=0.450349 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD2-CD1 dist=0.347568 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD2-CE1 dist=0.372259 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD2-CZ dist=0.488751 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CD2-CB dist=0.363358 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CD2-CG dist=0.46006 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CD2-CD dist=0.429323 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CD2-NE dist=0.392394 k=62.748810 r0=0.373200 
+>>> add spring=55 atoms=CD2-CZ dist=0.41074 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CD2-NH1 dist=0.457975 k=62.748810 r0=0.373200 
+>>> add spring=57 atoms=CD2-NH2 dist=0.437272 k=62.748810 r0=0.373200 
+>>> add spring=58 atoms=CD2-CB dist=0.489188 k=42.687122 r0=0.381600 
+>>> num springs = 58 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b7Rgna3b1Body-a3SpingsA3b7_A3b1Rgna3b7BodyPotential 
+>>> num pts1 63 
+>>> num pts2 43 
+>>> rgn1 atoms size=63 
+>>> rgn2 atoms size=43 
+>>> add spring=1 atoms=CB-CE dist=0.516125 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CG dist=0.512268 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CD dist=0.527867 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CE dist=0.422948 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-NZ dist=0.509071 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CD1-CG dist=0.438089 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CD dist=0.447148 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CE dist=0.338661 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-NZ dist=0.427685 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=CD2-CE dist=0.526638 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CB-CD dist=0.508063 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-CE dist=0.38961 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG-CD dist=0.452481 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-CE dist=0.357559 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CD dist=0.540546 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD1-CE dist=0.458081 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD1-NZ dist=0.313794 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=CD2-CG dist=0.481292 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-CD dist=0.336444 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=NE1-CD dist=0.51143 k=62.748810 r0=0.373200 
+>>> add spring=21 atoms=NE1-CE dist=0.461501 k=62.748810 r0=0.373200 
+>>> add spring=22 atoms=NE1-NZ dist=0.32223 k=92.332428 r0=0.364800 
+>>> add spring=23 atoms=CE2-CG dist=0.535696 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CE2-CD dist=0.390054 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CE2-CE dist=0.363021 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CE3-CD1 dist=0.502588 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CE3-CB dist=0.457019 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CE3-CG dist=0.368209 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CZ2-CB dist=0.533619 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CZ2-CG dist=0.501338 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CZ2-CD dist=0.365249 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CZ2-CE dist=0.389681 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CZ2-NZ dist=0.301292 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=CZ3-CB dist=0.524277 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CZ3-CG dist=0.541055 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CZ3-CD1 dist=0.425509 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CZ3-CB dist=0.362849 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CZ3-CG dist=0.312829 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CH2-CB dist=0.539512 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CH2-CB dist=0.518851 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CH2-CD1 dist=0.481295 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CH2-CB dist=0.412493 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CH2-CG dist=0.394671 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CH2-CE dist=0.334659 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CH2-NZ dist=0.292246 k=62.748810 r0=0.373200 
+>>> add spring=46 atoms=CB-CD1 dist=0.437551 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CB-CG dist=0.522484 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CB-CD dist=0.479622 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CB-CE dist=0.466977 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CB-NZ dist=0.497846 k=62.748810 r0=0.373200 
+>>> add spring=51 atoms=CB-CG dist=0.479896 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CB-CD2 dist=0.394656 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CG1-CD1 dist=0.465188 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CG1-CB dist=0.493595 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CG1-CG dist=0.399268 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CG1-CD dist=0.375424 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CG1-CE dist=0.356381 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CG1-NZ dist=0.421629 k=62.748810 r0=0.373200 
+>>> add spring=59 atoms=CG1-CG dist=0.469308 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CG1-CD2 dist=0.39078 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CG2-CG dist=0.476795 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=CG2-CD1 dist=0.349715 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CG2-CD2 dist=0.516717 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CG2-CD dist=0.532443 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CG2-CB dist=0.499171 k=42.687122 r0=0.381600 
+>>> add spring=66 atoms=CG2-CG dist=0.366892 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CG2-CD1 dist=0.420086 k=42.687122 r0=0.381600 
+>>> add spring=68 atoms=CD1-CD1 dist=0.53978 k=42.687122 r0=0.381600 
+>>> add spring=69 atoms=CD1-CB dist=0.518329 k=42.687122 r0=0.381600 
+>>> add spring=70 atoms=CD1-CG dist=0.428749 k=42.687122 r0=0.381600 
+>>> add spring=71 atoms=CD1-CD dist=0.452469 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CD1-CE dist=0.439203 k=42.687122 r0=0.381600 
+>>> add spring=73 atoms=CD1-NZ dist=0.532467 k=62.748810 r0=0.373200 
+>>> add spring=74 atoms=CD1-CB dist=0.494003 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CD1-CG dist=0.433227 k=42.687122 r0=0.381600 
+>>> add spring=76 atoms=CD1-CD2 dist=0.331176 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CB-CG2 dist=0.537677 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CB-CB dist=0.499483 k=42.687122 r0=0.381600 
+>>> add spring=79 atoms=CB-CG dist=0.499303 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CB-CD1 dist=0.441075 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CB-CD2 dist=0.481569 k=42.687122 r0=0.381600 
+>>> add spring=82 atoms=CG2-CG2 dist=0.414595 k=42.687122 r0=0.381600 
+>>> add spring=83 atoms=CG2-CB dist=0.380862 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CG2-CG dist=0.403593 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CG2-CD1 dist=0.385345 k=42.687122 r0=0.381600 
+>>> add spring=86 atoms=CG2-CD2 dist=0.382434 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CB-CG dist=0.496217 k=42.687122 r0=0.381600 
+>>> add spring=88 atoms=CB-CD1 dist=0.480032 k=42.687122 r0=0.381600 
+>>> add spring=89 atoms=CB-CD2 dist=0.389819 k=42.687122 r0=0.381600 
+>>> add spring=90 atoms=CG-CG dist=0.532739 k=42.687122 r0=0.381600 
+>>> add spring=91 atoms=CG-CD1 dist=0.543341 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CG-CD2 dist=0.416701 k=42.687122 r0=0.381600 
+>>> add spring=93 atoms=CD-CD2 dist=0.498695 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CD-CD1 dist=0.543774 k=42.687122 r0=0.381600 
+>>> add spring=95 atoms=CE-CG dist=0.510914 k=42.687122 r0=0.381600 
+>>> add spring=96 atoms=CE-CD1 dist=0.488072 k=42.687122 r0=0.381600 
+>>> add spring=97 atoms=CE-CD2 dist=0.454371 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CE-CG dist=0.489338 k=42.687122 r0=0.381600 
+>>> add spring=99 atoms=CE-CD1 dist=0.406336 k=42.687122 r0=0.381600 
+>>> add spring=100 atoms=CE-CD2 dist=0.46736 k=42.687122 r0=0.381600 
+>>> add spring=101 atoms=NZ-CG dist=0.485609 k=62.748810 r0=0.373200 
+>>> add spring=102 atoms=NZ-CD1 dist=0.403409 k=62.748810 r0=0.373200 
+>>> add spring=103 atoms=NZ-CD2 dist=0.441183 k=62.748810 r0=0.373200 
+>>> add spring=104 atoms=OD2-CD1 dist=0.481971 k=76.248734 r0=0.356920 
+>>> add spring=105 atoms=CB-CB dist=0.528868 k=42.687122 r0=0.381600 
+>>> add spring=106 atoms=CB-CG2 dist=0.413974 k=42.687122 r0=0.381600 
+>>> add spring=107 atoms=CB-CD2 dist=0.531303 k=42.687122 r0=0.381600 
+>>> add spring=108 atoms=CG-CB dist=0.521136 k=42.687122 r0=0.381600 
+>>> add spring=109 atoms=CG-CG2 dist=0.431916 k=42.687122 r0=0.381600 
+>>> add spring=110 atoms=CG-CB dist=0.54068 k=42.687122 r0=0.381600 
+>>> add spring=111 atoms=CG-CD1 dist=0.517236 k=42.687122 r0=0.381600 
+>>> add spring=112 atoms=CD1-CB dist=0.441408 k=42.687122 r0=0.381600 
+>>> add spring=113 atoms=CD1-CG2 dist=0.387193 k=42.687122 r0=0.381600 
+>>> add spring=114 atoms=CD1-CD1 dist=0.534016 k=42.687122 r0=0.381600 
+>>> add spring=115 atoms=CD1-CB dist=0.476518 k=42.687122 r0=0.381600 
+>>> add spring=116 atoms=CD1-CG dist=0.544594 k=42.687122 r0=0.381600 
+>>> add spring=117 atoms=CD1-CD1 dist=0.504788 k=42.687122 r0=0.381600 
+>>> add spring=118 atoms=CD2-CB dist=0.543492 k=42.687122 r0=0.381600 
+>>> add spring=119 atoms=CD2-CD1 dist=0.459696 k=42.687122 r0=0.381600 
+>>> add spring=120 atoms=CD2-CE1 dist=0.52599 k=42.687122 r0=0.381600 
+>>> add spring=121 atoms=CE1-CB dist=0.49684 k=42.687122 r0=0.381600 
+>>> add spring=122 atoms=CE1-CG2 dist=0.472579 k=42.687122 r0=0.381600 
+>>> add spring=123 atoms=CE1-CB dist=0.410345 k=42.687122 r0=0.381600 
+>>> add spring=124 atoms=CE1-CG dist=0.470945 k=42.687122 r0=0.381600 
+>>> add spring=125 atoms=CE1-CD1 dist=0.436013 k=42.687122 r0=0.381600 
+>>> add spring=126 atoms=CE1-CE1 dist=0.544682 k=42.687122 r0=0.381600 
+>>> add spring=127 atoms=CE2-CB dist=0.487282 k=42.687122 r0=0.381600 
+>>> add spring=128 atoms=CE2-CG dist=0.479483 k=42.687122 r0=0.381600 
+>>> add spring=129 atoms=CE2-CD1 dist=0.382931 k=42.687122 r0=0.381600 
+>>> add spring=130 atoms=CE2-CE1 dist=0.443681 k=42.687122 r0=0.381600 
+>>> add spring=131 atoms=CZ-CB dist=0.416818 k=42.687122 r0=0.381600 
+>>> add spring=132 atoms=CZ-CG dist=0.434252 k=42.687122 r0=0.381600 
+>>> add spring=133 atoms=CZ-CD1 dist=0.368765 k=42.687122 r0=0.381600 
+>>> add spring=134 atoms=CZ-CE1 dist=0.454904 k=42.687122 r0=0.381600 
+>>> add spring=135 atoms=OH-CB dist=0.411387 k=76.248734 r0=0.356920 
+>>> add spring=136 atoms=OH-CG dist=0.409435 k=76.248734 r0=0.356920 
+>>> add spring=137 atoms=OH-CD1 dist=0.353127 k=76.248734 r0=0.356920 
+>>> add spring=138 atoms=OH-CE1 dist=0.424889 k=76.248734 r0=0.356920 
+>>> add spring=139 atoms=CD-CD1 dist=0.508853 k=42.687122 r0=0.381600 
+>>> add spring=140 atoms=NE-CD1 dist=0.490402 k=62.748810 r0=0.373200 
+>>> add spring=141 atoms=CZ-CD1 dist=0.412447 k=42.687122 r0=0.381600 
+>>> add spring=142 atoms=NH1-CG1 dist=0.469375 k=62.748810 r0=0.373200 
+>>> add spring=143 atoms=NH1-CD1 dist=0.328838 k=62.748810 r0=0.373200 
+>>> add spring=144 atoms=NH2-CD1 dist=0.458986 k=62.748810 r0=0.373200 
+>>> num springs = 144 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b7_A3b1Rgna3b7Body-a3SpingsA3b1_A3b8Rgna3b1BodyPotential 
+>>> num pts1 43 
+>>> num pts2 40 
+>>> rgn1 atoms size=43 
+>>> rgn2 atoms size=40 
+>>> add spring=1 atoms=CB-CH2 dist=0.539512 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CZ3 dist=0.524277 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CH2 dist=0.518851 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CZ3 dist=0.541055 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CG2 dist=0.476795 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CB dist=0.496217 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CG dist=0.532739 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG-CE dist=0.510914 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-CE3 dist=0.502588 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD1-CZ3 dist=0.425509 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD1-CH2 dist=0.481295 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD1-CB dist=0.437551 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD1-CG1 dist=0.465188 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD1-CG2 dist=0.349715 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CD1 dist=0.53978 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD1-CB dist=0.480032 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD1-CG dist=0.543341 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD1-CE dist=0.488072 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-CG2 dist=0.516717 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD2-CB dist=0.389819 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD2-CG dist=0.416701 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD2-CD dist=0.498695 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD2-CE dist=0.454371 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CB-CE3 dist=0.457019 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CB-CZ2 dist=0.533619 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CB-CZ3 dist=0.362849 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CB-CH2 dist=0.412493 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CB-CG1 dist=0.493595 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CB-CD1 dist=0.518329 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CG-CG dist=0.512268 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CG-CD1 dist=0.438089 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CG-CD2 dist=0.481292 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CG-CE2 dist=0.535696 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CG-CE3 dist=0.368209 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CG-CZ2 dist=0.501338 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CG-CZ3 dist=0.312829 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CG-CH2 dist=0.394671 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CG-CB dist=0.522484 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CG-CG1 dist=0.399268 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CG-CD1 dist=0.428749 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CD-CG dist=0.527867 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CD-CD1 dist=0.447148 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CD-CB dist=0.508063 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CD-CG dist=0.452481 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CD-CD1 dist=0.540546 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CD-CD2 dist=0.336444 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD-CE2 dist=0.390054 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD-CZ2 dist=0.365249 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD-CB dist=0.479622 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD-CG1 dist=0.375424 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CD-CG2 dist=0.532443 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CD-CD1 dist=0.452469 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CE-CB dist=0.516125 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CE-CG dist=0.422948 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CE-CD1 dist=0.338661 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CE-CD2 dist=0.526638 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CE-CB dist=0.38961 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CE-CG dist=0.357559 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CE-CD1 dist=0.458081 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CE-CE2 dist=0.363021 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CE-CZ2 dist=0.389681 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=CE-CH2 dist=0.334659 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CE-CB dist=0.466977 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CE-CG1 dist=0.356381 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CE-CD1 dist=0.439203 k=42.687122 r0=0.381600 
+>>> add spring=66 atoms=NZ-CG dist=0.509071 k=62.748810 r0=0.373200 
+>>> add spring=67 atoms=NZ-CD1 dist=0.427685 k=62.748810 r0=0.373200 
+>>> add spring=68 atoms=NZ-CD1 dist=0.313794 k=62.748810 r0=0.373200 
+>>> add spring=69 atoms=NZ-CZ2 dist=0.301292 k=62.748810 r0=0.373200 
+>>> add spring=70 atoms=NZ-CH2 dist=0.292246 k=62.748810 r0=0.373200 
+>>> add spring=71 atoms=NZ-CB dist=0.497846 k=62.748810 r0=0.373200 
+>>> add spring=72 atoms=NZ-CG1 dist=0.421629 k=62.748810 r0=0.373200 
+>>> add spring=73 atoms=NZ-CD1 dist=0.532467 k=62.748810 r0=0.373200 
+>>> add spring=74 atoms=CB-CG2 dist=0.499171 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CB-CD1 dist=0.494003 k=42.687122 r0=0.381600 
+>>> add spring=76 atoms=CG-CB dist=0.479896 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CG-CG1 dist=0.469308 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CG-CG2 dist=0.366892 k=42.687122 r0=0.381600 
+>>> add spring=79 atoms=CG-CD1 dist=0.433227 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CG-CE dist=0.489338 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CG-NZ dist=0.485609 k=62.748810 r0=0.373200 
+>>> add spring=82 atoms=CD1-CG2 dist=0.420086 k=42.687122 r0=0.381600 
+>>> add spring=83 atoms=CD1-CD dist=0.543774 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CD1-CE dist=0.406336 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CD1-NZ dist=0.403409 k=62.748810 r0=0.373200 
+>>> add spring=86 atoms=CD2-CB dist=0.394656 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CD2-CG1 dist=0.39078 k=42.687122 r0=0.381600 
+>>> add spring=88 atoms=CD2-CD1 dist=0.331176 k=42.687122 r0=0.381600 
+>>> add spring=89 atoms=CD2-CE dist=0.46736 k=42.687122 r0=0.381600 
+>>> add spring=90 atoms=CD2-NZ dist=0.441183 k=62.748810 r0=0.373200 
+>>> num springs = 90 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b8Rgna3b1Body-a3SpingsA3b8_A3b1Rgna3b8BodyPotential 
+>>> num pts1 40 
+>>> num pts2 18 
+>>> rgn1 atoms size=40 
+>>> rgn2 atoms size=18 
+>>> add spring=1 atoms=CB-CB dist=0.512632 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG1 dist=0.436243 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CG2 dist=0.467649 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CD1 dist=0.328556 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CB dist=0.386488 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CG1 dist=0.295643 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CG2 dist=0.363112 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CB dist=0.444564 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-CG1 dist=0.315624 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD1-CG2 dist=0.459657 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD2-CB dist=0.294583 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-NE dist=0.520717 k=62.748810 r0=0.373200 
+>>> add spring=13 atoms=CB-CZ dist=0.523016 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CB-NH2 dist=0.529206 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CG1-CD dist=0.48912 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG1-NE dist=0.434908 k=62.748810 r0=0.373200 
+>>> add spring=17 atoms=CG1-CZ dist=0.409779 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG1-NH1 dist=0.434434 k=62.748810 r0=0.373200 
+>>> add spring=19 atoms=CG1-NH2 dist=0.417982 k=62.748810 r0=0.373200 
+>>> add spring=20 atoms=CG2-CG2 dist=0.482289 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG2-CG dist=0.54429 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG2-CD dist=0.528625 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG2-NE dist=0.520612 k=62.748810 r0=0.373200 
+>>> add spring=24 atoms=CB-CG2 dist=0.530506 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CB-NE dist=0.504111 k=62.748810 r0=0.373200 
+>>> add spring=26 atoms=CB-CZ dist=0.5092 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CB-NH2 dist=0.421012 k=62.748810 r0=0.373200 
+>>> add spring=28 atoms=CG1-CB dist=0.48733 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CG1-CG1 dist=0.46583 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CG1-CG2 dist=0.425323 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CG1-CD1 dist=0.531356 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CG1-NE dist=0.532271 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=CG1-NH2 dist=0.508895 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=CG2-NE dist=0.474038 k=62.748810 r0=0.373200 
+>>> add spring=35 atoms=CG2-CZ dist=0.474749 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CG2-NH2 dist=0.38067 k=62.748810 r0=0.373200 
+>>> add spring=37 atoms=CD1-CB dist=0.365553 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CD1-CG1 dist=0.379475 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CD1-CD1 dist=0.45828 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CD1-CB dist=0.480355 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CD1-CG dist=0.474904 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CD1-CD dist=0.518799 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CD1-NE dist=0.436509 k=62.748810 r0=0.373200 
+>>> add spring=44 atoms=CD1-CZ dist=0.502482 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CD1-NH2 dist=0.472592 k=62.748810 r0=0.373200 
+>>> add spring=46 atoms=CB-NH2 dist=0.504786 k=62.748810 r0=0.373200 
+>>> add spring=47 atoms=CG-CZ dist=0.491547 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CG-NH1 dist=0.519111 k=62.748810 r0=0.373200 
+>>> add spring=49 atoms=CG-NH2 dist=0.396386 k=62.748810 r0=0.373200 
+>>> add spring=50 atoms=OD1-CZ dist=0.398887 k=76.248734 r0=0.356920 
+>>> add spring=51 atoms=OD1-NH1 dist=0.430503 k=112.433098 r0=0.348520 
+>>> add spring=52 atoms=OD1-NH2 dist=0.295531 k=112.433098 r0=0.348520 
+>>> add spring=53 atoms=ND2-CZ dist=0.518527 k=62.748810 r0=0.373200 
+>>> add spring=54 atoms=ND2-NH2 dist=0.449371 k=92.332428 r0=0.364800 
+>>> add spring=55 atoms=CE-CZ dist=0.539319 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CE-NH2 dist=0.442659 k=62.748810 r0=0.373200 
+>>> add spring=57 atoms=NZ-NE dist=0.502454 k=92.332428 r0=0.364800 
+>>> add spring=58 atoms=NZ-CZ dist=0.445049 k=62.748810 r0=0.373200 
+>>> add spring=59 atoms=NZ-NH1 dist=0.502777 k=92.332428 r0=0.364800 
+>>> add spring=60 atoms=NZ-NH2 dist=0.373662 k=92.332428 r0=0.364800 
+>>> num springs = 60 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b8_A3b1Rgna3b8Body-a3SpingsA3b1_A3b9Rgna3b1BodyPotential 
+>>> num pts1 18 
+>>> num pts2 44 
+>>> rgn1 atoms size=18 
+>>> rgn2 atoms size=44 
+>>> add spring=1 atoms=CB-CB dist=0.512632 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.386488 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD1 dist=0.444564 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CD2 dist=0.294583 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CG1 dist=0.48733 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD1 dist=0.365553 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG1-CB dist=0.436243 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG1-CG dist=0.295643 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG1-CD1 dist=0.315624 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG1-CG1 dist=0.46583 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG1-CD1 dist=0.379475 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG2-CB dist=0.467649 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG2-CG dist=0.363112 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG2-CD1 dist=0.459657 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG2-CG2 dist=0.482289 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG2-CB dist=0.530506 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG2-CG1 dist=0.425323 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD1-CB dist=0.328556 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD1-CG1 dist=0.531356 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD1-CD1 dist=0.45828 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CD1 dist=0.480355 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG-CG2 dist=0.54429 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CD1 dist=0.474904 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD-CG1 dist=0.48912 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD-CG2 dist=0.528625 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD-CD1 dist=0.518799 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=NE-CB dist=0.520717 k=62.748810 r0=0.373200 
+>>> add spring=28 atoms=NE-CG1 dist=0.434908 k=62.748810 r0=0.373200 
+>>> add spring=29 atoms=NE-CG2 dist=0.520612 k=62.748810 r0=0.373200 
+>>> add spring=30 atoms=NE-CB dist=0.504111 k=62.748810 r0=0.373200 
+>>> add spring=31 atoms=NE-CG1 dist=0.532271 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=NE-CG2 dist=0.474038 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=NE-CD1 dist=0.436509 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=NE-NZ dist=0.502454 k=92.332428 r0=0.364800 
+>>> add spring=35 atoms=CZ-CB dist=0.523016 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CZ-CG1 dist=0.409779 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CZ-CB dist=0.5092 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CZ-CG2 dist=0.474749 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CZ-CD1 dist=0.502482 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CZ-CG dist=0.491547 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CZ-OD1 dist=0.398887 k=76.248734 r0=0.356920 
+>>> add spring=42 atoms=CZ-ND2 dist=0.518527 k=62.748810 r0=0.373200 
+>>> add spring=43 atoms=CZ-CE dist=0.539319 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CZ-NZ dist=0.445049 k=62.748810 r0=0.373200 
+>>> add spring=45 atoms=NH1-CG1 dist=0.434434 k=62.748810 r0=0.373200 
+>>> add spring=46 atoms=NH1-CG dist=0.519111 k=62.748810 r0=0.373200 
+>>> add spring=47 atoms=NH1-OD1 dist=0.430503 k=112.433098 r0=0.348520 
+>>> add spring=48 atoms=NH1-NZ dist=0.502777 k=92.332428 r0=0.364800 
+>>> add spring=49 atoms=NH2-CB dist=0.529206 k=62.748810 r0=0.373200 
+>>> add spring=50 atoms=NH2-CG1 dist=0.417982 k=62.748810 r0=0.373200 
+>>> add spring=51 atoms=NH2-CB dist=0.421012 k=62.748810 r0=0.373200 
+>>> add spring=52 atoms=NH2-CG1 dist=0.508895 k=62.748810 r0=0.373200 
+>>> add spring=53 atoms=NH2-CG2 dist=0.38067 k=62.748810 r0=0.373200 
+>>> add spring=54 atoms=NH2-CD1 dist=0.472592 k=62.748810 r0=0.373200 
+>>> add spring=55 atoms=NH2-CB dist=0.504786 k=62.748810 r0=0.373200 
+>>> add spring=56 atoms=NH2-CG dist=0.396386 k=62.748810 r0=0.373200 
+>>> add spring=57 atoms=NH2-OD1 dist=0.295531 k=112.433098 r0=0.348520 
+>>> add spring=58 atoms=NH2-ND2 dist=0.449371 k=92.332428 r0=0.364800 
+>>> add spring=59 atoms=NH2-CE dist=0.442659 k=62.748810 r0=0.373200 
+>>> add spring=60 atoms=NH2-NZ dist=0.373662 k=92.332428 r0=0.364800 
+>>> num springs = 60 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b9Rgna3b1Body-a3SpingsA3b9_A3b1Rgna3b9BodyPotential 
+>>> num pts1 44 
+>>> num pts2 24 
+>>> rgn1 atoms size=44 
+>>> rgn2 atoms size=24 
+>>> add spring=1 atoms=CB-NE dist=0.520717 k=62.748810 r0=0.373200 
+>>> add spring=2 atoms=CB-CZ dist=0.523016 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-NH2 dist=0.529206 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CG1-CD dist=0.48912 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG1-NE dist=0.434908 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CG1-CZ dist=0.409779 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG1-NH1 dist=0.434434 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=CG1-NH2 dist=0.417982 k=62.748810 r0=0.373200 
+>>> add spring=9 atoms=CG2-CG dist=0.54429 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG2-CD dist=0.528625 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG2-NE dist=0.520612 k=62.748810 r0=0.373200 
+>>> add spring=12 atoms=CB-NE dist=0.504111 k=62.748810 r0=0.373200 
+>>> add spring=13 atoms=CB-CZ dist=0.5092 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CB-NH2 dist=0.421012 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CG1-NE dist=0.532271 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=CG1-NH2 dist=0.508895 k=62.748810 r0=0.373200 
+>>> add spring=17 atoms=CG2-NE dist=0.474038 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=CG2-CZ dist=0.474749 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG2-NH2 dist=0.38067 k=62.748810 r0=0.373200 
+>>> add spring=20 atoms=CD1-CB dist=0.480355 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD1-CG dist=0.474904 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD1-CD dist=0.518799 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD1-NE dist=0.436509 k=62.748810 r0=0.373200 
+>>> add spring=24 atoms=CD1-CZ dist=0.502482 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD1-NH2 dist=0.472592 k=62.748810 r0=0.373200 
+>>> add spring=26 atoms=CB-NH2 dist=0.504786 k=62.748810 r0=0.373200 
+>>> add spring=27 atoms=CG-CZ dist=0.491547 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CG-NH1 dist=0.519111 k=62.748810 r0=0.373200 
+>>> add spring=29 atoms=CG-NH2 dist=0.396386 k=62.748810 r0=0.373200 
+>>> add spring=30 atoms=OD1-CZ dist=0.398887 k=76.248734 r0=0.356920 
+>>> add spring=31 atoms=OD1-NH1 dist=0.430503 k=112.433098 r0=0.348520 
+>>> add spring=32 atoms=OD1-NH2 dist=0.295531 k=112.433098 r0=0.348520 
+>>> add spring=33 atoms=ND2-CZ dist=0.518527 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=ND2-NH2 dist=0.449371 k=92.332428 r0=0.364800 
+>>> add spring=35 atoms=CB-CG dist=0.534906 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CB-CD1 dist=0.481661 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CB-CE1 dist=0.458534 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CB-CE2 dist=0.544433 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CB-CZ dist=0.492453 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CG-CB dist=0.524872 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CG-CG dist=0.438753 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CG-CD1 dist=0.360657 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CG-CD2 dist=0.48162 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CG-CE1 dist=0.328748 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CG-CE2 dist=0.458782 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CG-CZ dist=0.385092 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD-CB dist=0.523493 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD-CG dist=0.463478 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD-CD1 dist=0.368089 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD-CD2 dist=0.541946 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CD-CE1 dist=0.368199 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CD-CE2 dist=0.542652 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CD-CZ dist=0.463754 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CE-CZ dist=0.539319 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CE-NH2 dist=0.442659 k=62.748810 r0=0.373200 
+>>> add spring=56 atoms=CE-CB dist=0.464174 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CE-CG dist=0.445597 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CE-CD1 dist=0.379954 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CE-CD2 dist=0.540686 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CE-CE1 dist=0.428727 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CE-CZ dist=0.52709 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=NZ-NE dist=0.502454 k=92.332428 r0=0.364800 
+>>> add spring=63 atoms=NZ-CZ dist=0.445049 k=62.748810 r0=0.373200 
+>>> add spring=64 atoms=NZ-NH1 dist=0.502777 k=92.332428 r0=0.364800 
+>>> add spring=65 atoms=NZ-NH2 dist=0.373662 k=92.332428 r0=0.364800 
+>>> add spring=66 atoms=NZ-CB dist=0.495897 k=62.748810 r0=0.373200 
+>>> add spring=67 atoms=NZ-CG dist=0.504148 k=62.748810 r0=0.373200 
+>>> add spring=68 atoms=NZ-CD1 dist=0.433194 k=62.748810 r0=0.373200 
+>>> add spring=69 atoms=NZ-CE1 dist=0.500594 k=62.748810 r0=0.373200 
+>>> add spring=70 atoms=CB-CE2 dist=0.524654 k=42.687122 r0=0.381600 
+>>> add spring=71 atoms=CG-CE2 dist=0.465706 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CG-CZ dist=0.51248 k=42.687122 r0=0.381600 
+>>> add spring=73 atoms=CD2-CD2 dist=0.464836 k=42.687122 r0=0.381600 
+>>> add spring=74 atoms=CD2-CE1 dist=0.529715 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CD2-CE2 dist=0.359152 k=42.687122 r0=0.381600 
+>>> add spring=76 atoms=CD2-CZ dist=0.401858 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CD2-CB dist=0.528394 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CE2-CD2 dist=0.465672 k=42.687122 r0=0.381600 
+>>> add spring=79 atoms=CE2-CE2 dist=0.365617 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CE2-CZ dist=0.428562 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CE2-CB dist=0.451653 k=42.687122 r0=0.381600 
+>>> add spring=82 atoms=CZ-CE2 dist=0.475169 k=42.687122 r0=0.381600 
+>>> add spring=83 atoms=CZ-CB dist=0.534983 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CG-CE1 dist=0.50204 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CG-CE2 dist=0.542597 k=42.687122 r0=0.381600 
+>>> add spring=86 atoms=CG-CZ dist=0.443834 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CG-CG dist=0.445993 k=42.687122 r0=0.381600 
+>>> add spring=88 atoms=CG-CD dist=0.432189 k=42.687122 r0=0.381600 
+>>> add spring=89 atoms=CD1-CD1 dist=0.52116 k=42.687122 r0=0.381600 
+>>> add spring=90 atoms=CD1-CD2 dist=0.530163 k=42.687122 r0=0.381600 
+>>> add spring=91 atoms=CD1-CE1 dist=0.39185 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CD1-CE2 dist=0.404044 k=42.687122 r0=0.381600 
+>>> add spring=93 atoms=CD1-CZ dist=0.315164 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CD1-CB dist=0.517291 k=42.687122 r0=0.381600 
+>>> add spring=95 atoms=CD1-CG dist=0.490951 k=42.687122 r0=0.381600 
+>>> add spring=96 atoms=CD1-CD dist=0.432514 k=42.687122 r0=0.381600 
+>>> add spring=97 atoms=CD2-CE1 dist=0.502175 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CD2-CZ dist=0.482918 k=42.687122 r0=0.381600 
+>>> add spring=99 atoms=CD2-CG dist=0.480538 k=42.687122 r0=0.381600 
+>>> add spring=100 atoms=CD2-CD dist=0.488765 k=42.687122 r0=0.381600 
+>>> num springs = 100 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b9_A3b1Rgna3b9Body-a3SpingsA3b1_A3b10Rgna3b1BodyPotential 
+>>> num pts1 24 
+>>> num pts2 36 
+>>> rgn1 atoms size=24 
+>>> rgn2 atoms size=36 
+>>> add spring=1 atoms=CB-CG dist=0.524872 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CD dist=0.523493 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CB dist=0.534906 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CG dist=0.438753 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CD dist=0.463478 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD1-CB dist=0.481661 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CG dist=0.360657 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CD dist=0.368089 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-CD1 dist=0.52116 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD2-CG dist=0.48162 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD2-CD dist=0.541946 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD2-CD2 dist=0.464836 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD2-CE2 dist=0.465672 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD2-CD1 dist=0.530163 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CE1-CB dist=0.458534 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CE1-CG dist=0.328748 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CE1-CD dist=0.368199 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CE1-CD2 dist=0.529715 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CE1-CG dist=0.50204 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CE1-CD1 dist=0.39185 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CE1-CD2 dist=0.502175 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CE2-CB dist=0.544433 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CE2-CG dist=0.458782 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CE2-CD dist=0.542652 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CE2-CB dist=0.524654 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CE2-CG dist=0.465706 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CE2-CD2 dist=0.359152 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CE2-CE2 dist=0.365617 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CE2-CZ dist=0.475169 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CE2-CG dist=0.542597 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CE2-CD1 dist=0.404044 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CZ-CB dist=0.492453 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CZ-CG dist=0.385092 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CZ-CD dist=0.463754 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CZ-CG dist=0.51248 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CZ-CD2 dist=0.401858 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CZ-CE2 dist=0.428562 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CZ-CG dist=0.443834 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CZ-CD1 dist=0.315164 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CZ-CD2 dist=0.482918 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CB-CD2 dist=0.528394 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CB-CE2 dist=0.451653 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CB-CZ dist=0.534983 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CB-CD1 dist=0.517291 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CG-CG dist=0.445993 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CG-CD1 dist=0.490951 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CG-CD2 dist=0.480538 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD-CG dist=0.432189 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD-CD1 dist=0.432514 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD-CD2 dist=0.488765 k=42.687122 r0=0.381600 
+>>> num springs = 50 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b10Rgna3b1Body-a3SpingsA3b10_A3b1Rgna3b10BodyPotential 
+>>> num pts1 36 
+>>> num pts2 23 
+>>> rgn1 atoms size=36 
+>>> rgn2 atoms size=23 
+>>> add spring=1 atoms=CD2-CB dist=0.542159 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CE1-CD1 dist=0.516964 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CE2-CB dist=0.452637 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CZ-CB dist=0.483217 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CZ-CD dist=0.515882 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CZ-CD1 dist=0.481274 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=OH-CB dist=0.445428 k=76.248734 r0=0.356920 
+>>> add spring=8 atoms=OH-CB dist=0.496251 k=76.248734 r0=0.356920 
+>>> add spring=9 atoms=OH-CG dist=0.504414 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=OH-CD dist=0.403037 k=76.248734 r0=0.356920 
+>>> add spring=11 atoms=OH-CG1 dist=0.501208 k=76.248734 r0=0.356920 
+>>> add spring=12 atoms=OH-CD1 dist=0.392617 k=76.248734 r0=0.356920 
+>>> add spring=13 atoms=CG-CG dist=0.445993 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-CD dist=0.432189 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CG dist=0.490951 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD1-CD dist=0.432514 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD2-CG dist=0.480538 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD2-CD dist=0.488765 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CB-CB dist=0.383353 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CB-CG dist=0.387538 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CD1 dist=0.368906 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CD2 dist=0.532468 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CB-CD1 dist=0.43809 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CB-CG dist=0.530127 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CB-CD1 dist=0.47888 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CG-CG dist=0.453434 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CG-CD1 dist=0.421473 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CG-CD2 dist=0.486021 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=OD1-CB dist=0.491795 k=76.248734 r0=0.356920 
+>>> add spring=30 atoms=OD1-CG dist=0.355578 k=76.248734 r0=0.356920 
+>>> add spring=31 atoms=OD1-CD1 dist=0.35487 k=76.248734 r0=0.356920 
+>>> add spring=32 atoms=OD1-CD2 dist=0.389038 k=76.248734 r0=0.356920 
+>>> add spring=33 atoms=ND2-CG dist=0.527901 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=ND2-CD1 dist=0.489678 k=62.748810 r0=0.373200 
+>>> add spring=35 atoms=ND2-CD2 dist=0.530669 k=62.748810 r0=0.373200 
+>>> add spring=36 atoms=CG-CG2 dist=0.494844 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CD2-CB dist=0.511575 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CD2-CG1 dist=0.529327 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CD2-CG2 dist=0.380137 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CD2-CD1 dist=0.485649 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CB-CD1 dist=0.429693 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CG1-CD1 dist=0.487304 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CG2-CB dist=0.534653 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CG2-CG dist=0.478495 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CG2-CD1 dist=0.332078 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CG2-CB dist=0.53005 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CG2-CG1 dist=0.446555 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CG2-CG2 dist=0.512453 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CG2-CD1 dist=0.471284 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD1-CG2 dist=0.48965 k=42.687122 r0=0.381600 
+>>> num springs = 50 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b10_A3b1Rgna3b10Body-a3SpingsA3b1_A3b11Rgna3b1BodyPotential 
+>>> num pts1 23 
+>>> num pts2 50 
+>>> rgn1 atoms size=23 
+>>> rgn2 atoms size=50 
+>>> add spring=1 atoms=CB-CG2 dist=0.534653 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CG2 dist=0.478495 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD1-CB dist=0.429693 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CG1 dist=0.487304 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD1-CG2 dist=0.332078 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD2 dist=0.511575 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CG2 dist=0.53005 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG1-CD2 dist=0.529327 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG1-CG2 dist=0.446555 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG2-CG dist=0.494844 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG2-CD2 dist=0.380137 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG2-CG2 dist=0.512453 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG2-CD1 dist=0.48965 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD1-CD2 dist=0.485649 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CG2 dist=0.471284 k=42.687122 r0=0.381600 
+>>> num springs = 15 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b1_A3b11Rgna3b1Body-a3SpingsA3b11_A3b1Rgna3b11BodyPotential 
+>>> num pts1 50 
+>>> num pts2 54 
+>>> rgn1 atoms size=50 
+>>> rgn2 atoms size=54 
+>>> add spring=1 atoms=CD1-CE3 dist=0.543646 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CD1-CZ3 dist=0.505036 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CG2 dist=0.532609 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG1-CB dist=0.52141 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG1-OG1 dist=0.501569 k=76.248734 r0=0.356920 
+>>> add spring=6 atoms=CG1-CG2 dist=0.447508 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CE3-CE3 dist=0.541977 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CE3-CZ3 dist=0.457016 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CE3-CH2 dist=0.522996 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CE3-CD2 dist=0.461667 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CZ3-CE3 dist=0.490451 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CZ3-CZ3 dist=0.392428 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CZ3-CH2 dist=0.432718 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CZ3-CG dist=0.490413 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CZ3-CD1 dist=0.493465 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CZ3-CD2 dist=0.366422 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CH2-CZ3 dist=0.474521 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CH2-CH2 dist=0.478241 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CH2-CG dist=0.535693 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CH2-CD1 dist=0.524401 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CH2-CD2 dist=0.424207 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CG2 dist=0.418812 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CB-CE3 dist=0.510287 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CB-CZ3 dist=0.531417 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CB-CB dist=0.485449 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CB-CG dist=0.514666 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CB-CD1 dist=0.523213 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CB-CD2 dist=0.457471 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CG1-CG2 dist=0.463473 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CG1-CD2 dist=0.517629 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CG1-CE3 dist=0.397131 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CG1-CZ3 dist=0.41282 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CG1-CH2 dist=0.541345 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CG1-CB dist=0.51785 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CG1-CG dist=0.533306 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CG1-CD2 dist=0.440927 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CG2-CB dist=0.499607 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CG2-CG2 dist=0.376127 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CG2-CE3 dist=0.498029 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CG2-CZ3 dist=0.538354 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CG2-CB dist=0.357279 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CG2-CG dist=0.414767 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CG2-CD1 dist=0.432733 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CG2-CD2 dist=0.391902 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CD1-CB dist=0.461598 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CD1-CG2 dist=0.386768 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD1-CB dist=0.46179 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD1-CG dist=0.507805 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD1-CD2 dist=0.462393 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD1-CE3 dist=0.356257 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CD1-CZ3 dist=0.413568 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CD1-CD2 dist=0.503562 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CG-CG2 dist=0.533967 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=OD1-CG2 dist=0.443203 k=76.248734 r0=0.356920 
+>>> add spring=55 atoms=CB-CG dist=0.514312 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CB-CD1 dist=0.396643 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CB-CD2 dist=0.505037 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CG-CG dist=0.448814 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CG-CD1 dist=0.327957 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CG-CD2 dist=0.458537 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CD-CD1 dist=0.444866 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=CB-CB dist=0.493932 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CB-CG dist=0.523245 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CB-CD1 dist=0.420179 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CB-CB dist=0.467537 k=42.687122 r0=0.381600 
+>>> add spring=66 atoms=CG-CB dist=0.523873 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CG-CD1 dist=0.489136 k=42.687122 r0=0.381600 
+>>> add spring=68 atoms=CG-CB dist=0.375115 k=42.687122 r0=0.381600 
+>>> add spring=69 atoms=CD-CB dist=0.454927 k=42.687122 r0=0.381600 
+>>> add spring=70 atoms=CD-CB dist=0.506652 k=42.687122 r0=0.381600 
+>>> add spring=71 atoms=CD-CD1 dist=0.539525 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CD-CB dist=0.424623 k=42.687122 r0=0.381600 
+>>> add spring=73 atoms=OE1-CB dist=0.37746 k=76.248734 r0=0.356920 
+>>> add spring=74 atoms=OE1-CB dist=0.413272 k=76.248734 r0=0.356920 
+>>> add spring=75 atoms=OE1-CD1 dist=0.488282 k=76.248734 r0=0.356920 
+>>> add spring=76 atoms=OE1-CB dist=0.45767 k=76.248734 r0=0.356920 
+>>> add spring=77 atoms=NE2-CB dist=0.464647 k=62.748810 r0=0.373200 
+>>> add spring=78 atoms=NE2-CB dist=0.482301 k=62.748810 r0=0.373200 
+>>> add spring=79 atoms=CB-CB dist=0.454294 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CB-CB dist=0.395722 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CB-CG dist=0.400853 k=42.687122 r0=0.381600 
+>>> add spring=82 atoms=CB-ND1 dist=0.482296 k=62.748810 r0=0.373200 
+>>> add spring=83 atoms=CB-CD2 dist=0.39042 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CB-CE1 dist=0.516067 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CB-NE2 dist=0.467222 k=62.748810 r0=0.373200 
+>>> add spring=86 atoms=CG-CD1 dist=0.500299 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CG-CB dist=0.528754 k=42.687122 r0=0.381600 
+>>> add spring=88 atoms=CG-CB dist=0.532502 k=42.687122 r0=0.381600 
+>>> add spring=89 atoms=CG-CG dist=0.469897 k=42.687122 r0=0.381600 
+>>> add spring=90 atoms=CG-CB dist=0.439052 k=42.687122 r0=0.381600 
+>>> add spring=91 atoms=CG-CG dist=0.423261 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CG-ND1 dist=0.465081 k=62.748810 r0=0.373200 
+>>> add spring=93 atoms=CG-CD2 dist=0.426736 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CG-CE1 dist=0.490379 k=42.687122 r0=0.381600 
+>>> add spring=95 atoms=CG-NE2 dist=0.468826 k=62.748810 r0=0.373200 
+>>> add spring=96 atoms=CD1-CG dist=0.492095 k=42.687122 r0=0.381600 
+>>> add spring=97 atoms=CD1-CD1 dist=0.386511 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CD1-CB dist=0.461882 k=42.687122 r0=0.381600 
+>>> add spring=99 atoms=CD1-CB dist=0.411728 k=42.687122 r0=0.381600 
+>>> add spring=100 atoms=CD1-CG dist=0.34108 k=42.687122 r0=0.381600 
+>>> add spring=101 atoms=CD1-CD dist=0.46203 k=42.687122 r0=0.381600 
+>>> add spring=102 atoms=CD1-OE2 dist=0.480693 k=76.248734 r0=0.356920 
+>>> add spring=103 atoms=CD1-CB dist=0.478225 k=42.687122 r0=0.381600 
+>>> add spring=104 atoms=CD1-CG dist=0.496485 k=42.687122 r0=0.381600 
+>>> add spring=105 atoms=CD1-ND1 dist=0.530605 k=62.748810 r0=0.373200 
+>>> add spring=106 atoms=CD1-CD2 dist=0.531904 k=42.687122 r0=0.381600 
+>>> add spring=107 atoms=CD2-CB dist=0.540731 k=42.687122 r0=0.381600 
+>>> add spring=108 atoms=CD2-CG dist=0.484208 k=42.687122 r0=0.381600 
+>>> add spring=109 atoms=CD2-CB dist=0.381323 k=42.687122 r0=0.381600 
+>>> add spring=110 atoms=CD2-CG dist=0.329751 k=42.687122 r0=0.381600 
+>>> add spring=111 atoms=CD2-ND1 dist=0.340111 k=62.748810 r0=0.373200 
+>>> add spring=112 atoms=CD2-CD2 dist=0.33983 k=42.687122 r0=0.381600 
+>>> add spring=113 atoms=CD2-CE1 dist=0.355362 k=42.687122 r0=0.381600 
+>>> add spring=114 atoms=CD2-NE2 dist=0.354562 k=62.748810 r0=0.373200 
+>>> add spring=115 atoms=CG-CB dist=0.529485 k=42.687122 r0=0.381600 
+>>> add spring=116 atoms=CD-CB dist=0.488305 k=42.687122 r0=0.381600 
+>>> add spring=117 atoms=OE2-CB dist=0.402359 k=76.248734 r0=0.356920 
+>>> num springs = 117 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b1Rgna3b11Body-a3SpingsA3b2_A3b3Rgna3b2BodyPotential 
+>>> num pts1 54 
+>>> num pts2 13 
+>>> rgn1 atoms size=54 
+>>> rgn2 atoms size=13 
+>>> add spring=1 atoms=CG-CE1 dist=0.485828 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=ND1-CE1 dist=0.511143 k=62.748810 r0=0.373200 
+>>> add spring=3 atoms=CD2-CD1 dist=0.52047 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD2-CE1 dist=0.400211 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CE1-CD1 dist=0.543589 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CE1-CE1 dist=0.452864 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=NE2-CD1 dist=0.476144 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=NE2-CE1 dist=0.377742 k=62.748810 r0=0.373200 
+>>> add spring=9 atoms=CB-CD2 dist=0.501069 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CE1 dist=0.510745 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CB-CD1 dist=0.544906 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-CD2 dist=0.532608 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CB-CE1 dist=0.510098 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-CG dist=0.474459 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG-CD1 dist=0.433351 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG-CD2 dist=0.473712 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG-CE1 dist=0.389246 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD1-CD1 dist=0.512756 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD1-CE1 dist=0.462984 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD2-CB dist=0.438543 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD2-CG dist=0.366164 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD2-CD1 dist=0.334854 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD2-CD2 dist=0.394369 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD2-CE1 dist=0.335489 k=42.687122 r0=0.381600 
+>>> num springs = 24 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b3Rgna3b2Body-a3SpingsA3b3_A3b2Rgna3b3BodyPotential 
+>>> num pts1 13 
+>>> num pts2 12 
+>>> rgn1 atoms size=13 
+>>> rgn2 atoms size=12 
+>>> add spring=1 atoms=CB-CB dist=0.489465 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CB dist=0.399889 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CB dist=0.505483 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=OD1-CB dist=0.417854 k=76.248734 r0=0.356920 
+>>> add spring=5 atoms=OD1-CB dist=0.440265 k=76.248734 r0=0.356920 
+>>> add spring=6 atoms=OD1-OG dist=0.45186 k=137.509079 r0=0.332240 
+>>> add spring=7 atoms=OD2-CB dist=0.360943 k=76.248734 r0=0.356920 
+>>> num springs = 7 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b3_A3b2Rgna3b3Body-a3SpingsA3b2_A3b4Rgna3b2BodyPotential 
+>>> num pts1 12 
+>>> num pts2 22 
+>>> rgn1 atoms size=12 
+>>> rgn2 atoms size=22 
+>>> add spring=1 atoms=CB-CB dist=0.489465 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.399889 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-OD1 dist=0.417854 k=76.248734 r0=0.356920 
+>>> add spring=4 atoms=CB-OD2 dist=0.360943 k=76.248734 r0=0.356920 
+>>> add spring=5 atoms=CB-CG dist=0.505483 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-OD1 dist=0.440265 k=76.248734 r0=0.356920 
+>>> add spring=7 atoms=OG-OD1 dist=0.45186 k=137.509079 r0=0.332240 
+>>> num springs = 7 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b4Rgna3b2Body-a3SpingsA3b4_A3b2Rgna3b4BodyPotential 
+>>> num pts1 22 
+>>> num pts2 21 
+>>> rgn1 atoms size=22 
+>>> rgn2 atoms size=21 
+>>> add spring=1 atoms=CG-CD2 dist=0.539703 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CE1 dist=0.5063 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CE2 dist=0.44947 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CZ dist=0.429602 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=OD1-CD2 dist=0.437637 k=76.248734 r0=0.356920 
+>>> add spring=6 atoms=OD1-CE1 dist=0.43343 k=76.248734 r0=0.356920 
+>>> add spring=7 atoms=OD1-CE2 dist=0.339429 k=76.248734 r0=0.356920 
+>>> add spring=8 atoms=OD1-CZ dist=0.336751 k=76.248734 r0=0.356920 
+>>> add spring=9 atoms=OD2-CE1 dist=0.49072 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=OD2-CE2 dist=0.491073 k=76.248734 r0=0.356920 
+>>> add spring=11 atoms=OD2-CZ dist=0.443076 k=76.248734 r0=0.356920 
+>>> add spring=12 atoms=CB-CB dist=0.476674 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CB-CG1 dist=0.500097 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CB-CG2 dist=0.388463 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CB-CB dist=0.519851 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CB-CG dist=0.498495 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CB-CD2 dist=0.461354 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CB-CE2 dist=0.497565 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG-CB dist=0.544155 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG-CG1 dist=0.528039 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG-CG2 dist=0.473455 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG-CB dist=0.516452 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CG dist=0.493937 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG-CD2 dist=0.425629 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CG-CE2 dist=0.463711 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD1-CB dist=0.444585 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CD1-CG dist=0.403922 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD1-CD1 dist=0.501782 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CD1-CD2 dist=0.31284 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CD1-CE1 dist=0.525432 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CD1-CE2 dist=0.348221 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CD1-CZ dist=0.458872 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CD2-CG2 dist=0.50422 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CD2-CD2 dist=0.539028 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CE1-CB dist=0.498744 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CE1-CG dist=0.462742 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CE1-CD2 dist=0.352533 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CE1-CE2 dist=0.384231 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CE1-CZ dist=0.511553 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CZ-CD2 dist=0.484551 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CZ-CE2 dist=0.518294 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CG-CB dist=0.505483 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=OD1-CB dist=0.440265 k=76.248734 r0=0.356920 
+>>> add spring=44 atoms=OD1-OG dist=0.45186 k=137.509079 r0=0.332240 
+>>> num springs = 44 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b2Rgna3b4Body-a3SpingsA3b2_A3b5Rgna3b2BodyPotential 
+>>> num pts1 21 
+>>> num pts2 3 
+>>> rgn1 atoms size=21 
+>>> rgn2 atoms size=3 
+>>> add spring=1 atoms=CB-CD1 dist=0.444585 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CE1 dist=0.498744 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CD1 dist=0.403922 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CE1 dist=0.462742 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD1-CD1 dist=0.501782 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD2-CD1 dist=0.31284 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD2-CE1 dist=0.352533 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD2-CZ dist=0.484551 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CE1-CD1 dist=0.525432 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CE2-CD1 dist=0.348221 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CE2-CE1 dist=0.384231 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CE2-CZ dist=0.518294 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CZ-CD1 dist=0.458872 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CZ-CE1 dist=0.511553 k=42.687122 r0=0.381600 
+>>> num springs = 14 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b5Rgna3b2Body-a3SpingsA3b5_A3b2Rgna3b5BodyPotential 
+>>> num pts1 3 
+>>> num pts2 3 
+>>> rgn1 atoms size=3 
+>>> rgn2 atoms size=3 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b2_A3b5Rgna3b2Body-a3SpingsA3b5_A3b2Rgna3b5BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b5_A3b2Rgna3b5Body-a3SpingsA3b2_A3b11Rgna3b2BodyPotential 
+>>> num pts1 3 
+>>> num pts2 22 
+>>> rgn1 atoms size=3 
+>>> rgn2 atoms size=22 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b5_A3b2Rgna3b5Body-a3SpingsA3b2_A3b11Rgna3b2BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b11Rgna3b2Body-a3SpingsA3b11_A3b2Rgna3b11BodyPotential 
+>>> num pts1 22 
+>>> num pts2 32 
+>>> rgn1 atoms size=22 
+>>> rgn2 atoms size=32 
+>>> add spring=1 atoms=CG-CB dist=0.495678 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CD-CB dist=0.349886 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=NE-CB dist=0.30658 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CZ-CB dist=0.526334 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CZ-CB dist=0.491326 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CZ-CG dist=0.53307 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CZ-CD2 dist=0.512295 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CZ-CB dist=0.35806 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=NH1-CB dist=0.461674 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=NH1-CG dist=0.479507 k=62.748810 r0=0.373200 
+>>> add spring=11 atoms=NH1-CD2 dist=0.433197 k=62.748810 r0=0.373200 
+>>> add spring=12 atoms=NH1-CB dist=0.433807 k=62.748810 r0=0.373200 
+>>> add spring=13 atoms=NH2-CB dist=0.403681 k=62.748810 r0=0.373200 
+>>> add spring=14 atoms=NH2-CG dist=0.531605 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=NH2-CB dist=0.47176 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=NH2-CB dist=0.389954 k=62.748810 r0=0.373200 
+>>> add spring=17 atoms=CB-CD2 dist=0.438543 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CB-CB dist=0.503837 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CB-CG dist=0.494338 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG-CG dist=0.474459 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG-CD2 dist=0.366164 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG-CB dist=0.494085 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CG dist=0.480138 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD1-CD2 dist=0.52047 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD1-CE1 dist=0.543589 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD1-NE2 dist=0.476144 k=62.748810 r0=0.373200 
+>>> add spring=27 atoms=CD1-CB dist=0.544906 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD1-CG dist=0.433351 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CD1-CD1 dist=0.512756 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CD1-CD2 dist=0.334854 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CD2-CB dist=0.501069 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CD2-CB dist=0.532608 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CD2-CG dist=0.473712 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CD2-CD2 dist=0.394369 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CD2-CB dist=0.40905 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CD2-CG dist=0.378085 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CD2-CD dist=0.480524 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CE1-CG dist=0.485828 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CE1-ND1 dist=0.511143 k=62.748810 r0=0.373200 
+>>> add spring=40 atoms=CE1-CD2 dist=0.400211 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CE1-CE1 dist=0.452864 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CE1-NE2 dist=0.377742 k=62.748810 r0=0.373200 
+>>> add spring=43 atoms=CE1-CB dist=0.510745 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CE1-CB dist=0.510098 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CE1-CG dist=0.389246 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CE1-CD1 dist=0.462984 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CE1-CD2 dist=0.335489 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CE2-CB dist=0.377519 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CE2-CB dist=0.496834 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CE2-CG dist=0.433838 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CE2-CD2 dist=0.395304 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CE2-CB dist=0.461139 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CE2-CG dist=0.430408 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CZ-CG dist=0.485995 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CZ-ND1 dist=0.530395 k=62.748810 r0=0.373200 
+>>> add spring=56 atoms=CZ-CD2 dist=0.421788 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CZ-CE1 dist=0.503618 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CZ-NE2 dist=0.436414 k=62.748810 r0=0.373200 
+>>> add spring=59 atoms=CZ-CB dist=0.384064 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CZ-CB dist=0.485008 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CZ-CG dist=0.38968 k=42.687122 r0=0.381600 
+>>> add spring=62 atoms=CZ-CD1 dist=0.487936 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CZ-CD2 dist=0.367202 k=42.687122 r0=0.381600 
+>>> num springs = 63 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b2Rgna3b11Body-a3SpingsA3b2_A3b12Rgna3b2BodyPotential 
+>>> num pts1 32 
+>>> num pts2 8 
+>>> rgn1 atoms size=32 
+>>> rgn2 atoms size=8 
+>>> add spring=1 atoms=CB-CD2 dist=0.501069 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CE2 dist=0.377519 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD2 dist=0.532608 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CE2 dist=0.496834 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CG dist=0.474459 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CD2 dist=0.473712 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CE2 dist=0.433838 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD2-CB dist=0.438543 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD2-CG dist=0.366164 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD2-CD2 dist=0.394369 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD2-CE2 dist=0.395304 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-CB dist=0.503837 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CB-CG dist=0.494085 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CB-CD2 dist=0.40905 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CB-CE2 dist=0.461139 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG-CB dist=0.494338 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG-CG dist=0.480138 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG-CD2 dist=0.378085 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG-CE2 dist=0.430408 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD-CD2 dist=0.480524 k=42.687122 r0=0.381600 
+>>> num springs = 20 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b2_A3b12Rgna3b2Body-a3SpingsA3b12_A3b2Rgna3b12BodyPotential 
+>>> num pts1 8 
+>>> num pts2 16 
+>>> rgn1 atoms size=8 
+>>> rgn2 atoms size=16 
+>>> add spring=1 atoms=CB-CD dist=0.467092 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-OE1 dist=0.358583 k=76.248734 r0=0.356920 
+>>> add spring=3 atoms=CG-OE1 dist=0.446164 k=76.248734 r0=0.356920 
+>>> add spring=4 atoms=OD2-OE1 dist=0.459117 k=137.509079 r0=0.332240 
+>>> num springs = 4 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b12_A3b2Rgna3b12Body-a3SpingsA3b3_A3b4Rgna3b3BodyPotential 
+>>> num pts1 16 
+>>> num pts2 17 
+>>> rgn1 atoms size=16 
+>>> rgn2 atoms size=17 
+>>> add spring=1 atoms=CD1-CB dist=0.466996 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CD1-CG1 dist=0.484583 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD1-CG2 dist=0.419152 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CB dist=0.52244 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CG1 dist=0.446091 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD1 dist=0.393174 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CB dist=0.507183 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG-CB dist=0.518844 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG-CG1 dist=0.464722 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG-CD1 dist=0.382174 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD-CB dist=0.467092 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD-CD1 dist=0.515507 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=OE1-CB dist=0.358583 k=76.248734 r0=0.356920 
+>>> add spring=14 atoms=OE1-CG dist=0.446164 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=OE1-OD2 dist=0.459117 k=137.509079 r0=0.332240 
+>>> num springs = 15 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b3_A3b4Rgna3b3Body-a3SpingsA3b4_A3b3Rgna3b4BodyPotential 
+>>> num pts1 17 
+>>> num pts2 26 
+>>> rgn1 atoms size=17 
+>>> rgn2 atoms size=26 
+>>> add spring=1 atoms=CG-CB dist=0.505483 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=OD1-CB dist=0.440265 k=76.248734 r0=0.356920 
+>>> add spring=3 atoms=OD1-OG dist=0.45186 k=137.509079 r0=0.332240 
+>>> add spring=4 atoms=CB-CB dist=0.434913 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=OG-CB dist=0.465938 k=76.248734 r0=0.356920 
+>>> add spring=6 atoms=CB-OE1 dist=0.492039 k=76.248734 r0=0.356920 
+>>> add spring=7 atoms=CG2-CG dist=0.455858 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG2-CD dist=0.420833 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG2-OE1 dist=0.363722 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=CG2-NE2 dist=0.503175 k=62.748810 r0=0.373200 
+>>> add spring=11 atoms=CB-CB dist=0.534783 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG-CB dist=0.536313 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD-CB dist=0.47075 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD-OE1 dist=0.493579 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=CD-CB dist=0.496281 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=OE1-CB dist=0.466955 k=76.248734 r0=0.356920 
+>>> add spring=17 atoms=OE1-CD dist=0.506851 k=76.248734 r0=0.356920 
+>>> add spring=18 atoms=OE1-OE1 dist=0.422371 k=137.509079 r0=0.332240 
+>>> add spring=19 atoms=OE2-CB dist=0.437036 k=76.248734 r0=0.356920 
+>>> add spring=20 atoms=OE2-CB dist=0.388809 k=76.248734 r0=0.356920 
+>>> add spring=21 atoms=CB-CB dist=0.510859 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CG2 dist=0.498798 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=OG-CG2 dist=0.485418 k=76.248734 r0=0.356920 
+>>> num springs = 23 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b3Rgna3b4Body-a3SpingsA3b3_A3b11Rgna3b3BodyPotential 
+>>> num pts1 26 
+>>> num pts2 15 
+>>> rgn1 atoms size=26 
+>>> rgn2 atoms size=15 
+>>> add spring=1 atoms=CB-CG dist=0.505483 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CB dist=0.434913 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-OG dist=0.465938 k=76.248734 r0=0.356920 
+>>> add spring=4 atoms=CB-CB dist=0.534783 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CB dist=0.510859 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG2-CB dist=0.498798 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG2-OG dist=0.485418 k=76.248734 r0=0.356920 
+>>> add spring=8 atoms=CB-CD dist=0.47075 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-OE1 dist=0.466955 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=CB-OE2 dist=0.437036 k=76.248734 r0=0.356920 
+>>> add spring=11 atoms=CG-CG2 dist=0.455858 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD-CG2 dist=0.420833 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD-OE1 dist=0.506851 k=76.248734 r0=0.356920 
+>>> add spring=14 atoms=OE1-CB dist=0.492039 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=OE1-CG2 dist=0.363722 k=76.248734 r0=0.356920 
+>>> add spring=16 atoms=OE1-CD dist=0.493579 k=76.248734 r0=0.356920 
+>>> add spring=17 atoms=OE1-OE1 dist=0.422371 k=137.509079 r0=0.332240 
+>>> add spring=18 atoms=NE2-CG2 dist=0.503175 k=62.748810 r0=0.373200 
+>>> add spring=19 atoms=CB-CG dist=0.536313 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CB-CD dist=0.496281 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-OE2 dist=0.388809 k=76.248734 r0=0.356920 
+>>> num springs = 21 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b3_A3b11Rgna3b3Body-a3SpingsA3b11_A3b3Rgna3b11BodyPotential 
+>>> num pts1 15 
+>>> num pts2 10 
+>>> rgn1 atoms size=15 
+>>> rgn2 atoms size=10 
+>>> add spring=1 atoms=CB-CD1 dist=0.466996 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG1-CD1 dist=0.484583 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG2-CG dist=0.514994 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG2-CD1 dist=0.419152 k=42.687122 r0=0.381600 
+>>> num springs = 4 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b3Rgna3b11Body-a3SpingsA3b3_A3b12Rgna3b3BodyPotential 
+>>> num pts1 10 
+>>> num pts2 17 
+>>> rgn1 atoms size=10 
+>>> rgn2 atoms size=17 
+>>> add spring=1 atoms=CG-CG2 dist=0.514994 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CD1-CB dist=0.466996 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD1-CG1 dist=0.484583 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CG2 dist=0.419152 k=42.687122 r0=0.381600 
+>>> num springs = 4 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b3_A3b12Rgna3b3Body-a3SpingsA3b12_A3b3Rgna3b12BodyPotential 
+>>> num pts1 17 
+>>> num pts2 31 
+>>> rgn1 atoms size=17 
+>>> rgn2 atoms size=31 
+>>> add spring=1 atoms=CB-CD dist=0.467092 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-OE1 dist=0.358583 k=76.248734 r0=0.356920 
+>>> add spring=3 atoms=CG-OE1 dist=0.446164 k=76.248734 r0=0.356920 
+>>> add spring=4 atoms=OD2-OE1 dist=0.459117 k=137.509079 r0=0.332240 
+>>> add spring=5 atoms=CB-CG dist=0.507183 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD1 dist=0.466996 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.52244 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CG dist=0.518844 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CG dist=0.503745 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-NZ dist=0.498813 k=62.748810 r0=0.373200 
+>>> add spring=11 atoms=CG1-CD1 dist=0.484583 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG1-CB dist=0.446091 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG1-CG dist=0.464722 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG1-CB dist=0.469961 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG1-CG dist=0.399828 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG1-CD dist=0.517636 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG1-CE dist=0.514164 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG1-NZ dist=0.473748 k=62.748810 r0=0.373200 
+>>> add spring=19 atoms=CG1-CB dist=0.463199 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG2-CG dist=0.514994 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG2-CD1 dist=0.419152 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG2-CG dist=0.48343 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG2-CE dist=0.478987 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG2-NZ dist=0.404346 k=62.748810 r0=0.373200 
+>>> add spring=25 atoms=CD1-CB dist=0.393174 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD1-CG dist=0.382174 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CD1-CD dist=0.515507 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD1-CB dist=0.511512 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CD1-CG dist=0.480222 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CD1-CB dist=0.392121 k=42.687122 r0=0.381600 
+>>> num springs = 30 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b12_A3b3Rgna3b12Body-a3SpingsA3b4_A3b5Rgna3b4BodyPotential 
+>>> num pts1 31 
+>>> num pts2 25 
+>>> rgn1 atoms size=31 
+>>> rgn2 atoms size=25 
+>>> add spring=1 atoms=CB-SD dist=0.4701 k=69.394653 r0=0.390800 
+>>> add spring=2 atoms=CB-CE dist=0.431553 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CG dist=0.441881 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-NE2 dist=0.491523 k=62.748810 r0=0.373200 
+>>> add spring=5 atoms=CG-SD dist=0.46079 k=69.394653 r0=0.390800 
+>>> add spring=6 atoms=CG-CE dist=0.470247 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CB dist=0.481424 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CG dist=0.363476 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-NE2 dist=0.470992 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=CD1-SD dist=0.475491 k=69.394653 r0=0.390800 
+>>> add spring=11 atoms=CD1-CE dist=0.524166 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD2-CB dist=0.526516 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD2-CG dist=0.394239 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD2-NE2 dist=0.399919 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CD2-CG dist=0.529158 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD2-SD dist=0.370959 k=69.394653 r0=0.390800 
+>>> add spring=17 atoms=CD2-CE dist=0.393269 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=NZ-CG dist=0.523027 k=62.748810 r0=0.373200 
+>>> add spring=19 atoms=NZ-NE2 dist=0.462069 k=92.332428 r0=0.364800 
+>>> num springs = 19 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b5Rgna3b4Body-a3SpingsA3b5_A3b4Rgna3b5BodyPotential 
+>>> num pts1 25 
+>>> num pts2 37 
+>>> rgn1 atoms size=25 
+>>> rgn2 atoms size=37 
+>>> add spring=1 atoms=OD1-CD dist=0.508023 k=76.248734 r0=0.356920 
+>>> add spring=2 atoms=CB-CB dist=0.516485 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CB dist=0.499963 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CE1 dist=0.3525 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-NE2 dist=0.356582 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CB-CB dist=0.525954 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CG dist=0.518327 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CE dist=0.482684 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-NZ dist=0.524485 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=CG-CD2 dist=0.500599 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-CG dist=0.537662 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG-CD dist=0.514204 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG-CE dist=0.400974 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-NZ dist=0.438174 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=ND1-CG dist=0.524816 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=ND1-CD dist=0.465754 k=62.748810 r0=0.373200 
+>>> add spring=17 atoms=ND1-CE dist=0.344193 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=ND1-NZ dist=0.341161 k=92.332428 r0=0.364800 
+>>> add spring=19 atoms=CD2-CB dist=0.52485 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD2-CG dist=0.510697 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD2-CD2 dist=0.405375 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD2-CE2 dist=0.455031 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD2-CG dist=0.50956 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD2-CD dist=0.505218 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD2-CE dist=0.422774 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD2-NZ dist=0.477468 k=62.748810 r0=0.373200 
+>>> add spring=27 atoms=CE1-CB dist=0.3525 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CE1-CG dist=0.490281 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CE1-CD dist=0.426207 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CE1-CE dist=0.334933 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CE1-NZ dist=0.328692 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=NE2-CB dist=0.356582 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=NE2-CD2 dist=0.449903 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=NE2-CE2 dist=0.464279 k=62.748810 r0=0.373200 
+>>> add spring=35 atoms=NE2-CG dist=0.479085 k=62.748810 r0=0.373200 
+>>> add spring=36 atoms=NE2-CD dist=0.45093 k=62.748810 r0=0.373200 
+>>> add spring=37 atoms=NE2-CE dist=0.384304 k=62.748810 r0=0.373200 
+>>> add spring=38 atoms=NE2-NZ dist=0.417582 k=92.332428 r0=0.364800 
+>>> num springs = 38 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b5_A3b4Rgna3b5Body-a3SpingsA3b4_A3b11Rgna3b4BodyPotential 
+>>> num pts1 37 
+>>> num pts2 31 
+>>> rgn1 atoms size=37 
+>>> rgn2 atoms size=31 
+>>> add spring=1 atoms=CB-CB dist=0.516485 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CE1 dist=0.3525 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-NE2 dist=0.356582 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CE1-CB dist=0.3525 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=NE2-CB dist=0.356582 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CB-CB dist=0.525954 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CB dist=0.518327 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CB dist=0.499963 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CD2 dist=0.52485 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG-CD2 dist=0.510697 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD2-CG dist=0.500599 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD2-CD2 dist=0.405375 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD2-NE2 dist=0.449903 k=62.748810 r0=0.373200 
+>>> add spring=14 atoms=CE2-CD2 dist=0.455031 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CE2-NE2 dist=0.464279 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=CG-CG dist=0.537662 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG-ND1 dist=0.524816 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=CG-CD2 dist=0.50956 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG-CE1 dist=0.490281 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG-NE2 dist=0.479085 k=62.748810 r0=0.373200 
+>>> add spring=21 atoms=CD-CG dist=0.514204 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD-ND1 dist=0.465754 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=CD-CD2 dist=0.505218 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD-CE1 dist=0.426207 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD-NE2 dist=0.45093 k=62.748810 r0=0.373200 
+>>> add spring=26 atoms=CE-CB dist=0.482684 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CE-CG dist=0.400974 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CE-ND1 dist=0.344193 k=62.748810 r0=0.373200 
+>>> add spring=29 atoms=CE-CD2 dist=0.422774 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CE-CE1 dist=0.334933 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CE-NE2 dist=0.384304 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=NZ-CB dist=0.524485 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=NZ-CG dist=0.438174 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=NZ-ND1 dist=0.341161 k=92.332428 r0=0.364800 
+>>> add spring=35 atoms=NZ-CD2 dist=0.477468 k=62.748810 r0=0.373200 
+>>> add spring=36 atoms=NZ-CE1 dist=0.328692 k=62.748810 r0=0.373200 
+>>> add spring=37 atoms=NZ-NE2 dist=0.417582 k=92.332428 r0=0.364800 
+>>> num springs = 37 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b11Rgna3b4Body-a3SpingsA3b11_A3b4Rgna3b11BodyPotential 
+>>> num pts1 31 
+>>> num pts2 50 
+>>> rgn1 atoms size=31 
+>>> rgn2 atoms size=50 
+>>> add spring=1 atoms=CB-CD2 dist=0.476999 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CB dist=0.498723 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CB dist=0.468442 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CG dist=0.487854 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CD1 dist=0.385734 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG1-CB dist=0.436157 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG1-CG dist=0.473181 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG1-CD2 dist=0.380595 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG1-CB dist=0.452714 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG1-CB dist=0.404212 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG1-CG dist=0.449754 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG1-CD1 dist=0.386889 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG1-CD2 dist=0.495082 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG2-CD2 dist=0.506835 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG2-CB dist=0.415774 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG2-CG dist=0.497741 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG2-CD dist=0.522962 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG2-OE2 dist=0.460489 k=76.248734 r0=0.356920 
+>>> add spring=19 atoms=CG2-CB dist=0.525003 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG2-CD1 dist=0.473568 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CD1 dist=0.481424 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CD2 dist=0.526516 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CG dist=0.441881 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG-CD1 dist=0.363476 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CG-CD2 dist=0.394239 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD-CG dist=0.489548 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CD-CD1 dist=0.430682 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD-CD2 dist=0.42955 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=OE1-CD1 dist=0.489495 k=76.248734 r0=0.356920 
+>>> add spring=30 atoms=NE2-CG dist=0.491523 k=62.748810 r0=0.373200 
+>>> add spring=31 atoms=NE2-CD1 dist=0.470992 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=NE2-CD2 dist=0.399919 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=CB-CE1 dist=0.533441 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CB-CG dist=0.468634 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CB-CD1 dist=0.442139 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CB-CD2 dist=0.367696 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CG-CE1 dist=0.531675 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CG-NE2 dist=0.513096 k=62.748810 r0=0.373200 
+>>> add spring=39 atoms=CG-CG dist=0.54131 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CG-CD1 dist=0.521613 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CG-CD2 dist=0.438733 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CD2-CD2 dist=0.521728 k=42.687122 r0=0.381600 
+>>> add spring=43 atoms=CD2-CE1 dist=0.456936 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CD2-NE2 dist=0.412368 k=62.748810 r0=0.373200 
+>>> add spring=45 atoms=CD2-CG dist=0.505354 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CD2-CD1 dist=0.497562 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD2-CD2 dist=0.414171 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CE2-CD2 dist=0.538121 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CE2-CE1 dist=0.513561 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CE2-NE2 dist=0.441419 k=62.748810 r0=0.373200 
+>>> add spring=51 atoms=CE2-CD2 dist=0.529369 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CB-CB dist=0.494663 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CB-CG dist=0.512841 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CB-CD1 dist=0.4461 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CB-CD2 dist=0.52004 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CG-CB dist=0.389411 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CG-CG dist=0.42897 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CG-CD1 dist=0.403288 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CG-CD2 dist=0.425658 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CG-CD2 dist=0.529158 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=SD-CB dist=0.462003 k=69.394653 r0=0.390800 
+>>> add spring=62 atoms=SD-CG dist=0.544709 k=69.394653 r0=0.390800 
+>>> add spring=63 atoms=SD-CD1 dist=0.5439 k=69.394653 r0=0.390800 
+>>> add spring=64 atoms=SD-CD2 dist=0.547832 k=69.394653 r0=0.390800 
+>>> add spring=65 atoms=SD-CB dist=0.4701 k=69.394653 r0=0.390800 
+>>> add spring=66 atoms=SD-CG dist=0.46079 k=69.394653 r0=0.390800 
+>>> add spring=67 atoms=SD-CD1 dist=0.475491 k=69.394653 r0=0.390800 
+>>> add spring=68 atoms=SD-CD2 dist=0.370959 k=69.394653 r0=0.390800 
+>>> add spring=69 atoms=CE-CB dist=0.373206 k=42.687122 r0=0.381600 
+>>> add spring=70 atoms=CE-CG dist=0.492226 k=42.687122 r0=0.381600 
+>>> add spring=71 atoms=CE-CD1 dist=0.513726 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CE-CD2 dist=0.529123 k=42.687122 r0=0.381600 
+>>> add spring=73 atoms=CE-CB dist=0.410188 k=42.687122 r0=0.381600 
+>>> add spring=74 atoms=CE-CB dist=0.431553 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CE-CG dist=0.470247 k=42.687122 r0=0.381600 
+>>> add spring=76 atoms=CE-CD1 dist=0.524166 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CE-CD2 dist=0.393269 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CB-ND1 dist=0.435559 k=62.748810 r0=0.373200 
+>>> add spring=79 atoms=CB-CE1 dist=0.415127 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CB-CD1 dist=0.459009 k=42.687122 r0=0.381600 
+>>> add spring=81 atoms=CG-CG dist=0.50929 k=42.687122 r0=0.381600 
+>>> add spring=82 atoms=CG-ND1 dist=0.388579 k=62.748810 r0=0.373200 
+>>> add spring=83 atoms=CG-CE1 dist=0.408629 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CG-NE2 dist=0.529577 k=62.748810 r0=0.373200 
+>>> add spring=85 atoms=CG-CB dist=0.536279 k=42.687122 r0=0.381600 
+>>> add spring=86 atoms=CG-CD1 dist=0.497503 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=ND1-ND1 dist=0.426988 k=92.332428 r0=0.364800 
+>>> add spring=88 atoms=ND1-CE1 dist=0.477351 k=62.748810 r0=0.373200 
+>>> add spring=89 atoms=ND1-CB dist=0.428869 k=62.748810 r0=0.373200 
+>>> add spring=90 atoms=ND1-CD1 dist=0.514039 k=62.748810 r0=0.373200 
+>>> add spring=91 atoms=CD2-CB dist=0.506767 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CD2-CG dist=0.462292 k=42.687122 r0=0.381600 
+>>> add spring=93 atoms=CD2-CD dist=0.518247 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CD2-CB dist=0.519793 k=42.687122 r0=0.381600 
+>>> add spring=95 atoms=CD2-CG dist=0.471429 k=42.687122 r0=0.381600 
+>>> add spring=96 atoms=CD2-ND1 dist=0.371424 k=62.748810 r0=0.373200 
+>>> add spring=97 atoms=CD2-CE1 dist=0.402859 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CD2-NE2 dist=0.508108 k=62.748810 r0=0.373200 
+>>> add spring=99 atoms=CE1-CB dist=0.444189 k=42.687122 r0=0.381600 
+>>> add spring=100 atoms=CE1-CG dist=0.455677 k=42.687122 r0=0.381600 
+>>> add spring=101 atoms=CE1-CD dist=0.503208 k=42.687122 r0=0.381600 
+>>> add spring=102 atoms=CE1-OE1 dist=0.47772 k=76.248734 r0=0.356920 
+>>> add spring=103 atoms=CE1-CB dist=0.526889 k=42.687122 r0=0.381600 
+>>> add spring=104 atoms=CE1-CG dist=0.524127 k=42.687122 r0=0.381600 
+>>> add spring=105 atoms=CE1-ND1 dist=0.434485 k=62.748810 r0=0.373200 
+>>> add spring=106 atoms=CE1-CE1 dist=0.509416 k=42.687122 r0=0.381600 
+>>> add spring=107 atoms=CE1-CB dist=0.4051 k=42.687122 r0=0.381600 
+>>> add spring=108 atoms=NE2-CB dist=0.391738 k=62.748810 r0=0.373200 
+>>> add spring=109 atoms=NE2-CG dist=0.371152 k=62.748810 r0=0.373200 
+>>> add spring=110 atoms=NE2-CD dist=0.430919 k=62.748810 r0=0.373200 
+>>> add spring=111 atoms=NE2-OE1 dist=0.434462 k=112.433098 r0=0.348520 
+>>> add spring=112 atoms=NE2-CB dist=0.492248 k=62.748810 r0=0.373200 
+>>> add spring=113 atoms=NE2-CG dist=0.48214 k=62.748810 r0=0.373200 
+>>> add spring=114 atoms=NE2-ND1 dist=0.402179 k=92.332428 r0=0.364800 
+>>> add spring=115 atoms=NE2-CE1 dist=0.469309 k=62.748810 r0=0.373200 
+>>> add spring=116 atoms=NE2-CB dist=0.500321 k=62.748810 r0=0.373200 
+>>> num springs = 116 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b4Rgna3b11Body-a3SpingsA3b4_A3b12Rgna3b4BodyPotential 
+>>> num pts1 50 
+>>> num pts2 15 
+>>> rgn1 atoms size=50 
+>>> rgn2 atoms size=15 
+>>> add spring=1 atoms=CE1-CB dist=0.533441 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG1 dist=0.436157 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CB dist=0.494663 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CG dist=0.389411 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-SD dist=0.462003 k=69.394653 r0=0.390800 
+>>> add spring=6 atoms=CB-CE dist=0.373206 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CG1 dist=0.473181 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG-CB dist=0.468634 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG-CB dist=0.512841 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG-CG dist=0.42897 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-SD dist=0.544709 k=69.394653 r0=0.390800 
+>>> add spring=12 atoms=CG-CE dist=0.492226 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD1-CB dist=0.442139 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD1-CB dist=0.4461 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CG dist=0.403288 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD1-SD dist=0.5439 k=69.394653 r0=0.390800 
+>>> add spring=17 atoms=CD1-CE dist=0.513726 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD2-CB dist=0.476999 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-CG1 dist=0.380595 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD2-CG2 dist=0.506835 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD2-CB dist=0.367696 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD2-CB dist=0.52004 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD2-CG dist=0.425658 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD2-SD dist=0.547832 k=69.394653 r0=0.390800 
+>>> add spring=25 atoms=CD2-CE dist=0.529123 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CB-CE dist=0.410188 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CB-CB dist=0.498723 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CB-CG1 dist=0.452714 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CB-CG2 dist=0.415774 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CG-CG2 dist=0.497741 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CD-CG2 dist=0.522962 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=OE2-CG2 dist=0.460489 k=76.248734 r0=0.356920 
+>>> add spring=33 atoms=CB-CB dist=0.468442 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CB-CG1 dist=0.404212 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CB-CG2 dist=0.525003 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CB-SD dist=0.4701 k=69.394653 r0=0.390800 
+>>> add spring=37 atoms=CB-CE dist=0.431553 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CG-CB dist=0.487854 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CG-CG1 dist=0.449754 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CG-CG dist=0.441881 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CG-CD dist=0.489548 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CG-NE2 dist=0.491523 k=62.748810 r0=0.373200 
+>>> add spring=43 atoms=CG-SD dist=0.46079 k=69.394653 r0=0.390800 
+>>> add spring=44 atoms=CG-CE dist=0.470247 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CD1-CB dist=0.385734 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CD1-CG1 dist=0.386889 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CD1-CG2 dist=0.473568 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD1-CB dist=0.481424 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD1-CG dist=0.363476 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=CD1-CD dist=0.430682 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CD1-OE1 dist=0.489495 k=76.248734 r0=0.356920 
+>>> add spring=52 atoms=CD1-NE2 dist=0.470992 k=62.748810 r0=0.373200 
+>>> add spring=53 atoms=CD1-SD dist=0.475491 k=69.394653 r0=0.390800 
+>>> add spring=54 atoms=CD1-CE dist=0.524166 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CD2-CG1 dist=0.495082 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CD2-CB dist=0.526516 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CD2-CG dist=0.394239 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CD2-CD dist=0.42955 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CD2-NE2 dist=0.399919 k=62.748810 r0=0.373200 
+>>> add spring=60 atoms=CD2-CG dist=0.529158 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CD2-SD dist=0.370959 k=69.394653 r0=0.390800 
+>>> add spring=62 atoms=CD2-CE dist=0.393269 k=42.687122 r0=0.381600 
+>>> num springs = 62 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b4_A3b12Rgna3b4Body-a3SpingsA3b12_A3b4Rgna3b12BodyPotential 
+>>> num pts1 15 
+>>> num pts2 23 
+>>> rgn1 atoms size=15 
+>>> rgn2 atoms size=23 
+>>> add spring=1 atoms=CB-CB dist=0.468442 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.487854 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD1 dist=0.385734 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CB dist=0.536999 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CG dist=0.53467 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG1-CB dist=0.404212 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG1-CG dist=0.449754 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG1-CD1 dist=0.386889 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG1-CD2 dist=0.495082 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG2-CB dist=0.525003 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG2-CD1 dist=0.473568 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG2-CB dist=0.477436 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG2-CG dist=0.458685 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG2-CD dist=0.480131 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG2-NE2 dist=0.477366 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=CB-CD1 dist=0.481424 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CB-CD2 dist=0.526516 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG-CG dist=0.441881 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG-CD1 dist=0.363476 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG-CD2 dist=0.394239 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG-NZ dist=0.523027 k=62.748810 r0=0.373200 
+>>> add spring=22 atoms=CD-CG dist=0.489548 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CD-CD1 dist=0.430682 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CD-CD2 dist=0.42955 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD-NZ dist=0.479432 k=62.748810 r0=0.373200 
+>>> add spring=26 atoms=OE1-CD1 dist=0.489495 k=76.248734 r0=0.356920 
+>>> add spring=27 atoms=NE2-CG dist=0.491523 k=62.748810 r0=0.373200 
+>>> add spring=28 atoms=NE2-CD1 dist=0.470992 k=62.748810 r0=0.373200 
+>>> add spring=29 atoms=NE2-CD2 dist=0.399919 k=62.748810 r0=0.373200 
+>>> add spring=30 atoms=NE2-NZ dist=0.462069 k=92.332428 r0=0.364800 
+>>> add spring=31 atoms=CG-CD2 dist=0.529158 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=SD-CB dist=0.4701 k=69.394653 r0=0.390800 
+>>> add spring=33 atoms=SD-CG dist=0.46079 k=69.394653 r0=0.390800 
+>>> add spring=34 atoms=SD-CD1 dist=0.475491 k=69.394653 r0=0.390800 
+>>> add spring=35 atoms=SD-CD2 dist=0.370959 k=69.394653 r0=0.390800 
+>>> add spring=36 atoms=CE-CB dist=0.431553 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CE-CG dist=0.470247 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CE-CD1 dist=0.524166 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CE-CD2 dist=0.393269 k=42.687122 r0=0.381600 
+>>> num springs = 39 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b12_A3b4Rgna3b12Body-a3SpingsA3b5_A3b6Rgna3b5BodyPotential 
+>>> num pts1 23 
+>>> num pts2 33 
+>>> rgn1 atoms size=23 
+>>> rgn2 atoms size=33 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b12_A3b4Rgna3b12Body-a3SpingsA3b5_A3b6Rgna3b5BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b5_A3b6Rgna3b5Body-a3SpingsA3b6_A3b5Rgna3b6BodyPotential 
+>>> num pts1 33 
+>>> num pts2 17 
+>>> rgn1 atoms size=33 
+>>> rgn2 atoms size=17 
+>>> add spring=1 atoms=CB-CB dist=0.507148 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.43557 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD dist=0.31706 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CG dist=0.51842 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CD dist=0.423883 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD-CD dist=0.480017 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.497589 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CG dist=0.42116 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CD dist=0.297121 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG-CG dist=0.51472 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-CD dist=0.381122 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD-CG dist=0.489196 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD-CD dist=0.346238 k=42.687122 r0=0.381600 
+>>> num springs = 13 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b5Rgna3b6Body-a3SpingsA3b5_A3b11Rgna3b5BodyPotential 
+>>> num pts1 17 
+>>> num pts2 32 
+>>> rgn1 atoms size=17 
+>>> rgn2 atoms size=32 
+>>> add spring=1 atoms=CB-CB dist=0.507148 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CB dist=0.43557 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG-CG dist=0.51842 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD-CB dist=0.31706 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD-CG dist=0.423883 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD-CD dist=0.480017 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.497589 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG-CB dist=0.42116 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG-CG dist=0.51472 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG-CD dist=0.489196 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD-CB dist=0.297121 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD-CG dist=0.381122 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD-CD dist=0.346238 k=42.687122 r0=0.381600 
+>>> num springs = 13 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b5_A3b11Rgna3b5Body-a3SpingsA3b11_A3b5Rgna3b11BodyPotential 
+>>> num pts1 32 
+>>> num pts2 42 
+>>> rgn1 atoms size=32 
+>>> rgn2 atoms size=42 
+>>> add spring=1 atoms=CB-ND1 dist=0.435559 k=62.748810 r0=0.373200 
+>>> add spring=2 atoms=CB-CE1 dist=0.415127 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD1 dist=0.459009 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CG dist=0.50929 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-ND1 dist=0.388579 k=62.748810 r0=0.373200 
+>>> add spring=6 atoms=CG-CE1 dist=0.408629 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-NE2 dist=0.529577 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=CG-CB dist=0.536279 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG-CD1 dist=0.497503 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=ND1-ND1 dist=0.426988 k=92.332428 r0=0.364800 
+>>> add spring=11 atoms=ND1-CE1 dist=0.477351 k=62.748810 r0=0.373200 
+>>> add spring=12 atoms=ND1-CB dist=0.428869 k=62.748810 r0=0.373200 
+>>> add spring=13 atoms=ND1-CD1 dist=0.514039 k=62.748810 r0=0.373200 
+>>> add spring=14 atoms=CD2-CB dist=0.506767 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD2-CG dist=0.462292 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD2-CD dist=0.518247 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD2-CB dist=0.519793 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD2-CG dist=0.471429 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-ND1 dist=0.371424 k=62.748810 r0=0.373200 
+>>> add spring=20 atoms=CD2-CE1 dist=0.402859 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD2-NE2 dist=0.508108 k=62.748810 r0=0.373200 
+>>> add spring=22 atoms=CE1-CB dist=0.444189 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CE1-CG dist=0.455677 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CE1-CD dist=0.503208 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CE1-OE1 dist=0.47772 k=76.248734 r0=0.356920 
+>>> add spring=26 atoms=CE1-CB dist=0.526889 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CE1-CG dist=0.524127 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CE1-ND1 dist=0.434485 k=62.748810 r0=0.373200 
+>>> add spring=29 atoms=CE1-CE1 dist=0.509416 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CE1-CB dist=0.4051 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=NE2-CB dist=0.391738 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=NE2-CG dist=0.371152 k=62.748810 r0=0.373200 
+>>> add spring=33 atoms=NE2-CD dist=0.430919 k=62.748810 r0=0.373200 
+>>> add spring=34 atoms=NE2-OE1 dist=0.434462 k=112.433098 r0=0.348520 
+>>> add spring=35 atoms=NE2-CB dist=0.492248 k=62.748810 r0=0.373200 
+>>> add spring=36 atoms=NE2-CG dist=0.48214 k=62.748810 r0=0.373200 
+>>> add spring=37 atoms=NE2-ND1 dist=0.402179 k=92.332428 r0=0.364800 
+>>> add spring=38 atoms=NE2-CE1 dist=0.469309 k=62.748810 r0=0.373200 
+>>> add spring=39 atoms=NE2-CB dist=0.500321 k=62.748810 r0=0.373200 
+>>> add spring=40 atoms=CD2-CG dist=0.476715 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CD2-CD dist=0.458599 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=CD2-OE2 dist=0.429059 k=76.248734 r0=0.356920 
+>>> add spring=43 atoms=CE1-CD dist=0.533811 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CE1-OE2 dist=0.445168 k=76.248734 r0=0.356920 
+>>> add spring=45 atoms=CE2-CD1 dist=0.526636 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CE2-CB dist=0.524909 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CE2-CG dist=0.384126 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CE2-CD dist=0.356889 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CE2-OE1 dist=0.435434 k=76.248734 r0=0.356920 
+>>> add spring=50 atoms=CE2-OE2 dist=0.308815 k=76.248734 r0=0.356920 
+>>> add spring=51 atoms=CZ-CG dist=0.519166 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CZ-CD1 dist=0.494325 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CZ-CD2 dist=0.481268 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CZ-CG dist=0.45553 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CZ-CD dist=0.406664 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CZ-OE1 dist=0.490805 k=76.248734 r0=0.356920 
+>>> add spring=57 atoms=CZ-OE2 dist=0.321031 k=76.248734 r0=0.356920 
+>>> add spring=58 atoms=OH-CH2 dist=0.49773 k=76.248734 r0=0.356920 
+>>> add spring=59 atoms=OH-CG dist=0.402675 k=76.248734 r0=0.356920 
+>>> add spring=60 atoms=OH-CD1 dist=0.402296 k=76.248734 r0=0.356920 
+>>> add spring=61 atoms=OH-CD2 dist=0.35383 k=76.248734 r0=0.356920 
+>>> add spring=62 atoms=OH-CG dist=0.427406 k=76.248734 r0=0.356920 
+>>> add spring=63 atoms=OH-CD dist=0.368344 k=76.248734 r0=0.356920 
+>>> add spring=64 atoms=OH-OE1 dist=0.461958 k=137.509079 r0=0.332240 
+>>> add spring=65 atoms=OH-OE2 dist=0.26013 k=137.509079 r0=0.332240 
+>>> add spring=66 atoms=CG-CD dist=0.455947 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CG-OE1 dist=0.398451 k=76.248734 r0=0.356920 
+>>> add spring=68 atoms=CG-OE2 dist=0.478699 k=76.248734 r0=0.356920 
+>>> add spring=69 atoms=CD-CD dist=0.477346 k=42.687122 r0=0.381600 
+>>> add spring=70 atoms=CD-OE1 dist=0.39364 k=76.248734 r0=0.356920 
+>>> add spring=71 atoms=CE-CD dist=0.544009 k=42.687122 r0=0.381600 
+>>> add spring=72 atoms=CE-OE1 dist=0.473298 k=76.248734 r0=0.356920 
+>>> add spring=73 atoms=CB-CZ2 dist=0.542464 k=42.687122 r0=0.381600 
+>>> add spring=74 atoms=CB-CH2 dist=0.529185 k=42.687122 r0=0.381600 
+>>> add spring=75 atoms=CB-OE2 dist=0.470902 k=76.248734 r0=0.356920 
+>>> add spring=76 atoms=CG-CE2 dist=0.541868 k=42.687122 r0=0.381600 
+>>> add spring=77 atoms=CG-CZ2 dist=0.423885 k=42.687122 r0=0.381600 
+>>> add spring=78 atoms=CG-CH2 dist=0.4349 k=42.687122 r0=0.381600 
+>>> add spring=79 atoms=CG-CD dist=0.469606 k=42.687122 r0=0.381600 
+>>> add spring=80 atoms=CG-OE1 dist=0.47329 k=76.248734 r0=0.356920 
+>>> add spring=81 atoms=CG-OE2 dist=0.384442 k=76.248734 r0=0.356920 
+>>> add spring=82 atoms=CD-CZ2 dist=0.496093 k=42.687122 r0=0.381600 
+>>> add spring=83 atoms=CD-CH2 dist=0.539045 k=42.687122 r0=0.381600 
+>>> add spring=84 atoms=CD-CD dist=0.519393 k=42.687122 r0=0.381600 
+>>> add spring=85 atoms=CD-OE1 dist=0.449306 k=76.248734 r0=0.356920 
+>>> add spring=86 atoms=CD-CD dist=0.423359 k=42.687122 r0=0.381600 
+>>> add spring=87 atoms=CD-OE1 dist=0.390133 k=76.248734 r0=0.356920 
+>>> add spring=88 atoms=CD-OE2 dist=0.373205 k=76.248734 r0=0.356920 
+>>> add spring=89 atoms=CE-NE1 dist=0.522344 k=62.748810 r0=0.373200 
+>>> add spring=90 atoms=CE-CE2 dist=0.515916 k=42.687122 r0=0.381600 
+>>> add spring=91 atoms=CE-CZ2 dist=0.444491 k=42.687122 r0=0.381600 
+>>> add spring=92 atoms=CE-CH2 dist=0.518843 k=42.687122 r0=0.381600 
+>>> add spring=93 atoms=CE-CG dist=0.512067 k=42.687122 r0=0.381600 
+>>> add spring=94 atoms=CE-CD dist=0.375615 k=42.687122 r0=0.381600 
+>>> add spring=95 atoms=CE-OE1 dist=0.306671 k=76.248734 r0=0.356920 
+>>> add spring=96 atoms=CE-OE2 dist=0.372898 k=76.248734 r0=0.356920 
+>>> add spring=97 atoms=CE-CD dist=0.401135 k=42.687122 r0=0.381600 
+>>> add spring=98 atoms=CE-OE1 dist=0.354083 k=76.248734 r0=0.356920 
+>>> add spring=99 atoms=CE-OE2 dist=0.365594 k=76.248734 r0=0.356920 
+>>> add spring=100 atoms=NZ-NE1 dist=0.495111 k=92.332428 r0=0.364800 
+>>> add spring=101 atoms=NZ-CE2 dist=0.486844 k=62.748810 r0=0.373200 
+>>> add spring=102 atoms=NZ-CZ2 dist=0.435118 k=62.748810 r0=0.373200 
+>>> add spring=103 atoms=NZ-CH2 dist=0.503365 k=62.748810 r0=0.373200 
+>>> add spring=104 atoms=NZ-CD2 dist=0.517945 k=62.748810 r0=0.373200 
+>>> add spring=105 atoms=NZ-CB dist=0.480884 k=62.748810 r0=0.373200 
+>>> add spring=106 atoms=NZ-CG dist=0.424284 k=62.748810 r0=0.373200 
+>>> add spring=107 atoms=NZ-CD dist=0.303636 k=62.748810 r0=0.373200 
+>>> add spring=108 atoms=NZ-OE2 dist=0.304509 k=112.433098 r0=0.348520 
+>>> add spring=109 atoms=NZ-CB dist=0.484516 k=62.748810 r0=0.373200 
+>>> add spring=110 atoms=NZ-CG dist=0.42734 k=62.748810 r0=0.373200 
+>>> add spring=111 atoms=NZ-CD dist=0.287189 k=62.748810 r0=0.373200 
+>>> num springs = 111 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b5Rgna3b11Body-a3SpingsA3b6_A3b7Rgna3b6BodyPotential 
+>>> num pts1 42 
+>>> num pts2 22 
+>>> rgn1 atoms size=42 
+>>> rgn2 atoms size=22 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b11_A3b5Rgna3b11Body-a3SpingsA3b6_A3b7Rgna3b6BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b7Rgna3b6Body-a3SpingsA3b7_A3b6Rgna3b7BodyPotential 
+>>> num pts1 22 
+>>> num pts2 18 
+>>> rgn1 atoms size=22 
+>>> rgn2 atoms size=18 
+>>> add spring=1 atoms=CB-CB dist=0.530587 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CD1 dist=0.529884 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CB dist=0.520865 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CD1 dist=0.534336 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD2-CB dist=0.493973 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD2-CG1 dist=0.522815 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD2-CG2 dist=0.515245 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD2-CD1 dist=0.445207 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CB dist=0.518053 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CB dist=0.533891 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CB-OD1 dist=0.502081 k=76.248734 r0=0.356920 
+>>> add spring=12 atoms=CG-CB dist=0.533641 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG-CG dist=0.500188 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-OD1 dist=0.40244 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=CD-OD1 dist=0.474033 k=76.248734 r0=0.356920 
+>>> add spring=16 atoms=CB-CB dist=0.506891 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CB-CG1 dist=0.494197 k=42.687122 r0=0.381600 
+>>> num springs = 17 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b7_A3b6Rgna3b7Body-a3SpingsA3b6_A3b9Rgna3b6BodyPotential 
+>>> num pts1 18 
+>>> num pts2 1 
+>>> rgn1 atoms size=18 
+>>> rgn2 atoms size=1 
+>>> add spring=1 atoms=CB-CD2 dist=0.493973 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG1-CD2 dist=0.522815 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG2-CD2 dist=0.515245 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CD2 dist=0.445207 k=42.687122 r0=0.381600 
+>>> num springs = 4 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b9Rgna3b6Body-a3SpingsA3b9_A3b6Rgna3b9BodyPotential 
+>>> num pts1 1 
+>>> num pts2 1 
+>>> rgn1 atoms size=1 
+>>> rgn2 atoms size=1 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b6_A3b9Rgna3b6Body-a3SpingsA3b9_A3b6Rgna3b9BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b9_A3b6Rgna3b9Body-a3SpingsA3b6_A3b10Rgna3b6BodyPotential 
+>>> num pts1 1 
+>>> num pts2 17 
+>>> rgn1 atoms size=1 
+>>> rgn2 atoms size=17 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b9_A3b6Rgna3b9Body-a3SpingsA3b6_A3b10Rgna3b6BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b10Rgna3b6Body-a3SpingsA3b10_A3b6Rgna3b10BodyPotential 
+>>> num pts1 17 
+>>> num pts2 21 
+>>> rgn1 atoms size=17 
+>>> rgn2 atoms size=21 
+>>> add spring=1 atoms=CB-CG2 dist=0.466245 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG1-CB dist=0.505249 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG1-CG2 dist=0.420332 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG1-OD2 dist=0.497199 k=76.248734 r0=0.356920 
+>>> add spring=5 atoms=CG2-CG2 dist=0.422376 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD1 dist=0.499039 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CD1 dist=0.544478 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CD1 dist=0.457046 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CB dist=0.410317 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CG dist=0.512771 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-CB dist=0.360318 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG-CG dist=0.442281 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD-CB dist=0.460991 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD-CG dist=0.542269 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=OE2-CB dist=0.452967 k=76.248734 r0=0.356920 
+>>> num springs = 15 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b10_A3b6Rgna3b10Body-a3SpingsA3b6_A3b11Rgna3b6BodyPotential 
+>>> num pts1 21 
+>>> num pts2 24 
+>>> rgn1 atoms size=21 
+>>> rgn2 atoms size=24 
+>>> add spring=1 atoms=CB-CB dist=0.410317 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.360318 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD dist=0.460991 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-OE2 dist=0.452967 k=76.248734 r0=0.356920 
+>>> add spring=5 atoms=CG-CB dist=0.512771 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CG dist=0.442281 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CG-CD dist=0.542269 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CG1 dist=0.505249 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG2-CB dist=0.466245 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG2-CG1 dist=0.420332 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG2-CG2 dist=0.422376 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=OD2-CG1 dist=0.497199 k=76.248734 r0=0.356920 
+>>> num springs = 12 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b6_A3b11Rgna3b6Body-a3SpingsA3b11_A3b6Rgna3b11BodyPotential 
+>>> num pts1 24 
+>>> num pts2 24 
+>>> rgn1 atoms size=24 
+>>> rgn2 atoms size=24 
+>>> add spring=1 atoms=CB-CE3 dist=0.526955 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CZ2 dist=0.508804 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CZ3 dist=0.402069 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CH2 dist=0.391511 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CZ3 dist=0.514858 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CH2 dist=0.515301 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.543603 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CG dist=0.519916 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CD2 dist=0.503554 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CE3 dist=0.504688 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG1-OD2 dist=0.497199 k=76.248734 r0=0.356920 
+>>> add spring=12 atoms=CG1-CB dist=0.509971 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG1-CG dist=0.513357 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG1-CD2 dist=0.536059 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CG2-CB dist=0.457869 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG2-CG dist=0.434385 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG2-CD1 dist=0.507403 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG2-CD2 dist=0.397585 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CG2-NE1 dist=0.521684 k=62.748810 r0=0.373200 
+>>> add spring=20 atoms=CG2-CE2 dist=0.460788 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG2-CE3 dist=0.373962 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG2-CZ2 dist=0.500682 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG2-CZ3 dist=0.418982 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG2-CH2 dist=0.480144 k=42.687122 r0=0.381600 
+>>> num springs = 24 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b6Rgna3b11Body-a3SpingsA3b7_A3b8Rgna3b7BodyPotential 
+>>> num pts1 24 
+>>> num pts2 25 
+>>> rgn1 atoms size=24 
+>>> rgn2 atoms size=25 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b11_A3b6Rgna3b11Body-a3SpingsA3b7_A3b8Rgna3b7BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b7_A3b8Rgna3b7Body-a3SpingsA3b8_A3b7Rgna3b8BodyPotential 
+>>> num pts1 25 
+>>> num pts2 19 
+>>> rgn1 atoms size=25 
+>>> rgn2 atoms size=19 
+>>> add spring=1 atoms=CG2-CG dist=0.525701 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG2-CD2 dist=0.519414 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CG1 dist=0.505928 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CB dist=0.497782 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CG1 dist=0.405068 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CD1 dist=0.49432 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD-CG1 dist=0.500301 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CE-CG1 dist=0.475322 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CE-CD1 dist=0.504454 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CB dist=0.465403 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-CB dist=0.481398 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD2-CB dist=0.531808 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CD2-CG2 dist=0.493909 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD2-CB dist=0.376804 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD2-CG dist=0.46104 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD2-CD dist=0.490817 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD2-NE dist=0.405567 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=CD2-CZ dist=0.464011 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-NH2 dist=0.4367 k=62.748810 r0=0.373200 
+>>> add spring=20 atoms=CB-CB dist=0.50623 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CB-CG dist=0.464261 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CB-CD2 dist=0.411698 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CD2 dist=0.518337 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CB-CB dist=0.454504 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CB-CG1 dist=0.434252 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CB-CD1 dist=0.497525 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CG-CG1 dist=0.52422 k=42.687122 r0=0.381600 
+>>> num springs = 27 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b8_A3b7Rgna3b8Body-a3SpingsA3b7_A3b9Rgna3b7BodyPotential 
+>>> num pts1 19 
+>>> num pts2 35 
+>>> rgn1 atoms size=19 
+>>> rgn2 atoms size=35 
+>>> add spring=1 atoms=CB-CB dist=0.50623 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CB dist=0.464261 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD2-CB dist=0.411698 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD2-CG dist=0.518337 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CG dist=0.497782 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD2 dist=0.531808 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.454504 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CG1-CB dist=0.505928 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CG1-CG dist=0.405068 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CG1-CD dist=0.500301 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG1-CE dist=0.475322 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG1-CB dist=0.434252 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG2-CD2 dist=0.493909 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CD1-CG dist=0.49432 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CD1-CE dist=0.504454 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD1-CB dist=0.497525 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CB-CB dist=0.465403 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CB-CG dist=0.481398 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CB-CD2 dist=0.376804 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG-CD2 dist=0.46104 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD-CD2 dist=0.490817 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=NE-CD2 dist=0.405567 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=CZ-CD2 dist=0.464011 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=NH2-CD2 dist=0.4367 k=62.748810 r0=0.373200 
+>>> num springs = 24 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b7_A3b9Rgna3b7Body-a3SpingsA3b9_A3b7Rgna3b9BodyPotential 
+>>> num pts1 35 
+>>> num pts2 27 
+>>> rgn1 atoms size=35 
+>>> rgn2 atoms size=27 
+>>> add spring=1 atoms=CG-CD2 dist=0.502067 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CG-CE2 dist=0.530837 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CD1-CG dist=0.512523 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CD2 dist=0.39026 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD1-CE2 dist=0.405854 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD1-CZ dist=0.537112 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CB dist=0.5123 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CE1-CB dist=0.495944 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CE1-CG dist=0.458746 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CE1-CD2 dist=0.351597 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CE1-CE2 dist=0.383615 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CE1-CZ dist=0.508402 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CE1-CB dist=0.436727 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CE2-CD2 dist=0.541526 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CZ-CB dist=0.52942 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CZ-CG dist=0.525031 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CZ-CD2 dist=0.441221 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CZ-CE2 dist=0.497088 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CZ-CB dist=0.517629 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=OH-CD2 dist=0.470742 k=76.248734 r0=0.356920 
+>>> add spring=21 atoms=OH-CB dist=0.502282 k=76.248734 r0=0.356920 
+>>> add spring=22 atoms=CB-CD2 dist=0.542313 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG-CB dist=0.452443 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG-CG dist=0.47377 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CG-CD2 dist=0.472382 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CG-CE2 dist=0.54455 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CD1-CB dist=0.544957 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CD2-CB dist=0.422574 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CD2-CG dist=0.398157 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CD2-CD1 dist=0.455457 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CD2-CD2 dist=0.382283 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CD2-CE1 dist=0.494222 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CD2-CE2 dist=0.427448 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CD2-CZ dist=0.481629 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CB-CB dist=0.532432 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CG-CB dist=0.50938 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CG-CB dist=0.491504 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CD-CB dist=0.440109 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CD-CB dist=0.351756 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CD-CG dist=0.466108 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CD-CD2 dist=0.484535 k=42.687122 r0=0.381600 
+>>> add spring=42 atoms=OE1-CB dist=0.391143 k=76.248734 r0=0.356920 
+>>> add spring=43 atoms=OE1-CB dist=0.302395 k=76.248734 r0=0.356920 
+>>> add spring=44 atoms=OE1-CG dist=0.436871 k=76.248734 r0=0.356920 
+>>> add spring=45 atoms=OE1-CD2 dist=0.484289 k=76.248734 r0=0.356920 
+>>> add spring=46 atoms=NE2-CB dist=0.4838 k=62.748810 r0=0.373200 
+>>> add spring=47 atoms=NE2-CB dist=0.331289 k=62.748810 r0=0.373200 
+>>> add spring=48 atoms=NE2-CG dist=0.418168 k=62.748810 r0=0.373200 
+>>> add spring=49 atoms=NE2-CD2 dist=0.419703 k=62.748810 r0=0.373200 
+>>> add spring=50 atoms=CB-CB dist=0.465403 k=42.687122 r0=0.381600 
+>>> add spring=51 atoms=CG-CB dist=0.481398 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CG-CB dist=0.500877 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CD1-CB dist=0.360564 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CD1-CG dist=0.46311 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CD1-CD1 dist=0.505309 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CD2-CB dist=0.376804 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CD2-CG dist=0.46104 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CD2-CD dist=0.490817 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CD2-NE dist=0.405567 k=62.748810 r0=0.373200 
+>>> add spring=60 atoms=CD2-CZ dist=0.464011 k=42.687122 r0=0.381600 
+>>> add spring=61 atoms=CD2-NH2 dist=0.4367 k=62.748810 r0=0.373200 
+>>> add spring=62 atoms=CD-CG dist=0.530472 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=NE-CB dist=0.51921 k=62.748810 r0=0.373200 
+>>> add spring=64 atoms=NE-CG dist=0.477161 k=62.748810 r0=0.373200 
+>>> add spring=65 atoms=CZ-CB dist=0.417736 k=42.687122 r0=0.381600 
+>>> add spring=66 atoms=CZ-CG dist=0.384707 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CZ-CD dist=0.514237 k=42.687122 r0=0.381600 
+>>> add spring=68 atoms=NH1-CB dist=0.32352 k=62.748810 r0=0.373200 
+>>> add spring=69 atoms=NH1-CG dist=0.330083 k=62.748810 r0=0.373200 
+>>> add spring=70 atoms=NH1-CD dist=0.459303 k=62.748810 r0=0.373200 
+>>> add spring=71 atoms=NH2-CB dist=0.446334 k=62.748810 r0=0.373200 
+>>> add spring=72 atoms=NH2-CG dist=0.396548 k=62.748810 r0=0.373200 
+>>> add spring=73 atoms=NH2-CD dist=0.532378 k=62.748810 r0=0.373200 
+>>> num springs = 73 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b9_A3b7Rgna3b9Body-a3SpingsA3b7_A3b10Rgna3b7BodyPotential 
+>>> num pts1 27 
+>>> num pts2 18 
+>>> rgn1 atoms size=27 
+>>> rgn2 atoms size=18 
+>>> add spring=1 atoms=CB-CG dist=0.50938 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CD dist=0.440109 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-NE2 dist=0.4838 k=62.748810 r0=0.373200 
+>>> add spring=4 atoms=CB-CE1 dist=0.495944 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CZ dist=0.52942 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CB dist=0.532432 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CG dist=0.491504 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CD dist=0.351756 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-NE2 dist=0.331289 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=CG-CD1 dist=0.512523 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CG-CE1 dist=0.458746 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CG-CZ dist=0.525031 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG-CD dist=0.466108 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-NE2 dist=0.418168 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CD2-CG dist=0.502067 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CD2-CD1 dist=0.39026 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CD2-CE1 dist=0.351597 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CD2-CE2 dist=0.541526 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD2-CZ dist=0.441221 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD2-OH dist=0.470742 k=76.248734 r0=0.356920 
+>>> add spring=21 atoms=CD2-CD dist=0.484535 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CD2-NE2 dist=0.419703 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=CE2-CG dist=0.530837 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CE2-CD1 dist=0.405854 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CE2-CE1 dist=0.383615 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CE2-CZ dist=0.497088 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CZ-CD1 dist=0.537112 k=42.687122 r0=0.381600 
+>>> add spring=28 atoms=CZ-CE1 dist=0.508402 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CB-CD1 dist=0.5123 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CB-CE1 dist=0.436727 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CB-CZ dist=0.517629 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CB-OH dist=0.502282 k=76.248734 r0=0.356920 
+>>> num springs = 32 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b7_A3b10Rgna3b7Body-a3SpingsA3b10_A3b7Rgna3b10BodyPotential 
+>>> num pts1 18 
+>>> num pts2 19 
+>>> rgn1 atoms size=18 
+>>> rgn2 atoms size=19 
+>>> add spring=1 atoms=CB-CB dist=0.463815 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.429272 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD dist=0.424874 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG-CB dist=0.45758 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CG dist=0.382012 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG-CD dist=0.352693 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CB dist=0.523105 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CD1-CG dist=0.444907 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CD1-CD dist=0.370539 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CD2-CB dist=0.443865 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CD2-CG dist=0.338974 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CD2-CD dist=0.339983 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CE1-CB dist=0.522896 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CE1-OG1 dist=0.452981 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=CE1-CG dist=0.469141 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CE1-CD dist=0.378099 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CE2-OG1 dist=0.45734 k=76.248734 r0=0.356920 
+>>> add spring=18 atoms=CE2-CB dist=0.499219 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CE2-CG dist=0.369925 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CE2-CD dist=0.34848 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CZ-CB dist=0.511092 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CZ-OG1 dist=0.410775 k=76.248734 r0=0.356920 
+>>> add spring=23 atoms=CZ-CG dist=0.434888 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CZ-CD dist=0.367289 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=OH-CB dist=0.493866 k=76.248734 r0=0.356920 
+>>> add spring=26 atoms=OH-OG1 dist=0.381745 k=137.509079 r0=0.332240 
+>>> add spring=27 atoms=OH-CD dist=0.440625 k=76.248734 r0=0.356920 
+>>> add spring=28 atoms=OD1-CB dist=0.494572 k=76.248734 r0=0.356920 
+>>> add spring=29 atoms=OD1-CG dist=0.447686 k=76.248734 r0=0.356920 
+>>> num springs = 29 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b10_A3b7Rgna3b10Body-a3SpingsA3b8_A3b9Rgna3b8BodyPotential 
+>>> num pts1 19 
+>>> num pts2 17 
+>>> rgn1 atoms size=19 
+>>> rgn2 atoms size=17 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b10_A3b7Rgna3b10Body-a3SpingsA3b8_A3b9Rgna3b8BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b8_A3b9Rgna3b8Body-a3SpingsA3b9_A3b8Rgna3b9BodyPotential 
+>>> num pts1 17 
+>>> num pts2 18 
+>>> rgn1 atoms size=17 
+>>> rgn2 atoms size=18 
+>>> add spring=1 atoms=CB-CB dist=0.472983 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG dist=0.46777 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CG2-CB dist=0.414245 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CG2-CG dist=0.374487 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG2-CD dist=0.478245 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG2-NE dist=0.477574 k=62.748810 r0=0.373200 
+>>> add spring=7 atoms=CB-CG dist=0.539989 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-NE dist=0.288448 k=62.748810 r0=0.373200 
+>>> add spring=9 atoms=CB-CZ dist=0.407636 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-NH1 dist=0.478508 k=62.748810 r0=0.373200 
+>>> add spring=11 atoms=CB-NH2 dist=0.486093 k=62.748810 r0=0.373200 
+>>> add spring=12 atoms=CB-CB dist=0.516235 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CG-CZ dist=0.359096 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CG-NH1 dist=0.416526 k=62.748810 r0=0.373200 
+>>> add spring=15 atoms=CG-NH2 dist=0.45592 k=62.748810 r0=0.373200 
+>>> add spring=16 atoms=CD-NH2 dist=0.356405 k=62.748810 r0=0.373200 
+>>> add spring=17 atoms=NE-CB dist=0.288448 k=62.748810 r0=0.373200 
+>>> add spring=18 atoms=CZ-CB dist=0.407636 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CZ-CG dist=0.359096 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=NH1-CB dist=0.478508 k=62.748810 r0=0.373200 
+>>> add spring=21 atoms=NH1-CG dist=0.416526 k=62.748810 r0=0.373200 
+>>> add spring=22 atoms=NH2-CB dist=0.486093 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=NH2-CG dist=0.45592 k=62.748810 r0=0.373200 
+>>> add spring=24 atoms=NH2-CD dist=0.356405 k=62.748810 r0=0.373200 
+>>> num springs = 24 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b9_A3b8Rgna3b9Body-a3SpingsA3b9_A3b10Rgna3b9BodyPotential 
+>>> num pts1 18 
+>>> num pts2 14 
+>>> rgn1 atoms size=18 
+>>> rgn2 atoms size=14 
+>>> add spring=1 atoms=CB-CG2 dist=0.526399 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CE1 dist=0.368142 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CE2 dist=0.367663 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CZ dist=0.416483 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG-CB dist=0.508362 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CD1-CB dist=0.535666 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CD1-CB dist=0.51452 k=42.687122 r0=0.381600 
+>>> num springs = 7 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b9_A3b10Rgna3b9Body-a3SpingsA3b10_A3b9Rgna3b10BodyPotential 
+>>> num pts1 14 
+>>> num pts2 21 
+>>> rgn1 atoms size=14 
+>>> rgn2 atoms size=21 
+>>> add spring=1 atoms=CE1-CD dist=0.523495 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CE2-CD dist=0.543274 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CZ-CD dist=0.472161 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CB dist=0.49536 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CB-CG dist=0.461752 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CD dist=0.317233 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.415356 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CG dist=0.520163 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CD2 dist=0.524165 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CB dist=0.508165 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CB-CB dist=0.479491 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-CB dist=0.46741 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CB-CG dist=0.420493 k=42.687122 r0=0.381600 
+>>> add spring=14 atoms=CB-CD1 dist=0.543525 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CB-CD2 dist=0.308636 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG-CB dist=0.483262 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG-CG dist=0.446183 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CG-CD2 dist=0.374632 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CD-CB dist=0.410869 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CD-CG dist=0.419442 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CD-CD2 dist=0.375528 k=42.687122 r0=0.381600 
+>>> num springs = 21 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b10_A3b9Rgna3b10Body-a3SpingsA3b10_A3b11Rgna3b10BodyPotential 
+>>> num pts1 21 
+>>> num pts2 23 
+>>> rgn1 atoms size=21 
+>>> rgn2 atoms size=23 
+>>> add spring=1 atoms=CB-CD1 dist=0.543525 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-CG1 dist=0.505188 k=42.687122 r0=0.381600 
+>>> add spring=3 atoms=CB-CD1 dist=0.470801 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CD1-CG1 dist=0.505059 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CD1-CD1 dist=0.49051 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CB-CB dist=0.531453 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CG dist=0.468876 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-CD dist=0.35611 k=42.687122 r0=0.381600 
+>>> add spring=9 atoms=CB-CB dist=0.477956 k=42.687122 r0=0.381600 
+>>> add spring=10 atoms=CB-CB dist=0.440821 k=42.687122 r0=0.381600 
+>>> add spring=11 atoms=CB-CG dist=0.428518 k=42.687122 r0=0.381600 
+>>> add spring=12 atoms=CB-CD dist=0.40399 k=42.687122 r0=0.381600 
+>>> add spring=13 atoms=CB-OE1 dist=0.312692 k=76.248734 r0=0.356920 
+>>> add spring=14 atoms=CB-OE2 dist=0.508954 k=76.248734 r0=0.356920 
+>>> add spring=15 atoms=OG1-CG dist=0.414896 k=76.248734 r0=0.356920 
+>>> add spring=16 atoms=OG1-CD dist=0.31611 k=76.248734 r0=0.356920 
+>>> add spring=17 atoms=OG1-CB dist=0.478145 k=76.248734 r0=0.356920 
+>>> add spring=18 atoms=OG1-OE1 dist=0.430052 k=137.509079 r0=0.332240 
+>>> add spring=19 atoms=CG2-CB dist=0.537124 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CG2-CG dist=0.495903 k=42.687122 r0=0.381600 
+>>> add spring=21 atoms=CG2-CD dist=0.414073 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG2-CB dist=0.358696 k=42.687122 r0=0.381600 
+>>> add spring=23 atoms=CG2-CG dist=0.488671 k=42.687122 r0=0.381600 
+>>> add spring=24 atoms=CG2-CB dist=0.33666 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CG2-CG dist=0.31983 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CG2-CD dist=0.340293 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CG2-OE1 dist=0.288615 k=76.248734 r0=0.356920 
+>>> add spring=28 atoms=CG2-OE2 dist=0.453243 k=76.248734 r0=0.356920 
+>>> add spring=29 atoms=CB-CB dist=0.531453 k=42.687122 r0=0.381600 
+>>> add spring=30 atoms=CB-CG2 dist=0.537124 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CB-CB dist=0.536537 k=42.687122 r0=0.381600 
+>>> add spring=32 atoms=CG-CB dist=0.468876 k=42.687122 r0=0.381600 
+>>> add spring=33 atoms=CG-CG2 dist=0.495903 k=42.687122 r0=0.381600 
+>>> add spring=34 atoms=CG-CB dist=0.520138 k=42.687122 r0=0.381600 
+>>> add spring=35 atoms=CD-CB dist=0.35611 k=42.687122 r0=0.381600 
+>>> add spring=36 atoms=CD-CG2 dist=0.414073 k=42.687122 r0=0.381600 
+>>> add spring=37 atoms=CD-CB dist=0.539306 k=42.687122 r0=0.381600 
+>>> add spring=38 atoms=CB-CB dist=0.440821 k=42.687122 r0=0.381600 
+>>> add spring=39 atoms=CB-CG2 dist=0.33666 k=42.687122 r0=0.381600 
+>>> add spring=40 atoms=CB-CB dist=0.504383 k=42.687122 r0=0.381600 
+>>> add spring=41 atoms=CB-OE1 dist=0.287534 k=76.248734 r0=0.356920 
+>>> add spring=42 atoms=CB-OE2 dist=0.341416 k=76.248734 r0=0.356920 
+>>> add spring=43 atoms=CB-CB dist=0.528988 k=42.687122 r0=0.381600 
+>>> add spring=44 atoms=CB-CG1 dist=0.50471 k=42.687122 r0=0.381600 
+>>> add spring=45 atoms=CG-CB dist=0.428518 k=42.687122 r0=0.381600 
+>>> add spring=46 atoms=CG-CG2 dist=0.31983 k=42.687122 r0=0.381600 
+>>> add spring=47 atoms=CG-CB dist=0.488412 k=42.687122 r0=0.381600 
+>>> add spring=48 atoms=CD-CB dist=0.40399 k=42.687122 r0=0.381600 
+>>> add spring=49 atoms=CD-CG2 dist=0.340293 k=42.687122 r0=0.381600 
+>>> add spring=50 atoms=OE1-CB dist=0.312692 k=76.248734 r0=0.356920 
+>>> add spring=51 atoms=OE1-CG2 dist=0.288615 k=76.248734 r0=0.356920 
+>>> add spring=52 atoms=OE1-CB dist=0.287534 k=76.248734 r0=0.356920 
+>>> add spring=53 atoms=OE2-CB dist=0.508954 k=76.248734 r0=0.356920 
+>>> add spring=54 atoms=OE2-CG2 dist=0.453243 k=76.248734 r0=0.356920 
+>>> add spring=55 atoms=OE2-CB dist=0.341416 k=76.248734 r0=0.356920 
+>>> add spring=56 atoms=CG1-CD1 dist=0.505059 k=42.687122 r0=0.381600 
+>>> add spring=57 atoms=CG1-CB dist=0.50471 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CD1-CD1 dist=0.49051 k=42.687122 r0=0.381600 
+>>> num springs = 58 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b10_A3b11Rgna3b10Body-a3SpingsA3b11_A3b10Rgna3b11BodyPotential 
+>>> num pts1 23 
+>>> num pts2 21 
+>>> rgn1 atoms size=23 
+>>> rgn2 atoms size=21 
+>>> add spring=1 atoms=CB-CB dist=0.540718 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=CB-OG1 dist=0.493777 k=76.248734 r0=0.356920 
+>>> add spring=3 atoms=CB-CB dist=0.521576 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CB-CB dist=0.52709 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CG2-CB dist=0.530916 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CG2-CB dist=0.525516 k=42.687122 r0=0.381600 
+>>> add spring=7 atoms=CB-CB dist=0.513425 k=42.687122 r0=0.381600 
+>>> add spring=8 atoms=CB-OG dist=0.507898 k=76.248734 r0=0.356920 
+>>> add spring=9 atoms=CG-OG dist=0.495646 k=76.248734 r0=0.356920 
+>>> add spring=10 atoms=OD1-OG dist=0.410754 k=137.509079 r0=0.332240 
+>>> num springs = 10 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b10Rgna3b11Body-a3SpingsA3b11_A3b12Rgna3b11BodyPotential 
+>>> num pts1 21 
+>>> num pts2 27 
+>>> rgn1 atoms size=21 
+>>> rgn2 atoms size=27 
+>>> num springs = 0 
+
+ **** PM WARNING: spring potential "a3SpingsA3b11_A3b10Rgna3b11Body-a3SpingsA3b11_A3b12Rgna3b11BodyPotential" has no connections within cutoff. 
+
+>>>>>> PmSpringPotential::compConnectivity 
+>>> cutoff = 0.600000 
+>>> paired conn = 0 
+
+>>>>>> PmSpringPotential::compConnectivity  name=a3SpingsA3b11_A3b12Rgna3b11Body-a3SpingsA3b12_A3b11Rgna3b12BodyPotential 
+>>> num pts1 27 
+>>> num pts2 33 
+>>> rgn1 atoms size=27 
+>>> rgn2 atoms size=33 
+>>> add spring=1 atoms=CD-CG dist=0.48276 k=42.687122 r0=0.381600 
+>>> add spring=2 atoms=NE-CG dist=0.493582 k=62.748810 r0=0.373200 
+>>> add spring=3 atoms=CZ-CG dist=0.416293 k=42.687122 r0=0.381600 
+>>> add spring=4 atoms=CZ-CD dist=0.43317 k=42.687122 r0=0.381600 
+>>> add spring=5 atoms=CZ-CE dist=0.53896 k=42.687122 r0=0.381600 
+>>> add spring=6 atoms=CZ-NZ dist=0.528744 k=62.748810 r0=0.373200 
+>>> add spring=7 atoms=NH1-CB dist=0.430238 k=62.748810 r0=0.373200 
+>>> add spring=8 atoms=NH1-CG dist=0.287267 k=62.748810 r0=0.373200 
+>>> add spring=9 atoms=NH1-CD dist=0.313374 k=62.748810 r0=0.373200 
+>>> add spring=10 atoms=NH1-CE dist=0.425223 k=62.748810 r0=0.373200 
+>>> add spring=11 atoms=NH1-NZ dist=0.426369 k=92.332428 r0=0.364800 
+>>> add spring=12 atoms=NH2-CG dist=0.493469 k=62.748810 r0=0.373200 
+>>> add spring=13 atoms=NH2-CD dist=0.478442 k=62.748810 r0=0.373200 
+>>> add spring=14 atoms=CB-CB dist=0.530734 k=42.687122 r0=0.381600 
+>>> add spring=15 atoms=CB-CG dist=0.526002 k=42.687122 r0=0.381600 
+>>> add spring=16 atoms=CG1-CG dist=0.534275 k=42.687122 r0=0.381600 
+>>> add spring=17 atoms=CG2-CB dist=0.530861 k=42.687122 r0=0.381600 
+>>> add spring=18 atoms=CB-CB dist=0.532339 k=42.687122 r0=0.381600 
+>>> add spring=19 atoms=CB-CB dist=0.533112 k=42.687122 r0=0.381600 
+>>> add spring=20 atoms=CB-NE2 dist=0.49396 k=62.748810 r0=0.373200 
+>>> add spring=21 atoms=CG-CB dist=0.536768 k=42.687122 r0=0.381600 
+>>> add spring=22 atoms=CG-NE dist=0.475798 k=62.748810 r0=0.373200 
+>>> add spring=23 atoms=CG-NE2 dist=0.498378 k=62.748810 r0=0.373200 
+>>> add spring=24 atoms=CD-CB dist=0.454154 k=42.687122 r0=0.381600 
+>>> add spring=25 atoms=CD-CG dist=0.496095 k=42.687122 r0=0.381600 
+>>> add spring=26 atoms=CD-CD dist=0.433845 k=42.687122 r0=0.381600 
+>>> add spring=27 atoms=CD-NE dist=0.341948 k=62.748810 r0=0.373200 
+>>> add spring=28 atoms=CD-CZ dist=0.410776 k=42.687122 r0=0.381600 
+>>> add spring=29 atoms=CD-NH2 dist=0.386487 k=62.748810 r0=0.373200 
+>>> add spring=30 atoms=CD-CD dist=0.506566 k=42.687122 r0=0.381600 
+>>> add spring=31 atoms=CD-NE2 dist=0.389287 k=62.748810 r0=0.373200 
+>>> add spring=32 atoms=OE1-CB dist=0.475439 k=76.248734 r0=0.356920 
+>>> add spring=33 atoms=OE1-CG dist=0.4844 k=76.248734 r0=0.356920 
+>>> add spring=34 atoms=OE1-CD dist=0.389864 k=76.248734 r0=0.356920 
+>>> add spring=35 atoms=OE1-NE dist=0.289843 k=112.433098 r0=0.348520 
+>>> add spring=36 atoms=OE1-CZ dist=0.350343 k=76.248734 r0=0.356920 
+>>> add spring=37 atoms=OE1-NH1 dist=0.474973 k=112.433098 r0=0.348520 
+>>> add spring=38 atoms=OE1-NH2 dist=0.32914 k=112.433098 r0=0.348520 
+>>> add spring=39 atoms=OE1-NE2 dist=0.447262 k=112.433098 r0=0.348520 
+>>> add spring=40 atoms=OE2-CB dist=0.412632 k=76.248734 r0=0.356920 
+>>> add spring=41 atoms=OE2-CG dist=0.46094 k=76.248734 r0=0.356920 
+>>> add spring=42 atoms=OE2-CD dist=0.430029 k=76.248734 r0=0.356920 
+>>> add spring=43 atoms=OE2-NE dist=0.333577 k=112.433098 r0=0.348520 
+>>> add spring=44 atoms=OE2-CZ dist=0.389846 k=76.248734 r0=0.356920 
+>>> add spring=45 atoms=OE2-NH2 dist=0.361886 k=112.433098 r0=0.348520 
+>>> add spring=46 atoms=OE2-CB dist=0.451624 k=76.248734 r0=0.356920 
+>>> add spring=47 atoms=OE2-CG dist=0.470562 k=76.248734 r0=0.356920 
+>>> add spring=48 atoms=OE2-CD dist=0.389799 k=76.248734 r0=0.356920 
+>>> add spring=49 atoms=OE2-OE1 dist=0.462039 k=137.509079 r0=0.332240 
+>>> add spring=50 atoms=OE2-NE2 dist=0.272227 k=112.433098 r0=0.348520 
+>>> add spring=51 atoms=CB-CB dist=0.529399 k=42.687122 r0=0.381600 
+>>> add spring=52 atoms=CB-CG dist=0.541058 k=42.687122 r0=0.381600 
+>>> add spring=53 atoms=CB-CB dist=0.531657 k=42.687122 r0=0.381600 
+>>> add spring=54 atoms=CB-CG dist=0.522069 k=42.687122 r0=0.381600 
+>>> add spring=55 atoms=CB-CD dist=0.54171 k=42.687122 r0=0.381600 
+>>> add spring=56 atoms=CB-NZ dist=0.436944 k=62.748810 r0=0.373200 
+>>> add spring=57 atoms=CG-CG dist=0.451048 k=42.687122 r0=0.381600 
+>>> add spring=58 atoms=CG-CD dist=0.462521 k=42.687122 r0=0.381600 
+>>> add spring=59 atoms=CG-CE dist=0.436765 k=42.687122 r0=0.381600 
+>>> add spring=60 atoms=CG-NZ dist=0.309761 k=62.748810 r0=0.373200 
+>>> add spring=61 atoms=CD1-CB dist=0.488157 k=42.687122 r0=0.381600q
+ 
+>>> add spring=62 atoms=CD1-CG dist=0.48037 k=42.687122 r0=0.381600 
+>>> add spring=63 atoms=CD1-CD dist=0.524357 k=42.687122 r0=0.381600 
+>>> add spring=64 atoms=CD1-CE dist=0.489673 k=42.687122 r0=0.381600 
+>>> add spring=65 atoms=CD1-NZ dist=0.353409 k=62.748810 r0=0.373200 
+>>> add spring=66 atoms=CD2-CG dist=0.543886 k=42.687122 r0=0.381600 
+>>> add spring=67 atoms=CD2-CD dist=0.520467 k=42.687122 r0=0.381600 
+>>> add spring=68 atoms=CD2-CE dist=0.461818 k=42.687122 r0=0.381600 
+>>> add spring=69 atoms=CD2-NZ dist=0.334266 k=62.748810 r0=0.373200 
+>>> num springs = 69 
+>>> step [1]  t [0.001] 

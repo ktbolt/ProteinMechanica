@@ -1,0 +1,110 @@
+
+# define create potential macro  
+#-------------------------------
+variable map_energy=true
+variable emin=1.0
+variable emax=4.0
+
+variable cutoff=1.0
+variable pot_k=35.0
+variable pot_t=inf
+variable pot_show=true
+
+macro createPotential(name, b1, b2)
+simulation ${simulation_name} add interaction=${name}${b1}${b2}Springs  \
+   type=spring use_ca=${use_ca} force_const=${pot_k}                    \
+   ljspring=${ljspring}                                                 \
+   bodies={${name}${b1}Body ${name}${b2}Body}                           \
+   cutoff=${cutoff} time={0.0 ${pot_t}}                                 \
+   map_energy=true  map_scale={ ${emin} ${emax} }                       \
+   color=[0 0 0] show=true
+end macro
+
+#------------------------------------------------------------#
+#                define rigor potentials                     #
+#------------------------------------------------------------#
+createPotential(rigor, Head, Iq1)
+createPotential(rigor, Iq1,  Iq2)
+createPotential(rigor, Iq2,  Iq3)
+createPotential(rigor, Iq3,  Iq4)
+createPotential(rigor, Iq4,  Iq5)
+createPotential(rigor, Iq5,  Iq6)
+
+#------------------------------------------------------------#
+#                define pps potentials                       #
+#------------------------------------------------------------#
+createPotential(pps, Head, Iq1)
+createPotential(pps, Iq1,  Iq2)
+createPotential(pps, Iq2,  Iq3)
+createPotential(pps, Iq3,  Iq4)
+createPotential(pps, Iq4,  Iq5)
+createPotential(pps, Iq5,  Iq6)
+
+
+#----------------------------------
+# add tail interaction potentials |
+#----------------------------------
+variable ccpot_t2= 10000
+variable ccpot_show= true
+
+macro createTailPotential(name, b1, b2)
+  simulation ${simulation_name} add interaction=${name}${b1}${b2}Springs \
+     type=spring  use_ca=true force_const=5.0 cutoff=0.70                \
+     bodies = {${name}${b1}Body ${name}${b2}Body }                       \
+     time={0.0 ${ccpot_t2} }                                             \
+     color=[ 0 0 0] map_energy=${map_energy}                             \
+     map_scale={${emin} ${emax}} show=${ccpot_show}
+end macro
+
+# pps potentials
+#---------------
+createTailPotential(pps, Iq6, Hcr1)
+createTailPotential(pps, Hcr1, Hcr2)
+createTailPotential(pps, Hcr2, Hcr3)
+createTailPotential(pps, Hcr3, Hcr4)
+createTailPotential(pps, Hcr4, Hcr5)
+
+createTailPotential(rigor, Iq6, Hcr1)
+createTailPotential(rigor, Hcr1, Hcr2)
+createTailPotential(rigor, Hcr2, Hcr3)
+createTailPotential(rigor, Hcr3, Hcr4)
+createTailPotential(rigor, Hcr4, Hcr5)
+
+#------------------------------------------------------------#
+#                define coiled-coil potentials               #
+#------------------------------------------------------------#
+
+# lower region
+#-------------
+domain rigorHcr5 define region=rigorHcr5Rgn1 residues=C[970-980]
+domain ppsHcr5   define region=ppsHcr5Rgn1   residues=J[970-980]
+
+body rigorHcr5Body add potential_geometry=rigorCCPot1  \
+  region=rigorHcr5Rgn1 geometry=points color=[1 0 1] show=false 
+
+body ppsHcr5Body add potential_geometry=ppsCCPot1 \
+  region=ppsHcr5Rgn1 geometry=points color=[1 0 1] show=false 
+
+simulation ${simulation_name} add interaction=cc1Pot \
+  type=spring force_const=5.0 cutoff=0.8  \
+  list={rigorCCPot1 ppsCCPot1}            \
+  time={ 0.0 ${ccpot_t2} }                \
+  map_energy=true  map_scale={ ${emin} ${emax} } show=true
+
+# the rest 
+#----------
+domain rigorHcr5 define region=rigorHcr5Rgn2  residues=C[980-1050]
+domain ppsHcr5   define region=ppsHcr5Rgn2    residues=J[980-1050]
+
+body rigorHcr5Body add potential_geometry=rigorCCPot2  \
+  region=rigorHcr5Rgn2 geometry=points color=[1 0 1] show=false
+
+body ppsHcr5Body add potential_geometry=ppsCCPot2 \
+  region=ppsHcr5Rgn2 geometry=points color=[1 0 1] show=false
+
+simulation ${simulation_name} add interaction=cc2Pot \
+  type=spring force_const=5.0 cutoff=0.8  \
+  list={rigorCCPot2 ppsCCPot2}            \
+  time={ 0.0 ${ccpot_t2} }                \
+  map_energy=true  map_scale={ ${emin} ${emax} } show=true
+

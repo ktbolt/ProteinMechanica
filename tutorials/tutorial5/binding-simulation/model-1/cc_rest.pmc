@@ -1,0 +1,53 @@
+#-------------------------------------#
+# restrain coiled-coil at residue 913 #
+#-------------------------------------#
+variable ccrk=10
+variable rramp=100
+
+variable ccdist=1.0
+variable ccadist=true 
+#variable ccdist=0.8
+#variable ccadist=false
+#variable ccshow=false
+variable ccshow=true 
+
+domain rigorHcr1 define region=rigorHcr1cl residues=C[913] atom_names={CA}
+domain ppsHcr1   define region=ppsHcr1cl   residues=J[913] atom_names={CA}
+
+simulation ${simulation_name} add restraint=ccRes913 \
+   body1=rigorHcr1Body  region1=rigorHcr1cl  \
+   body2=ppsHcr1Body    region2=ppsHcr1cl    \
+   force_const=${ccrk} distance=${ccdist}    \
+   absolute_distance=${ccadist}              \
+   ramp=${rramp}                             \
+   color=[ 1 0 1 ] show=${ccshow}            \
+   time={ 0 1000000 }
+
+#---------------------------------------------------------------------------------------
+
+domain rigorHcr3 define region=rigorHcr3cl residues=C[943] atom_names={CA}
+domain ppsHcr3   define region=ppsHcr3cl   residues=J[943] atom_names={CA}
+
+simulation ${simulation_name} add restraint=res943 \
+   body1=rigorHcr3Body  region1=rigorHcr3cl       \
+   body2=ppsHcr3Body    region2=ppsHcr3cl         \
+   force_const=${ccrk} distance=${ccdist}         \
+   absolute_distance=${ccadist}                   \
+   ramp=${rramp}                                  \
+   color=[ 1 0 1 ] show=${ccshow}                 \
+   time={ 0 1000000 }
+
+
+domain rigorHcr2 define region=rigorHcr2cl residues=C[929] atom_names={CA}
+domain ppsHcr2   define region=ppsHcr2cl   residues=J[929] atom_names={CA}
+
+simulation ${simulation_name} add restraint=ccRes929 \
+   body1=rigorHcr2Body region1=rigorHcr2cl  \
+   body2=ppsHcr2Body   region2=ppsHcr2cl    \
+   force_const=${ccrk} distance=${ccdist}   \
+   absolute_distance=${ccadist}             \
+   ramp=${rramp}                            \
+   color=[1 0 1] show=${ccshow}             \
+   time={ 0 1000000 }
+
+

@@ -1,0 +1,124 @@
+#============================================================*
+# define rigor potentials                                    *
+#============================================================*
+variable rigor_map_energy=true
+variable rigor_emin=1.0
+variable rigor_emax=1.0
+
+variable rigor_pot_t=10000
+variable rigor_pot_k=35.0
+variable rigor_pot_show=true
+
+simulation ${simulation_name}  add interaction=rigorHeadInsert2Springs      \
+   type=spring use_ca=true force_const=${rigor_pot_k}         \
+   bodies={ rigorHeadBody rigorInsert2Body}                   \
+   cutoff=0.8 time={0.0 ${rigor_pot_t}}                       \
+   map_energy=true  map_scale={ ${rigor_emin} ${rigor_emax} } \
+   color=[0 0 0] show=true                          
+
+simulation ${simulation_name} add interaction=rigorInsert2Actinin1Springs   \
+   type=spring use_ca=true force_const=${rigor_pot_k}         \
+   bodies={rigorInsert2Body rigorActinin1Body}                \
+   cutoff=0.8 time={0.0 ${rigor_pot_t}}                       \
+   map_energy=true  map_scale={${rigor_emin} ${rigor_emax} }  \
+   color=[0 0 0] show=true
+
+simulation ${simulation_name} add interaction=rigorActinin1Actinin2Springs  \
+   type=spring use_ca=true force_const=${rigor_pot_k}         \
+   bodies={rigorActinin1Body rigorActinin2Body}               \
+   cutoff=0.8 time={0.0 ${rigor_pot_t}}                       \
+   map_energy=true  map_scale={ ${rigor_emin} ${rigor_emax} } \
+   color=[0 0 0] show=true
+
+#============================================================#
+# define pps potentials                                      #
+#============================================================#
+variable pps_map_energy=true
+variable pps_emin=0.0
+variable pps_emax=4.0
+variable pps_pot_t=10000
+variable pps_pot_k=35.0
+variable pps_pot_show=true
+
+# head-insert2 springs 
+#---------------------
+domain ppsHead    define region=ppsHeadRgn    residues=C atom_names={CA}
+domain ppsInsert2 define region=ppsInsert2Rgn residues=C atom_names={CA}
+
+body ppsHeadBody add potential_geometry=ppsHeadPts \
+   region=ppsHeadRgn geometry=points color=[1 0 0] show=false
+
+body ppsInsert2Body add potential_geometry=ppsInsert2Pts \
+   region=ppsInsert2Rgn geometry=points color=[0 1 0] show=true
+
+simulation ${simulation_name}  add interaction=ppsHeadInsert2Springs    \
+   type=spring use_ca=true force_const=${pps_pot_k}       \
+   list={ppsHeadPts ppsInsert2Pts}                        \
+   cutoff=0.8 time={0.0 ${pps_pot_t}}                     \
+   map_energy=true  map_scale={ ${pps_emin} ${pps_emax} } \
+   color=[0 0 0] show=${pps_pot_show}               
+
+#simulation ${simulation_name}  add interaction=ppsHeadInsert2Springs    \
+   type=spring use_ca=true force_const=${pps_pot_k}       \
+   bodies={ ppsHeadBody ppsInsert2Body}                   \
+   cutoff=0.8 time={0.0 ${pps_pot_t}}                     \
+   map_energy=true  map_scale={ ${pps_emin} ${pps_emax} } \
+   color=[0 0 0] show=${pps_pot_show}               
+
+
+#----- insert2-actinin springs ------#
+simulation ${simulation_name} add interaction=ppsInsert2Actinin1Springs  \
+   type=spring use_ca=true force_const=${pps_pot_k}        \
+   bodies={ppsInsert2Body ppsActinin1Body}                 \
+   cutoff=0.8 time={0.0 ${pps_pot_t}}                      \
+   map_energy=true  map_scale={ ${pps_emin} ${pps_emax} }  \
+   color=[0 0 0] show=${pps_pot_show}
+
+simulation ${simulation_name} add interaction=ppsActinin1Actinin2Springs  \
+   type=spring use_ca=true force_const=${pps_pot_k}         \
+   bodies={ppsActinin1Body ppsActinin2Body}                 \
+   cutoff=0.8 time={0.0 ${pps_pot_t}}                       \
+   map_energy=true  map_scale={ ${pps_emin} ${pps_emax} }   \
+   color=[0 0 0] show=${pps_pot_show}
+
+
+#============================================================#
+# define zipper potential                                    #
+#============================================================#
+variable zipmap_energy=true
+variable zipemin=1.0
+variable zipemax=1.0
+
+variable zippot_t=10000
+variable zippot_k=35.0
+variable zippot_show=true
+
+simulation ${simulation_name}  add interaction=zipZipperSprings      \
+   type=spring use_ca=true force_const=${zippot_k}     \
+   bodies={ ppsZipperBody rigorZipperBody}             \
+   cutoff=0.8 time={0.0 ${zippot_t}}                   \
+   map_energy=true  map_scale={ ${zipemin} ${zipemax} }\
+   color=[0 0 0] show=true                          
+
+domain ppsZipper   define region=ppsZipperRgn    residues=C[1066-1095] atom_names={CA} 
+domain rigorZipper define region=rigorZipperRrgn residues=A[1066-1095] atom_names={CA}
+
+#body ppsZipperBody add potential_geometry=ppsZipperPts    \
+   region=ppsZipperRgn \
+   geometry=points \
+   color=[1 0 0]   \
+   show=false 
+
+#body rigorZipperBody add potential_geometry=rigorZipperPts \
+   region=rigorZipperRrgn           \
+   geometry=points              \
+   color=[0 1 0]              \
+   show=true
+
+#simulation ${simulation_name} add interaction=zipZipperSprings        \
+   type=spring  force_const=${zippot_k} cutoff=0.8  \
+   list={ppsZipperPts rigorZipperPts}                      \
+   time = {0.0 1000.0}                             \
+   color=[1 0 0]                                   \
+   show=true
+

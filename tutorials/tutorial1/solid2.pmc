@@ -1,0 +1,29 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Reading and visualizing a protein structure.               #
+#                                                            #
+# Creating solids: cylinders                                 #
+#============================================================#
+
+# create cylinder using a center and axis
+#----------------------------------------
+solid create  name=cyl1  type=cylinder  \
+              radius=0.1                \
+              length=2.0                \
+              center =[ 0 0 0]          \
+              axis =[ 0 1 0]            \ 
+              color=[ 1 0 0 ]           \
+              show=true
+
+
+
+# create cylinder using two points
+#---------------------------------
+solid create  name=cyl2  type=cylinder  \
+              radius=0.1                \
+              point1 =[ 0 1 0 ]         \
+              point2 =[ 2 1 0 ]         \
+              color=[ 0 1 0 ]           \
+              show=true
+

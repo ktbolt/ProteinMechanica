@@ -1,0 +1,59 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Simulating Myosin V Binding to Actin                      #
+#                                                           #
+# Main simulation script file.                              #
+#-----------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# set mass scaling
+#-----------------
+units scale name=mass uname=reducedMass value=10000.0
+
+# define some variables
+#----------------------
+variable structures_file=../build_structure_file/structure.pdb
+variable motor_name=motor
+variable actin_name=actin
+variable bwidth=3
+
+variable ljspring=false
+#variable ljspring=true
+variable use_ca=true
+
+variable simulation_name=m5bsim
+variable simulation_file_name=m5Bind${n}
+
+variable binding_head1=ppsHead
+variable target1_name=targetBind${n}
+
+# create rigid domains
+#---------------------
+read domains.pmc
+
+# create rigid bodies and joints
+#-------------------------------
+read model.pmc
+
+# create simulation 
+#------------------
+read sim.pmc
+
+# create energy potentials 
+#-------------------------
+read potentials.pmc
+
+# create cc restaints 
+#--------------------
+read cc_rest.pmc
+
+# create target restaints 
+#------------------------
+read target.pmc
+
+# run simulation
+#---------------
+read run.pmc
+

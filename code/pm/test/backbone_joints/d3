@@ -1,0 +1,93 @@
+
+#============================================================*
+#               test simulation using ball joints            *
+#                                                            *
+# 8 bodies with 1 residue each. rigid units.                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+#molecule m1  xform  translation = [ -1.9540  -8.7018  -4.8071 ] 
+
+# create a some domains
+domain create iq = C[760-788]
+#domain iq backbone color = [ 0.6 0.6 0.6 ] width = 2 show
+#domain iq bonds bond_color = [ 1 1 1 ] width = 2 show
+
+domain create r1 = C760  rigid_unit = true
+#domain r1 atoms color = [ 1 0 0 ] show
+#domain r1 bonds atoms = true  atom_color = [ 1 0 0 ]  bond_color = [ 1 0 0 ]  show
+domain r1 bonds atoms = true  atom_color = element  bond_color = [ 1 0 0 ]  show
+
+domain create r2 = C761
+#domain r2 atoms color = [ 0 1 0 ] show
+#domain r2 bonds atoms = true  atom_color = [ 0 1 0 ] bond_color = [ 0 1 0 ] show
+domain r2 bonds atoms = true  atom_color = element bond_color = [ 0 1 0 ] show
+
+domain create r3 = C762
+#domain r3 atoms color = [ 1 1 0 ] show
+domain r3 bonds atoms = true  atom_color = element bond_color = [ 1 1 0 ] width = 2 show
+
+body create  name = ground    type = ground
+body create  name = r1b  type = rigid   domain = r1
+body create  name = r2b  type = rigid   domain = r2
+body create  name = r3b  type = rigid   domain = r3
+
+joint create  name = jnt1   type = ball  domain = iq res = C760   use = CA
+joint jnt1 color = [ 1 0 0 ] msize = 0.02 shading = color show = true
+joint jnt1 bodies = { ground r1b }
+
+joint create  name = jnt2   type = ball  domain = iq res = C761   use = CA
+joint jnt2 color = [ 0 1 0 ] msize = 0.02 shading = color show = true
+joint jnt2 bodies = { r1b r2b }
+
+joint create  name = jnt3   type = ball  domain = iq res = C762   use = CA
+joint jnt3 color = [ 1 1 0 ] msize = 0.02 shading = color show = true
+joint jnt3 bodies = { r2b r3b }
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground r1b r2b r3b }
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 jnt2 jnt3 }
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force1         \
+              type = explicit         \
+              global_frame = true             \
+              point = [ -.2384   0.1716   0.3084 ]    \
+              direction = [ 0.5 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = r2b   \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+graphics center point = [ 0 0 0 ]
+
+

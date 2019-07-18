@@ -1,0 +1,43 @@
+
+#============================================================*
+#               test reading 2nd structure                   *
+#                                                            *
+# create domains from all helices, sheets and loops.         *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = db1  format = pdb  file = ../data/1W7I.pdb
+
+# read molecule
+molecule read  name = m1   database = db1  
+
+# create a some domains
+domain create head = A[2-780]
+#domain head backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+domain create cam = B
+#domain cam backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+
+# show all helices
+#-----------------
+domains  create  helices = true  prefix = h color = [ 0.7 0 0 ] \
+                 width = 5
+
+# show all sheets 
+#----------------
+domains  create  sheets = true  prefix = sh color = [ 0 0.7 0 ] \
+                 width = 8
+
+# show all loops  
+#----------------
+domains  create  loops = true  prefix = lp color = [ 0 0 0.7 ] \
+                 width = 8
+
+
+graphics background color = [ 1 1 1 ]
+
+
+

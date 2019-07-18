@@ -1,0 +1,33 @@
+#------------------------------------------------------#
+# define springs between all atoms.                    #
+#------------------------------------------------------#
+variable map_energy=true
+variable emin=0.0
+variable emax=0.1
+
+variable cutoff=0.6
+variable pot_k=1.0
+variable pot_t=inf
+variable pot_show=true 
+
+simulation rsim1 add interaction=a1a2Spings   \
+   type=spring  force_const=${pot_k}          \
+   association=full                           \
+   ljspring=true                              \
+   bodies={a1b1Body a1b2Body a1b3Body a1b4Body a1b5Body a1b6Body a1b7Body a1b8Body \
+           a1b9Body a1b10Body a1b11Body a1b12Body a1b13Body a1b14Body a1b15Body    \
+           a1b16Body a1b17Body a1b18Body a1b19Body a1b20Body a1b21Body a1b22Body   \
+           a1b23Body a1b24Body}                                                    \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=${pot_show}
+
+#simulation rsim1 add interaction=a1a2Spings   \
+   type=spring  force_const=${pot_k}          \
+   association=full                           \
+   ljspring=true                              \
+   bodies={a1b1Body a1b2Body a1b3Body a1b20Body a1b23Body a1b24Body}  \ 
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=${pot_show}
+

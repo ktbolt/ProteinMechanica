@@ -1,0 +1,6 @@
+
+ perform test binding simulation 
+
+ p silent=true bsim.pmc
+
+

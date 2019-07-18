@@ -1,0 +1,10 @@
+Mon Feb  2 16:27:33 PST 2009
+----------------------------
+
+  simulate powerstroke.
+
+  note: motors are not completely working.
+
+        you need to experiemnt with max_angle and max_force to get
+        it to go through the angle you want.
+

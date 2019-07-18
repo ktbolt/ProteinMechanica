@@ -1,0 +1,57 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# Creating hinge joints.                                     #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create a domain
+#----------------
+domain  create  iq1=C[760-788]
+domain  create  iq2=C[788-814]
+domain  create  hc =C
+
+# visualize atoms
+#----------------
+domain  iq1  backbone  color=[1 0 0]  width=2  show=true
+domain  iq2  backbone  color=[0 1 0]  width=2  show=true
+
+# create rigid bodies  
+#--------------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+
+# create a hinge joint
+#---------------------
+joint  create  name=joint1  type=hinge  position=hc:C[787-789]:mc      \
+               use_pca=true  pca_res=hc:C[780-796]                     \
+               axis=pca2                                               \
+               bodies={ iq1Body iq2Body }                              \
+               color=[ 1 1 0] msize=0.4 display=solid  show=true  
+
+
+# print information
+#------------------
+joint  joint1  print 
+
+# center view 
+#------------
+graphics  center  point=iq1:C[788]:CA
+
+
+# PCA used for joint axes
+#------------------------
+#domain  create  hcPca =C[780-796]
+#domain  hcPca   backbone  color=[1 1 1]  width=4
+#domain  hcPca   pca  width=2  scale=2.0  show=true 
+
+
+

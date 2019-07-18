@@ -1,0 +1,46 @@
+
+#============================================================*
+#               test domain fitting                          *
+#============================================================*
+
+# open pdb file
+#---------------
+database open name = neck format = pdb  file = neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+#domain iq1 atoms color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+#domain iq2 atoms color = [ 1 0 0 ] width = 2 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+#domain iq3 atoms color = [ 1 0 0 ] width = 2 show
+
+domain create hc = C
+
+
+# fit iq1 to iq2
+#---------------
+
+#domain iq1 fit  sequence = C[770-780]               \
+                destination = iq2                   \
+                destination_sequence = C[798-808]   \
+                atom_names = { O C CA }             \
+                rotation = on
+
+domain iq1 fit  sequence = C[773-776]               \
+                destination = iq2                   \
+                destination_sequence = C[796-799]   \
+                atom_names = { CA }                 \
+                rotation = on
+
+domain iq1 backbone name = fit color = [ 1 1 1 ] width = 3 show
+

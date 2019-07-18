@@ -1,0 +1,38 @@
+
+#============================================================*
+#               test reading mcr density map.                *
+# helicase                                                   *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = m1  format = pm  file = emd_1134.pm 
+
+
+# display voxel values
+#---------------------
+#grid m1 points  vmin = 0.01  vmax = 0.02  show = true
+
+
+# isosurface 
+#-----------
+#grid m1  isosurface  level = 0.02  show = true
+#grid m1  isosurface  point = [ 20.124 20.4691 19.0839 ] show = true
+#grid m1  isosurface  point = [ 15.168 11.9222 8.97064 ] show = true
+#grid m1  isosurface  point = [ 21.3315 15.9842 17.5 ] show = true
+grid m1  isosurface  point = [ 15.6558 22.7648 17.5 ] show = true
+
+# slice 
+#------
+#grid m1  slice  k = 50  vmin = -0.092504  vmax = 0.075945 show = true
+#grid m1  slice  i = 48  vmin = -0.092504  vmax = 0.075945 show = true
+
+
+# display volume 
+#----------------
+grid m1 volume vmin = 0.01  vmax = 0.02  samples = 8 show = true
+

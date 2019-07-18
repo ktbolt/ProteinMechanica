@@ -1,0 +1,27 @@
+#============================================================#
+# test ifdef                                                 #
+#============================================================#
+#system echo=off
+system verbose=false
+
+database open name=neck_xform format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+domain create hc=C
+domain create camA=A
+domain create camB=B
+
+variable color=[1 0 0] 
+variable redbackbone=true
+
+ifdef ${redbackbone} 
+  variable colorRed=[1 0 0] 
+  domain hc backbone color=${colorRed} width=2 show=true
+else
+  domain hc atoms color=[0 1 0] width=2 show=true
+end ifdef
+
+
+ifdef ${colorRed} 
+  domain camB backbone color=${colorRed} width=2 show=true
+end ifdef
+

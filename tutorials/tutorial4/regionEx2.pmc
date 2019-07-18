@@ -1,0 +1,32 @@
+#============================================================#
+# Tutorial 4 - Modeling Interactions                         #
+#                                                            #
+# Regions                                                    #
+#                                                            #
+# Create four domains, one for each chain.                   #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create domain
+#--------------
+domain  create  cam3=D   molecule=neckMol
+
+# visualize backbone atoms
+#-------------------------
+domain cam3 backbone color=[ 0 0 1 ] width=2  show=true
+domain cam3 bonds  atoms=true  atom_color=[ 1 0 0 ]  bond_color=[1 0 0] show=true
+
+# create a region for cam1 
+#-------------------------
+domain cam3 define region=cam3Rgn  residues=D  use_sidechains=true  \ 
+       color=[1 1 1]  use_spheres=true  show=true
+
+

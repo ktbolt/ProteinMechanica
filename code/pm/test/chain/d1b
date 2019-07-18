@@ -1,0 +1,143 @@
+
+#============================================================*
+#                   test chain of cyls                       *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create cylinder
+#----------------
+solid create name = c1 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 0 0 ] \
+             axis = [ 0 1 0 ]
+solid create name = c2 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 1 0 ] \
+             axis = [ 0 1 0 ]  color = [ 1 1 0 ]
+solid create name = c3 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 2 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c4 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 3 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c5 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 4 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c6 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 5 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c7 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 6 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c8 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 7 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c9 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 8 0 ] \
+             axis = [ 0 1 0 ]  color = [ 0 1 0 ]
+solid create name = c10 type = cylinder radius = 0.2 length = 1.0 center = [ 10.12 9 0 ] \
+             axis = [ 0 1 0 ]  color = [ 1 1 0 ]
+
+#----------------
+
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = c1b type = rigid  solid = c1
+body create  name = c2b type = rigid  solid = c2
+body create  name = c3b type = rigid  solid = c3
+body create  name = c4b type = rigid  solid = c4
+body create  name = c5b type = rigid  solid = c5
+body create  name = c6b type = rigid  solid = c6
+body create  name = c7b type = rigid  solid = c7
+body create  name = c8b type = rigid  solid = c8
+body create  name = c9b type = rigid  solid = c9
+body create  name = c10b type = rigid  solid = c10
+
+
+# create joints
+#--------------
+joint create  name = jnt1  type = weld cylinder = c1  distance = 0.0
+#joint create  name = jnt1  type = ball  cylinder = c1  distance = 0.0
+joint jnt1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt1 bodies = { ground c1b }
+
+joint create  name = jnt2  type = hinge  cylinder = c2 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt2 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt2 bodies = { c1b c2b }
+
+joint create  name = jnt3  type = hinge  cylinder = c3 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt3 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt3 bodies = { c2b c3b }
+
+joint create  name = jnt4  type = hinge  cylinder = c4 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt4 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt4 bodies = { c3b c4b }
+
+joint create  name = jnt5  type = hinge  cylinder = c5 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt5 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt5 bodies = { c4b c5b }
+
+joint create  name = jnt6  type = hinge  cylinder = c6 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt6 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt6 bodies = { c5b c6b }
+
+joint create  name = jnt7  type = hinge  cylinder = c7 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt7 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt7 bodies = { c6b c7b }
+
+joint create  name = jnt8  type = hinge  cylinder = c8 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt8 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt8 bodies = { c7b c8b }
+
+joint create  name = jnt9  type = hinge  cylinder = c9 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt9 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt9 bodies = { c8b c9b }
+
+joint create  name = jnt10 type = hinge  cylinder = c10 axis = [ 0 0 1 ]  \
+              distance = 0.0
+joint jnt10 color = [ 1 0 0 ] msize = 0.05 shading = flat show = true
+joint jnt10 bodies = { c9b c10b }
+
+#--------------------------------
+
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim momentum = on
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+
+
+# add joints
+#-----------
+simulation rsim add joints = all 
+
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 0 0 0 ]       \
+              direction = [ 1 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = c10b  \
+                    time = { 0 100.0 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+

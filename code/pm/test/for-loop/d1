@@ -1,0 +1,38 @@
+#============================================================#
+# test for loop                                              #
+#============================================================#
+system echo=off
+system verbose=false
+
+database open name=neck_xform format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+domain create hc=C
+domain hc backbone color=[1 0 0] show=true
+
+variable solid_color=[1 0 0]
+variable line_color=[1 1 0]
+
+# define macros
+#--------------
+macro showDomainLine(n)
+  domain create ld${n}=C[${n}]
+  domain ld${n} atoms render=line color=${line_color} show=true
+end macro
+
+macro showDomainSolid(n)
+  domain create sd${n}=C[${n}]
+  domain sd${n} atoms color=${solid_color} show=true
+end macro
+
+# define for loop
+#----------------
+for i = 760:830:2
+  showDomainLine(${i})
+end for
+
+for i = 830:760:-2
+  showDomainSolid(${i})
+end for
+
+
+

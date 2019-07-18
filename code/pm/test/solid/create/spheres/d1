@@ -1,0 +1,37 @@
+
+#============================================================*
+#                     test create sphere                     *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create sphere 
+#--------------
+solid create  name = sp1  type = sphere \
+              radius = 1.0   \
+              center = [ 0.0 0.0 0.0 ] \
+              color = [ 1 1 0 ] \
+              show = true
+
+
+# create sphere
+#--------------
+solid create  name = sp2  type = sphere \
+              radius = 1.0   \
+              center = [ -2.0 0.0 0.0 ] \
+              color = [ 1 0 0 ] \
+              show = true
+
+# create sphere
+#--------------
+solid create  name = sp3  type = sphere \
+              radius = 1.0   \
+              center = [ -2.0 2.0 0.0 ] \
+              color = [ 1 0 1 ] \
+              show = true
+
+

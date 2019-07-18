@@ -1,0 +1,90 @@
+#============================================================#
+# surface-domain springs.                                    #
+#                                                            #
+# use regions.                                               #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read surface
+#-------------
+surface read  name=camB   format=pm  file=../data/camB_surf.pm  
+surface camB  color=[ 0 1 0]  display=solid  show =true
+
+# read molecule
+#--------------
+database open name= neck_xform  format=pdb file= ../data/iq123.pdb
+molecule read  database= neck_xform  name=m1  model=1  type=protein
+domain create hc=C
+domain create iq2=C[788-814]
+domain iq2 backbone color=[ 0.7 0 0 ] width=2 show=true
+domain create iq2h=C[788-814]
+
+# create bodies  
+#--------------
+body create  name=ground    type=ground
+body create  name=camBBody  type=rigid   surface=camB 
+body create  name=iq2Body   type=rigid   domain=iq2  
+
+# create a rigid simulation
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=camBBody
+simulation rsim add body=iq2Body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# define spring interaction
+#--------------------------
+surface camB  define  region=camBRgn  color=[ 0 1 0 ] show=true
+
+body camBBody add potential_geometry=iq1Spring  \
+     region=camBRgn geometry=points             \
+     color=[ 1 1 0] show=true
+
+domain iq2 define region=iq2Rgn  residues=C  atom_names={ CA }
+
+body iq2Body add potential_geometry=iq2Spring  \
+     region=iq2Rgn geometry=points             \
+     color=[ 1 0 0] show=true
+
+simulation rsim add interaction=iq1Iq2Spring \
+   type=spring cutoff=0.2                    \
+   list={iq1Spring iq2Spring}                \
+   show=true time={ 0.0 1000.0 }
+
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             world_frame=true      \
+             point=[3.5935 6.01814 3.8397]         \
+             direction=[ 2 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=iq2Body   \
+                    time={ 0 4 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+#simulation state  save_frequency=20
+
+
+
+

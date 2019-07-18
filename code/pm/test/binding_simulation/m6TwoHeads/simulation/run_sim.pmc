@@ -1,0 +1,24 @@
+#------------------------------------------------------#
+# simulate coarse-grained model of m6 dimer            #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# define macros
+#--------------
+#read macros.pmc
+
+#variable rwidth=3
+variable unit=13
+variable structures_file=structure.pdb
+
+variable motor_name=motor
+variable actin_name=actin
+variable target_name=targetBind9
+variable simulation_name=simMotorBind9
+
+read domains.pmc model.pmc sim.pmc potentials.pmc target.pmc run.pmc
+
+#read domains.pmc model.pmc sim.pmc potentials.pmc target.pmc 
+#read run.pmc
+

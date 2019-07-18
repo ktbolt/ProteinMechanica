@@ -1,0 +1,47 @@
+#============================================================#
+# domain fitting: fit single amino acid                      #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neck format=pdb  file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read name=m1 database=neck
+
+# create iq1 domain
+#------------------
+domain create iq1=AC[760-798]
+domain iq1 backbone color=[1 0 0] width=1 show=true
+
+domain create iq1b=C[798]
+domain iq1b bonds atoms=true  atom_color=[ 1 0 0 ]  bond_color=[1 0 0] show=true
+
+# create iq3 domain
+#------------------
+domain create iq3=DC[814-836]
+domain create iq3b=C[814]
+
+# fit iq3 to iq1 using mainchain atoms; transform the domains 
+# givin in the "list" argument.
+#------------------------------------------------------------
+domain iq3 fit  sequence=C[814]               \
+                destination=iq1               \
+                destination_sequence=C[798]   \
+                list={ iq3b }                 \
+                atom_names={ CA CB C O N } 
+
+# display fit domain
+#-------------------
+domain iq3 backbone color=[0 1 0] width=1 show=true
+domain iq3b bonds atoms=true atom_color=[0 1 0] bond_color=[0 1 0] show=true
+
+# write structure with contiguous C chain
+#----------------------------------------
+domains write  atoms list={ iq1 } chains={ C[760-797] }        file=fit2.pdb
+domains append atoms list={ iq3 } chains={ C[814-836]=C[798] } file=fit2.pdb
+domains append atoms list={ iq1 } chains={ A }                 file=fit2.pdb
+domains append atoms list={ iq3 } chains={ D=B }               file=fit2.pdb
+
+

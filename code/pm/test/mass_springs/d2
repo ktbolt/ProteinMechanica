@@ -1,0 +1,167 @@
+#============================================================*
+#                     test mass spring with spheres          *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+solid create  name = sp1  type = sphere radius = 0.4 center = [ 0.0 0.0 0.0 ] 
+solid create  name = sp2  type = sphere radius = 0.4  center = [ 2.0 0.0 0.0 ] 
+solid create  name = sp3  type = sphere  radius = 0.4 center = [ 4.0 0.0 0.0 ] 
+solid create  name = sp4  type = sphere  radius = 0.4 center = [ 6.0 0.0 0.0 ] 
+solid create  name = sp5  type = sphere  radius = 0.4 center = [ 8.0 0.0 0.0 ] 
+
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = sp1b  type = static solid = sp1
+#body create  name = sp1b  type = rigid  solid = sp1
+
+body create  name = sp2b  type = rigid  solid = sp2
+body create  name = sp3b  type = rigid  solid = sp3
+body create  name = sp4b  type = rigid  solid = sp4
+body create  name = sp5b  type = rigid  solid = sp5
+
+body sp2b   damping = 0.001 
+body sp3b   damping = 0.001 
+body sp4b   damping = 0.001 
+body sp5b   damping = 0.001 
+
+
+#----- ground joint -----#
+joint create  name = groundJnt  type = ball  solid = sp1  
+joint groundJnt color = [ 1 1 1 ] msize = 0.08 shading = color show = true
+joint groundJnt bodies = { ground sp1b }
+
+joint create  name = groundJnt2  type = weld  solid = sp5  
+joint groundJnt2 color = [ 1 1 1 ] msize = 0.08 shading = color show = true
+joint groundJnt2 bodies = { ground sp5b }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+simulation rsim add joints = all 
+
+
+# add potential 
+#--------------
+solid  sp1  define region = sp1Rgn   use_center = true
+solid  sp2  define region = sp2Rgn   use_center = true
+
+body sp1b  add potential = sp1Pot type = spring  region = sp1Rgn  \
+               geometry = points  color = [ 0 1 0 ]               \
+               force_const = 10.0  cutoff = 2.8   show = true 
+
+body sp2b  add potential = sp2Pot  type = spring  region = sp2Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               force_const = 10.0   cutoff = 2.8   show = true 
+
+simulation rsim add interaction = sp1Sp2Pot          \
+                    body1 = sp1b potential1 = sp1Pot \
+                    body2 = sp2b potential2 = sp2Pot \
+                    time = { 0.0 1000.0 }
+
+#-----------------------------------------------------
+
+solid  sp2  define region = sp2Rgn2   use_center = true
+solid  sp3  define region = sp3Rgn    use_center = true
+
+body sp2b  add potential = sp2Pot2  type = spring  region = sp2Rgn2  \
+               geometry = points    color = [ 0 1 0 ]                \
+               force_const = 1.0    cutoff = 2.8   show = true
+
+body sp3b  add potential = sp3Pot  type = spring  region = sp3Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               force_const = 1.0   cutoff = 2.8   show = true
+
+simulation rsim add interaction = sp2Sp3Pot          \
+                    body1 = sp2b potential1 = sp2Pot \
+                    body2 = sp3b potential2 = sp3Pot \
+                    time = { 0.0 1000.0 }
+
+#-----------------------------------------------------
+
+solid  sp3  define region = sp3Rgn2   use_center = true
+solid  sp4  define region = sp4Rgn    use_center = true
+
+body sp3b  add potential = sp3Pot2  type = spring  region = sp3Rgn2  \
+               geometry = points    color = [ 0 1 0 ]                \
+               force_const = 1.0    cutoff = 2.8   show = true
+
+body sp4b  add potential = sp4Pot  type = spring  region = sp4Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               force_const = 1.0   cutoff = 2.8   show = true
+
+simulation rsim add interaction = sp3Sp4Pot          \
+                    body1 = sp3b potential1 = sp3Pot \
+                    body2 = sp4b potential2 = sp4Pot \
+                    time = { 0.0 1000.0 }
+
+#-----------------------------------------------------
+
+solid  sp4  define region = sp4Rgn2   use_center = true
+solid  sp5  define region = sp5Rgn    use_center = true
+
+body sp4b  add potential = sp4Pot2  type = spring  region = sp4Rgn2  \
+               geometry = points    color = [ 0 1 0 ]                \
+               force_const = 1.0    cutoff = 2.8   show = true
+
+body sp5b  add potential = sp5Pot  type = spring  region = sp5Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               force_const = 1.0   cutoff = 2.8   show = true
+
+simulation rsim add interaction = sp4Sp5Pot          \
+                    body1 = sp4b potential1 = sp4Pot \
+                    body2 = sp5b potential2 = sp5Pot \
+                    time = { 0.0 1000.0 }
+
+
+
+# add forces
+#-----------
+force create  name = force1  type = explicit point = [ 0 0 0 ]       \
+              direction = [ 0 1 0 ]  scale = 1.0
+simulation rsim add force = force1   body = sp2b   time = { 10 12.1 }
+#simulation rsim add force = force1   body = sp4b   time = { 0 0.1 }
+
+force create  name = rforce1  type = random  explicit point = [ 0 0 0 ]       \
+              sd = 0.1 mean = 0.0  scale = 1.0
+#simulation rsim add force = rforce1   body = sp3b   time = { 10 100.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+#simulation rsim time step = 0.01
+simulation  state  save_frequency = 10
+
+simulation rsim momentum = on
+simulation rsim damping = on
+
+
+# write energy 
+#-------------
+simulation  rsim  write  energy = true  file_name = rsim
+
+
+
+

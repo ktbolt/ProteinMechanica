@@ -1,0 +1,44 @@
+
+#============================================================*
+#                  test create cylinder                      *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# create cylinder 
+#----------------
+#solid create  name = cyl1  type = cylinder  radius = 1.0  length = 2.0 show = true
+#solid cyl1  color = [ 1 0 0 ] 
+
+# create cylinder 
+#----------------
+solid create  name = cyl2  type = cylinder  \
+              radius = 5.0   \
+              length = 10.0  \
+              center = [ 2 0 0 ]  \
+              axis = [ 1 1 1 ]  \
+              color = [ 0 1 0 ] \
+              show = true
+
+# create cylinder
+#----------------
+#solid create  name = cyl3  type = cylinder  \
+              radius = 1.0   \
+              length = 2.0  \
+              center = [ 4 0 0 ]  \
+              color = [ 0 1 1 ] \
+              show = true
+
+
+# create cylinder
+#----------------
+#solid create  name = cyl4  type = cylinder  \
+              radius = 1.0   \
+              length = 4.0  \
+              center = [ 4 4 0 ]  \
+              axis = [ 1 0 0 ]  \
+              color = [ 1 1 0 ] \
+              show = true

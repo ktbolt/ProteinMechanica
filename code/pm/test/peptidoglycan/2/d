@@ -1,0 +1,23 @@
+
+#============================================================*
+#               test reading peptide-glycans                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = 2aiz format = pdb file = 2AIZ.pdb
+
+# read molecule
+molecule read  database = 2aiz  name = m1  model = 1  type = protein
+
+# create a some domains
+domain create d1 = P
+#domain d1 atoms color = [ 1 0 0 ] width = 2 show
+#domain d1 atoms color = element width = 2 show
+domain d1 backbone color = [ 1 0 0 ] width = 1 show
+
+#domain d1 bonds  atom_color = element  show = true
+

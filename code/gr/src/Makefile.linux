@@ -1,0 +1,39 @@
+
+SHELL = /usr/bin/sh
+
+include gr_src.mk
+
+
+# define include dirs
+#--------------------
+glut_inc = -I/usr/include/GL//include
+glut_inc = -I../../free_glut/freeglut/include
+
+gr_inc =  -I/usr/include/GL/include -I/usr/X11R6/include/
+jpg_inc = ../jpg/include
+inc = -I.  -I../../include \
+           -I../include \
+           -I../../common/include
+hdr = ../include/pm/gr/
+
+common_dir = ../../common/src/
+common_objs = $(common_dir)/common.o $(common_dir)/mth.o
+
+# use for debug: code crashes with -g -funroll-loops -march=pentium4 -mfpmath=sse
+#----------------
+#copt = -g
+#flags = $(inc) $(copt)  $(cwf)
+
+# use for optimized execution 
+#----------------------------
+copt = -O2 -pedantic
+flags = $(inc) $(copt) -funroll-loops -march=pentium4 -mfpmath=sse
+
+obj: $(obj) 
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

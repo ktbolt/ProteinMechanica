@@ -1,0 +1,39 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# Rigid bodies form domains.                                 #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create a domain
+#----------------
+domain  create  iq1=C[760-788]
+domain  create  iq2=C[788-814]
+domain  create  iq3=C[814-836]
+
+# visualize atoms
+#----------------
+domain iq1 atoms color=[1 0 0] 
+domain iq2 atoms color=[0 1 0] 
+domain iq3 atoms color=[1 0.6 0] 
+
+# create rigid bodies  
+#--------------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# print information about rigid bodies  
+#-------------------------------------
+body iq1Body print properties=mass
+
+
+

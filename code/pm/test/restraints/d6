@@ -1,0 +1,185 @@
+#============================================================*
+#               test restraints                              *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/two_necks.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+
+domain create jiq1 = IJ[760-788]
+domain jiq1 backbone color = [ 0.7 1 1 ] width = 2 show
+domain create jiq2 = KJ[788-814]
+domain jiq2 backbone color = [ 1 0.7 1 ] width = 2 show
+domain create jiq3 = LJ[814-836]
+domain jiq3 backbone color = [ 1 1 0.7 ] width = 2 show
+
+domain create hc = C
+domain create jhc = J
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+body create  name = jiq1_body  type = rigid   domain = jiq1
+body create  name = jiq2_body  type = rigid   domain = jiq2
+body create  name = jiq3_body  type = rigid   domain = jiq3
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+# joint 1
+#--------
+joint create  name = 1   type = ball  domain = hc   res = C[788]   use = CA
+joint 1 color = [ 0 1 0 ] msize = 0.1 shading = flat display = line show = true
+joint 1 bodies = { iq1_body iq2_body }
+
+# joint 2
+#--------
+joint create  name = 2   type = ball  domain = hc   res = C[814]   use = CA
+joint 2 color = [ 0 1 0 ] msize = 0.1 shading = flat display = line show = true 
+joint 2 bodies = { iq2_body iq3_body }
+
+# joint 3
+#--------
+joint  create  name=3  type=ball  domain = jhc   res = J[788]   use = CA
+joint 3 color = [ 0 0 1 ] msize = 0.1 shading = flat display = line show = true
+joint 3 bodies = { jiq2_body jiq3_body }
+
+# joint 4
+#--------
+joint  create  name=4  type = ball  domain = jhc   res = J[814]   use = CA
+joint 4 color = [ 0 0 1 ] msize = 0.1 shading = flat display = line show = true
+joint 4 bodies = { jiq2_body jiq3_body }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+simulation rsim add body = jiq1_body
+simulation rsim add body = jiq2_body
+simulation rsim add body = jiq3_body
+
+
+# add joints
+#-----------
+simulation rsim add joint=1
+simulation rsim add joint=2
+simulation rsim add joint=3
+simulation rsim add joint=4
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+simulation rsim momentum = on
+
+
+# add forces
+#-----------
+#simulation rsim add force = force1         \
+                    body = iq3_body        \
+                    point = [ 0 0 0 ]    \
+                    direction = [ 10 0 0 ]  \
+                    scale = 1.0
+
+# add restraints
+#----------------
+
+domain iq1  define region=iq1_rgn  residues=A  atom_names={ CA }
+domain jiq1 define region=jiq1_rgn residues=I  atom_names={ CA }
+
+simulation rsim add restraint = res2                       \
+                    type=all                               \
+                    body1 = jiq1_body  region1 = jiq1_rgn   \
+                    body2 = iq1_body   region2 = iq1_rgn   \
+                    force_const = 0.1   distance = 0.99     \
+                    compute_energy=true      \
+                    show = true                            \
+                    time = { 0 1000 }
+
+domain iq2  define region=iq2_rgn  residues=B  atom_names={ CA }
+domain jiq2 define region=jiq2_rgn residues=K  atom_names={ CA }
+
+simulation rsim add restraint = res3                       \
+                    type=all                               \
+                    body1 = jiq2_body  region1 = jiq2_rgn   \
+                    body2 = iq2_body   region2 = iq2_rgn   \
+                    force_const = 0.1  distance = 0.99     \
+                    compute_energy=true      \
+                    show = true                            \
+                    time = { 0 1000 }
+
+domain iq3  define region=iq3_rgn  residues=D  atom_names={ CA }
+domain jiq3 define region=jiq3_rgn residues=L  atom_names={ CA }
+
+simulation rsim add restraint = res1                       \
+                    type=all                               \
+                    body1 = jiq3_body  region1 = jiq3_rgn   \
+                    body2 = iq3_body   region2 = iq3_rgn   \
+                    force_const = 0.1  distance = 0.99     \
+                    compute_energy=true      \
+                    show = true                            \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+
+
+# set damping
+#------------
+simulation rsim damping = on
+body iq1_body  damping = 10.0
+body iq2_body  damping = 10.0
+body iq3_body  damping = 10.0
+
+# step simulation
+#----------------
+#simulation rsim step = 400
+#simulation rsim step
+
+simulation  rsim  write  energy = true  file_name = rsim
+
+#s 1000
+#wait
+
+
+# check how close restraints are satisfied
+#-----------------------------------------
+#simulation rsim restraints  check 
+
+

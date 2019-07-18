@@ -1,0 +1,19 @@
+#============================================================*
+# create multibody from secondary strucutre.                 *
+#============================================================*
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1 format=pdb file=1G8X.pdb
+molecule read name=m1 database=db1
+
+# create multibody
+#-----------------
+#domain create actinin1=B
+domain create actinin1=B[760-1000]
+#domain actinin1 backbone color=[1 1 1] show=true
+multibody create name=aa1 domain=actinin1 type=secondary_structure
+

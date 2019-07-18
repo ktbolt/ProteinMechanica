@@ -1,0 +1,159 @@
+#============================================================#
+#               test helix-helix interaction                 #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=molDb format=pdb file=../data/neck_xform.pdb
+molecule read name=Mol database=molDb 
+
+# create a some domains
+#----------------------
+domain create iq1=C[762-788]
+domain create iq1b=C[762-787]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+domain iq1 bonds atoms=true atom_color=[1 0 0] bond_color=[1 0 0] show=true
+domain iq1b backbone color=[1 0.5 0] width=2 show=true
+domain iq1b bonds atoms=true atom_color=[1 0.5 0] bond_color=[1 0.5 0] show=true
+
+domain create iq2=C[788-813]
+domain create iq2b=C[788-813]
+domain iq2 backbone color=[0 1 0] width=2 show=true
+domain iq2 bonds atoms=true atom_color=[0 1 0] bond_color=[0 1 0] show=true
+domain iq2b backbone color=[0 1 1] width=2 show=true
+domain iq2b bonds atoms=true atom_color=[0 1 1] bond_color=[0 1 1] show=true
+
+# create bodies 
+#--------------
+body create  name=ground   type=ground
+body create  name=iq1      type=rigid   domain=iq1
+body create  name=iq2      type=rigid   domain=iq2
+
+body create  name=groundb   type=ground
+body create  name=iq1b      type=rigid   domain=iq1b
+body create  name=iq2b      type=rigid   domain=iq2b
+
+# create joints 
+#--------------
+joint create name=jnt1 type=ball position=iq1:C[762]:CA  \
+   color=[1 1 1] msize=0.1 shading=color show=true       \
+   bodies={ground iq1}
+
+joint create name=jnt2 type=ball position=iq2:C[788]:CA  \
+   color=[0 1 0] msize=0.1 shading=color show=true       \
+   bodies={iq1 iq2}
+
+joint create name=jnt1b type=ball position=iq1b:C[762]:CA  \
+   color=[1 1 1] msize=0.1 shading=color show=true       \
+   bodies={groundb iq1b}
+
+joint create name=jnt2b type=ball position=iq2b:C[788]:CA  \
+   color=[0 1 0] msize=0.1 shading=color show=true       \
+   bodies={iq1b iq2b}
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim1  type=rigid
+simulation create name=rsim2  type=rigid
+
+# add bodies
+#-----------
+simulation rsim1 add body=iq1
+simulation rsim1 add body=iq2    
+simulation rsim1 add body=ground 
+
+simulation rsim2 add body=iq1b
+simulation rsim2 add body=iq2b
+simulation rsim2 add body=groundb
+
+# add joints 
+#-----------
+simulation rsim1 add joint=jnt1
+simulation rsim1 add joint=jnt2
+simulation rsim2 add joint=jnt1b
+simulation rsim2 add joint=jnt2b
+
+# create potential
+#-----------------
+variable map_energy=true
+variable emin=0.0
+variable emax=0.1
+
+variable cutoff=0.8
+variable pot_k=2.0
+variable pot_t=inf
+variable pot_show=true
+
+domain iq1 define region=iq1Rgn residues=C[780-787] no_mainchain=true
+domain iq2 define region=iq2Rgn residues=C[788-790] no_mainchain=true
+
+body iq1 add potential_geometry=iq1iq1Geom1 \
+   geometry=points region=iq1Rgn            \
+   color=[1 0 0] show=true
+
+body iq2 add potential_geometry=iq1iq2Geom2 \
+   geometry=points region=iq2Rgn            \
+   color=[1 0 1] show=true
+
+simulation rsim1 add interaction=iq1iq2Spings     \
+   type=spring  force_const=${pot_k}              \
+   list={iq1iq1Geom1 iq1iq2Geom2}                 \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+# 2nd potential
+#--------------
+domain iq1b define region=iq1bRgn residues=C[780-787] no_mainchain=true
+domain iq2b define region=iq2bRgn residues=C[788-790] no_mainchain=true
+
+body iq1b add potential_geometry=iq1iq1bGeom1 \
+   geometry=points region=iq1bRgn            \
+   color=[1 0 0] show=true
+
+body iq2b add potential_geometry=iq1iq2bGeom2 \
+   geometry=points region=iq2bRgn            \
+   color=[1 0 1] show=true
+
+simulation rsim2 add interaction=iq1iq2bSpings     \
+   type=spring  force_const=${pot_k}              \
+   list={iq1iq1bGeom1 iq1iq2bGeom2}                 \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+
+# add force
+#----------
+force create name=force1 type=explicit point=iq2:C[813]     \
+   global_frame=true direction=[4 0 0] scale=1.0 show=true
+simulation rsim1 add force=force1  body=iq2 time={0 1000}
+
+force create name=force1b type=explicit point=iq2b:C[813]     \
+   global_frame=true direction=[4 0 0] scale=1.0 show=true
+simulation rsim2 add force=force1b  body=iq2b time={0 1000}
+
+
+# set solver 
+#-----------
+simulation rsim1 solver=ode   
+simulation rsim1 solver finite_rotation=on             
+simulation rsim1 initialize 
+
+simulation rsim2 solver=ode   
+simulation rsim2 solver finite_rotation=on             
+simulation rsim2 initialize 
+
+simulation rsim1 add trace name=tr1 body=iq2 color=[0 1 0] \
+   global_frame=true point=iq2:C[813]
+
+simulation rsim2 add trace name=tr2 body=iq2b color=[0 1 1] \
+   global_frame=true point=iq2b:C[813]
+
+

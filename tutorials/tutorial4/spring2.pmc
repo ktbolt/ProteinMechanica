@@ -1,0 +1,116 @@
+#============================================================#
+# Tutorial 4 - Interactions                                  #
+#                                                            #
+# protein domain spring potential without regions.           #
+#                                                            #
+# define springs for atoms between three domains.            #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name= neck_xform  format=pdb file=iq123.pdb
+
+# read molecule
+#-------------
+molecule read  database= neck_xform  name=m1  model=1  type=protein
+
+# create domains
+#---------------
+domain create hc=C
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+
+# create bodies 
+#--------------
+body create  name=ground    type=ground
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create joints 
+#--------------
+joint create  name=jnt1   type=weld    domain=hc    res=C[760]    use=CA
+joint jnt1 bodies={ ground iq1Body }
+joint jnt1 color=[ 1 1 1 ] msize=0.1 shading=color show=true 
+
+joint create  name=jnt2   type=ball    domain=hc    res=C[788]    use=CA
+joint jnt2 bodies={ iq1Body iq2Body }
+joint jnt2 color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+joint create  name=jnt3   type=ball    domain=hc    res=C[814]    use=CA
+joint jnt3 bodies={ iq2Body iq3Body }
+joint jnt3 color=[ 1 1 1 ] msize=0.1 shading=color show=true 
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+
+# add joints
+#-----------
+simulation rsim add joint=jnt1
+simulation rsim add joint=jnt2
+simulation rsim add joint=jnt3
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             point=[ 0 0 0 ]       \
+             direction=[ 10 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=iq3Body   \
+                    time={ 0 2 }
+
+# add spring interaction potentials
+#----------------------------------
+simulation rsim add interaction=spring1                            \
+           type=spring  use_ca=true force_const=50.0  cutoff=1.0   \
+           bodies={ iq1Body  iq2Body iq3Body }                     \
+           color=[ 1 1 0 ]  show=true                              \
+           time={ 0.0 1000.0 }
+
+# print interaction info
+#-----------------------
+simulation  rsim  interactions  print=true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+simulation rsim momentum=on
+
+# scale and translate the graphics scene
+#---------------------------------------
+graphics  scale=2.0  
+
+simulation rsim step=100000
+
+
+
+

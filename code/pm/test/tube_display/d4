@@ -1,0 +1,20 @@
+#============================================================#
+# test a backbone that is in several segments                #
+#============================================================#
+
+variable w=2
+
+# set units
+units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read molecule
+#--------------
+database open name=neck format=pdb  file=pps1Head.pdb
+molecule read  name=m1   database=neck
+domain create d1=C
+domain create d2=C
+domain d1 backbone color=[0.5 0.5 0.5] tube=true width=${w} show=true
+domain d2 backbone color=[1 0 0] width=4 show=true
+
+

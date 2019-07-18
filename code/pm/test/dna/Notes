@@ -1,0 +1,21 @@
+Sat Nov  8 11:36:20 PST 2008
+----------------------------
+
+  test reading dna and protein.
+
+  protein:  chain A
+
+  dna: chain C   residues:  DA , DG, DC, DT
+
+  dna: chain D   residues:  DA , DG, DC, DT
+
+  water: HETATM  residue:   HOH
+
+
+  NOTE: there seems to be a problem with the bond connectivity for
+        this type of dna.
+
+
+
+
+

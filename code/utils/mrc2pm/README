@@ -1,0 +1,33 @@
+
+ #-------------------#
+ # Program mrc2pm    #
+ #-------------------#
+
+ Electron density maps obtained from Cryo electron microscopy (cryoEM) are 
+ deposited at EMDataBank.org in the MRC file format. The data is a three-dimensional 
+ grid of voxels each with a value corresponding to density of electrons.
+
+ The mrc2pm program will read in a file in the MRC format and write out a 
+ Protein Mechanica format .pm grid file. 
+
+
+ Build
+ -----
+ gcc -o mrc2pm  mrc2pm.c  mrc.c
+
+
+ Usage
+ -----
+ mrc2pm  <name>  >  <name>_grid.pm 
+
+
+ Example
+ -------
+ mrc2pm  emd_1201.map  >  emd_1201_grid.pm
+
+ reads in emd_1201.map file and outputs the PM gird file emd_1201_grid.pm 
+
+ visualize emd_1201_grid.pm using Protein Mechanica script d1.
+
+
+

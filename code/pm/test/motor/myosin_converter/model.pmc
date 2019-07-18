@@ -1,0 +1,35 @@
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground     type = ground
+body create  name = lowerBody  type = rigid   domain = pre_lower
+body create  name = convBody   type = rigid   domain = pre_conv
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+joint create  name = groundJnt   type = weld  position = [ 0 0 0 ]
+joint groundJnt bodies = { ground lowerBody }
+joint groundJnt color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+
+joint create  name = headConvJnt  type = hinge  domain = pre_conv  res = C[695] \
+              use = CA   axis = [ -0.936852 0.347609 0.038413 ]
+joint headConvJnt bodies = { lowerBody convBody }
+joint headConvJnt color = [ 0 0 1 ] msize = 0.1 shading = color show = true
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name = rsim  type = rigid
+simulation rsim solver = ode
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground lowerBody convBody }
+
+# add joints
+#-----------
+simulation rsim add joints = { groundJnt headConvJnt }
+
+

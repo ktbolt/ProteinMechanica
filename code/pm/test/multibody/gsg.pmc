@@ -1,0 +1,85 @@
+#============================================================#
+#          test peptide rigid body model of a gsg            #
+#============================================================#
+system echo=off
+#system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=db1 format=pdb file=gsg.pdb
+molecule read name=m1 database=db1
+
+domain create gsg1=C[1-5] last_nca_atoms=true
+domain gsg1 bonds atoms=true atom_color=[1 1 1] bond_color=[1 1 1] render=line \
+   width=2 show=true
+
+domain create gsg2=C[15-18]
+domain gsg2 bonds atoms=true atom_color=[0.7 0.7 0.7 ] bond_color=[0.7 0.7 0.7] \
+   render=line width=2 show=true
+
+# create multibody model at peptide level
+#----------------------------------------
+domain create mgsg=C[5-15]
+multibody create name=kc domain=mgsg type=kinematic_chain joint_type=hinge last=peptide
+
+# add ground body and joint
+#--------------------------
+body create name=ground type=ground
+body create name=gsg1Body type=rigid domain=gsg1
+body create name=gsg2Body type=rigid domain=gsg2
+
+joint create name=groundJnt type=weld position=gsg1:C[1]:CA  \
+   color=[0 1 1] msize=0.05 shading=color show=true          \
+   bodies={ground gsg1Body}
+
+# connect gsg1 to chain
+#-----------------------
+joint create name=gsg1Jnt type=hinge position=gsg1:C[5]:N        \
+   use_bond=true  bond={gsg1:C[5]:N  kcSc5:C[5]:CA }             \
+   color=[0 1 0] msize=0.15 shading=color display=line show=true \
+   bodies={gsg1Body kcSc5Body}
+
+# connect chain to gsg2 
+#-----------------------
+joint create name=gsg2Jnt type=hinge position=gsg2:C[15]:N        \
+   use_bond=true  bond={kcPt14:C[15]:N  gsg2:C[15]:CA}            \
+   color=[0 1 0] msize=0.15 shading=color display=line show=true  \
+   bodies={kcPt14Body gsg2Body}
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all 
+simulation rsim add joints=all 
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1 \
+   type=explicit point=kcSc14:C[14]:CA global_frame=true \ 
+   direction=[0 -0.2 0] scale=1.0
+simulation rsim add force=force1 body=kcSc14Body time={0 1000}
+
+#force create name=force2 \
+   type=explicit point=gsg2:C[18]:CA global_frame=true \ 
+   direction=[0 -0.2 0] scale=1.0
+#simulation rsim add force=force2 body=gsg2Body time={0 1000}
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.001
+
+# set some graphics things
+#-------------------------
+graphics center point=gsg1:C[5]:N
+graphics background color=[0.5 0.5 0.7] 
+

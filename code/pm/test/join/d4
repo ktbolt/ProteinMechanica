@@ -1,0 +1,53 @@
+#============================================================*
+#               test domain fitting and joining              *
+#                                                            *
+# use single residue and change CaM chain id                 *
+#============================================================*
+
+# read molecule
+#--------------
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = C[760-788]A
+domain iq1 backbone color = [ 1 0 0 ] show
+
+
+# read molecule
+#--------------
+database open name = iq34 format = pdb  file = ../data/1N2D.pdb
+molecule read  name = m2   database = iq34
+
+# create a some domains
+#----------------------
+domain create iq3 = C[822-855]B
+domain iq3 xform  translate = [ -2 0 0 ] 
+domain iq3 backbone color = [ 0 0 1 ] show
+
+
+# fit iq3 to iq1
+#---------------
+domain iq3 fit  sequence = C[825]               \
+                destination = iq1               \
+                destination_sequence = C[787]   \
+                atom_names = { O C CA }         
+domain iq3 backbone name = fit color = [ 0 1 0 ] width = 1 show
+
+
+# joint iq3 to iq1
+#-----------------
+domain iq3  join  name = iq13                   \
+                  residue = C[825]              \
+                  destination = iq1             \
+                  destination_residue = C[787]  \
+                  chain_ids = { B=E }
+
+domains write atoms list = { iq13 }  file = t4.pdb
+
+domain iq13 xform  translate = [ 10 0 0 ] 
+domain iq13 backbone color = [ 1 1 0 ] width = 2 show
+
+graphics  center  domain = iq1
+

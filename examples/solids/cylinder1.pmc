@@ -1,0 +1,30 @@
+#============================================================#
+# create cylinders using point and axis.                     #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# create cylinder 
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 1.0   \
+              length = 10.0  \
+              center = [ 0 0 0 ]  \
+              axis = [ 0 1 0 ]  \
+              color = [ 0 1 0 ] \
+              display = line    \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl2  type = cylinder  \
+              radius = 1.0   \
+              length = 5.0  \
+              center = [ 0 7.5 0 ]  \
+              axis = [ 0 1 0 ]  \
+              color = [ 0 1 1 ] \
+              show = true
+
+

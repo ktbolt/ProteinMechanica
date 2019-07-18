@@ -1,0 +1,87 @@
+#------------------------------------------------------#
+# define rigid bodies for rigor structure              #
+#------------------------------------------------------#
+
+#----- joint macro -----#
+macro crJnt(name, dom, res, body1, body2)
+  joint create name=${name} type=ball position=${dom}:${res}:CA  \
+     color=[0.7 0.7 0.7] msize=0.05 shading=color show=true      \
+     bodies={ ${body1} ${body2} }
+end macro
+
+body create name=ground type=ground
+body create type=rigid domain_prefix=rigor
+
+#----- ground joint -----#
+joint create name=groundJnt type=weld position=rigorHead:A[523]:CA \
+   color=[0.7 0.7 0.7] msize=0.1 shading=color show=true           \
+   bodies={ground rigorHeadBody}
+
+#----- body joints ------#
+crJnt(rigorActinin1Jnt, rigorActinin1, A[770], rigorHeadBody, rigorActinin1Body)
+crJnt(rigorActinin2Jnt, rigorActinin2, A[897], rigorActinin1Body, rigorActinin2Body)
+crJnt(rigorGsg1Jnt, rigorGsg1, A[1018], rigorActinin2Body, rigorGsg1Body)
+crJnt(rigorGsg2Jnt, rigorGsg2, A[1021], rigorGsg1Body, rigorGsg2Body)
+crJnt(rigorGsg3Jnt, rigorGsg3, A[1024], rigorGsg2Body, rigorGsg3Body)
+crJnt(rigorGsg4Jnt, rigorGsg4, A[1027], rigorGsg3Body, rigorGsg4Body)
+crJnt(rigorZipperJnt, rigorZipper, A[1029], rigorGsg4Body, rigorZipperBody)
+
+#------------------------------------------------------#
+# define rigid bodies for pps structure                #
+#------------------------------------------------------#
+body create type=rigid domain_prefix=pps1
+crJnt(pps1Actinin1Jnt, pps1Actinin1, B[770], pps1HeadBody, pps1Actinin1Body)
+crJnt(pps1Actinin2Jnt, pps1Actinin2, B[897], pps1Actinin1Body, pps1Actinin2Body)
+crJnt(pps1Gsg1Jnt, pps1Gsg1, B[1018], pps1Actinin2Body, pps1Gsg1Body)
+crJnt(pps1Gsg2Jnt, pps1Gsg2, B[1021], pps1Gsg1Body, pps1Gsg2Body)
+crJnt(pps1Gsg3Jnt, pps1Gsg3, B[1024], pps1Gsg2Body, pps1Gsg3Body)
+crJnt(pps1Gsg4Jnt, pps1Gsg4, B[1027], pps1Gsg3Body, pps1Gsg4Body)
+crJnt(pps1ZipperJnt, pps1Zipper, B[1029], pps1Gsg4Body, pps1ZipperBody)
+
+body create type=rigid domain_prefix=pps2
+crJnt(pps2Actinin1Jnt, pps2Actinin1, C[770], pps2HeadBody, pps2Actinin1Body)
+crJnt(pps2Actinin2Jnt, pps2Actinin2, C[897], pps2Actinin1Body, pps2Actinin2Body)
+crJnt(pps2Gsg1Jnt, pps2Gsg1, C[1018], pps2Actinin2Body, pps2Gsg1Body)
+crJnt(pps2Gsg2Jnt, pps2Gsg2, C[1021], pps2Gsg1Body, pps2Gsg2Body)
+crJnt(pps2Gsg3Jnt, pps2Gsg3, C[1024], pps2Gsg2Body, pps2Gsg3Body)
+crJnt(pps2Gsg4Jnt, pps2Gsg4, C[1027], pps2Gsg3Body, pps2Gsg4Body)
+crJnt(pps2ZipperJnt, pps2Zipper, C[1029], pps2Gsg4Body, pps2ZipperBody)
+
+#------------------------------------------------------#
+# set damping for rigid bodies                         #
+#------------------------------------------------------#
+variable damp=1.0
+
+# rigor bodies
+#-------------
+body rigorActinin1Body damping=${damp}
+body rigorActinin2Body damping=${damp}
+body rigorGsg1Body   damping=${damp}
+body rigorGsg2Body   damping=${damp}
+body rigorGsg3Body   damping=${damp}
+body rigorGsg4Body   damping=${damp}
+body rigorZipperBody damping=${damp}
+
+# pps1 bodies
+#-----------
+body pps1HeadBody     damping=${damp}
+body pps1Actinin1Body damping=${damp}
+body pps1Actinin2Body damping=${damp}
+body pps1Gsg1Body   damping=${damp}
+body pps1Gsg2Body   damping=${damp}
+body pps1Gsg3Body   damping=${damp}
+body pps1Gsg4Body   damping=${damp}
+body pps1ZipperBody damping=${damp}
+
+# pps2 bodies
+#-----------
+body pps2HeadBody     damping=${damp}
+body pps2Actinin1Body damping=${damp}
+body pps2Actinin2Body damping=${damp}
+body pps2Gsg1Body   damping=${damp}
+body pps2Gsg2Body   damping=${damp}
+body pps2Gsg3Body   damping=${damp}
+body pps2Gsg4Body   damping=${damp}
+body pps2ZipperBody damping=${damp}
+
+

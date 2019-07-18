@@ -1,0 +1,177 @@
+#============================================================*
+#               test sphere-sphere contact check             *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../data/two_necks.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+
+
+domain create hcj = J
+domain hcj  backbone  color = [ 0.0 0.6 0.6 ] width = 2 show
+domain create iq4 = IJ[760-788]
+domain iq4 backbone color = [ 1 0 0.5 ] width = 2 show
+domain create iq5 = KJ[788-814]
+domain iq5 backbone color = [ 0 1 0.5 ] width = 2 show
+domain create iq6 = LJ[814-836]
+domain iq6 backbone color = [ 0.5 0 1 ] width = 2 show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+# 2nd group
+body create  name = iq4_body  type = rigid   domain = iq4
+body create  name = iq5_body  type = rigid   domain = iq5
+body create  name = iq6_body  type = rigid   domain = iq6
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+# 1st group
+joint create  name = jnt1   type = ball    domain = hc    res = C[760]     use = CA
+joint jnt1 bodies = { ground iq1_body }
+joint jnt1 color = [ 1 0 0 ] msize = 0.1 shading = color show = true 
+
+joint create  name = jnt2   type = ball    domain = hc    res = C[788]     use = CA
+joint jnt2 bodies = { iq1_body iq2_body }
+joint jnt2 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt3   type = ball    domain = hc    res = C[814]     use = CA
+joint jnt3 bodies = { iq2_body iq3_body }
+joint jnt3 color = [ 0 0 1 ] msize = 0.1 shading = color show = true 
+
+# 2nd group
+joint create  name = jnt4   type = weld    domain = hcj  res = J[760]     use = CA
+joint jnt4 bodies = { ground iq4_body }
+joint jnt4 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt5   type = weld    domain = hcj  res = J[788]     use = CA
+joint jnt5 bodies = { iq4_body iq5_body }
+joint jnt5 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt6   type = weld    domain = hcj  res = J[814]     use = CA
+joint jnt6 bodies = { iq5_body iq6_body }
+joint jnt6 color = [ 0 0 1 ] msize = 0.1 shading = color show = true
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+simulation rsim add body = iq4_body
+simulation rsim add body = iq5_body
+simulation rsim add body = iq6_body
+
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+simulation rsim add joint = jnt3
+simulation rsim add joint = jnt4
+simulation rsim add joint = jnt5
+simulation rsim add joint = jnt6
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+
+force create name = force1           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 200 0 0 ]  \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 2 }
+
+# add interaction potentials
+#---------------------------
+
+domain iq3 define region = iq3_rgn  residues = D[80-140]
+domain iq5 define region = iq5_rgn  residues = K[1-80]
+
+body iq3_body add potential_geometry = iq3_contact        \
+                  region = iq3_rgn               \ 
+                  geometry = sphere              \
+                  color = [ 1 0 0 ]              \
+                  show = true               
+
+body iq5_body add potential_geometry = iq5_contact        \
+                  region = iq5_rgn               \
+                  geometry = sphere              \
+                  color = [ 0 1 0 ]              \
+                  display = line                 \
+                  show = true                    
+
+simulation rsim add interaction = contact1              \
+                    type = contact                      \
+                    list = { iq3_contact iq5_contact }  \
+                    strength = 100.0                    \
+                    time = { 0.0 100.0 }
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim momentum = off
+
+simulation rsim time step = 0.01
+#simulation  state  save_frequency = 10
+simulation  rsim  write  energy = true  contact = true  file_name = rsim
+
+
+s 100
+
+wait
+
+
+# check how close restraints are satisfied
+#-----------------------------------------
+simulation rsim  contact check
+
+
+
+

@@ -1,0 +1,58 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Dimer Model                                  #
+#                                                           #
+# Fit models of head-neck onto models of the myosin V       #
+# coiled-coil region.                                       #
+#-----------------------------------------------------------#
+#system echo=off
+system verbose=false
+
+#-------------------------------------------------------#
+# fit rigor-like to pre-power head-neck models to hinge # 
+#-------------------------------------------------------#
+
+# fit sequence
+#-------------
+variable fsc=C[914-916]
+variable fsj=J[914-916]
+
+# read post-stroke head-neck model
+#---------------------------------
+database open name=db1 format=pdb file=postMonomer.pdb
+molecule read name=m1 database=db1 
+domain create rigor=CABDEFG24
+domain rigor backbone color=[1 0 0] width=1 show=true
+
+# read extended hinge-coil model  
+#-------------------------------
+database open name=db2 format=pdb file=pdb_structures/tailExtendedHingeCoil.pdb 
+molecule read name=m2 database=db2 
+domain create cc=CJ
+domain cc fit sequence=${fsc} destination=rigor destination_sequence=${fsc}
+domain cc backbone color=[1 1 0] width=1 show=true
+
+# read pre-powerstroke head-neck 
+#-------------------------------
+database open name=db3 format=pdb file=preMonomer.pdb
+molecule read name=m3 database=db3
+domain create prepower=CABDEFG
+domain prepower fit sequence=${fsc} destination=cc destination_sequence=${fsj}
+domain prepower backbone color=[0 1 0] width=1 show=true
+
+# output dimer 
+#-------------
+variable fn=dimer.pdb
+domains write  atoms list={rigor}    chains={C[5-915]}                file=${fn} 
+domains append atoms list={cc}       chains={C[916-1079]}             file=${fn} 
+domains append atoms list={rigor}    chains={A B D E F G}             file=${fn} 
+domains append atoms list={prepower} chains={C[2-915]=J}              file=${fn} 
+domains append atoms list={cc}       chains={J[916-1079]}             file=${fn} 
+domains append atoms list={prepower} chains={A=H B=I D=K E=L F=M G=N} file=${fn} 
+domains append atoms list={rigor}    chains={2 4}                     file=${fn} 
+
+graphics center point=[20.3148 9.79035 11.2786]
+

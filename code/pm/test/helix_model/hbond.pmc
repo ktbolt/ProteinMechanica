@@ -1,0 +1,120 @@
+
+#============================================================#
+# add interaction spring potentials for hydrogen bonds       #
+#                                                            #
+# use cutoff = 0.32 nm                                       #
+#     force_const = 7                                        #
+#============================================================#
+
+domain d1  define  region = d1hbr  residues = C[783]  atom_names = { O } 
+domain d8  define  region = d8hbr  residues = C[787]  atom_names = { N } 
+
+body d1b add potential_geometry = d1HbSpring1    \
+         region = d1hbr                 \
+         geometry = points              \
+         show = true
+
+body d8b add potential_geometry = d8HbSpring1     \
+         region = d8hbr                  \
+         geometry = points              \
+         show = true
+
+
+simulation rsim add interaction = d1_d8_HbSpring   \
+                    type = spring                  \
+                    force_const = 7.0              \
+                    cutoff = 1.0                   \
+                    list = { d1HbSpring1  d8HbSpring1  }  \
+                    time = { 0.0 1000.0 }
+
+#------------------------------------------------------------------
+
+domain d3   define  region = d3hbr   residues = C[784]  atom_names = { O }
+domain d10  define  region = d10hbr  residues = C[788]  atom_names = { N }
+
+body d3b add potential_geometry = d3HbSpring1    \
+         region = d3hbr                 \
+         geometry = points              \
+         show = true
+
+body d10b add potential_geometry = d10HbSpring1     \
+         region = d10hbr                  \
+         geometry = points              \
+         show = true
+
+simulation rsim add interaction = d3_d10_HbSpring             \
+                    type = spring                  \
+                    force_const = 7.0              \
+                    cutoff = 1.0                   \
+                    list = { d3HbSpring1  d10HbSpring1 }  \
+                    time = { 0.0 1000.0 }
+
+
+#------------------------------------------------------------------
+
+domain d5   define  region = d5hbr   residues = C[785]  atom_names = { O }
+domain d12  define  region = d12hbr  residues = C[789]  atom_names = { N }
+
+body d5b add potential_geometry = d5HbSpring1    \
+         region = d5hbr                 \
+         geometry = points              \
+         show = true
+
+body d12b add potential_geometry = d12HbSpring1     \
+         region = d12hbr                  \
+         geometry = points              \
+         show = true
+
+simulation rsim add interaction = d5_d12_HbSpring             \
+                    type = spring                  \
+                    force_const = 7.0              \
+                    cutoff = 1.0                   \
+                    list = { d5HbSpring1 d12HbSpring1 }   \
+                    time = { 0.0 1000.0 }          \
+                    show = true
+
+#------------------------------------------------------------------
+
+domain d7   define  region = d7hbr   residues = C[786]  atom_names = { O }
+domain d14  define  region = d14hbr  residues = C[790]  atom_names = { N }
+
+body d7b add potential_geometry = d7HbSpring1    \
+         region = d7hbr                 \
+         geometry = points              \
+         show = true
+
+body d14b add potential_geometry = d14HbSpring1     \
+         region = d14hbr                  \
+         geometry = points              \
+         show = true
+
+simulation rsim add interaction = d7_d14_HbSpring             \
+                    type = spring                  \
+                    force_const = 7.0              \
+                    cutoff = 1.0                   \
+                    list = { d7HbSpring1  d14HbSpring1 }   \
+                    time = { 0.0 1000.0 }           \
+                    show = true
+
+#------------------------------------------------------------------
+
+domain d9   define  region = d9hbr   residues = C[787]  atom_names = { O }
+domain d16  define  region = d16hbr  residues = C[791]  atom_names = { N }
+
+body d9b add potential_geometry = d9HbSpring1    \
+         region = d9hbr                 \
+         geometry = points              \
+         show = true
+
+body d16b add potential_geometry = d16HbSpring1     \
+         region = d16hbr                  \
+         geometry = points              \
+         show = true
+
+simulation rsim add interaction = d9_d16_HbSpring             \
+                    type = spring                  \
+                    force_const = 7.0              \
+                    cutoff = 1.0                   \
+                    list = { d9HbSpring1 d16HbSpring1 }  \
+                    time = { 0.0 1000.0 }          \
+                    show = true 

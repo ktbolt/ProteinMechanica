@@ -1,0 +1,11 @@
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim type=rigid
+simulation rsim solver=ode
+
+# add bodies and joints
+#----------------------
+simulation rsim add bodies=all
+simulation rsim add joints=all
+

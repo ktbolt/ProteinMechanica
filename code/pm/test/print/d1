@@ -1,0 +1,41 @@
+
+#============================================================*
+#                    test printing domain properties         *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create some domains
+#--------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 1 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 1 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+
+
+# print mass properties
+#----------------------
+domain  iq1  print  properties = mass 
+domain  iq2  print  properties = mass 
+domain  iq3  print  properties = mass 
+
+
+# print geometric properties
+#---------------------------
+domain iq1  pca    show = true
+domain iq1  print  properties = geometric
+
+domain iq2 pca  show = true
+domain iq2  print  properties = geometric
+
+domain iq3 pca  show = true
+domain iq3  print  properties = geometric
+

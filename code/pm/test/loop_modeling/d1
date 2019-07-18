@@ -1,0 +1,242 @@
+
+#============================================================*
+#               test rigid body simulation of a loop         *
+#                                                            *
+# res 593-613                                                *
+#                                                            *
+# define ball joints btw every two residues.                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = db1  format = pdb  file=../data/loop_piece.pdb
+
+# read molecule
+molecule read  name = m1   database = db1
+
+
+domain create loop  = C
+domain loop backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+
+domain create d1 = C[593-594]
+domain d1 backbone color = [ 1 0 0 ] width = 3 show
+#domain d1 bonds atoms = true atom_color = [ 1 0 0 ] bond_color = [ 1 0 0 ] \
+                atom_render = line show
+
+domain create d2 = C[594-595]
+domain d2 backbone color = [ 0 1 0 ] width = 3 show
+#domain d2 bonds atoms = true atom_color = [ 0 1 0 ] bond_color = [ 0 1 0 ] show
+
+domain create d3 = C[595-596]
+domain d3 backbone color = [ 0 0 1 ] width = 3 show
+#domain d3 bonds atoms = true atom_color = [ 0 0 1 ] bond_color = [ 0 0 1 ] show
+
+domain create d4 = C[596-597]
+domain d4 backbone color = [ 1 0 1 ] width = 3 show
+#domain d4 bonds atoms = true atom_color = [ 1 0 1 ] bond_color = [ 1 0 1 ] show
+
+domain create d5 = C[597-598]
+domain d5 backbone color = [ 1 1 0 ] width = 3 show
+domain d5 bonds atoms = true atom_color = [ 1 1 0 ] bond_color = [ 1 1 0 ] show
+
+domain create d6 = C[598-599]
+domain d6 backbone color = [ 1 0 0 ] width = 3 show
+domain create d7 = C[599-600]
+domain d7 backbone color = [ 0 1 0 ] width = 3 show
+domain create d8 = C[600-601]
+domain d8 backbone color = [ 0 1 0 ] width = 3 show
+domain create d9 = C[601-602]
+domain d9 backbone color = [ 0 0 1 ] width = 3 show
+domain create d10 = C[602-603]
+domain d10 backbone color = [ 1 0 1 ] width = 3 show
+domain create d11 = C[603-604]
+domain d11 backbone color = [ 0 1 1 ] width = 3 show
+domain create d12 = C[604-605]
+domain d12 backbone color = [ 1 1 0 ] width = 3 show
+domain create d13 = C[605-606]
+domain d13 backbone color = [ 1 0 0 ] width = 3 show
+domain create d14 = C[606-607]
+domain d14 backbone color = [ 0 1 0 ] width = 3 show
+domain create d15 = C[607-608]
+domain d15 backbone color = [ 1 1 0 ] width = 3 show
+domain create d16 = C[608-609]
+domain d16 backbone color = [ 0 0 1 ] width = 3 show
+domain create d17 = C[609-610]
+domain d17 backbone color = [ 0 1 1 ] width = 3 show
+domain create d18 = C[610-611]
+domain d18 backbone color = [ 1 0 0 ] width = 3 show
+
+domain create d19 = C[611-612]
+domain d19 backbone color = [ 1 0 1 ] width = 3 show
+domain d19 bonds atoms = true atom_color = [ 1 0 1 ] bond_color = [ 1 0 1 ] show
+
+domain create d20 = C[612-613]
+domain d20 backbone color = [ 0 0 1 ] width = 3 show
+domain d20 bonds atoms = true atom_color = [ 0 0 1 ] bond_color = [ 0 0 1 ] show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = ground    type = ground
+body create  name = d1b  type = rigid  domain = d1
+body create  name = d2b  type = rigid  domain = d2
+body create  name = d3b  type = rigid  domain = d3
+body create  name = d4b  type = rigid  domain = d4
+body create  name = d5b  type = rigid  domain = d5
+body create  name = d6b  type = rigid  domain = d6
+body create  name = d7b  type = rigid  domain = d7
+body create  name = d8b  type = rigid  domain = d8
+body create  name = d9b  type = rigid  domain = d9
+body create  name = d10b  type = rigid  domain = d10
+body create  name = d11b  type = rigid  domain = d11
+body create  name = d12b  type = rigid  domain = d12
+body create  name = d13b  type = rigid  domain = d13
+body create  name = d14b  type = rigid  domain = d14
+body create  name = d15b  type = rigid  domain = d15
+body create  name = d16b  type = rigid  domain = d16
+body create  name = d17b  type = rigid  domain = d17
+body create  name = d18b  type = rigid  domain = d18
+body create  name = d19b  type = rigid  domain = d19
+body create  name = d20b  type = rigid  domain = d20
+
+joint create  name = jnt1  type = ball domain = d1  res = C[593] use = CA
+joint jnt1 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt1 bodies = { ground d1b }
+
+joint create  name = jnt2  type = ball domain = d1  res = C[594] use = CA 
+joint jnt2 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt2 bodies = { d1b d2b }
+
+joint create  name = jnt3  type = ball domain = d2  res = C[595] use = CA 
+joint jnt3 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt3 bodies = { d2b d3b }
+
+joint create  name = jnt4  type = ball domain = d3  res = C[596] use = CA 
+joint jnt4 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt4 bodies = { d3b d4b }
+
+joint create  name = jnt5  type = ball domain = d4  res = C[597] use = CA 
+joint jnt5 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt5 bodies = { d4b d5b }
+
+joint create  name = jnt6  type = ball domain = d5  res = C[598] use = CA
+joint jnt6 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt6 bodies = { d5b d6b }
+
+joint create  name = jnt7  type = ball domain = d6  res = C[599] use = CA
+joint jnt7 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt7 bodies = { d6b d7b }
+
+joint create  name = jnt8  type = ball domain = d7  res = C[600] use = CA
+joint jnt8 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt8 bodies = { d7b d8b }
+
+joint create  name = jnt9  type = ball domain = d8  res = C[601] use = CA
+joint jnt9 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt9 bodies = { d8b d9b }
+
+joint create  name = jnt10  type = ball domain = d9  res = C[602] use = CA
+joint jnt10 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt10 bodies = { d9b d10b }
+
+joint create  name = jnt11  type = ball domain = d10  res = C[603] use = CA
+joint jnt11 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt11 bodies = { d10b d11b }
+
+joint create  name = jnt12  type = ball domain = d11  res = C[604] use = CA
+joint jnt12 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt12 bodies = { d11b d12b }
+
+joint create  name = jnt13  type = ball domain = d12  res = C[605] use = CA
+joint jnt13 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt13 bodies = { d12b d13b }
+
+joint create  name = jnt14  type = ball domain = d13  res = C[606] use = CA
+joint jnt14 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt14 bodies = { d13b d14b }
+
+joint create  name = jnt15  type = ball domain = d14  res = C[607] use = CA
+joint jnt15 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt15 bodies = { d14b d15b }
+
+joint create  name = jnt16  type = ball domain = d15  res = C[608] use = CA
+joint jnt16 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt16 bodies = { d15b d16b }
+
+joint create  name = jnt17  type = ball domain = d16  res = C[609] use = CA
+joint jnt17 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt17 bodies = { d16b d17b }
+
+joint create  name = jnt18  type = ball domain = d17  res = C[610] use = CA
+joint jnt18 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt18 bodies = { d17b d18b }
+
+joint create  name = jnt19  type = ball domain = d18  res = C[611] use = CA
+joint jnt19 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt19 bodies = { d18b d19b }
+
+joint create  name = jnt20  type = ball domain = d19  res = C[612] use = CA
+joint jnt20 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt20 bodies = { d19b d20b }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground d1b  d2b d3b d4b d5b d6b d7b d8b \
+                               d9b d10b d11b d12b d13b d14b d15b d16b  \
+                               d17b d18b d19b d20b }
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 jnt2 jnt3 jnt4 jnt5 jnt6 jnt7 jnt8 jnt9 jnt10 \
+                               jnt11 jnt12 jnt13 jnt14 jnt15 jnt16 jnt17 jnt18    \
+                               jnt19 jnt20 }
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create  name = force1          \
+              type = explicit        \
+              point = [ 0 0 0 ]      \
+              direction = [ 0.1 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = d20b       \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+simulation rsim time step = 0.001 
+
+
+
+graphics center point = [ 12.0688 14.505 5.9047 ]
+
+
+
+
+
+
+
+
+
+
+

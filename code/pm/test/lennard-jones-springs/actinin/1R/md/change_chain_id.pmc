@@ -1,0 +1,11 @@
+
+# output md em structure with new chain id
+#-----------------------------------------
+database open name=actininDb1 format=pdb file=em_protn.pdb
+molecule read name=actininHeadMol1 database=actininDb1
+domain create dom=1
+domain dom backbone show=true
+
+domains write atoms no_hydrogen=true list={dom} chains={1=A} file=em_protn_A.pdb
+
+

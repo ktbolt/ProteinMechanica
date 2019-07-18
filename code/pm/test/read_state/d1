@@ -1,0 +1,116 @@
+#============================================================#
+#                                                            #
+#              test saving state and reading back in         #
+#                                                            #
+# save state                                                 #
+#============================================================#
+system echo=off
+system verbose=false
+variable width=2.0
+
+# set units
+#----------
+#units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1 format=pdb file=../data/neck_xform.pdb 
+
+# read molecule
+#--------------
+molecule read name=m1 database=db1
+molecule m1 xform rotation=[ -50 -30 0 ]  
+
+# create iq-cam domains
+#----------------------
+domain create iq1=C[766-788]A
+domain iq1 backbone color=[0.7 0 0] width=${width} show
+
+domain create iq2=C[788-813]B
+domain iq2 backbone color=[0 0.7 0] width=${width} show
+
+# create bodies
+#--------------
+body create name=ground type=ground
+body create name=iq1b type=rigid domain=iq1
+body create name=iq2b type=rigid domain=iq2
+
+# create joints 
+#--------------
+joint create  name=groundJnt  type=weld  domain=iq1  res=C[780] use=CA 
+joint groundJnt color=[1 1 1] msize=0.01 shading=color show=true
+joint groundJnt bodies={ ground iq1b }
+
+joint create  name=iq12Jnt  type=ball  domain=iq1  res=C[788] use=CA 
+joint iq12Jnt color=[ 1 1 0 ] msize=0.08 shading=flat  show=true
+joint iq12Jnt bodies={ iq1b iq2b }
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+#simulation rsim print  joints=true
+#simulation rsim print bodies=true 
+
+# set solver
+#-----------
+simulation rsim solver=ode
+
+# add forces
+#-----------
+force create  name=force1  type=explicit  global_frame=true  \
+              point=iq2:C[799]  direction=[ 100 0 0 ]  scale=1.0
+simulation rsim add force=force1  body=iq2b  time={ 0 1000 }
+
+# add spring potentials 
+#-----------------------
+simulation rsim  add interactions=iq1Iq2Springs   \
+                 type=spring                      \
+                 force_const=50.0                 \
+                 cutoff=0.7                       \
+                 use_ca=true                      \
+                 time={ 0.0 1000.0 }              \
+                 color=[ 0 0 0 ]                  \
+                 width=1                          \
+                 show=true                        \
+                 bodies={ iq1b iq2b }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+#simulation rsim momentum=off
+simulation rsim momentum=on
+simulation  state  save_frequency=1
+
+
+# add trace 
+#----------
+simulation rsim  add trace  name=trace1  \
+           global_frame=true             \
+           point=iq2:C[811]              \
+           body=iq2b                     \
+           color=[ 1 0 1 ]   show=true 
+
+
+# print body masses        
+#------------------
+#body  iq1b  print  properties=mass
+#body  iq2b  print  properties=mass
+
+
+# print interactions       
+#-------------------
+#simulation  rsim  interactions  print=true
+simulation  rsim  write  energy=true  state=true  file_name=rsim
+
+
+#graphics  center  point=[ 3.09952 4.47314 4.79906 ]
+graphics  background  color=[ 1 1 1 ] 
+graphics  scale=2.0 
+
+
+

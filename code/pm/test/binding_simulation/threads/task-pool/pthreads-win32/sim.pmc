@@ -1,0 +1,59 @@
+#============================================================*
+#               rigid body simulation of two CaM             *
+#============================================================*
+system echo=off
+system verbose=false
+
+# set units
+units scale name=mass uname=reducedMass value=10000.0
+
+# read pdb file
+database open name=neck format=pdb file=neck_xform.pdb
+molecule read name=m1 database=neck
+
+# create a some domains
+domain create iq1=AC[762-788]
+domain iq1 backbone color=[1 0 0] width=2 show=true
+domain create iq2=BC[788-813]
+domain iq2 backbone color=[0 1 0] width=2 show=true
+
+# create bodies 
+body create name=ground  type=ground
+body create name=iq1Body type=rigid domain=iq1
+body create name=iq2Body type=rigid domain=iq2
+
+# create joints
+joint create name=groundIq1Jnt type=ball position=iq1:C[762]:CA \
+      color=[1 1 0] msize=0.1 shading=color show=true           \
+      bodies={ground iq1Body}
+
+joint create name=iq1Iq2Jnt type=ball position=iq2:C[788]:CA \
+      color=[0 1 1] msize=0.1 shading=color show=true        \
+      bodies={iq1Body iq2Body}
+
+# create a rigid simulation  
+simulation create name=rsim type=rigid
+
+# add bodies
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=ground 
+
+# add joints 
+simulation rsim add joint=groundIq1Jnt
+simulation rsim add joint=iq1Iq2Jnt
+
+# add forces
+force create name=force1 type=explicit point=iq2:C[812] global_frame=true \
+      direction=[1 0 0] width=2 show=true
+simulation rsim add force=force1 body=iq2Body time={0 1000}
+
+# initialize simulation
+simulation rsim solver=ode   
+simulation rsim initialize 
+simulation rsim step=1000
+wait
+simulation rsim write energy=true file_name=rsim${sim_id}
+q
+
+

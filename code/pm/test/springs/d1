@@ -1,0 +1,68 @@
+#============================================================*
+#                  test spring potential                     *
+#                                                            *
+# use springs on all atoms.                                  *
+#============================================================*
+system echo=off
+system verbose=false
+
+# set units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read pdb file
+database open name= neck_xform  format=pdb file= ../data/neck_xform.pdb
+molecule read  database= neck_xform  name=m1  model=1  type=protein
+
+# create domains
+domain create hc=C
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0.7 0 0 ] width=2 show
+domain create iq2h=C[788-814]
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0.7 0 ] width=2 show
+domain create iq3h=C[814-836]
+
+# create bodies 
+body create name=ground   type=ground
+body create name=iq2_body type=rigid  domain=iq2
+body create name=iq3_body type=rigid  domain=iq3
+
+# create joints 
+joint create name=ground_jnt type=weld position=hc:C[788]:CA \
+      ground_jnt bodies={ground iq2_body}
+
+joint create name=jnt1 type=ball position=hc:C[814]:CA \
+      bodies={iq2_body iq3_body} color=[0 0 1] msize=0.04 shading=color show=true 
+
+# create a rigid simulation 
+simulation create name=rsim type=rigid
+simulation rsim solver=ode
+
+# add bodies and joints
+simulation rsim add bodies=all
+simulation rsim add joints=all
+
+# add force
+force create name=force1 type=explicit global_frame=true point=hc:C[836] \
+   direction=[20 0 0] scale=0.5
+simulation rsim add force=force1 body=iq3_body time={0 100}
+
+# add potential
+#--------------
+domain iq2 define region=iq2_hrgn residues=C[809-813] 
+domain iq3 define region=iq3_hrgn residues=C[814-818] 
+
+body iq2_body add potential_geometry=iq2_pts_h  \
+     region=iq2_hrgn geometry=points color=[1 0 0] show=true 
+
+body iq3_body add potential_geometry=iq3_pts_h \
+     region=iq3_hrgn geometry=points color=[0 1 0] show=true  
+
+simulation rsim add interaction=hspring1       \
+   type=spring force_const=1.0 cutoff=10.0 list={iq2_pts_h iq3_pts_h} \
+   time={0.0 1000.0} color=[1 1 0] map_energy=true show=true  
+
+# initialize simulation
+simulation rsim initialize
+simulation rsim time step=0.01
+

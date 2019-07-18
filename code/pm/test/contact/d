@@ -1,0 +1,114 @@
+#============================================================*
+#         for picture of contact geometry.                   *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 6 show
+domain create iq2cam = B
+#domain iq2cam bonds  atom_color = [ 0.7 0 0 ] bond_color = [  0.7 0 0 ] \
+                     atoms = false show = true
+
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0.7 0 ] width = 6 show
+
+domain create iq3h = C[814-836]
+#domain iq3h bonds  atom_color = [ 0 0.7 0 ] bond_color = [ 0 0.7 0 ] \
+                   atoms = true show = true
+
+domain create iq3cam = D
+
+#domain iq3cam bonds  atom_color = [ 0 0.7 0 ] bond_color = [ 0 0.7 0 ] \
+                     atoms = true show = true
+
+
+# 1st group
+body create  name = ground    type = ground
+#body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+
+# create simulation
+#------------------
+simulation create name = rsim  type = rigid
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add interaction potentials
+#---------------------------
+
+domain iq3 define region = iq3_rgn  residues = D[90-140] 
+#domain iq3 define region = iq3_rgn  residues = D[125-135] use_sidechains = true
+#domain iq2 define region = iq2_rgn  residues = B[120-140] 
+domain iq2 define region = iq2_rgn  residues = B
+
+domain create iq3_region =  D[125-135] 
+#domain iq3_region  bonds atoms = true bond_color = element show 
+
+body iq3_body add potential = iq3_contact        \
+                  type = contact                 \
+                  region = iq3_rgn               \ 
+                  sidechains = true              \ 
+                  geometry = sphere              \
+                  strength = 20.0                \
+                  color = [ 1 0 1 ]              \
+                  display = line                 \
+                  width = 2                      \
+                  show = true               
+
+body iq2_body add potential = iq2_contact        \
+                  type = contact                 \
+                  region = iq2_rgn               \
+                  geometry = ellipsoid           \
+                  strength = 20.0                \
+                  color = [ 1 0 1 ]              \
+                  display = line                 \
+                  width = 2                      \
+                  show = true                    
+
+simulation rsim add interaction = contact1                      \
+                    body1 = iq3_body  potential1 = iq3_contact  \ 
+                    body2 = iq5_body  potential2 = iq5_contact  \ 
+                    time = { 0.0 10.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+
+# step simulation
+#----------------
+#simulation rsim step = 200
+
+
+graphics background  color = [ 1 1 1 ]
+graphics scale = 2.0  

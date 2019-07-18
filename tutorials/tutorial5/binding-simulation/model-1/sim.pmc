@@ -1,0 +1,30 @@
+#------------------------------------------------------#
+# simulate coarse-grained model                        #
+#------------------------------------------------------#
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=${simulation_name}  type=rigid
+simulation ${simulation_name} solver=ode
+simulation ${simulation_name} momentum=on
+simulation ${simulation_name} damping=on
+
+# add bodies and joints
+#----------------------
+simulation ${simulation_name} add bodies=all
+simulation ${simulation_name} add joints=all
+
+# initialize the simulation
+#--------------------------
+#simulation ${simulation_name} initialize
+#simulation ${simulation_name} time step=0.001
+#simulation state save_frequency=100
+
+# output simulation results
+#--------------------------
+#simulation ${simulation_name} write energy=true file_name=${simulation_name}_${unit}
+
+graphics rotate=[0 -90 135]
+
+
+

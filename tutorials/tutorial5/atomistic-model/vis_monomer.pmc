@@ -1,0 +1,54 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Head-Neck Model                              #
+#                                                           #
+# Visualize monomer models.                                 #
+#-----------------------------------------------------------#
+# read monomer model
+#-------------------
+ifdef ${pre}
+database open name=preMonDb type=pdb file=preMonomer.pdb 
+molecule read name=preMonMol database=preMonDb
+domain create pre=C
+domain pre backbone color=[0.7 0.7 0.7] width=2 show=true
+
+domain create precamA=A
+domain create precamB=B
+domain create precamD=D
+domain create precamE=E
+domain create precamF=F
+domain create precamG=G
+
+domain precamA backbone color=[1 0 0]   width=2 show=true
+domain precamB backbone color=[0 1 0]   width=2 show=true
+domain precamD backbone color=[1 1 0]   width=2 show=true
+domain precamE backbone color=[0 1 1]   width=2 show=true
+domain precamF backbone color=[1 0 1]   width=2 show=true
+domain precamG backbone color=[1 0.5 0] width=2 show=true
+end ifdef
+
+
+ifdef ${post}
+database open name=postMonDb type=pdb file=postMonomer.pdb 
+molecule read name=postMonMol database=postMonDb
+domain create post=C
+domain post backbone color=[0.7 0.7 0.7] width=2 show=true
+
+domain create postcamA=A
+domain create postcamB=B
+domain create postcamD=D
+domain create postcamE=E
+domain create postcamF=F
+domain create postcamG=G
+
+domain postcamA backbone color=[1 0 0]   width=2 show=true
+domain postcamB backbone color=[0 1 0]   width=2 show=true
+domain postcamD backbone color=[1 1 0]   width=2 show=true
+domain postcamE backbone color=[0 1 1]   width=2 show=true
+domain postcamF backbone color=[1 0 1]   width=2 show=true
+domain postcamG backbone color=[1 0.5 0] width=2 show=true
+end ifdef
+

@@ -1,0 +1,40 @@
+#============================================================#
+# read and visualize dna and protein                         #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+#database open name = 1ej9  format = pdb  file = ../data/1EJ9.pdb
+#database open name = 1ej9  format = pdb  file = /home/dparker/protmech/examples/data/1EJ9.pdb
+database open name = 1ej9  format = pdb  file = 1EJ9.pdb
+
+# read protein molecule
+#----------------------
+molecule read  name = protein  database = 1ej9 
+
+# create protein domains
+#-----------------------
+domain create d1 = A
+domain d1 backbone color = [ 0 1 0 ]  width = 2  show = true
+domain d1 surface read format = pm file = /home/dparker/protmech/examples/dna/data/1EJ9_surf.pm
+domain d1 surface color = [ 0.0 0.5 0.0 ] display = line show
+
+
+# read dna molecule
+#------------------
+molecule read  name = dna  database = 1ej9  type = dna
+
+# create dna domains
+#-------------------
+domain create dna_c = C
+domain dna_c backbone color = [ 1 0 0 ] show = true
+domain dna_c atoms    color = element atom_names = { P } show = true
+
+domain create dna_d = D
+domain dna_d backbone color = [ 0 1 0 ] show = true
+domain dna_d atoms    color = element  atom_names = { P } show = true
+

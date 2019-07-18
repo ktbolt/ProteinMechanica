@@ -1,0 +1,22 @@
+#============================================================#
+# helix properties                                           #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create d1 = C[760-788]
+domain d1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+# show helix properties
+#----------------------
+domain d1 helix properties  msize = 0.01 color = [ 1 1 1]  show = true  print = true 
+
+

@@ -1,0 +1,69 @@
+
+#============================================================*
+#         test surface with random force                     *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name =  neck_xform  format = pdb file =  ../../data/two_necks.pdb
+
+# read molecule
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+domain create iq3 = D
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+domain iq3 surface read format = pm file = sasa/camD_surf.pm
+domain iq3 surface color = [ 0.3 0.3 1.0 ] render = color show
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = iq3_body  type = rigid   domain = iq3
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = iq3_body
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add random forces
+#------------------
+force create name = force1        \
+             type = random        \
+             mean = 0.0           \
+             sd = 10.0           \
+             seed = 147321        \
+             scale = 0.1
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim momentum_off = true 
+
+
+# step simulation
+#----------------
+simulation rsim step = 200
+
+
+

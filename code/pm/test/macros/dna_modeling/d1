@@ -1,0 +1,68 @@
+#============================================================#
+# test macros for dna modeling                               #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=dna format=pdb file=../../data/dna_strand.pdb 
+
+# read molecule
+#--------------
+molecule read database=dna name=m1 model=1 type=dna 
+
+# create domains 
+#---------------
+domain create dna=CD
+
+# dna domain macro
+#-----------------
+macro dnaDomain (id, seq, color)
+  domain create dna${id}=${seq}           
+  domain dna${id} backbone color=${color} show=true
+  domain dna${id} atoms  color=${color}  atom_names={ P }  show=true 
+end macro
+
+dnaDomain(1,  C[1-10]D[1-10],      [ 1 0 0 ])
+dnaDomain(2,  C[10-19]D[10-19],    [ 0 1 0 ])
+
+# create bodies
+#--------------
+body create  name=ground    type=ground
+
+body create  type=rigid                    \
+             names  ={ dna1Body dna2Body } \
+             domains={ dna1  dna2  }
+
+
+# create joints
+#--------------
+variable k1=10.0
+variable k2=10.0
+variable k3=10.0
+
+
+# dna joint macro
+#-----------------
+macro dnaJoint (i, j, pos, pca_res, rev_axis)
+  joint create  name=dna${i}${j}Jnt  type=ball position=dna${j}:${pos} \
+        use_pca=true  pca_domain=dna   pca_res=${pca_res}              \
+        axis1=pca1  axis2=pca2  reverse_axes=${rev_axis}               \
+        force_const1=${k1}  force_const2=${k2} force_const3=${k3}
+  joint dna${i}${j}Jnt color=[ 1 1 1 ] msize=0.1 shading=color \
+        show_axes=true  show=true
+  joint dna${i}${j}Jnt bodies={ dna${i}Body dna${j}Body }
+end macro
+
+
+# joint btw bodies dna1Body and dna2Body
+#---------------------------------------
+dnaJoint (1, 2, C[10]D[10], C[6-14]D[6-14], true)
+
+
+graphics  center  point=[-0.872131 -0.311066 4.23767]

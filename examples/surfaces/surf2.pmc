@@ -1,0 +1,61 @@
+#============================================================#
+# simulate surfces from a grid.                              #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read surfaces
+#--------------
+surface read  name = pt1Surf  format = pm  file = grid1_p1_surf.pm  
+surface pt1Surf color = [ 1 0 0]  display = solid show 
+
+surface read  name = pt2Surf  format = pm  file = grid1_p2_surf.pm 
+surface pt2Surf  color = [ 0 1 0]  display = line  show 
+
+# create bodies  
+#--------------
+body create  name = ground    type = ground
+body create  name = pt1_body  type = rigid   surface = pt1Surf
+body create  name = pt2_body  type = rigid   surface = pt2Surf
+
+# create a rigid simulation 
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = pt1_body  
+simulation rsim add body = pt2_body  
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             torque = true           \
+             direction = [ 0 0 50 ]  \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = pt2_body   \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+graphics  background  color = [ 1 1 1 ]
+
+# step simulation
+#----------------
+#simulation rsim step = 200
+
+
+

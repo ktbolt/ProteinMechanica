@@ -1,0 +1,44 @@
+
+#============================================================*
+#               create model of powerstroke                  *
+#                                                            *
+# force converter rotation using a motor.                    *
+#============================================================*
+
+# read molecule and define domains
+#---------------------------------
+read mol.pmc
+
+
+# create CG model
+#----------------
+read model.pmc
+
+
+# add motor
+#-----------
+motor create  name = motor1         \
+              type = angular        \
+              joint = headConvJnt   \
+              axes = { 1 }          \
+              max_angle = { 185.0 } \
+              angle_inc = { 0.1 }   \
+              max_vel = { 10.0 }    \
+              max_force = { 200 }
+
+simulation rsim add  motor = motor1  time = { 0 1000.5 }
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim momentum = off
+simulation rsim initialize
+simulation rsim time step = 0.02
+
+simulation  state  save_frequency = 2 
+
+graphics center domain = pre_head
+domains pick
+
+

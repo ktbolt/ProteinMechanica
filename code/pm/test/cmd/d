@@ -1,0 +1,11 @@
+
+# open pdb file
+database open name = neck format = pdb  file = iq.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+domain create iq1 = AC[762-788]
+
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+

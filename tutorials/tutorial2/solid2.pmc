@@ -1,0 +1,69 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Modeling the myosin V neck using ellipsoids.               #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name= head format=pdb file=1W7I.pdb
+
+# read molecule
+#--------------
+molecule read  database=head  name=headMol  model=1  type=protein
+
+# create head domain
+#-------------------
+domain create head=A
+domain head backbone  color=[ 1 0 0 ] width=2 show=true
+
+# use pca to determine neck axis
+#-------------------------------
+domain create headNeck=A[760-788]
+domain headNeck backbone  color=[ 1 1 1 ] width=4 show=true
+domain headNeck pca show 
+
+# create ellipsoids for the neck
+#-------------------------------
+solid create  name=ellpisoid1  type=ellipsoid    \
+              point=head:A[760-764]:mc             \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \ 
+              color=[ 1 1 0 ]  show=true
+
+solid create  name=ellpisoid2  type=ellipsoid    \
+              point=[ 2.34338 4.00376 -1.27405  ]  \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \ 
+              color=[ 1 1 0 ]  show=true
+
+solid create  name=ellpisoid3  type=ellipsoid    \
+              point=[ 4.61232 7.62092 -3.87559  ]  \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \ 
+              color=[ 1 1 0 ]  show=true
+
+solid create  name=ellpisoid4  type=ellipsoid    \
+              point=[ 6.88126 11.2381 -6.47713  ]  \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \
+              color=[ 1 1 0 ]  show=true
+
+solid create  name=ellpisoid5  type=ellipsoid    \
+              point=[ 9.1502 14.8553 -9.07867   ]  \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \
+              color=[ 1 1 0 ]  show=true
+
+solid create  name=ellpisoid6  type=ellipsoid    \
+              point=[ 11.4191 18.4725 -11.6802  ]  \
+              radius1=2.5 radius2=1.0            \
+              axis=[ 0.453788 0.723433 -0.520309 ] \
+              color=[ 1 1 0 ]  show=true
+
+
+# rotate scene for a better view
+#-------------------------------
+graphics  rotate=[ 80 0 0 ]
+
+

@@ -1,0 +1,77 @@
+#============================================================#
+# define rigid bodies and joints for domains.                #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1 format=pdb file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read name=m1 database=db1
+
+# create multibody model from domains
+#------------------------------------
+multibody  create  name=mv  type=domains                   \
+           bodies={ AC[760-788], BC[788-814], DC[814-836] }  \
+           domain_color=[0 1 0]                              \
+           joint_type=ball                                   \
+           joints={ C[788] , C[814]  }                       \
+           joint_color=[1 0 0]  msize=0.1
+
+# add ground joint
+#-----------------
+body create  name=ground  type=ground
+
+joint create  name=groundJnt  type=weld  position=mv1:C[760]:CA     \
+              color=[ 1 1 1 ] msize=0.01 shading=color show=true  \
+              bodies={ ground mv1Body }
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+
+# print joint information
+#------------------------
+simulation rsim print  joints=true
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# add forces
+#-----------
+force create  name=force1             \
+              type=explicit           \
+              point=[ 0 0 0 ]         \
+              global_frame=false      \
+              direction=[ 1 0 0 ]     \
+              scale=1.0
+
+simulation rsim add force=force1   \
+                    body=mv3Body   \
+                    time={ 0 1000 }
+
+
+#--------------------------------------------------------------#
+#                 add spring potentials                        #
+#--------------------------------------------------------------#
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+
+graphics  center  point=[ 1.32939 2.57201 2.19204 ]
+

@@ -1,0 +1,54 @@
+ #-------------------------------------------------------#
+ #       Protein Mechanica Example Scripts               #
+ #-------------------------------------------------------#
+
+ This directory contains example scripts for Protein Mechanica.
+ Each sub-directory contains scripts associated with a specific operation.   
+
+ The data directory contains PDB files, PM surface files and PM
+ grid files used by the example scripts.
+
+ The following is a list of subdirectors:
+
+ contact - contact potentials
+
+ data - PDB, surface and grid files
+
+ dna - reading and visualizing; simulatiing dna
+
+ fit - fitting domains together
+
+ forces - adding forces to simulations
+
+ grid - visualizing volume grids from cryo-em; writing grid isosurface 
+
+ helix_props - displaying helix properties (center line)
+
+ hydrogen_bonds - displaying hydrogen bonds
+
+ joints - creating joints
+
+ macros - defining macros
+
+ mass_springs - simulation of mass-spring systems
+
+ mixed_models - simualtion of mixed (domain, surfaces, solids) multibody systems
+
+ multibody - using the "multibody" command to simulate proteins on the peptide level
+
+ restraints - using restraints
+
+ rigid_simulation -  multibody systems simulations
+
+ secondary_structure - visualizing secondary structure records in PDB 
+
+ solids - creation of solids 
+
+ springs - using elastic, bend and entrpic springs in multibody simulations,
+           surface-surface springs, molecular domain - surface springs
+
+ surfaces - visualization and simulation of surfaces as rigid bodies
+
+ visualization - visualizing protein structures
+
+

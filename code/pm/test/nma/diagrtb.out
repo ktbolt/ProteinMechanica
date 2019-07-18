@@ -1,0 +1,41 @@
+ Diagrtb> Diagonalizes a matrix, using the RTB/BNM approximation.
+ Diagrtb> Version 2.52, November 2004. 
+ Diagrtb> Options to be read in diagrtb.dat file.
+
+ Diagrtb> Main options:
+
+ MATRix filename          = pdbmat.sdijb
+ COORdinates filename     = neck_xform.pdb
+ Eigenvector OUTPut file  = diagrtb.eigenfacs
+ Nb of VECTors required   =         56
+ EigeNVALues chosen       =       LOWE
+ Nb of residues per BLOck =          1
+ Origin of MASS values    =       CONS
+ MATRix FORMat            =       BINA
+
+ Blocpdb>  4167 atoms picked in pdb file.
+ Blocpdb>   All masses set to unity.
+
+ Blocpdb>   521 blocks.
+
+ Prepmat> Matrix trace    =     325030.0000
+
+ Diagstd>   3126 eigenvectors are computed. 
+
+ Diagstd> Selected eigenvalues: 
+      0.0000000      0.0000000      0.0000000      0.0000000      0.0000000
+      0.0000000      0.0030189      0.0071789      0.0084046      0.0254050
+      0.0324980      0.0518992      0.0609857      0.1056358      0.1147917
+      0.1515416      0.1616067      0.1989423      0.2057049      0.2244791
+      0.2550208      0.2776165      0.2851595      0.3332856      0.3543576
+      0.3852961      0.4543013      0.4786713      0.5043330      0.5222690
+      0.5559815      0.5796902      0.6393194      0.6702472      0.7115654
+      0.7236743      0.7741046      0.8389340      0.8878425      0.8978278
+      0.9170402      0.9877328      1.0150519      1.1445565      1.1673657
+      1.1886954      1.2139053      1.2239933      1.2445215      1.2626274
+      1.3143067      1.3308292      1.3670708      1.3875453      1.4052989
+      1.4615603
+
+ Rtb_to_modes>    56 eigenvectors saved.
+
+ Diagrtb> Normal end.

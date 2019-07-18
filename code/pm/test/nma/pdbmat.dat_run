@@ -1,0 +1,12 @@
+! This file can be modified and used as a command file (named pdbmat.dat) for pdbmat.
+ Coordinate FILENAME        = neck_xform.pdb
+ INTERACtion DISTance CUTOF =      8.000
+ INTERACtion FORCE CONStant =      1.000
+ Origin of MASS values      =       CONS ! CONstant, or from COOrdinate file.
+ Output PRINTing level      =          0 ! =1: more detailled. =2: debug level.
+ Bond DEFINITION            =       NONE ! NONe, ALL, or between CONsecutive atoms.
+ Maximum bond LENGTH        =      0.000
+ BOND FORCE CONStant        =      0.000
+ ANGLE FORCE CONStant       =      0.000
+ LevelSHIFT                 =    1.0E-09 ! Non-zero value often required (numerical reasons).
+ Matrix FORMAT              =     BINARY ! Free, or Binary, matrix saved.

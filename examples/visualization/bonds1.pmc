@@ -1,0 +1,30 @@
+#============================================================#
+# visualize domain atom bonds: no atoms                      #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create helix = C
+domain helix bonds  bond_color = [ 0.6 0.6 0.6 ] show = true
+
+domain create camA = A
+domain camA bonds  bond_color = [ 1 0 0 ] show = true
+
+domain create camB = B
+domain camB bonds  bond_color = [ 0 1 0 ]  show = true
+
+domain create camD = D
+domain camD bonds  bond_color = [ 1 1 0 ]  show = true
+
+graphics  background  color = [1 1 1]
+
+
+

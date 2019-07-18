@@ -1,0 +1,66 @@
+#============================================================#
+# linear explicit torque around helix axis.                  #
+#============================================================#
+
+# set units
+#---------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck format=pdb  file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=m1   database=neck
+
+# create a some domains
+#----------------------
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 1 0 0 ] width=2 show=true
+
+domain create iq2Helix=C[788-814]
+domain iq2Helix pca show 
+
+# create bodies
+#--------------
+body create  name=iq2Body  type=rigid   domain=iq2
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=iq2Body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add force at center of mass
+#----------------------------
+force create  name=force1  type=explicit   torque=true \
+      direction=[ 0.539744 0.771608 0.336597 ]  show=true
+simulation rsim add force=force1  body=iq2Body  time={ 0 1000 }
+
+
+# add traces 
+#-----------
+simulation rsim add trace name=trace1 color=[0 1 0]  \
+   global_frame=true point=iq2:B[132]                \
+   body=iq2Body show=true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+simulation rsim state save_frequency=100
+
+
+# step simulation
+#----------------
+simulation rsim step=100000000
+
+

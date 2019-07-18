@@ -1,0 +1,25 @@
+#============================================================*
+#                  test reading pdb model                    *
+#============================================================*
+system echo=off
+system verbose=false
+
+# set units
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=db format=pdb file=aligned1.pdb 
+
+# read 1st model
+#---------------
+molecule read database=db name=m1 model=1 type=protein
+domain create m1=A
+domain m1 backbone color=[1 0 0] width=1 show
+
+# read 2nd model
+#---------------
+molecule read database=db name=m2 model=2 type=protein
+domain create m2=H
+domain m2 backbone color=[0 1 0] width=1 show
+

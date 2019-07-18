@@ -1,0 +1,130 @@
+g++ -shared -o /Users/parkerda/software/protein-mechanica/protmech/protmech/trunk/lib//libpm_core.dll atom.o atoms.o bexp.o bez.o body.o bsim.o cmpd.o cmd.o csys.o db.o force.o gc.o geom.o graphics.o grid.o joint.o mesh.o model.o mol.o motor.o msg.o msr.o ode_solv.o part.o pm.o pobj.o pot.o rbsim.o rbsolv.o res.o rest.o sd.o sim.o sobj.o solid.o state.o surf.o pmsys.o trace.o ../../common/src//common.o ../../common/src//mth.o /Users/parkerda/software/protein-mechanica/protmech/protmech/trunk/lib//libpm_common.dll /Users/parkerda/software/protein-mechanica/protmech/protmech/trunk/lib//libpm_gr.dll 
+Undefined symbols for architecture x86_64:
+  "_dBodyAddForce", referenced from:
+      ProteinMechanica::PmOdeSolver::addDampingForces() in ode_solv.o
+  "_dBodyAddForceAtPos", referenced from:
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addInteractionForces() in ode_solv.o
+  "_dBodyAddForceAtRelPos", referenced from:
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addRandomForces() in ode_solv.o
+  "_dBodyAddTorque", referenced from:
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addRandomForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addDampingForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addInteractionForces() in ode_solv.o
+  "_dBodyCreate", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dBodyGetAngularVel", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addDampingForces() in ode_solv.o
+  "_dBodyGetLinearVel", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addDampingForces() in ode_solv.o
+  "_dBodyGetPosition", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::setState(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, std::__1::vector<ProteinMechanica::PmRigidBodyState, std::__1::allocator<ProteinMechanica::PmRigidBodyState> >&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+  "_dBodyGetRelPointPos", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addRandomForces() in ode_solv.o
+  "_dBodyGetRotation", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+  "_dBodySetAngularVel", referenced from:
+      ProteinMechanica::PmOdeSolver::step() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::setState(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, std::__1::vector<ProteinMechanica::PmRigidBodyState, std::__1::allocator<ProteinMechanica::PmRigidBodyState> >&) in ode_solv.o
+  "_dBodySetFiniteRotationAxis", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dBodySetFiniteRotationMode", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dBodySetLinearVel", referenced from:
+      ProteinMechanica::PmOdeSolver::step() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::setState(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, std::__1::vector<ProteinMechanica::PmRigidBodyState, std::__1::allocator<ProteinMechanica::PmRigidBodyState> >&) in ode_solv.o
+  "_dBodySetMass", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dBodySetPosition", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::setState(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, std::__1::vector<ProteinMechanica::PmRigidBodyState, std::__1::allocator<ProteinMechanica::PmRigidBodyState> >&) in ode_solv.o
+  "_dBodySetRotation", referenced from:
+      ProteinMechanica::PmOdeSolver::setState(std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > > >&, std::__1::vector<ProteinMechanica::PmRigidBodyState, std::__1::allocator<ProteinMechanica::PmRigidBodyState> >&) in ode_solv.o
+  "_dBodyVectorToWorld", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addExplicitForces() in ode_solv.o
+  "_dJointAddHingeTorque", referenced from:
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+  "_dJointAddUniversalTorques", referenced from:
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+  "_dJointAttach", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+      ProteinMechanica::ode_AttachJoints(ProteinMechanica::PmOdeJoint&, ProteinMechanica::PmBody*, dxBody*, ProteinMechanica::PmBody*, dxBody*) in ode_solv.o
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointCreateAMotor", referenced from:
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointCreateBall", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointCreateFixed", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointCreateHinge", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointCreateUniversal", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointGetAMotorAngle", referenced from:
+      ProteinMechanica::PmOdeSolver::stepMotors() in ode_solv.o
+  "_dJointGetHingeAngle", referenced from:
+      ProteinMechanica::PmOdeSolver::update() in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+  "_dJointGetUniversalAngle1", referenced from:
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+  "_dJointGetUniversalAngle2", referenced from:
+      ProteinMechanica::PmOdeSolver::addJointForces() in ode_solv.o
+  "_dJointSetAMotorAngle", referenced from:
+      ProteinMechanica::PmOdeSolver::stepMotors() in ode_solv.o
+  "_dJointSetAMotorAxis", referenced from:
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointSetAMotorMode", referenced from:
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointSetAMotorNumAxes", referenced from:
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointSetAMotorParam", referenced from:
+      ProteinMechanica::PmOdeSolver::stepMotors() in ode_solv.o
+      ProteinMechanica::ode_activateJointMotor(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&, bool) in ode_solv.o
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+      ProteinMechanica::PmOdeSolver::addJointMotors() in ode_solv.o
+  "_dJointSetBallAnchor", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetFixed", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetHingeAnchor", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetHingeAxis", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetHingeParam", referenced from:
+      ProteinMechanica::ode_addJointStop(ProteinMechanica::PmOdeSolverData*, ProteinMechanica::PmOdeJoint&) in ode_solv.o
+  "_dJointSetUniversalAnchor", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetUniversalAxis1", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dJointSetUniversalAxis2", referenced from:
+      ProteinMechanica::PmOdeSolver::addJoints(std::__1::vector<ProteinMechanica::PmJoint*, std::__1::allocator<ProteinMechanica::PmJoint*> >) in ode_solv.o
+  "_dMassSetParameters", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dMassSetZero", referenced from:
+      ProteinMechanica::PmOdeSolver::addBodies(std::__1::vector<ProteinMechanica::PmBody*, std::__1::allocator<ProteinMechanica::PmBody*> >) in ode_solv.o
+  "_dWorldCreate", referenced from:
+      ProteinMechanica::PmOdeSolver::initialize(ProteinMechanica::PmRigidSimulation*, double) in ode_solv.o
+  "_dWorldQuickStep", referenced from:
+      ProteinMechanica::PmOdeSolver::step() in ode_solv.o
+  "_dWorldStep", referenced from:
+      ProteinMechanica::PmOdeSolver::step() in ode_solv.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+make: *** [/Users/parkerda/software/protein-mechanica/protmech/protmech/trunk/lib//libpm_core.dll] Error 1

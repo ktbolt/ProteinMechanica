@@ -1,0 +1,47 @@
+#============================================================*
+#            test simulation of dna using cylinders          *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name = dna  format = pdb  file = ../../../data/dna_strand.pdb 
+
+# read molecule
+#--------------
+molecule read  database = dna name = m1  model = 1  type = dna 
+
+# create domains 
+#---------------
+domain create helix = CD
+# translate domain so that ground joint will be (0,0,0)
+#domain helix xform translation = [ 0.15334 -0.208601 -0.332707 ]
+#domain helix backbone color = [ 1 0 0 ] show = true
+#domain helix bonds atoms = true  bond_color = element show = true
+
+domain create dna_c = C
+domain dna_c backbone color = [ 1 0 0 ] show = true
+domain dna_c bonds atoms = false bond_color = element show = true
+domain dna_c atoms color=[0 1 0.5] show=true
+
+domain create dna_d = D
+domain dna_d backbone color = [ 0 1 0 ] show = true
+domain dna_d bonds atoms = false bond_color = element show = true
+#domain dna_d atoms color = element show = true
+domain dna_d atoms color=[1 0 0] show=true
+
+
+
+# create cylinder
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              domain = helix                \
+              region = CD                   \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true

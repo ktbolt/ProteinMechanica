@@ -1,0 +1,35 @@
+#============================================================#
+#                   show using tube                          #
+#============================================================#
+
+variable w=2
+
+# set units
+units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read molecule
+#--------------
+database open name=neck format=pdb  file=../data/neck_xform.pdb
+molecule read  name=m1   database=neck
+molecule m1  xform  rotation=[ 45  15  -60 ]
+
+# create a some domains
+#----------------------
+#domain create helix=C[760-762]
+#domain create helix=C[760-765]
+domain create helix=C[760-815]A
+domain helix backbone color=[0.0 1.0 0.0] tube=true width=${w} show=true
+#domain helix backbone color=[0.0 1.0 0.0] planes=true width=${w} show=true
+
+#domain create camA=A
+#domain camA backbone color=[ 0.7 0 0 ] width=${w} show=true
+
+#domain create camB=B
+#domain camB backbone color=[ 0 0.7 0 ] width=${w} show=true
+
+#graphics background color=[ 1 1 1 ]
+#graphics scale=2.5
+graphics center point=[-3.43713 5.68404 1.79914]
+
+

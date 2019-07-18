@@ -1,0 +1,110 @@
+#============================================================#
+# rigid body simulation of a protein.                        #
+#                                                            #
+# use ball joints, no springs.                               #
+#============================================================#
+
+# set units
+#---------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show=true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show=true
+
+# domain for creating joints
+#---------------------------
+domain create hc = C
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+# create joints    
+#--------------
+
+# joint 1
+#--------
+joint create name = 1   type = ball   \
+      position = = iq1:C[760]:CA      
+joint 1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true 
+joint 1 bodies = { ground iq1_body }
+
+# joint 2
+#--------
+joint create   name = 2  type = ball       \
+      position = hc:C[788]:CA 
+joint 2 color = [ 1 1 1 ] msize = 0.1 shading = flat display = solid show = true 
+joint 2 bodies = { iq1_body iq2_body }
+
+# joint 3
+#--------
+joint create name = 3   type = ball       \
+      position = hc:C[814]:CA 
+joint 3 color = [ 1 1 1 ] msize = 0.1 shading = flat display = solid show = true
+joint 3 bodies = { iq2_body iq3_body }
+
+# create a rigid simulation  
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1_body
+simulation rsim add body = iq2_body
+simulation rsim add body = iq3_body
+
+# add joints
+#-----------
+simulation rsim add joint = 1
+simulation rsim add joint = 2
+simulation rsim add joint = 3
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force1         \
+              type = explicit       \
+              point = [ 0 0 0 ]     \
+              direction = [ 4 0 0 ] \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3_body   \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+
+
+# step simulation
+#----------------
+simulation rsim step = 10000
+
+

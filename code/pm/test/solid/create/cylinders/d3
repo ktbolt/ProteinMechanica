@@ -1,0 +1,76 @@
+
+#============================================================*
+#            test create cylinder using domain               *
+#                                                            *
+# allign cylinders with previous one.                        *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 1 show
+
+domain create hc1 = C[760-780]
+domain hc1  backbone  color = [ 1 0 0 ] width = 3 show
+
+
+# create cylinder
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[762-780]           \
+              atoms = { CA }                \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl2  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[780-796]           \
+              atoms = { CA }                \
+              allign = cyl1                 \
+              color = [ 0 1 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl3  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[796-814]           \
+              atoms = { CA }                \
+              allign = cyl2                 \
+              color = [ 1 1 0 ]             \
+              display = line                \
+              show = true
+
+# create cylinder
+#----------------
+solid create  name = cyl4  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[814-832]           \
+              atoms = { CA }                \
+              allign = cyl3                 \
+              color = [ 0 1 1 ]             \
+              display = line                \
+              show = true
+

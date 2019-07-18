@@ -1,0 +1,26 @@
+
+#============================================================*
+#               test reading peptide-glycans                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = dh138            \
+              format = pdb            \
+              file = dh138_conf1.pdb  \
+              data = miscellaneous 
+
+# read molecule
+molecule read  name = m1  database = dh138 type = miscellaneous 
+
+# create a some domains
+domain create d1 = A
+#domain d1 atoms color = [ 1 0 0 ] width = 2 show
+#domain d1 atoms color = element width = 2  display = line show
+
+#domain d1 bonds  atom_color = element  bond_color = [ 1 0 0 ] show = true
+domain d1 bonds  atom_color = element  atoms = true show = true
+

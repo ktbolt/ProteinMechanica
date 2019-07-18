@@ -1,0 +1,19 @@
+#============================================================#
+# visualize myosin v in folded state: cell values.           #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = m1  format = pm  file = ../data/emd_1201.pm 
+
+# display cell values
+#--------------------
+grid m1 points  vmin = 0.3  vmax = 0.7  show = true
+#grid m1 points  vmin = 0.4  vmax = 0.5  show = true
+
+
+

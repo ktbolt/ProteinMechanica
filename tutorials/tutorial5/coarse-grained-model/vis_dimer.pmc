@@ -1,0 +1,47 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building a Coarse-grained Model of the Myosin V Dimer     #
+#                                                           #
+# Visualize dimer model.                                    #
+#-----------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# read monomer model
+#-------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+domain create post=C
+domain create postcamA=A
+domain create postcamB=B
+domain create postcamD=D
+domain create postcamE=E
+domain create postcamF=F
+domain create postcamG=G
+
+domain post backbone color=[0.7 0.7 0.7] width=2 show=true
+domain postcamA backbone color=[1 0 0]   width=2 show=true
+domain postcamB backbone color=[0 1 0]   width=2 show=true
+domain postcamD backbone color=[1 1 0]   width=2 show=true
+domain postcamE backbone color=[0 1 1]   width=2 show=true
+domain postcamF backbone color=[1 0 1]   width=2 show=true
+domain postcamG backbone color=[1 0.5 0] width=2 show=true
+
+domain create pre=J
+domain create precamH=H
+domain create precamI=I
+domain create precamK=K
+domain create precamL=L
+domain create precamM=M
+domain create precamN=N
+
+domain pre backbone color=[0.7 0.7 0.7] width=2 show=true
+domain precamH backbone color=[1 0 0]   width=2 show=true
+domain precamI backbone color=[0 1 0]   width=2 show=true
+domain precamK backbone color=[1 1 0]   width=2 show=true
+domain precamL backbone color=[0 1 1]   width=2 show=true
+domain precamM backbone color=[1 0 1]   width=2 show=true
+domain precamN backbone color=[1 0.5 0] width=2 show=true
+

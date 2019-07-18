@@ -1,0 +1,20 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# Creating rigid bodies from surfaces.                       #
+#============================================================#
+
+# read surface
+#-------------
+surface read  name=camA format=pm  file=camA_surf.pm
+surface camA color=[ 1 1 0]  display=solid  shading=flat
+
+# create rigid bodie
+#-------------------
+body create  name=camABody  type=rigid   surface=camA 
+
+# print information about rigid bodies
+#-------------------------------------
+body camABody print properties=mass
+
+

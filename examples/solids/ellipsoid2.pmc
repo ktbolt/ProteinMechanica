@@ -1,0 +1,39 @@
+#============================================================#
+# create an ellipsoid using two points.                      #
+#============================================================#
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck  format = pdb file =  ..//data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database = neck  name = m1  model = 1  type = protein
+
+# create domain
+#--------------
+domain create iq1 = C[760-814]
+domain iq1 backbone  color = [ 1 0 0 ] width = 2 show=true
+domain create iq2 = C[814-836]
+domain iq2 backbone  color = [ 0 1 0 ] width = 2 show=true
+
+
+# create ellipsoid between two points on the helix center (hc)
+#-------------------------------------------------------------
+solid create  name = ellpisoid1  type = ellipsoid      \
+              point1 = iq2:C[817]:hc                   \
+              point2 = iq2:C[833]:hc                   \
+              radius = 0.3                             \
+              color = [ 1 0 0 ]                        \
+              display = line                           \
+              show = true
+
+
+
+

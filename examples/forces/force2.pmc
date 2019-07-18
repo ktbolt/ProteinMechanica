@@ -1,0 +1,102 @@
+#============================================================#
+# random explicit force.                                     #
+#============================================================#
+
+# set units
+#---------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck format=pdb  file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=m1   database=neck
+
+# create a some domains
+#----------------------
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 0.7 0 0 ] width=2 show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 0.7 0 ] width=2 show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 0.7 ] width=2 show=true
+
+# domain for creating joints
+#---------------------------
+domain create hc=C
+
+# create bodies
+#--------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+simulation rsim momentum=off 
+
+# add force at center of mass
+#----------------------------
+variable fs=40
+
+force create  name=force1  type=random      \
+      point=[ 0 0 0 ]  seed=135197  mean=0  sd=${fs}   show=true
+simulation rsim add force=force1  body=iq2Body  time={ 0 inf}
+
+# add force at residue C835
+#--------------------------
+force create  name=force2  type=random                        \
+      global_frame=true  point=[0 0 0]  seed=319730 mean=0  sd=${fs}  \
+      color=[ 1 1 0] show=true
+simulation rsim add force=force2  body=iq3Body  time={ 0 inf }
+
+# add force at center of N-term lobe
+#-----------------------------------
+force create  name=force3  type=random                        \
+      global_frame=true  point=[0 0 0]   seed=193741 mean=0  sd=${fs} \
+      color=[ 0 1 0] show=true
+simulation rsim add force=force3  body=iq1Body  time={ 0 inf }
+
+
+# add traces 
+#-----------
+simulation rsim  add trace  name=trace1  color=[ 1 0.5 0.5 ]  \
+           global_frame=true  point=iq1                   \
+           body=iq1Body   width=2 show=true
+
+simulation rsim  add trace  name=trace2  color=[ 0.5 1 0.5 ]  \
+           global_frame=true  point=iq2                   \
+           body=iq2Body   width=2 show=true
+
+simulation rsim  add trace  name=trace3  color=[ 0.5 0.5 1 ]  \
+           global_frame=true  point=iq3                   \
+           body=iq3Body   width=2 show=true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim state save_frequency=10000
+
+
+# step simulation
+#----------------
+simulation rsim step=100000000
+
+

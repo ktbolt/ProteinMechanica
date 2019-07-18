@@ -1,0 +1,44 @@
+#============================================================#
+# test conditionals                                          #
+#============================================================#
+#system echo=off
+#system verbose=false
+
+database open name=neck_xform format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+domain create hc=C
+domain create cam=A
+
+# test boolean
+#-------------
+#variable redbackbone=false
+variable redbackbone=true
+
+if ${redbackbone} 
+  variable color=[1 0 0] 
+  domain hc backbone  color=${color}  width=2 show=true
+  print redbackbone=true
+else
+  variable icolor=[0 1 0] 
+  domain hc  backbone  color=${icolor}  width=2 show=true
+end if
+
+# test equality 
+#--------------
+variable dtype=backbone
+
+if ${dtype}=atoms
+
+  domain cam atoms  color=element  show=true
+  print domain cam atoms  color=element  show=true
+
+else 
+
+  domain cam  backbone  color=[0 1 0]  width=2 show=true
+  print domain cam  backbone  color=[0 1 0]  width=2 show
+
+end if
+
+
+
+

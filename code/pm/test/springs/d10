@@ -1,0 +1,146 @@
+#============================================================#
+#                  test torsion spring potential             #
+#============================================================#
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 2 show
+domain create iq2h = C[788-814]
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0.7 0 ] width = 2 show
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+# 1st group
+body create  name = ground    type = ground
+body create  name = iq2Body  type = rigid   domain = iq2
+body create  name = iq3Body  type = rigid   domain = iq3
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+joint create  name = ground_jnt  type = weld  domain = hc    res = C[788]     use = CA \
+joint ground_jnt bodies = { ground iq2Body }
+
+joint create  name = jnt1  type = ball  domain = hc  res = C[814]  use = CA
+joint jnt1 bodies = { iq2Body iq3Body }
+joint jnt1 color = [ 0 0 1 ] msize = 0.04 shading = color show = true 
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq2Body
+simulation rsim add body = iq3Body
+
+# add joints
+#-----------
+simulation rsim add joint = ground_jnt
+simulation rsim add joint = jnt1
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create name = force1            \
+             type = explicit          \
+             global_frame = true      \
+             point = iq3:D[69]:CA      \
+             direction = [ 0 0 10 ]   \
+             scale = 1.0
+
+simulation rsim add force = force1   \
+                    body = iq3Body   \
+                    time = { 0 20 }
+
+
+# add torsion spring
+#-------------------
+# define points as:
+#
+#          2'-----1'
+#          .
+#          .
+#          .
+#          3
+#          |
+#          |
+#          2------1
+
+domain iq2 define region = iq2_rgn residues = B[69]C[806,814]  atom_names = { CA }
+
+domain iq3 define region = iq3_rgn residues = D[69]C[824] atom_names = { CA }
+
+body iq2Body add potential_geometry = iq2Iq3Pot1    \
+                 geometry = points                  \ 
+                 region = iq2_rgn                   \ 
+                 color = [ 0.6 0.6 0.6 ]            \ 
+                 width = 2.0  show = true  
+
+body iq3Body add potential_geometry = iq2Iq3Pot2  \ 
+                 geometry = points                \ 
+                 region = iq3_rgn                 \ 
+                 color = [ 1 0.6 0.6 ]            \
+                 width = 2.0   show = true  
+
+simulation rsim add interaction = helix1Helix2Int    \
+                    type = torsion                   \
+                    force_const = 10.0               \
+                    list = { iq2Iq3Pot1 iq2Iq3Pot2 } \
+                    time = { 0 10000 }               \
+                    color = [ 1 1 0 ]                \
+                    show = true
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.01
+simulation rsim momentum = off
+#simulation rsim momentum = on
+simulation  state  save_frequency = 10
+
+#----------------------------
+# output simulation results |
+#----------------------------
+simulation  rsim  write  file_name = rsim
+simulation  rsim  write  energy = true  file_name = rsim
+#simulation  rsim  interactions  print = true
+
+#graphics background  color = [ 1 1 1 ]
+graphics center point = [ 3.77781 5.96775 3.98927 ] 
+
+

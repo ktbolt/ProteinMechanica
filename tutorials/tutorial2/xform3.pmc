@@ -1,0 +1,34 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Transforming and copying domains.                          #
+#============================================================#
+
+# open iq12 pdb file
+#-------------------
+database open name=iq12Db format=pdb  file=iq12.pdb
+
+# read iq12 molecule
+#-------------------
+molecule read  name=iq12Mol  database=iq12Db  type=protein
+molecule iq12Mol print 
+
+# create and visualize domains
+#-----------------------------
+domain  create  iq12=C 
+domain iq12 backbone color=[ 1 0 0 ] width=2 show=true
+
+domain  create  iq12CamA=A
+domain iq12CamA backbone color=[ 0 1 0 ] width=2 show=true
+
+domain  create  iq12CamB=B
+domain iq12CamB backbone color=[ 1 1 0 ] width=2 show=true
+
+# transform a copy of iq12CamA 
+#-----------------------------
+domain  iq12CamA  xform  copy=iq12CamAXform  translate=[ 4 -2 0 ]  
+
+# visualize xformed copy 
+#-----------------------
+domain iq12CamAXform backbone color=[ 0 1 1 ] width=2 show=true
+

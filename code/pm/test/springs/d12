@@ -1,0 +1,83 @@
+#============================================================*
+#               test adding springs using multibody cmd      *
+#                                                            *
+# create multibody from secondary strucutre.                 *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/1W7I.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1  
+
+# create a some domains
+#-------------------
+domain create head = A[2-780]
+#domain head backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+
+# create multibody
+#-----------------
+domain create headModel_1 = A[60-381]
+multibody  create  name=hm1b  domain=headModel_1  type=secondary_structure 
+
+domain create headModel_2 = A[386-594]
+multibody  create  name=hm2b  domain=headModel_2  type=secondary_structure 
+
+domain create headModel_3 = A[632-792]
+multibody  create  name=hm2b  domain=headModel_3  type=secondary_structure 
+
+body create  name=ground    type=ground
+joint create  name=groundJnt  type=weld domain=hm2b_helix21  res=A[525] use=CA
+joint groundJnt color = [ 1 1 1 ] msize = 0.02 shading = color show = true
+joint groundJnt bodies = { ground hm2b_helix21Body }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name = rsim  type = rigid
+simulation rsim add bodies = all
+simulation rsim add joints = all
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force2      \
+   type=explicit  point=hm2b_helix32:A[790] direction = [ 0 0 10.2 ]  \
+   global_frame = true scale = 1.0
+simulation rsim add force=force2  body=hm2b_helix32Body time = { 0 1000 }
+
+# add springs 
+#------------
+variable hm1Bodies = body:hm1b*
+variable hm2Bodies = body:hm2b*
+variable use_ca = false
+
+simulation rsim add interaction=spring1                     \
+   type=spring force_const=10.0 cutoff=0.8 use_ca=${use_ca} \
+   bodies={ ${hm1Bodies} ${hm2Bodies} }                     \
+   time={ 0.0 1000.0 }                                      \
+   map_strain=true  map_scale={-0.1 0.1}                    \
+   color=[ 1 1 0 ] show=true 
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.002
+simulation  state  save_frequency = 10
+
+
+

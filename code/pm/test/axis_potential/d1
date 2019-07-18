@@ -1,0 +1,104 @@
+#============================================================#
+# test axis potential                                        #
+#                                                            #
+#============================================================#
+system echo = off
+#system verbose = false
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read molecule
+#--------------
+database open name =  neck_xform  format = pdb file =  ../data/neck_xform.pdb
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains
+#---------------
+domain create hc = C
+
+#domain create iq2 = C[788-814]
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 2 show
+#domain iq2 pca  show=true 
+
+#domain create iq3 = C[814-836]
+domain create iq3 = DC[814-836]
+domain iq3 xform  rotate = [ 0 0 45] 
+domain iq3 backbone color = [ 0 0.7 0 ] width = 2 show
+#domain iq3 pca  show=true 
+
+
+# create bodies 
+#--------------
+body create  name = ground   type = ground
+body create  name = iq2Body  type = rigid   domain = iq2
+body create  name = iq3Body  type = rigid   domain = iq3
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq2Body
+simulation rsim add body = iq3Body
+
+body iq2Body damping = 1.0
+body iq3Body damping = 1.0
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add axis potential
+#-------------------
+#domain iq2 define region = iq2Rgn  residues = C 
+domain iq2 define region = iq2Rgn  residues = BC 
+
+#domain iq3 define region = iq3Rgn  residues = C
+domain iq3 define region = iq3Rgn  residues = DC
+
+body iq2Body add potential_geometry = iq2Axis1   \
+             geometry=lines                      \
+             region=iq2Rgn                       \
+             axes = { 1 3 }                      \
+             color = [ 1 0.6 0.6 ]  show = true 
+
+body iq3Body add potential_geometry = iq3Axis1  \
+             geometry = lines                   \
+             region = iq3Rgn                    \ 
+             axes = { 1 2 }                     \
+             color = [ 0.6 1 0.6 ]  show = true 
+
+simulation rsim add interaction=hspring1     \
+                type=axis                    \
+                axes_strength = { 5 5 }      \
+                rest_strength=10.0           \ 
+                rest_cutoff=0.0              \ 
+                list= { iq2Axis1  iq3Axis1 } \ 
+                time = { 0.0 1000.0 }        \
+                show=true
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.01
+simulation rsim momentum = off
+simulation rsim damping = on
+simulation  state  save_frequency = 10
+
+
+graphics center point = [ 3.77781 5.96775 3.98927 ] 
+
+
+#s 10000
+
+

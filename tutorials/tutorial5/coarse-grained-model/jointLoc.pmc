@@ -1,0 +1,54 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Creating a Coarse-grained Model of the Myosin V Dimer     #
+#                                                           #
+# Define rigid domains.                                     #
+#-----------------------------------------------------------#
+
+# read myosin v dimer model
+#--------------------------
+database open name=dimerDb type=pdb file=../atomistic-model/dimer.pdb
+molecule read name=dimerMol database=dimerDb
+
+# post-stroke monomer
+#--------------------
+domain create rigorIq1=AC[766-788]
+domain create rigorIq1s=C[785-788]
+domain create rigorIq2=BC[788-814]
+domain create rigorIq2s=C[789-790]
+domain create rigorIq3=DC[814-836]
+domain create rigorIq4=EC[836-862]
+
+domain rigorIq1  backbone color=[1 0 0] width=2 show=true
+domain rigorIq1s bonds atoms=true atom_color=[1 0 0] bond_color=[1 0 0] show=true
+
+domain rigorIq2 backbone color=[0 1 0] width=2 show=true
+domain rigorIq2s bonds atoms=true atom_color=[0 1 0] bond_color=[0 1 0] show=true
+
+domain rigorIq3 backbone color=[1 0.8 0] width=2 show=true
+domain rigorIq4 backbone color=[0 1 1] width=2 show=true
+
+# define joint macro
+#-------------------
+macro crJnt(name, dom, res, body1, body2)
+  joint create name=${name} type=ball position=${dom}:${res}:CA  \
+     color=[1 0 1] msize=0.10 shading=color show=true            \
+     bodies={ ${body1} ${body2} }
+end macro
+
+# define rigid bodies 
+#--------------------
+body create type=rigid domain_prefix=rigor
+
+# define joints
+#--------------
+crJnt(rigorIq1Iq2Jnt,  rigorIq2, C[788], rigorIq1Body,  rigorIq2Body)
+crJnt(rigorIq2Iq3Jnt,  rigorIq3, C[814], rigorIq2Body,  rigorIq3Body)
+crJnt(rigorIq3Iq4Jnt,  rigorIq4, C[836], rigorIq3Body,  rigorIq4Body)
+
+
+graphics center point=rigorIq1=C[788]:CA 
+graphics background color=[1 1 1]

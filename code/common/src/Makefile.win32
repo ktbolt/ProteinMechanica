@@ -1,0 +1,27 @@
+SHELL = /usr/bin/sh
+
+src = common.cpp mth.cpp
+obj = $(src:.cpp=.o) 
+
+# define include dirs
+
+inc = -I. \
+      -I../include  \
+      -I../../pm/include/ 
+
+# windows flags
+#--------------
+wflags = -mno-cygwin  -DWIN32
+
+copt = -g
+copt = -O2
+flags = $(inc) $(copt) $(wflags) -DUSE_GRAPHICS  
+
+obj: $(obj)
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

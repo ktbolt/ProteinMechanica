@@ -1,0 +1,31 @@
+#============================================================#
+# Tutorial 4 - Modeling Interactions                         #
+#                                                            #
+# Regions                                                    #
+#                                                            #
+# Create regions for a surface.                              #
+#============================================================#
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# read surfaces
+#--------------
+surface read  name=camA   format=pm  file=camA_surf.pm 
+surface camA  color=[ 1 0 0]  display=solid  show=true
+
+# create bodies  
+#--------------
+body create  name=camA_body  type=rigid   surface=camA 
+
+# create regions 
+#---------------
+surface camA  define  region=rgn1                            \
+        point=[ -0.697607 0.0948486 2.54117 ]   distance=1.0 \
+        use_spheres=true  show=true
+
+graphics  scale=1.5
+
+
+

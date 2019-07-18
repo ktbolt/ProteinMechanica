@@ -1,0 +1,163 @@
+
+#============================================================#
+#   test hinge torques for peptide plane and sidechains.     #
+#============================================================#
+
+system echo = off
+system verbose = false
+
+# set units
+#----------
+#units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1
+
+# create helix domain
+#--------------------
+domain create helix = C
+#domain helix backbone color = [ 1 1 1 ]  width = 3 show
+
+
+# peptide/sidechain 1 
+#--------------------
+domain create d1 = C[783-784]  peptide = true
+domain d1 bonds atoms = true atom_color = element \
+                bond_color = [ 1 0 0 ]  render = line show
+domain d1 backbone color = [ 1 0.61 0 ] planes = true  width = 2 show
+#-----
+domain create d2 = C[784]  sidechain_group = true
+domain d2 bonds atoms = true atom_color = [ 1 0 0 ] bond_color = [ 0.5 0 0 ] show
+
+
+# peptide/sidechain 2 
+#--------------------
+domain create d3 = C[784-785]  peptide = true
+domain d3 bonds atoms = true atom_color = element  bond_color = element   \
+          render = line  show
+domain d3 backbone  color = [ 0 1 0 ]  planes = true  
+#-----
+domain create d4 = C[785]  sidechain_group = true
+domain d4 bonds atoms = true atom_color = [ 0 1 0 ] bond_color = [ 0 0.5 0 ] show
+
+
+# peptide/sidechain 3 
+#--------------------
+domain create d5 = C[785-786]  peptide = true
+domain d5 bonds atoms = true atom_color = element  bond_color = element   \
+          render = line  show
+domain d5 backbone  color = [ 0 1 0 ]  planes = true
+#-----
+domain create d6 = C[786]  sidechain_group = true
+domain d6 bonds atoms = true atom_color = [ 1 1 0 ] bond_color = [ 0.5 0.5 0 ] show
+
+
+#--------------------------------------------------------------#
+#                add rigid bodies                              #
+#--------------------------------------------------------------#
+
+body create  name = ground    type = ground
+body create  name = d1b  type = rigid  domain = d1
+body create  name = d2b  type = rigid  domain = d2
+body create  name = d3b  type = rigid  domain = d3
+body create  name = d4b  type = rigid  domain = d4
+body create  name = d5b  type = rigid  domain = d5
+body create  name = d6b  type = rigid  domain = d6
+
+#--------------------------------------------------------------#
+#                add joints                                    #
+#--------------------------------------------------------------#
+
+#----------- jnt 1 ---------------
+joint create  name = jnt1  type = weld domain = d1  res = C[783] use = C
+#joint create  name = jnt1  type = ball domain = d1  res = C[783] use = C
+joint jnt1 color = [ 1 1 1 ] msize = 0.01 shading = color show = true
+joint jnt1 bodies = { ground d1b }
+
+#----------- jnt 2&3 ---------------
+joint create  name = jnt2  type = hinge  position = d2:C[784]:N      \
+              use_bond = true  bond = { d2:C[784]:CA  d1:C[784]:N }
+joint jnt2 color = [ 1 1 1 ] msize = 0.01 shading = flat  show = true
+joint jnt2 bodies = { d1b d2b }
+joint jnt2 force_constant = 4.0 
+
+joint create  name = jnt3  type = hinge  position = d3:C[784]:C      \
+              use_bond = true  bond = { d2:C[784]:CA  d3:C[784]:C }
+joint jnt3 color = [ 1 1 1 ] msize = 0.01 shading = flat  show = true
+joint jnt3 bodies = { d2b d3b }
+joint jnt3 force_constant = 4.0 
+
+#----------- jnt 4 & 5 ---------------
+joint create  name = jnt4  type = hinge  position = d4:C[785]:N      \
+              use_bond = true  bond = { d3:C[785]:N  d4:C[785]:CA }
+joint jnt4 color = [ 1 1 1 ] msize = 0.01 shading = flat  show = true
+joint jnt4 bodies = { d3b d4b }
+joint jnt4 force_constant = 4.0 
+
+joint create  name = jnt5  type = hinge  position = d5:C[785]:C      \
+              use_bond = true  bond = { d4:C[785]:CA  d5:C[785]:C }
+joint jnt5 color = [ 1 1 1 ] msize = 0.01 shading = flat  show = true
+joint jnt5 bodies = { d4b d5b }
+joint jnt5 force_constant = 4.0 
+
+#----------- jnt 6 & 7 ---------------
+joint create  name = jnt6  type = hinge  position = d6:C[786]:N      \
+              use_bond = true  bond = { d5:C[786]:N  d6:C[786]:CA }
+joint jnt6 color = [ 1 1 1 ] msize = 0.01 shading = flat  show = true
+joint jnt6 bodies = { d5b d6b }
+joint jnt6 force_constant = 4.0 
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+simulation rsim add bodies = all
+simulation rsim add joints = all
+#simulation rsim print  bodies = true  joints = true
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create  name = force1              \
+              type = explicit            \
+              point = d6:C[786]:CB       \
+              global_frame = true        \
+              direction = [ 0 0 1 ]   \
+              scale = 1.0
+
+simulation rsim add force = force1     \
+                    body = d6b        \
+                    time = { 0 1000 }
+
+force create  name = force2              \
+              type = explicit            \
+              point = d5:C[785]:O        \
+              global_frame = true        \
+              direction = [ 0 0 -1 ]     \
+              scale = 1.0
+
+simulation rsim add force = force2     \
+                    body = d5b        \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.001
+
+
+graphics  center  point = [ 1.32939 2.57201 2.19204 ]

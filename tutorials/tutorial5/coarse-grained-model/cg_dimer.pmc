@@ -1,0 +1,18 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building a Coarse-grained Model of the Myosin V Dimer     #
+#-----------------------------------------------------------#
+#system echo=off
+#system verbose=false
+
+# create rigid domains
+#---------------------
+read domains.pmc
+
+# create rigid bodies and joints
+#-------------------------------
+read model.pmc
+
+graphics background color=[1 1 1]
+

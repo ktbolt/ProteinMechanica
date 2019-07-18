@@ -1,0 +1,39 @@
+Fri Oct 17 13:09:32 PDT 2008
+----------------------------
+
+  body body1 add restraint = body_res_1
+                 point = <>  |  com = true   | region = <>
+
+
+                 -------- or -------
+
+
+  domain d1 add region = dreg1
+                point | com | region 
+
+  surface s1 add region = sreg1
+                 point | com | faces | points | 
+                
+  restraint create name = res1   
+                   pobj1 = d1 region1 = dreg1
+                   pobj2 = s1 region2 = sreg1
+                   time = [ ]
+                   k = <>
+
+
+                 -------- or -------
+
+
+  body body1 add restraint_point = body_res_1
+                 point = <>  |  com = true   | region = <>
+
+  body body2 add restraint_point = body_res_2
+                 point = <>  |  com = true   | region = <>
+
+  simulation rsim add restraint = res1
+                      restraint_points = { body_res_1 body_res_2 }
+                      time = []
+                      k = <>
+
+
+

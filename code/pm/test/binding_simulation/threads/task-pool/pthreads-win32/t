@@ -1,0 +1,58 @@
+//*============================================================*
+//*==========              workerThread              ==========*
+//*============================================================*
+
+void *
+workerThread (void *threadarg) 
+  {
+  struct ThreadData *my_data;
+  my_data = (ThreadData *) threadarg;
+  int taskid = my_data->num;
+
+  stringstream ss; 
+  ss << taskid; 
+  string taskString = ss.str();
+  bool more_tasks = true;
+
+  // keep on working until task_queue is empty  //
+
+  while (more_tasks) {
+    pthread_mutex_lock (&task_queue_lock);
+    string workOnMe;
+
+    if (task_queue.size() == 0) { 
+      more_tasks = false; 
+      }
+    else {
+      workOnMe = task_queue.front();
+      task_queue.pop_front();
+      }
+
+    pthread_mutex_unlock (&task_queue_lock);
+
+    if (!more_tasks) {
+      break;
+      }
+
+    // execute pm cmd // 
+
+    system (workOnMe.c_str());
+
+    workOnMe = "thread " + taskString + " worked on " + workOnMe;
+
+    // let's pretend this takes some time, add a delay to the computation
+
+    /*
+    struct timeval timeout;
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 100000; // 0.1 second delay
+    select (0, NULL, NULL, NULL, & timeout);
+    */
+
+    pthread_mutex_lock (&finished_queue_lock);
+    finished_queue.push_back (workOnMe);
+    pthread_mutex_unlock (&finished_queue_lock);
+    }
+
+  pthread_exit (NULL);
+  }

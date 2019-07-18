@@ -1,0 +1,36 @@
+
+#============================================================*
+#                    read molecule                           *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read post-stroke molecule
+#---------------------------
+database open name = post format = pdb  file = headRigorLike_fit.pdb 
+molecule read  name = m2   database = post
+molecule  m2  xform  translation = [ 3.4684 4.95186 -6.80119 ]  rotation = [ 0 90 0 ]
+domain create post_head = C
+#domain post_head backbone color = [ 0.5 0.5 0.5 ] width = 2 show
+
+
+# read prestroke molecule
+#------------------------
+database open name = pre format = pdb file = headPrepower.pdb
+molecule read  name = m1   database = pre
+molecule  m1  xform  translation = [ 3.4684 4.95186 -6.80119 ] 
+domain create pre_head = C
+#domain pre_head backbone color = [ 0.5 0.5 0.5 ] width = 1 show
+
+domain create pre_lower = C[2-695]
+domain pre_lower backbone color = [ 1 0 0 ] width = 3 show
+#domain pre_lower atoms color = [ 1 0 0 ] show
+
+domain create pre_conv = C[695-787]
+domain pre_conv backbone color = [ 0 0.7 0.0 ] width = 3 show
+
+#graphics background color = [ 1 1 1 ]
+
+

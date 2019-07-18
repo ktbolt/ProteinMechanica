@@ -1,0 +1,101 @@
+#============================================================*
+#               test distance measurement                    *
+#                                                            *
+# use picking                                                *
+#============================================================*
+system echo=off
+system verbose=false
+
+# set units
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+database open name=neck format=pdb  file=../data/neck_xform.pdb
+
+# read molecule
+molecule read  name=m1   database=neck
+
+
+# create a some domains
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+#domain iq1 atoms color=[ 1 0 0 ] show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+#domain iq2 bonds  atom_color=element  atoms=true show=true
+#domain iq2 atoms color=[ 0 1 0 ] show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+#domain iq3 bonds  atom_color=element  atoms=true show=true
+#domain iq3 atoms color=[ 0 0 1 ] show=true
+
+domain create hc=C
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name=ground    type=ground
+body create  name=iq1_body  type=rigid   domain=iq1
+body create  name=iq2_body  type=rigid   domain=iq2
+body create  name=iq3_body  type=rigid   domain=iq3
+
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+# joint 1
+#--------
+joint create  name=1  type=ball  domain=iq1  res=C[760]  use=CA
+joint 1 color=[ 1 0 0 ] msize=0.1 shading=color show=true 
+joint 1 bodies={ ground iq1_body }
+
+# joint 2
+#--------
+joint create  name=2   type=ball   domain=hc   res=C[788]   use=CA
+joint 2 color=[ 0 1 0 ] msize=0.1 shading=flat display=line show=true 
+joint 2 bodies={ iq1_body iq2_body }
+
+# joint 3
+#--------
+joint create   name=3  type=ball  domain=hc   res=C[814]   use=CA
+joint 3 color=[ 0 0 1 ] msize=0.1 shading=flat display=line show=true
+joint 3 bodies={ iq2_body iq3_body }
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq1_body
+simulation rsim add body=iq2_body
+simulation rsim add body=iq3_body
+
+# add joints
+#-----------
+simulation rsim add joint=1
+simulation rsim add joint=2
+simulation rsim add joint=3
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# measure current distance between iq2 and iq3
+#---------------------------------------------
+#measure  distance  pick=true
+
+# use the command "md"
+#---------------------
+#md
+

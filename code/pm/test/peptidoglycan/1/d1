@@ -1,0 +1,36 @@
+
+#============================================================*
+#                      read nag-nam                          *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+#----------- nag-nam -------------
+database open name = nag-nam  format = pdb  file = nag-nam.pdb  data = miscellaneous 
+molecule read  name = m1 database = nag-nam type = miscellaneous 
+domain create nag-nam = A
+#domain nag-nam atoms color = [ 1 1 1 ] width = 2 show
+#domain nag-nam bonds  atom_color = [ 1 0 0 ] show = true
+#domain nag-nam bonds  atoms = true  bond_color = [ 1 0 0 ] show = true
+#domain nag-nam bonds  bond_color = [ 1 0 0 ] atoms = true show = true
+#domain nag-nam bonds  bond_color = element atoms = true show = true
+domain nag-nam bonds  bond_color = element atoms = true atom_color = [ 0 1 0 ] show = true
+
+
+#----------- peptide 1 -------------
+database open name = pep1  format = pdb  file = peptide_1.pdb  data = miscellaneous 
+molecule read  name = m2 database = pep1 type = miscellaneous 
+domain create pep1 = A
+#domain pep1 atoms color = [ 1 0 0 ] width = 2  display = line show
+#domain pep1  bonds  bond_color = [ 1 0 0 ] show = true
+domain pep1  bonds  bond_color = [ 1 0 0 ] atoms = true show = true
+
+#----------- peptide 2 -------------
+database open name = pep2  format = pdb  file = peptide_2.pdb  data = miscellaneous 
+molecule read  name = m3 database = pep2 type = miscellaneous 
+domain create pep2 = A
+#domain pep2 atoms color = [ 0 1 0 ] width = 2  display = line show
+domain pep2  bonds  bond_color = [ 0 1 0 ] atoms = true show = true
+

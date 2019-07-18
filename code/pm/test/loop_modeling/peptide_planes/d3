@@ -1,0 +1,105 @@
+
+#============================================================*
+#               test simulation of peptide planes            *
+#                                                            *
+# use pin joints.                                            *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+database open name = db1  format = pdb  file = d1x.pdb
+molecule read  name = m1   database = db1
+domain create d1 = A
+domain d1 bonds  atoms = true  atom_color = [ 1 0 0 ] \
+                 render = line \
+                 bond_color = [ 1 0 0 ] width = 3 show
+
+database open name = db2  format = pdb  file = d2x.pdb
+molecule read  name = m2   database = db2
+domain create d2 = A
+domain d2 bonds  atoms = true  atom_color = [ 0 1 0 ] \
+                 bond_color = [ 0 1 0 ] width = 3 show
+
+database open name = db3  format = pdb  file = d3x.pdb
+molecule read  name = m3   database = db3
+domain create d3 = A
+domain d3 bonds  atoms = true  atom_color = [ 0 1 1 ] \
+                 render = line \
+                 bond_color = [ 0 1 1 ] width = 3 show
+
+
+#--------------------------------------------------------------#
+#                      create bodies                           #
+#--------------------------------------------------------------#
+body create  name = d1b  type = rigid   domain = d1
+body create  name = d2b  type = rigid   domain = d2
+body create  name = d3b  type = rigid   domain = d3
+body create  name = ground type = ground  
+
+#--------------------------------------------------------------#
+#                      create joints                           #
+#--------------------------------------------------------------#
+
+joint create  name = jnt1  type = pin domain = d2  res = A3 use = N \
+              use_bond = true   bond = { d1:A3:N d2:A3:CA }
+joint jnt1 color = [ 0 1 0 ] msize = 0.02 shading = color show = true
+joint jnt1 bodies = { d1b d2b }
+
+joint create  name = jnt2  type = pin domain = d2  res = A3 use = C \
+              use_bond = true   bond = { d2:A3:CA d3:A3:C }
+joint jnt2 color = [ 0 1 0 ] msize = 0.02 shading = color show = true
+joint jnt2 bodies = { d2b d3b }
+
+joint create  name = jntg  type = ball domain = d2  res = A3  use = OE1
+joint jntg color = [ 0 1 0 ] msize = 0.01 shading = color show = true
+joint jntg bodies = { ground d1b }
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground d1b d2b d3b }
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 jnt2 jntg }
+
+# add forces
+#-----------
+force create  name = force1                           \
+              type = explicit                         \
+              global_frame = true                     \
+              point = [ 0.2499 0.162477 0.284767 ]    \
+              direction = [  -0.2  0 0 ]              \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = d2b        \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+
+#graphics center point = [ 0 0 0 ] 
+
+   
+
+
+

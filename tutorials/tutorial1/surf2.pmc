@@ -1,0 +1,11 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Creating and visualizing surfaces objects.                 #
+#============================================================#
+
+# read surface
+#-------------
+surface read name=iq1CamA format=pm file=iq1_surf.pm
+surface iq1CamA color=[1 1 0] display=solid shading=flat
+

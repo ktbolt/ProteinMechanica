@@ -1,0 +1,60 @@
+#------------------------------------------------------#
+# fit dimer to actin at subunit D.                     #
+#------------------------------------------------------#
+#system echo=off
+#system verbose=false
+variable pdb=../../../pdb_structures
+
+# read m6
+#--------
+variable fname=dimer
+database open name=m6Db format=pdb file=../../../atomistic-model/dimer.pdb
+molecule read name=m6Mol database=m6Db
+domain create dimer=ABCDEFGJHIKLMN
+
+# read actin
+#-----------
+database open name=actinDb format=pdb file=${pdb}/actinFilament25_md.pdb 
+molecule read name=actinMol database=actinDb
+domain create actin1=ACEGIKMOQSUWY 
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX  
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+# read m6 rigor model docked to actin
+#------------------------------------
+database open name=rigorDockedDb format=pdb file=${pdb}/m5-rigorHead-dockedActin.pdb
+molecule read name=rigorDockedMol database=rigorDockedDb
+domain create rigorDocked=CW
+
+# fit rigor-actin model to actin filament 
+#----------------------------------------
+variable fs=[337-349]
+#variable fs=[302-348]
+
+domain rigorDocked fit sequence=W${fs} \
+       destination=actin2 destination_sequence=D${fs}
+
+domain rigorDocked backbone color=[0.5 0.5 0.5] width=1 show=true
+
+# fit dimer to rigor-actin model 
+#-------------------------------
+variable m6fs=[515-520,528-535,541-552]
+
+domain dimer fit sequence=C${m6fs} \
+       destination=rigorDocked destination_sequence=C${m6fs}
+domain dimer backbone color=[1 0.5 0.5] width=1 show=true
+
+# write dimer 
+#------------
+domains write atoms list={dimer} file=${fname}-dockedActin.pdb
+graphics center point=actin1:G[13]
+
+
+#database open name=ostructuresDb format=pdb file=rsim_13_domains.pdb
+#molecule read name=ostructuresMol database=ostructuresDb
+#domain create omodel=CJ
+#domain omodel fit sequence=C${fs} \
+       destination=rigorDocked destination_sequence=C${fs}
+#domain omodel backbone color=[0 1 0.6] width=2 show=true
+

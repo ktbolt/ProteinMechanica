@@ -1,0 +1,132 @@
+#------------------------------------------------------#
+# read structure database                              #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units
+units scale name=mass uname=reducedMass value=10000.0
+
+# read m6 atomistic model
+#------------------------
+database open name=structuresDb format=pdb file=${structures_file}
+molecule read name=structuresMol database=structuresDb model_name=${motor_name}
+
+#------------------------------------------------------#
+# define rigid domains for rigor monomer               #
+#------------------------------------------------------#
+#domain create rigor=A
+#domain rigor backbone color=[0.5 0.5 0.5] width=1
+
+variable rwidth=3
+variable rigorHeadColor=[0.6 0.6 0.6]
+variable rigorInsert2Color=[0.6 0.6 0.6]
+variable rigorActinin1Color=[0.6 0.6 0.6]
+variable rigorActinin2Color=[0.6 0.6 0.6]
+variable rigorGsg1Color=[0.6 0.6 0.6]
+variable rigorGsg2Color=[0.6 0.6 0.6]
+variable rigorGsg3Color=[0.6 0.6 0.6]
+variable rigorGsg4Color=[0.6 0.6 0.6]
+variable rigorZipperColor=[0.6 0.6 0.6]
+
+# head, insert2 and IQ
+#---------------------
+domain create rigorHead=A[2-770]
+domain rigorHead backbone color=${rigorHeadColor} width=${rwidth}
+
+domain create rigorInsert2=A[770-811]B
+domain rigorInsert2 backbone color=${rigorInsert2Color} width=${rwidth}
+
+domain create rigorActinin1=A[811-933]
+domain rigorActinin1 backbone color=${rigorActinin1Color} width=${rwidth}
+
+domain create rigorActinin2=A[933-1054]
+domain rigorActinin2 backbone color=${rigorActinin2Color} width=${rwidth}
+
+domain create rigorGsg1=A[1054-1057]
+domain rigorGsg1 backbone color=${rigorGsg1Color} width=2
+
+domain create rigorGsg2=A[1057-1060]
+domain rigorGsg2 backbone color=${rigorGsg2Color} width=2
+
+domain create rigorGsg3=A[1060-1063]
+domain rigorGsg3 backbone color=${rigorGsg3Color} width=2
+
+domain create rigorGsg4=A[1063-1066]
+domain rigorGsg4 backbone color=${rigorGsg4Color} width=2
+
+domain create rigorZipper=A[1066-1095]
+domain rigorZipper backbone color=${rigorZipperColor} width=2
+
+#------------------------------------------------------#
+# define rigid domains for pps monomer                 #
+#------------------------------------------------------#
+#domain create pps=C
+#domain pps backbone color=[0.5 0.5 0.5] width=1
+
+variable ppsHeadColor=[0.6 0.6 0.6]
+variable ppsInsert2Color=[0.6 0.6 0.6]
+variable ppsActinin1Color=[0.6 0.6 0.6]
+variable ppsActinin2Color=[0.6 0.6 0.6]
+variable ppsGsg1Color=[0.6 0.6 0.6]
+variable ppsGsg2Color=[0.6 0.6 0.6]
+variable ppsGsg3Color=[0.6 0.6 0.6]
+variable ppsGsg4Color=[0.6 0.6 0.6]
+variable ppsZipperColor=[0.6 0.6 0.6]
+
+# head, insert2
+#--------------
+domain create ppsHead=C[2-770]
+domain ppsHead backbone color=${ppsHeadColor} width=${rwidth}
+
+domain create ppsInsert2=C[770-811]D
+domain ppsInsert2 backbone color=${ppsInsert2Color} width=${rwidth}
+
+domain create ppsActinin1=C[811-933]
+domain ppsActinin1 backbone color=${ppsActinin1Color} width=${rwidth}
+
+domain create ppsActinin2=C[933-1054]
+domain ppsActinin2 backbone color=${ppsActinin2Color} width=${rwidth}
+
+domain create ppsGsg1=C[1054-1057]
+domain ppsGsg1 backbone color=${ppsGsg1Color} width=2
+
+domain create ppsGsg2=C[1057-1060]
+domain ppsGsg2 backbone color=${ppsGsg2Color} width=2
+
+domain create ppsGsg3=C[1060-1063]
+domain ppsGsg3 backbone color=${ppsGsg3Color} width=2
+
+domain create ppsGsg4=C[1063-1066]
+domain ppsGsg4 backbone color=${ppsGsg4Color} width=2
+
+domain create ppsZipper=C[1066-1095]
+domain ppsZipper backbone color=${ppsZipperColor} width=2
+
+#------------------------------------------------------#
+# define actin filament                                #
+#------------------------------------------------------#
+molecule read name=structuresMol database=structuresDb model_name=${actin_name}
+
+domain create actin1=ACEGIKMOQSUWY
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+domain create actinG=G
+domain create actinH=H
+domain create actinI=I
+domain create actinJ=J
+domain create actinK=K
+domain create actinL=L
+domain create actinM=M
+domain create actinN=N
+domain create actinO=O
+domain create actinP=P
+domain create actinQ=Q
+domain create actinR=R
+domain create actinS=S
+domain create actinT=T
+

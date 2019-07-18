@@ -1,0 +1,27 @@
+
+#============================================================*
+#               test domain fitting                          *
+#============================================================*
+
+# open pdb file
+#--------------
+database open name = neck  format = pdb  file = ../data/two_necks.pdb
+
+
+# read molecule
+#---------------
+molecule read database = neck  name = m1
+
+# create a some domains
+#----------------------
+domain create iq1 = C[760-788]A
+domain create iq1a = A
+
+#domain iq1 bonds  atom_color = [ 1 0 0 ] bond_color = [ 1 0 0 ] \
+                  atoms = true show = true
+
+domain iq1 bonds  atom_color = element  bond_color = [ 1 0 0 ] \
+                  atoms = true show = true
+
+domain iq1 backbone color = [ 0 1 0 ]  width = 2
+

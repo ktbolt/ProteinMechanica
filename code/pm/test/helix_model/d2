@@ -1,0 +1,109 @@
+
+#============================================================#
+#          test rigid body simulation of a helix             #
+#                                                            #
+# define rigid bodies for peptide plane and sidechains.      #
+#                                                            #
+# add hydrogen bonds.                                        #
+#============================================================#
+
+system echo = off
+system verbose = false
+
+# set units
+#----------
+#units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1
+
+# create helix domain
+#--------------------
+domain create helix = C
+#domain helix backbone color = [ 1 1 1 ]  width = 3 show
+
+
+#--------------------------------------------------------------#
+#                     create domains                           #
+#--------------------------------------------------------------#
+
+read doms.pmc
+
+
+#--------------------------------------------------------------#
+#                create cg model                               #
+#--------------------------------------------------------------#
+
+read model.pmc
+
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+
+simulation create name = rsim  type = rigid
+
+simulation rsim add bodies = all
+simulation rsim add joints = all
+#simulation rsim print  bodies = true  joints = true
+simulation rsim print  joints = true
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+
+# add forces
+#-----------
+force create  name = force1             \
+              type = explicit           \
+              point = d16:C[791]:CB     \
+              global_frame = true       \
+              direction = [ 0 1.0 0 ]   \
+              scale = 1.0
+
+simulation rsim add force = force1     \
+                    body = d16b        \
+                    time = { 0 1000 }
+
+#--------------------------------------------------------------#
+#                 add spring potentials                        #
+#--------------------------------------------------------------#
+
+# sidechain potential
+#--------------------
+read pot.pmc
+
+# hydrogen bond potential
+#-----------------------
+read hbond.pmc
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.001
+simulation rsim momentum = on
+#simulation  state  save_frequency = 100
+
+simulation rsim  add trace  name = trace1  color = [ 1 0 1 ]  \
+           global_frame = true    \
+           point = [ 1.0686 3.00864 2.20185 ]  \
+           body = d1b   show = true
+
+#----------------------------
+# print body masses         |
+#----------------------------
+#body  d1b  print  properties = mass
+#body  d2b  print  properties = mass
+
+
+graphics  center  point = [ 1.32939 2.57201 2.19204 ]

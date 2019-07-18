@@ -1,0 +1,40 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Head-Neck Model                              #
+#                                                           #
+# Fit models of neck onto models of the myosin V head in    #
+# pre- and post-powerstroke states.                         #
+#-----------------------------------------------------------#
+
+#-----------------------------------------------------------#
+# read post head model
+#---------------------
+database open name=postDb type=pdb file=../pdb_structures/headPost.pdb 
+molecule read name=postMol database=postDb
+
+domain create postHead=C
+domain postHead backbone color=[0.5 0.5 1] width=1 show=true
+domain create postCam=A
+domain postCam backbone color=[0 1 1] width=3 show=true
+domain create postConv=C[702-733]
+domain postConv backbone color=[1 0 0] width=3 show=true
+
+# read neck model
+#----------------
+database open name=neckDb type=pdb file=neck_model.pdb 
+molecule read name=neckMol database=neckDb
+molecule neckMol print 
+domain create postNeck=CA
+
+# fit neck onto the end of head
+#------------------------------
+variable fs1=C[756-769]
+domain postNeck fit sequence=${fs1} \
+   destination=postHead             \ 
+   destination_sequence=${fs1}
+domain postNeck backbone color=[1 1 0] width=3 show=true
+graphics center point=[-0.00705329 0.541441 1.5543]
+

@@ -1,0 +1,50 @@
+
+#============================================================*
+#               test restraints                              *
+#                                                            *
+# fit 1m45 to 1m46                                           *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#---------------
+database open name = bneck format = pdb  file = ../../data/1M45.pdb                
+molecule read  name = m2   database = bneck
+domain create bound = AB
+domain bound backbone color = [ 1 0.7 0.7 ] width = 2 show
+
+
+# open pdb file
+#---------------
+database open name = neck format = pdb  file = ../../data/1M46.pdb                
+
+# read molecule
+#---------------
+molecule read  name = m1   database = neck
+molecule m1  xform transaltion = [ -2.01791 -3.05832 -0.54274 ] 
+domain create hc = A
+
+
+#--------------------
+domain create camClobe = A[82-148]
+domain camClobe backbone color = [ 1 1 0 ] width = 2 show
+
+# create iq domain
+#--------------------
+domain create iq = B
+domain iq backbone color = [ 0.6 0.6 0.6 ] width = 2 show
+
+
+# fit bound cam model
+#--------------------
+domain bound fit  sequence = B[814-817]             \
+                destination = iq                   \
+                destination_sequence = B[862-865]   \
+                atom_names = { O C CA }
+
+domain bound backbone name = fit color = [ 1 1 1 ] width = 2 show
+

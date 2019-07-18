@@ -1,0 +1,46 @@
+#============================================================*
+#               test domain fitting and joining              *
+#                                                            *
+# using several residues using multiple chains               *
+#============================================================*
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = C[760-788]A
+domain iq1 backbone color = [ 1 0 0 ] show
+
+domain create iq3 = C[814-836]D
+domain iq3 backbone color = [ 0 0 1 ] width = 1 show
+
+
+# fit iq3 to iq1
+#---------------
+domain iq3 fit  sequence = C[815-818]               \
+                destination = iq1                   \
+                destination_sequence = C[785-788]   \
+                atom_names = { O C CA }         
+domain iq3 backbone name = fit color = [ 0 1 0 ] width = 1 show
+
+
+# joint iq3 to iq1
+#-----------------
+domain iq3  join  name = iq13        \
+                  residue = C[816]     \
+                  destination = iq1  \
+                  destination_residue = C[786]
+
+domains write atoms list = { iq13 }  file = t3.pdb
+
+domain iq13 xform  translate = [ 10 0 0 ] 
+domain iq13 backbone color = [ 1 1 0 ] width = 2 show
+
+graphics  center  domain = iq1
+

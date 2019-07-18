@@ -1,0 +1,38 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Writing domains.                                           #
+#============================================================#
+
+# open iq123 pdb file
+#-------------------
+database open name=iq123Db format=pdb  file=iq123.pdb
+
+# read iq123 molecule
+#--------------------
+molecule read  name=iq123Mol  database=iq123Db  type=protein
+molecule iq123Mol print 
+
+# create domains
+#---------------
+domain create iq1=AC[760-788]
+domain create iq2=BC[788-814]
+domain create iq3=DC[814-836]
+
+# write all chains for iq1
+#-------------------------
+domains write atoms list={ iq1 }  file=write1.pdb
+
+# write C chain for iq1 and iq2 
+#------------------------------
+domains write   atoms  list={ iq1 }  chains={ C }         file=write2.pdb
+domains append  atoms  list={ iq2 }  chains={ C[789-814] }  file=write2.pdb
+
+# write A and B chains with different ids
+#----------------------------------------
+domains  write  atoms  list={ iq1 iq2 }  chains={ A=E  B=F }   file=write3.pdb
+
+# renumber residues
+#------------------
+domains  write  atoms  list={ iq1 }  chains={ C=C[1] }  file=write4.pdb
+

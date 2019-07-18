@@ -1,0 +1,58 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# A multibody model from mixed representations.              #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name= head format=pdb file=head.pdb
+
+# read molecule
+#--------------
+molecule read  database=head  name=headMol  model=1  type=protein
+
+# create domain
+#--------------
+domain create head=C[2-700]
+domain head backbone  color=[ 0.7 0 0 ] width=2 show=true
+
+# read surface
+#-------------
+surface read  name=neck format=pm  file=neck_surf.pm
+surface neck color=[ 0.6 0.6 0.6 ]  display=line  show=true
+
+# create sphere
+#--------------
+solid create  name=sp1  type=sphere              \
+              radius=2.0                           \
+              point=[ 5.59204 4.71045 1.42459 ]    \
+              axis=[ 0 0 -1 ]                      \
+              color=[ 0 0 1 ]                      \
+              display=solid                        \
+              show=true
+
+# create bodies
+#--------------
+body create  name=headBody  type=rigid   domain=head
+body create  name=neckBody  type=rigid   surface=neck
+body create  name=spBody    type=rigid   solid=sp1
+
+# create joints
+#--------------
+joint create  name=headNeckJnt  type=universal    \
+              position=head:C[700]:CA               \
+              axis1=[ 0 1 0 ]  axis2=[ 1 0 0 ]    \
+              bodies={ headBody neckBody }          \
+              color=[ 1 1 0 ] msize=4.0 shading=color show=true
+
+joint create  name=neckSphereJnt  type=universal  \
+              position=[ 5.59204 4.71045 1.42459]   \
+              bodies={ neckBody spBody }            \
+              color=[ 0 1 0 ] msize=4.0 shading=color show=true
+
+# rotate scene for a better view
+#-------------------------------
+graphics  rotate=[ 90 0 0 ]
+
+

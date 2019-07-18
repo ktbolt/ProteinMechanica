@@ -1,0 +1,21 @@
+#------------------------------------------------------#
+# simulate coarse-grained model of 2R actinin          #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+#units
+units scale name=mass uname=reducedMass value=10000.0
+
+ifdef ${model1}
+read model1.pmc
+read pot1.pmc
+end ifdef
+
+ifdef ${model2}
+read model2.pmc
+read pot2.pmc
+end ifdef
+

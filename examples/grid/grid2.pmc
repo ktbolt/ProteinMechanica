@@ -1,0 +1,19 @@
+#============================================================#
+# visualize myosin v in folded state: volume sampling.       #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+grid  read  name = mV  format = pm  file = ../data/emd_1201.pm 
+
+# display cell values
+#--------------------
+grid mV volume vmin = 0.3  vmax = 0.7  samples = 8 show = true
+
+
+
+

@@ -1,0 +1,28 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Reading and visualizing a protein structure.               #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+
+# create three domains
+#---------------------
+domain  create  helix=C[760-788]   
+domain  create  camLobes=A[1-78,90-148]
+domain  create  camLinker=A[78-90]
+
+
+# visualize backbone atoms
+#-------------------------
+domain helix     backbone color=[ 1 1 1 ] width=2  show=true
+domain camLobes  backbone color=[ 1 0 0 ] width=2  show=true
+domain camLinker backbone color=[ 0 1 0 ] width=2  show=true
+
+

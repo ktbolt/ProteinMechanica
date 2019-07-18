@@ -1,0 +1,122 @@
+#============================================================#
+# rigid body simulation of a protein.                        #
+#                                                            #
+# use universal joints with springs.                         #
+#============================================================#
+
+# set units
+#---------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show=true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show=true
+
+# domain for creating joints
+#---------------------------
+domain create hc = C
+
+# create bodies
+#--------------
+body create  name = ground   type = ground
+body create  name = iq1Body  type = rigid   domain = iq1
+body create  name = iq2Body  type = rigid   domain = iq2
+body create  name = iq3Body  type = rigid   domain = iq3
+
+# create joints
+#--------------
+variable fc = 100    
+
+joint create  name = jnt1   type = universal  position = hc:C[760-763]:CA   \
+      use_pca = true  pca_res = hc:C[760-767]:CA axis1 = pca2  axis2 = pca3 \
+      force_const1 = ${fc}  force_const2 = ${fc}                            \
+      bodies = { ground iq1Body }                                          \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true
+
+joint create  name = jnt2   type = universal position = hc:C[786-790]:CA    \
+      use_pca = true  pca_res = hc:C[784-792]:CA axis1 = pca2  axis2 = pca3 \
+      force_const1 = ${fc}  force_const2 = ${fc}                            \
+      bodies = { iq1Body iq2Body }                                        \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true
+
+joint create  name = jnt3   type = universal    position = hc:C[812-816]:CA \
+      use_pca = true  pca_res = hc:C[808-818]:CA axis1 = pca2  axis2 = pca3 \
+      force_const1 = ${fc}  force_const2 = ${fc}                            \
+      bodies = { iq2Body iq3Body }                                        \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true
+
+# create a rigid simulation  
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = iq1Body
+simulation rsim add body = iq2Body
+simulation rsim add body = iq3Body
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1 
+simulation rsim add joint = jnt2 
+simulation rsim add joint = jnt3 
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force1 type = explicit                   \
+      point = [ 0 0 0 ]   direction = [ 4 0 0 ]  scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = iq3Body   \
+                    time = { 0 1 }
+
+force create  name = rforce1 type = random   \
+      point = [ 0 0 0 ]   mean = 0  sd = 4
+
+simulation rsim add force = rforce1    \
+                    body = iq3Body    \
+                    time = { 0 1000 }
+
+
+# add trace
+#----------
+simulation rsim  add trace  name = trace1  color = [ 1 1 0 ]  \
+           global_frame = true  point = iq3                  \
+           body = iq3Body   show = true
+
+simulation rsim  add trace  name = trace2  color = [ 1 1 0 ]  \
+           global_frame = true  point = iq2                  \
+           body = iq2Body   show = true
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.01
+
+# step simulation
+#----------------
+simulation rsim step = 10000
+
+

@@ -1,0 +1,126 @@
+#============================================================#
+#          test entropic potential using a wlc               #
+#                                                            #
+# define rigid bodies for peptide plane and sidechains.      #
+#                                                            #
+# use multibody command.                                     #
+#============================================================#
+#system echo=off
+#system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1 format=pdb file=../data/neck_xform.pdb
+
+# read molecule
+#--------------
+molecule read name=m1 database=db1
+
+# create helix domain
+#--------------------
+domain create helix=C[766-813]
+domain helix backbone color=[0.6 0.6 0.6] width=2 show=true
+
+#--------------------------------------------------------------#
+#                 create kinematic chain                       #
+#--------------------------------------------------------------#
+#multibody  create  name=kc  domain=helix  type=kinematic_chain  joint_type=weld
+#multibody  create  name=kc  domain=helix  type=kinematic_chain  joint_type=ball
+multibody  create  name=kc  domain=helix  type=kinematic_chain
+
+
+# add ground body and joint
+#--------------------------
+body create  name=ground  type=ground
+joint create  name=groundJnt  type=weld  domain=kcSc767 res=C[767] use=NH1
+joint groundJnt color=[ 1 1 1 ] msize=0.01 shading=color show=true
+joint groundJnt bodies={ ground kcSc766Body }
+
+#--------------------------------------------------------------#
+#                 create a rigid simulation                    #
+#--------------------------------------------------------------#
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+
+#simulation rsim print  joints=true
+#simulation rsim print bodies=true 
+
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+
+# add forces
+#-----------
+force create  name=force1             \
+              type=explicit           \
+              point=[ 0 0 0 ]         \
+              global_frame=false      \
+              direction=[20 20 0]   \
+              scale=1.0
+
+simulation rsim add force=force1     \
+                    body=kcSc812Body \
+                    time={ 0 1000 }
+
+
+#--------------------------------------------------------------#
+#                 add spring potentials                        #
+#--------------------------------------------------------------#
+
+# add interaction potentials
+#---------------------------
+domain kcSc766 define region=kcSc766Rgn residues=C[766] atom_names={CA}
+domain kcSc812 define region=kcSc812Rgn residues=C[812] atom_names={CA}
+
+body kcSc766Body add potential_geometry=spring1  \
+  geometry=points region=kcSc766Rgn             \
+  color=[ 1 0.8 0 ] width=3 show=true
+
+body kcSc812Body add potential_geometry=spring2 \
+   geometry=points region=kcSc812Rgn            \
+   show=true
+
+#simulation rsim add interaction=hspring1   \
+   type=entropic-spring                    \
+   function=wlc                            \
+   list={ spring1 spring2 }                \
+   time={ 0.0 1000.0 }                     \
+   show=true
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+simulation rsim momentum=off
+#simulation  state  save_frequency=10
+
+#simulation rsim  add trace  name=trace1  color=[ 1 0 1 ]  \
+           global_frame=true    \
+           point=kcSc76:C[836]  \
+           body=kcScBody76   show=true
+simulation  rsim  write  energy=true  file_name=rsim
+
+measurement create name=dist type=distance     \
+   point1=kcSc766:C[766]:CA body1= kcSc766Body \ 
+   point2=kcSc812:C[812]:CA body2= kcSc812Body
+
+simulation rsim add measurement=dist
+simulation rsim write measurement=dist file_name=dist
+
+#----------------------------
+# print body masses         |
+#----------------------------
+#body  d1b  print  properties=mass
+#body  d2b  print  properties=mass
+
+graphics  center  point=[ 0.426082 0.721974 0.604492 ]
+#graphics  background  color=[ 1 1 1] 
+

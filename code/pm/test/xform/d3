@@ -1,0 +1,33 @@
+#============================================================*
+#               test domain transformation                   *
+#                                                            *
+# transform given point to zero.                             *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 1 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 1 show
+domain create iq2c = C[788-814]
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 1 show
+
+
+# translate point on domains to zero
+#-----------------------------------
+domain iq2 xform  origin = iq2:C788:CA 
+domain iq2 backbone name = xform color = [ 0 0.7 0 ] width = 2 show
+
+domain iq3 xform  translate = [ 0 0 0 ]  point = iq3:C814:CA 
+domain iq3 backbone name = xform color = [ 0 0 0.7 ] width = 2 show
+

@@ -1,0 +1,28 @@
+
+#============================================================*
+#                    test domain pca                         *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create some domains
+#--------------------
+#domain create hc = C
+#domain hc backbone color = [ 1 0 0 ] width = 1 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 1 show
+
+
+# compute pca
+#------------
+
+domain iq2 pca  atom_names = { CA } show = true
+domain iq2 pca  show = true
+
+#domain hc pca  show = true
+

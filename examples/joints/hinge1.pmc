@@ -1,0 +1,53 @@
+#============================================================#
+# hinge joints: position on helix center                     #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck   format = pdb  file = ../data/iq123.pdb
+
+# read protein molecule
+#----------------------
+molecule read  name = protein  database = neck
+
+# create domains
+#---------------
+domain create hc = C
+#domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show=true
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show=true
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show=true
+
+
+# create bodies 
+#---------------
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq1
+body create  name = iq2_body  type = rigid   domain = iq2
+body create  name = iq3_body  type = rigid   domain = iq3
+
+
+# create joints 
+#--------------
+joint create  name = jnt1   type = hinge  position = hc:C[760-763]:CA   \
+      use_pca = true  pca_res = hc:C[760-767]:CA axis = pca2            \
+      bodies = { ground iq1_body }                                      \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true  
+
+joint create  name = jnt2   type = hinge  position = hc:C[786-790]:CA    \
+      use_pca = true  pca_res = hc:C[784-792]:CA axis = pca2             \
+      bodies = { iq1_body iq2_body }                                     \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true  
+
+joint create  name = jnt3   type = hinge  position = hc:C[812-816]:CA \
+      use_pca = true  pca_res = hc:C[808-818]:CA axis = pca2          \
+      bodies = { iq2_body iq3_body }                                  \
+      color = [ 1 1 1 ] msize = 0.4 shading = color show = true 
+
+

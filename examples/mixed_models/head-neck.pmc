@@ -1,0 +1,109 @@
+#============================================================#
+# mixed model of myosin head-neck.                           #
+#============================================================#
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name= head format=pdb file=../data/mv_head.pdb 
+
+# read molecule
+#--------------
+molecule read database=head name=m1 model=1 type=protein
+molecule m1 xform translation=[ -5.4411 -8.07774 -33.7495 ] 
+
+# create domains
+#---------------
+domain create head=C[2-700]
+domain head backbone  color=[ 0.7 0 0 ] width=2 show=true
+
+# read surfaces
+#--------------
+surface read  name=neck format=pm  file=../data/neck_surf.pm 
+surface neck xform translation=[ -5.4411 -8.07774 -33.7495 ] 
+surface neck color=[ 0.6 0.6 0.6 ]  display=line  show =true
+#surface neck color=[ 1 0 0]  display=points show =true
+#surface neck color=[ 0.6 0.6 0.6 ]  render=color show =true
+
+# create sphere
+#--------------
+solid create  name=sp1  type=sphere \
+              radius=2.0   \
+              point=[ 0.180157 -3.34644 -32.3022 ] \
+              axis=[ 0 0 -1 ]  \
+              color=[ 0 0 1 ]  \
+              display=solid    \
+              show=true
+
+
+# create bodies
+#--------------
+body create  name=ground    type=ground
+body create  name=headBody  type=rigid   domain=head 
+body create  name=neckBody  type=rigid   surface=neck 
+body create  name=spBody    type=rigid   solid=sp1  
+
+# create joints
+#--------------
+joint create  name=groundJnt  type=weld   position=[ 0 0 0 ]
+joint groundJnt bodies={ ground headBody }
+joint groundJnt color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+joint create  name=headNeckJnt  type=ball  domain=head  res=C[700]  use=CA
+joint headNeckJnt bodies={ headBody neckBody }
+joint headNeckJnt color=[ 1 1 0 ] msize=0.1 shading=color show=true
+
+joint create  name=neckSphereJnt  type=universal \
+              position=[ 0.180157 -3.34644 -32.3] \
+              axis1=[ 0 1 0 ]  axis2=[ 1 0 0 ] \
+              force_const1=800.0  force_const2=800.0  
+joint neckSphereJnt bodies={ neckBody spBody }
+joint neckSphereJnt color=[ 0 1 0 ] msize=0.1 shading=color show=true
+
+# create a rigid simulation
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=headBody
+simulation rsim add body=neckBody 
+simulation rsim add body=spBody 
+
+# add joints
+#-----------
+simulation rsim add joint=groundJnt 
+simulation rsim add joint=headNeckJnt
+simulation rsim add joint=neckSphereJnt
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             point=[ 0 0 0 ]       \
+             direction=[ 100 0 0 ] \
+             scale=0.002
+
+simulation rsim add force=force1    \
+                    body=spBody \
+                    time={ 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation  rsim   initialize
+simulation  rsim   save  frequency=50 
+
+graphics  background  color=[ 1 1 1 ]
+graphics  rotate=[ 90 0 0 ]
+
+simulation  rsim   step=100000 
+

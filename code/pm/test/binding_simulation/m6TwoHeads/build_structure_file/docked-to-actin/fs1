@@ -1,0 +1,17 @@
+
+#>>> fit error = 0.0900006
+#variable fitA=A[524-535]
+#variable fitH=H[532-543]
+
+#>>> fit error = 0.0582764
+#variable fitA=A[515-520,541-546]
+#variable fitH=H[523-528,548-553]
+
+#>>> fit error = 0.0775339
+#variable fitA=A[515-520,528-533,541-546]
+#variable fitH=H[523-528,535-540,548-553]
+
+#>>> fit error = 0.103066
+variable fitA=A[515-520,528-535,541-552]
+variable fitH=H[523-528,535-542,548-559]
+

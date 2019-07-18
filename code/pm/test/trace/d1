@@ -1,0 +1,18 @@
+
+#============================================================*
+# read in a trace                                            *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+trace  read  name = trace1  format = pm  file = trace_1.pm
+trace  trace1  color = [ 1 1 1 ]  show = true
+trace  trace1  length   
+trace  trace1  inflection = 0.001
+

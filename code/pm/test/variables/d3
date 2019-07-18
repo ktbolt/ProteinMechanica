@@ -1,0 +1,23 @@
+#============================================================#
+#                  test variables                            #
+#                                                            #
+# pass a variable v1 and v2 as a command line argument.      #
+#============================================================#
+#system echo = off
+#system verbose = false
+
+# read molecule
+#--------------
+database open name=neck_xform  format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+
+# create domains
+#---------------
+domain create iq1=${v1} 
+domain iq1 backbone  color=[ 1 0 0]  width=2 show
+
+domain create iq2=${v2} 
+domain iq2 backbone  color=[ 0 1 0]  width=2 show
+
+
+

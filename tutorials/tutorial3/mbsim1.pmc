@@ -1,0 +1,120 @@
+#============================================================#
+# Tutorial 3 - Mechanical Modeling                           #
+#                                                            #
+# A multibody simulation of a section of the myosin V neck.  #
+#============================================================#
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=1000.0
+
+# open pdb file
+#--------------
+database open name=mvNeckDb format=pdb  file=iq123.pdb 
+
+# read molecule
+#--------------
+molecule read  name=mvNeckMol  database=mvNeckDb  type=protein
+molecule mvNeckMol print 
+
+# create a domains
+#-----------------
+domain create hc=C
+
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0 1 ] width=2 show=true
+
+# create rigid bodies 
+#--------------------
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+body create  name=iq3Body  type=rigid   domain=iq3
+
+# create ground body
+#-------------------
+body create  name=groundBody   type=ground
+
+# create joints 
+#--------------
+joint  create  name=groundJoint  type=weld  position=iq1:C[760]:CA  \
+               bodies={ groundBody iq1Body }                            \
+               color=[ 1 1 1]  msize=0.2  show=true
+
+joint  create  name=iq12Joint  type=ball  position=iq1:C[788]:CA  \
+               use_pca=true  pca_res=hc:C[780-796]:CA               \
+               axis1=pca1  axis2=pca2                               \
+               force_const1=20  force_const2=20  force_const3=20  \
+               bodies={ iq1Body iq2Body }                             \
+               color=[ 1 1 1] msize=0.1  show_axes=true  show=true
+
+joint  create  name=iq23Joint  type=ball  position=iq2:C[814]:CA  \
+               use_pca=true  pca_res=hc:C[806-822]:CA               \
+               axis1=pca1  axis2=pca2                               \
+               force_const1=20  force_const2=20  force_const3=20  \
+               bodies={ iq2Body iq3Body }                             \
+               color=[ 1 1 1] msize=0.1  show_axes=true  show=true
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add rigid bodies 
+#-----------------
+simulation rsim add body=groundBody
+simulation rsim add body=iq1Body 
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+
+# add joints
+#-----------
+simulation rsim add joint=groundJoint
+simulation rsim add joint=iq12Joint  
+simulation rsim add joint=iq23Joint  
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+# add a force
+#------------
+force create name=force1  type=explicit  \
+             global_frame=true             \
+             point=iq3:C[835]:CA           \
+             direction=[ 2 0 0 ]           \
+             color=[ 0 1 1 ]   show=true
+
+simulation rsim add force=force1  \
+                    body=iq3Body  \
+                    time={ 0 10 }
+
+# add a trace
+#------------
+simulation rsim  add trace  name=trace1  \
+           global_frame=true             \
+           point=iq3:C[835]:CA           \
+           color=[ 1 1 0 ]               \
+           body=iq3Body   show=true
+
+
+# rotate the scene for a better view
+#-----------------------------------
+graphics  rotate=[ 0 0 25 ] 
+
+
+# step the simulation
+#--------------------
+simulation rsim step=1000 
+
+
+
+
+

@@ -1,0 +1,10 @@
+look at coarse-grain modeling of actinin
+----------------------------------------
+
+ use Lennard-Jones springs.
+
+
+ 1) run simulation 
+
+    p run_sim.pmc 
+

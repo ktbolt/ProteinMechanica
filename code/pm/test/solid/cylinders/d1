@@ -1,0 +1,83 @@
+
+#============================================================*
+#                   test chain of cyls                       *
+#============================================================*
+
+# set units
+units
+#units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create cylinder
+#----------------
+solid create name = c1  type = cylinder  radius = 0.2  length = 1.0 \
+             center = [ 0 1 0 ]  axis = [ 0 1 0 ]
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = c1b type = rigid  solid = c1
+
+
+# create joints
+#--------------
+joint create  name = jnt1  type = hinge cylinder = c1  distance = 0.0 \
+              axis = [ 0 0 1 ]
+#joint create  name = jnt1  type = ball  cylinder = c1  distance = 0.0
+joint jnt1 color = [ 1 0 0 ] msize = 0.1 shading = flat show = true
+joint jnt1 bodies = { ground c1b }
+
+#--------------------------------
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim momentum = on
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+
+
+# add joints
+#-----------
+simulation rsim add joints = all 
+
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 0 0.5 0 ]       \
+              direction = [ 0.1 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = c1b  \
+                    time = { 0 1.0 }
+
+force create  name = force2           \
+              type = explicit         \
+              point = [ 0 0.5 0 ]       \
+              direction = [ 0 0 10 ]  \
+              scale = 1.0
+
+simulation rsim add force = force2    \
+                    body = c1b  \
+                    time = { 0 10000.0 }
+
+simulation rsim add trace name = trace1         \
+                    point = [ 0 0.5 0 ]    \
+                    body = c1b 
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.03
+
+

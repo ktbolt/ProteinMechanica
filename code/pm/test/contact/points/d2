@@ -1,0 +1,75 @@
+#============================================================*
+#         test surface transofrmation                        *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name =  neck_xform  format = pdb file =  t.pdb
+
+# read molecule
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+
+domain create d1 = D
+domain d1 atoms color = [ 0 0.7 0 ] width = 3 show
+
+domain create d2 = E
+domain d2 atoms color = [ 1 0 0 ] width = 3 show
+
+
+body create  name = d1_body  type = rigid   domain = d1
+body create  name = d2_body  type = rigid   domain = d2
+
+
+simulation create name = rsim  type = rigid
+simulation rsim add body = d1_body
+simulation rsim add body = d2_body
+
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+force create name = force1 type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 1 1 0 ]  \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = d1_body   \
+                    time = { 0 0.01 }
+
+domain d1 define region = d1_rgn  residues = D[2]
+domain d2 define region = d2_rgn  residues = E[2]
+
+body d1_body add potential_geometry = d1_contact  \
+                 region = d1_rgn                  \
+                 geometry = points                \
+                 color = [ 1 0 0 ]                \
+                 show = true
+
+body d2_body add potential_geometry = d2_contact   \
+                  region = d2_rgn                  \
+                  geometry = points                \
+                  color = [ 0 1 0 ]                \
+                  display = line                   \
+                  show = true
+
+simulation rsim add interaction = contact1              \
+                    type = contact                      \
+                    list = { d1_contact d2_contact }    \
+                    strength = 1.0                     \
+                    time = { 0.0 100.0 }
+
+
+
+simulation rsim initialize
+simulation rsim momentum = on
+simulation rsim time step = 0.001
+
+s 30
+
+

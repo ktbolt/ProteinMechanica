@@ -1,0 +1,29 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Picking on graphics objects.                               #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create domains
+#---------------
+domain  create  neckHeavyChain=C[788-814]  molecule=neckMol
+domain  create  camB=B  molecule=neckMol
+
+# visualize backbone 
+#-------------------
+domain neckHeavyChain backbone color=[1 1 1]  width=2 show=true
+
+# visualize spacefill 
+#--------------------
+domain camB atoms color=[1 0 0]   show=true
+ 
+

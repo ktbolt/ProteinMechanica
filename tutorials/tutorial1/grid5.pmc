@@ -1,0 +1,20 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Writing isosurfaces.                                       #
+#============================================================#
+
+# read grid
+#----------
+grid  read  name =  helicase  format = pm  file = emd_1134.pm        
+
+# extract and visualize slices 
+#-----------------------------
+grid  helicase  slice  k = 50  vmin = -0.092504  vmax = 0.075945 show = true
+
+# extract isosurface at a point
+#------------------------------
+grid  helicase  isosurface  point = [ 15.6558 22.7648 17.5 ] 
+#grid  helicase  isosurface  point = [ 15.6558 22.7648 17.5 ]   file = helicase.pm
+
+

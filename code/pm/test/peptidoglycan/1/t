@@ -1,0 +1,18 @@
+
+#============================================================*
+#               read nag-nam                                 *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+#----------- nag-nam -------------
+database open name = nag-nam  format = pdb  file = nag-nam.pdb  data = miscellaneous 
+molecule read  name = m1 database = nag-nam type = miscellaneous 
+domain create nag-nam = A
+#domain nag-nam atoms color = [ 1 1 1 ] width = 2 show
+#domain nag-nam bonds  atom_color = [ 1 0 0 ] show = true
+#domain nag-nam bonds  atoms = true  bond_color = [ 1 0 0 ] show = true
+domain nag-nam bonds  bond_color = [ 1 0 0 ] atoms = true show = true
+

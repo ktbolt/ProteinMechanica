@@ -1,0 +1,75 @@
+#============================================================#
+# rigid body simulation of a helix at the peptide unit level.#
+#                                                            #
+# define rigid bodies for peptide plane and sidechains.      #
+#                                                            #
+# use multibody command.                                     #
+#                                                            #
+# use hinge joints.                                          #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=db1  format=pdb  file=../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=m1   database=db1
+
+# create helix domain
+#--------------------
+domain create helix=C[766-813]
+
+# create kinematic chain 
+#-----------------------
+multibody  create  name=kc  domain=helix  type=kinematic_chain
+
+# add ground body and joint
+#--------------------------
+body create  name=ground  type=ground
+
+joint create  name=groundJnt  type=weld  position=kcSc766:C[766]:CA
+joint groundJnt color=[ 1 1 1 ] msize=0.01 shading=color show=true
+joint groundJnt bodies={ ground kcSc766Body }
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+simulation rsim add bodies=all
+simulation rsim add joints=all
+simulation rsim print bodies=true 
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create  name=force1  type=explicit     \
+      point=[ 0 0 0 ]  global_frame=false    \
+      direction=[ 2 0 0 ]   scale=1.0
+simulation rsim add force=force1  body=kcPt812Body time={ 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+simulation rsim momentum=on
+
+# print body masses 
+#------------------
+#body  d1b  print  properties=mass
+#body  d2b  print  properties=mass
+
+graphics  center  point=[ 1.32939 2.57201 2.19204 ]
+
+simulation rsim step=100000 
+

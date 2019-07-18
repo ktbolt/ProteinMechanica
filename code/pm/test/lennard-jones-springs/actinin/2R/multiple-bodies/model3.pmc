@@ -1,0 +1,66 @@
+#------------------------------------------------------#
+# define model of 2R actinin                           #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=aactinin2R_xform.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+multibody create name=a3b type=domains                                  \
+   bodies={ A[748-791], A[791-796], A[796-800], A[800-808], A[808-817], \ 
+            A[817-828], A[828-839], A[839-842], A[842-848], A[848-857], \
+            A[857-878], A[878-880], A[880-886], A[886-897], A[897-907], \
+            A[907-912], A[912-916], A[916-927], A[927-956], A[956-958], \
+            A[958-963], A[963-971], A[971-978], A[978-1000] }           \
+   domain_color=[0 1 0] \
+   joint_type=ball      \
+   joints={ A[791] A[796] A[800] A[808] A[817] A[828] A[839] A[842] A[848] \
+            A[857] A[878] A[880] A[886] A[897] A[907] A[912] A[916] A[927] \
+            A[956] A[958] A[963] A[971] A[978] }                           \
+   joint_color=[1 0 1] msize=0.05
+
+#--------------
+body create name=ground3 type=ground
+
+# create joints
+#--------------
+joint create name=a3GroundJoint type=weld position=a3b1:A[748]:CA  \
+              color=[1 0 0] msize=0.18 shading=color show=true     \
+              bodies={ground3 a3b1Body}
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim3 type=rigid
+simulation rsim3 solver=ode
+#simulation rsim3 damping=on
+
+# add bodies and joints
+#----------------------
+simulation rsim3 add body=ground3 
+simulation rsim3 add bodies=prefix  prefix=a3
+simulation rsim3 add joints=prefix  prefix=a3
+
+# initialize the simulation
+#--------------------------
+simulation rsim3 initialize
+simulation rsim3 time step=0.002
+simulation rsim3 state save_frequency=100
+
+# apply forces 
+#-------------
+force create name=a3force1 type=explicit  \
+   global_frame=true point=a3b24:A[1000]  \
+   direction=[0 4 0] scale=1.0            \
+   color=[0 1 0] show=true
+simulation rsim3 add force=a3force1 body=a3b24Body time={0 500}
+
+# add trace
+#----------
+simulation rsim3  add trace name=trace2  \
+           global_frame=true    \
+           point=a3b24:A[1000] color=[0 1 0]  \
+           body=a3b24Body  show=true
+
+simulation rsim3 write energy=true state=true file_name=rsim3

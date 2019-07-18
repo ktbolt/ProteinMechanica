@@ -1,0 +1,30 @@
+#============================================================#
+# create some spheres: use point and direction               #
+#============================================================#
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# create sphere 
+#--------------
+solid create  name = sp1  type = sphere \
+              radius = 1.0              \
+              center = [ 0.0 0.0 0.0 ]  \
+              color = [ 1 1 0 ]         \
+              show = true
+
+
+# create sphere
+#--------------
+solid create  name = sp2  type = sphere \
+              point = [ 1 0 0 ]         \
+              radius = 1.0              \
+              axis = [ 1 0 0 ]          \
+              color = [ 1 0 0 ]         \
+              show = true
+
+
+

@@ -1,0 +1,256 @@
+#============================================================*
+#            test simulation of cylinders from domain        *
+#                                                            *
+# allign cylinders with previous one.                        *
+#============================================================*
+system echo = off
+system verbose = false
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck_xform  format = pdb file =  ../../../data/two_necks.pdb
+
+# read molecule
+#--------------
+molecule read  database =  neck_xform  name = m1  model = 1  type = protein
+
+# create domains 
+#---------------
+domain create hc = C
+# translate domain so that ground joint will be (0,0,0)
+domain hc  xform translation = [ 0.15334 -0.208601 -0.332707 ]
+domain hc  backbone  color = [ 1 0 0 ] width = 1 show
+
+domain create hj = C
+domain hj  xform translation = [ 3.15334 -0.208601 -0.332707 ]
+domain hj  backbone  color = [ 0 1 0 ] width = 1 show
+
+# create cylinders
+#-----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[762-780]           \
+              atoms = { CA }                \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl2  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[780-796]           \
+              atoms = { CA }                \
+              allign = cyl1                 \
+              color = [ 0 1 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl3  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[796-814]           \
+              atoms = { CA }                \
+              allign = cyl2                 \
+              color = [ 1 1 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl4  type = cylinder  \
+              radius = 0.22                 \
+              domain = hc                   \
+              region = C[814-832]           \
+              atoms = { CA }                \
+              allign = cyl3                 \
+              color = [ 0 1 1 ]             \
+              display = line                \
+              show = true
+
+#--- 2nd helix ----
+
+solid create  name = cyl5  type = cylinder  \
+              radius = 0.22                 \
+              domain = hj                   \
+              region = C[762-780]           \
+              atoms = { CA }                \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl6  type = cylinder  \
+              radius = 0.22                 \
+              domain = hj                   \
+              region = C[780-796]           \
+              atoms = { CA }                \
+              allign = cyl5                 \
+              color = [ 0 1 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl7  type = cylinder  \
+              radius = 0.22                 \
+              domain = hj                   \
+              region = C[796-814]           \
+              atoms = { CA }                \
+              allign = cyl6                 \
+              color = [ 1 1 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl8  type = cylinder  \
+              radius = 0.22                 \
+              domain = hj                   \
+              region = C[814-832]           \
+              atoms = { CA }                \
+              allign = cyl7                 \
+              color = [ 0 1 1 ]             \
+              display = line                \
+              show = true
+
+
+# create bodies                           
+#--------------
+body create  name = ground    type = ground
+body create  name = cyl1_body type = rigid  solid = cyl1
+body create  name = cyl2_body type = rigid  solid = cyl2
+body create  name = cyl3_body type = rigid  solid = cyl3
+body create  name = cyl4_body type = rigid  solid = cyl4
+#--- 2nd helix ----
+body create  name = cyl5_body type = rigid  solid = cyl5
+body create  name = cyl6_body type = rigid  solid = cyl6
+body create  name = cyl7_body type = rigid  solid = cyl7
+body create  name = cyl8_body type = rigid  solid = cyl8
+
+
+# create joints
+#--------------
+joint create  name = jnt1  type = ball  cylinder = cyl1  distance = 0.0
+joint jnt1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt1 bodies = { ground cyl1_body }
+
+joint create  name = jnt2  type = ball cylinder = cyl1  distance = 1.0 
+joint jnt2 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+joint jnt2 bodies = { cyl1_body cyl2_body }
+
+joint create  name = jnt3  type = ball cylinder = cyl2  distance = 1.0 
+joint jnt3 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+joint jnt3 bodies = { cyl2_body cyl3_body }
+
+joint create  name = jnt4  type = ball  cylinder = cyl3  distance = 1.0 
+joint jnt4 color = [ 1 1 0 ] msize = 0.1 shading = color show = true
+joint jnt4 bodies = { cyl3_body cyl4_body }
+
+#--- 2nd helix ----
+joint create  name = jnt5  type = ball  cylinder = cyl5  distance = 0.0
+joint jnt5 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt5 bodies = { ground cyl5_body }
+
+joint create  name = jnt6  type = ball cylinder = cyl6  distance = 0.0 
+joint jnt6 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+joint jnt6 bodies = { cyl5_body cyl6_body }
+
+joint create  name = jnt7  type = ball cylinder = cyl7  distance = 0.0 
+joint jnt7 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+joint jnt7 bodies = { cyl6_body cyl7_body }
+
+joint create  name = jnt8  type = ball  cylinder = cyl8  distance = 0.0
+joint jnt8 color = [ 1 1 0 ] msize = 0.1 shading = color show = true
+joint jnt8 bodies = { cyl7_body cyl8_body }
+
+
+# create a rigid simulation  
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = cyl1_body
+simulation rsim add body = cyl2_body
+simulation rsim add body = cyl3_body
+simulation rsim add body = cyl4_body
+simulation rsim add body = cyl5_body
+simulation rsim add body = cyl6_body
+simulation rsim add body = cyl7_body
+simulation rsim add body = cyl8_body
+
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+simulation rsim add joint = jnt3
+simulation rsim add joint = jnt4
+simulation rsim add joint = jnt5
+simulation rsim add joint = jnt6
+simulation rsim add joint = jnt7
+simulation rsim add joint = jnt8
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 0 0 0 ]       \
+              direction = [ 1 0 0 ]   \
+              scale = 1.0             \
+              show = true
+
+simulation rsim add force = force1    \
+                    body = cyl4_body  \
+                    time = { 0 1000 }
+
+force create  name = force2           \
+              type = explicit         \
+              point = [ 0 0 0 ]       \
+              direction = [ -1 0 0 ]   \
+              scale = 1.0
+
+#simulation rsim add force = force2    \
+                    body = cyl8_body  \
+                    time = { 0 1000 }
+
+# add interaction potentials
+#---------------------------
+
+solid cyl4 define region = cyl4_rgn  indices = i[1-10]
+
+body cyl4_body add potential_geometry = cyl4_contact  \
+                   region = cyl4_rgn                  \
+                   geometry = cylinder                \
+                   show = true
+
+solid cyl8 define region = cyl8_rgn  indices = i[1-10]
+
+body cyl8_body add potential_geometry = cyl8_contact  \
+                   region = cyl8_rgn                  \
+                   geometry = cylinder                \
+                   show = true
+
+simulation rsim add interaction = contact1                 \
+                    type = contact                         \
+                    strength = 20.0                        \
+                    list = { cyl4_contact  cyl8_contact }  \
+                    time = { 0.0 1000.0 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.002
+
+# step simulation
+#----------------
+simulation rsim step = 320 
+#simulation rsim step = 520 
+

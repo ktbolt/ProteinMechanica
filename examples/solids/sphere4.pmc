@@ -1,0 +1,34 @@
+#============================================================#
+# sphere using two points on a protein.                      #
+#============================================================#
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name =  neck  format = pdb file =  ..//data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  database = neck  name = m1  model = 1  type = protein
+
+# create domain
+#--------------
+domain create iq1 = C[760-814]
+domain iq1 backbone  color = [ 1 0 0 ] width = 2 show=true
+domain create iq2 = C[814-836]
+domain iq2 backbone  color = [ 0 1 0 ] width = 2 show=true
+
+
+# create sphere 
+#--------------
+solid create  name = sp1  type = sphere \
+              point1 = iq2:C[814]:CA    \
+              point2 = iq2:C[836]:CA    \
+              color = [ 1 1 0 ]         \
+              display = line  show = true
+

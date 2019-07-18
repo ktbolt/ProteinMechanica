@@ -1,0 +1,26 @@
+#============================================================#
+# visualize dna bonds                                        #
+#============================================================#
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = 2rgr  format = pdb  file = ../data/2RGR.pdb
+
+# read dna molecule
+#------------------
+molecule read  name = dna  database = 2rgr  type = dna
+
+# create domains
+#---------------
+domain create dna_c = C
+domain dna_c backbone color = [ 1 0 0 ] show = true
+domain dna_c bonds atoms = true  bond_color = element show = true
+
+domain create dna_d = D
+domain dna_d backbone color = [ 0 1 0 ] show = true
+domain dna_d bonds atoms = true  bond_color = element show = true
+

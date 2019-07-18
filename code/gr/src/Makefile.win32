@@ -1,0 +1,47 @@
+
+SHELL = /usr/bin/sh
+
+include gr_src.mk
+
+
+# define include dirs
+#--------------------
+glut_inc = -I../../free_glut/freeglut_MinGW//include
+
+gr_inc =  -I/usr/include/GL/include -I/usr/X11R6/include/
+jpg_inc = ../jpg/include
+inc = -I.  -I../../include \
+           -I../include \
+           -I../../common/include \
+           $(jpeg_inc) $(gr_inc) $(glut_inc)
+
+hdr = ../include/pm/gr/
+
+
+common_dir = ../../common/src/
+common_objs = $(common_dir)/common.o $(common_dir)/mth.o
+
+# special cywin flags for my pos computer
+#----------------------------------------
+#cwf = -DUSE_CYGWIN_SPECIAL_HEADERS
+
+# windows flags
+#--------------
+wflags = -mno-cygwin  -DWIN32
+
+# use for debug: code crashes with -g -funroll-loops -march=pentium4 -mfpmath=sse
+#copt = -g
+#flags = $(inc) $(copt)  $(cwf)
+
+# use for optimized execution 
+copt = -O2 -pedantic
+flags = -DFREEGLUT_STATIC $(inc) $(cwf) $(copt) $(wflags)
+
+obj: $(obj) 
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

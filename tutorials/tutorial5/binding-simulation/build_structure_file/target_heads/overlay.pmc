@@ -1,0 +1,44 @@
+#------------------------------------------------------#
+# overlay rigor and pps models on actin.               #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+variable unit=G
+variable pdb=../../../pdb_structures
+
+# read actin
+#-----------
+database open name=actinDb format=pdb file=${pdb}/actinFilament25_md.pdb 
+molecule read name=actinMol database=actinDb
+domain create actin1=ACEGIKMOQSUWY 
+domain actin1 backbone color=[0.5 0.5 0.5] width=1 show=true
+domain create actin2=BDFHJLNPRTVX  
+domain actin2 backbone color=[0.5 0.5 0.5] width=1 show=true
+domain create actin=ABCDEFGHIJKLMNOPQRSTUVWXY 
+
+# read m5 pps model docked to actin
+#----------------------------------
+database open name=ppsDockedDb format=pdb file=${pdb}/m5-ppsHead-dockedActin.pdb
+molecule read name=ppsDockedMol database=ppsDockedDb
+domain create ppsDocked=CW
+
+# read m5 rigor model docked to actin
+#------------------------------------
+database open name=rigorDockedDb format=pdb file=${pdb}/m5-rigorHead-dockedActin.pdb
+molecule read name=rigorDockedMol database=rigorDockedDb
+domain create rigorDocked=CW
+
+# fit rigor-actin model to actin filament 
+#----------------------------------------
+variable fs=[302-348]
+
+domain ppsDocked fit sequence=W${fs} \
+       destination=actin destination_sequence=${unit}${fs}
+domain ppsDocked backbone color=[1 0 0] width=2 show=true
+
+domain rigorDocked fit sequence=W${fs} \
+       destination=actin destination_sequence=${unit}${fs}
+domain rigorDocked backbone color=[0 1 0] width=2 show=true
+
+graphics center point=actin1:G[13]
+

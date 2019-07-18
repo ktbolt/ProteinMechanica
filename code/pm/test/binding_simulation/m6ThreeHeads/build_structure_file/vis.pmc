@@ -1,0 +1,17 @@
+#------------------------------------------------------#
+# vis trimer structure                                 #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# read actin-docked trimer 
+#------------------------
+database open name=trimerDb format=pdb file=mvi_780_2R_4xgsg_trimer.pdb 
+molecule read name=trimerMol database=trimerDb
+domain create trimerA=A
+domain trimerA backbone color=[1 0 0] show=true
+domain create trimerB=B
+domain trimerB backbone color=[0 1 0] show=true
+domain create trimerC=C
+domain trimerC backbone color=[0 0 1] show=true
+

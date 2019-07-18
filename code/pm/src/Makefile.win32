@@ -1,0 +1,44 @@
+#---------------------------------------------------------#
+#                makefile for windows                     #
+#---------------------------------------------------------#
+SHELL = /usr/bin/sh
+
+include pm_src.mk
+
+# ode path
+#---------
+ode_path = /usr/local/
+ode_inc = $(ode_path)/include/
+
+# define include dirs
+#--------------------
+glut_inc = -I/usr/include/w32api
+opengl_inc = -I/usr/X11R6/include/  -I/usr/include/w32api
+gr_inc = $(glut_inc) $(opengl_inc)
+
+inc = -I.                    \
+      -I $(ode_inc)          \
+      -I../../gr++/include   \
+      -I../include/          \
+      -I../../common/include/ 
+
+
+# special cywin flags for my pos computer
+#----------------------------------------
+cwf = -DUSE_CYGWIN_SPECIAL_HEADERS
+
+# windows flags
+#--------------
+wflags = -mno-cygwin  -DWIN32
+
+copt = -O2
+flags = $(inc) $(copt) -DUSE_GRAPHICS   $(cwf)  $(wflags)
+
+obj: $(obj)
+
+.cpp.o: 
+	g++ $(flags) -c $<
+
+clean:
+	rm -f *.o;
+

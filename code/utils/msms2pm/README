@@ -1,0 +1,31 @@
+
+ #-------------------#
+ # Program msms2pm   #
+ #-------------------#
+
+ The MSMS program (Sanger) creates a solvent accessible surface of
+ a protein. The surface is stored in .face and .vert files. 
+
+ The msms2pm program will read in the .face and .vert files and
+ write out a Protein Mechanica format .pm file. The surface vertices
+ and triangle connectivity are stored in binary format.
+
+
+ Build
+ -----
+ gcc -o msms2pm msms2pm.c
+
+
+ Usage
+ -----
+ msms2pm  <name>  >  <name>_surf.pm 
+
+
+ Example
+ -------
+ msms2pm  cam   > cam_surf.pm 
+
+ reads in cam.face and cam.verts files. output is to
+ the file cam_surf.pm.
+
+

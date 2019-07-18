@@ -1,0 +1,34 @@
+
+#------------------------------------------------------#
+# pm look at peptide planes                            #
+#------------------------------------------------------#
+
+#-------------------------#
+#  set units              #
+#-------------------------#
+
+units
+units scale  name = mass   uname = reducedMass   scale = 1000
+
+
+#-------------------------#
+#  read pdb file          #
+#-------------------------#
+
+molecule read name = mv format = pdb file = d1.pdb 
+
+var ren = wire 
+var ren = point
+var ren = solid
+
+domain create d1 = A
+domain d1 bonds  color = [ 1 1 1 ]  atoms = on  \
+            cbonly = false radius = 0.04  width = 5  show 
+domain  d1 backbone  planes   color = [ 0 1 1 ]  show 
+
+
+domains pick 
+graphics pick  size = 0.2  width = 3  color = [ 1 1 0 ] 
+graphics center domain = d1 
+
+

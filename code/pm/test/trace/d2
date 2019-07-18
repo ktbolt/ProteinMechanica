@@ -1,0 +1,32 @@
+#============================================================*
+# read in a trace                                            *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+trace  read  name = trace2  format = pm  file = trace_2.pm
+
+trace  trace2  color = [ 1 1 1 ]  show = true
+
+
+# show the interval that is <= the given length
+#----------------------------------------------
+trace  trace2  interval = 0.001  show = true
+
+
+# compute the lenght of the trace 
+#--------------------------------
+trace  trace2  length   
+
+
+# compute the lenght of the trace in a given direction
+#-----------------------------------------------------
+trace  trace2  length   direction = [ 0 -1 0 ]
+
+

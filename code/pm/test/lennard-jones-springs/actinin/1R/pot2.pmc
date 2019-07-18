@@ -1,0 +1,26 @@
+#------------------------------------------------------#
+# define springs between side chain atoms.             #
+#------------------------------------------------------#
+variable map_energy2=true
+variable emin2=0.0
+variable emax2=0.1
+
+#variable cutoff=0.8
+variable cutoff2=0.6
+variable pot_k2=1.0
+variable pot_t2=inf
+variable pot_show2=true
+
+variable spring_atoms2=atom_names={sc}
+
+simulation rsim2 add interaction=a2Spings               \
+   type=spring  force_const=${pot_k2}  ${spring_atoms2} \
+   association=full                                     \
+   ljspring=true                                        \
+   bodies={a2b1Body a2b2Body a2b3Body a2b4Body a2b5Body a2b6Body a2b7Body a2b8Body \
+           a2b9Body a2b10Body a2b11Body a2b12Body } \ 
+   cutoff=${cutoff2} time={0.0 ${pot_t2}}           \
+   map_energy=true  map_scale={ ${emin2} ${emax2} } \
+   color=[0 0 0] show=true
+
+

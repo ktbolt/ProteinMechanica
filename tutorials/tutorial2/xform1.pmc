@@ -1,0 +1,37 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Transforming molecules.                                    #
+#============================================================#
+
+# open iq12 pdb file
+#-------------------
+database open name=iq12Db format=pdb  file=iq12.pdb
+
+# read iq12 molecule
+#-------------------
+molecule read  name=iq12Mol  database=iq12Db  type=protein
+molecule iq12Mol print 
+
+# create and visualize domains
+#-----------------------------
+domain  create  iq12=C 
+domain iq12 backbone color=[ 1 0 0 ] width=2 show=true
+domain  create  iq12Cam=AB
+domain iq12Cam backbone color=[ 0 1 0 ] width=2 show=true
+
+# read another iq12 molecule
+#-------------------
+molecule read  name=iq12XformMol  database=iq12Db  type=protein
+
+# transform the molecule
+#-----------------------
+molecule iq12XformMol  xform  translate=[ 8 0 0]  
+
+# create and visualize xformed domains
+#-------------------------------------
+domain  create  iq12Xform=C
+domain iq12Xform backbone color=[ 1 1 0 ] width=2 show=true
+domain  create  iq12CamXform=AB
+domain iq12CamXform backbone color=[ 0 1 1 ] width=2 show=true
+

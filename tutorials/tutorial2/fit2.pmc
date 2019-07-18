@@ -1,0 +1,59 @@
+#============================================================#
+# Tutorial 2 - Structural Modeling                           #
+#                                                            #
+# Fit the iq12 structure onto a myosin v head structure.     #
+# Use the domain write command to assemble the structures.   #
+#============================================================#
+
+# open head pdb file
+#-------------------
+database open name=headDb format=pdb  file=headRigorLike.pdb
+
+# read head molecule
+#-------------------
+molecule read  name=headMol  database=headDb  type=protein
+molecule headMol print 
+
+# head domain
+#------------
+domain  create  head=C 
+domain head backbone color=[ 1 1 1 ] width=1 show=true
+
+
+# open iq12 pdb file
+#-------------------
+database open name=iq12Db format=pdb  file=iq12.pdb
+
+# read iq12 molecule
+#-------------------
+molecule read  name=iq12Mol  database=iq12Db  type=protein
+molecule iq12Mol print 
+
+# iq12 domain
+#------------
+domain  create  iq12=CAB 
+domain iq12 backbone color=[ 1 0 0 ] width=1 show=true
+
+# fit the iq12 onto the head
+#---------------------------
+domain iq12 fit  sequence=C[760-762]              \
+                 destination=head                 \
+                 destination_sequence=C[760-762]  \
+                 atom_names={ CA }                \
+                 copy=iq12Fit
+
+domain iq12Fit backbone color=[ 0 1 0 ] width=1 show=true
+
+
+# output fit structures
+#----------------------
+domains write  atoms list={ head }     chains={ C[5-760] }       file=fit2.pdb
+domains append atoms list={ iq12Fit }  chains={ C[761-830] A B}  file=fit2.pdb
+
+
+# rotate view 
+#-------------
+graphics  rotate=[ 0 -90 0 ]
+
+ 
+

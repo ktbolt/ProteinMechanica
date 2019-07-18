@@ -1,0 +1,101 @@
+
+#============================================================*
+#             test surface rigid simulation                  *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read surfaces
+#--------------
+surface read  name = camA   format = pm  file = camA_surf.pm 
+surface camA  xform translation = [ -1.12146 -0.254134 -3.19202 ]
+surface camA  color = [ 1 0 0]  display = solid show 
+#surface camA  color = [ 1 0 0]  display = line  show 
+
+surface read  name = camB   format = pm  file = camB_surf.pm 
+surface camB  xform translation = [ -1.12146 -0.254134 -3.19202 ]
+surface camB  color = [ 0 1 0]  display = line  show 
+
+
+# create bodies  
+#--------------
+body create  name = ground     type = ground
+body create  name = camA_body  type = rigid   surface = camA 
+body create  name = camB_body  type = rigid   surface = camB 
+
+# create joints 
+#--------------
+joint create  name = jnt1   type = ball   position = [ 0 0 0 ] 
+joint jnt1 bodies = { ground camA_body }
+joint jnt1 color = [ 1 1 0 ] msize = 0.1 shading = color show = true
+
+joint create  name = jnt2   type = ball   position = [ 1.09755 3.29329 -1.68415 ] 
+joint jnt2 bodies = { camA_body camB_body }
+joint jnt2 color = [ 0 1 1 ] msize = 0.1 shading = color show = true
+
+#  create a course-grained model  
+#-------------------------------
+model create name = model_1
+
+# add joints
+#-----------
+model model_1 add joint = jnt1
+model model_1 add joint = jnt2
+
+# add bodies
+#-----------
+model model_1 add body = ground    
+model model_1 add body = camA_body
+model model_1 add body = camB_body
+
+#model model_1 joints msize = 0.5 show = true
+#model model_1 bodies msize = 0.5 show = true
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add body = ground
+simulation rsim add body = camA_body 
+simulation rsim add body = camB_body 
+
+# add joints
+#-----------
+simulation rsim add joint = jnt1
+simulation rsim add joint = jnt2
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create name = force1           \
+             type = explicit         \
+             point = [ 0 0 0 ]       \
+             direction = [ 10 0 0 ]  \
+             scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = camB_body  \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+
+# step simulation
+#----------------
+#simulation rsim step = 200
+
+graphics  background  color = [ 1 1 1 ]
+
+

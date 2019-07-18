@@ -1,0 +1,32 @@
+look at coarse-grain modeling of actinin
+----------------------------------------
+
+ look at models of single 1R domains.
+
+ use Lennard-Jones springs.
+
+ have two models:
+
+     1) springs between all atoms
+
+
+     2) springs between side chain atoms
+
+
+     3) springs between c-alpha atoms
+
+
+ 1) run simulation 
+
+    p model1=true run_sim.pmc 
+
+    p model2=true run_sim.pmc 
+
+    p model3=true run_sim.pmc 
+
+
+ 2) compare model1 and model2
+
+    p model1=true model2=true run_sim.pmc
+
+

@@ -1,0 +1,38 @@
+#============================================================#
+# myosin v in folded state.                                  #
+#============================================================#
+
+# set units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read grid    
+#----------
+#grid  read  name = m1  format = pm  file = emd_1201_grid.pm 
+grid  read  name = m1  format = pm  file = ssv_for_ken.pm 
+
+
+# display voxel values
+#---------------------
+#grid m1 points  vmin = 0.3  vmax = 0.7  show = true
+#grid m1 points  vmin = 0.4  vmax = 0.5  show = true
+
+
+# isosurface 
+#-----------
+#grid m1  isosurface  level = 0.5  show = true
+#grid m1  isosurface  point = [ 48.7901 42.3509 11.1201]  show = true
+#grid m1  isosurface  point = [ 16.4102 14.9206 2.0 ]  wire=true show = true
+grid m1  isosurface  point = [ 15 19.7649 10.6129 ]  show = true
+
+# display volume
+#----------------
+#grid m1 volume vmin = 0.4  vmax = 0.8  samples = 4 show = true
+#grid m1 volume vmin = 0.4  vmax = 0.8  samples = 4 show = true
+
+
+# slice             
+#----------------
+grid m1  slice  k = 150  vmin = -2.0  vmax = 6.0 show = true
+grid m1  slice  i = 150  vmin = -2.0  vmax = 6.0 show = true
+
+

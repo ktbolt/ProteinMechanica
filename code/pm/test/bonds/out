@@ -1,0 +1,2477 @@
+>>>>>> GrSystem: init 
+>>>>>> PmSystem: ctor 
+>>>>>> PmSystem: init 
+
+>>>>>> GrWindow::create: glut window [Protein Modeler]  
+  >>>> glut window id [1] 
+   >>> use_graphics [1] 
+
+pm>  
+ >>>>>> GlutWinExpose:  win [104803e8]  g_curr_win [-1] 
+   >>> data[d2] 
+pm> #============================================================*
+pm> # test domain fitting *
+pm> #============================================================*
+pm> # open pdb file
+pm> #--------------
+pm> database open name = neck format = pdb file = neck_xform.pdb 
+    >>> PDB: open [neck_xform.pdb] for reading. 
+    >>> read pdb file ... done.
+
+    >>> read 1 protein model(s) 
+             0 nucleotide model(s) 
+             0 misc model(s) 
+
+
+    ------------ protein ------------
+    >>> 4167 atoms   4 chains 
+    --------- chains --------- 
+    1  id = D  number of residues = 148
+    2  id = B  number of residues = 148
+    3  id = A  number of residues = 148
+    4  id = C  number of residues = 77
+pm> # read molecule
+pm> #---------------
+pm> molecule read database = neck name = m1
+    >>> get mol  1 8 
+    >>> number of molecule atoms = [4167] 
+
+>>> PmMolecule::set 8 
+    >>> molecule type = protein 
+    >>> extent  min (-1.0206 -0.1953 -1.125)  max (6.2513 10.3063 5.9885) 
+pm> # create a some domains
+pm> #----------------------
+pm> domain create iq1 = C[760-788]A
+pm> domain create iq1a = A
+pm> #domain iq1 bonds atom_color = element show = true
+pm> #domain iq1 bonds atom_color = element atoms = false show = true
+pm> domain iq1 bonds atom_color = [ 1 0 0 ] bond_color = [ 1 0 0 ]  atoms = true show = true
+
+>>>>>> PmMolecule::displayBonds: 
+   >>> num chains [2] 
+   >>> num coords [4] 
+---- chain C ---- 
+>>>> geom [domain[iq1:C]bonds] 
+>>>> num bonds [249] 
+>>>> bond: N(0)  CA(1) 
+>>>> bond: CA(1)  C(2) 
+>>>> bond: C(2)  O(3) 
+>>>> bond: CA(1)  CB(4) 
+>>>> bond: CB(4)  CG(5) 
+>>>> bond: CG(5)  CD(6) 
+>>>> bond: CD(6)  CE(7) 
+>>>> bond: CE(7)  NZ(8) 
+>>>> bond: C(2)  N(9) 
+>>>> bond: N(9)  CA(10) 
+>>>> bond: CA(10)  C(11) 
+>>>> bond: C(11)  O(12) 
+>>>> bond: CA(10)  CB(13) 
+>>>> bond: CB(13)  CG(14) 
+>>>> bond: CG(14)  CD1(15) 
+>>>> bond: CG(14)  CD2(16) 
+>>>> bond: C(11)  N(17) 
+>>>> bond: N(17)  CA(18) 
+>>>> bond: CA(18)  C(19) 
+>>>> bond: C(19)  O(20) 
+>>>> bond: CA(18)  CB(21) 
+>>>> bond: CB(21)  CG(22) 
+>>>> bond: CG(22)  CD(23) 
+>>>> bond: CD(23)  NE(24) 
+>>>> bond: NE(24)  CZ(25) 
+>>>> bond: CZ(25)  NH1(26) 
+>>>> bond: CZ(25)  NH2(27) 
+>>>> bond: C(19)  N(28) 
+>>>> bond: N(28)  CA(29) 
+>>>> bond: CA(29)  C(30) 
+>>>> bond: C(30)  O(31) 
+>>>> bond: CA(29)  CB(32) 
+>>>> bond: C(30)  N(33) 
+>>>> bond: N(33)  CA(34) 
+>>>> bond: CA(34)  C(35) 
+>>>> bond: C(35)  O(36) 
+>>>> bond: CA(34)  CB(37) 
+>>>> bond: CB(37)  CG(38) 
+>>>> bond: CG(38)  OD1(39) 
+>>>> bond: CG(38)  OD2(40) 
+>>>> bond: C(35)  N(41) 
+>>>> bond: N(41)  CA(42) 
+>>>> bond: CA(42)  C(43) 
+>>>> bond: C(43)  O(44) 
+>>>> bond: CA(42)  CB(45) 
+>>>> bond: CB(45)  CG(46) 
+>>>> bond: CG(46)  CD(47) 
+>>>> bond: CD(47)  CE(48) 
+>>>> bond: CE(48)  NZ(49) 
+>>>> bond: C(43)  N(50) 
+>>>> bond: N(50)  CA(51) 
+>>>> bond: CA(51)  C(52) 
+>>>> bond: C(52)  O(53) 
+>>>> bond: CA(51)  CB(54) 
+>>>> bond: CB(54)  CG(55) 
+>>>> bond: CG(55)  CD1(56) 
+>>>> bond: CG(55)  CD2(57) 
+>>>> bond: C(52)  N(58) 
+>>>> bond: N(58)  CA(59) 
+>>>> bond: CA(59)  C(60) 
+>>>> bond: C(60)  O(61) 
+>>>> bond: CA(59)  CB(62) 
+>>>> bond: CB(62)  CG(63) 
+>>>> bond: CG(63)  CD(64) 
+>>>> bond: CD(64)  NE(65) 
+>>>> bond: NE(65)  CZ(66) 
+>>>> bond: CZ(66)  NH1(67) 
+>>>> bond: CZ(66)  NH2(68) 
+>>>> bond: C(60)  N(69) 
+>>>> bond: N(69)  CA(70) 
+>>>> bond: CA(70)  C(71) 
+>>>> bond: C(71)  O(72) 
+>>>> bond: CA(70)  CB(73) 
+>>>> bond: C(71)  N(74) 
+>>>> bond: N(74)  CA(75) 
+>>>> bond: CA(75)  C(76) 
+>>>> bond: C(76)  O(77) 
+>>>> bond: CA(75)  CB(78) 
+>>>> bond: C(76)  N(79) 
+>>>> bond: N(79)  CA(80) 
+>>>> bond: CA(80)  C(81) 
+>>>> bond: C(81)  O(82) 
+>>>> bond: CA(80)  CB(83) 
+>>>> bond: CB(83)  SG(84) 
+>>>> bond: C(81)  N(85) 
+>>>> bond: N(85)  CA(86) 
+>>>> bond: CA(86)  C(87) 
+>>>> bond: C(87)  O(88) 
+>>>> bond: CA(86)  CB(89) 
+>>>> bond: CB(89)  CG1(90) 
+>>>> bond: CB(89)  CG2(91) 
+>>>> bond: CG1(90)  CD1(92) 
+>>>> bond: C(87)  N(93) 
+>>>> bond: N(93)  CA(94) 
+>>>> bond: CA(94)  C(95) 
+>>>> bond: C(95)  O(96) 
+>>>> bond: CA(94)  CB(97) 
+>>>> bond: CB(97)  CG(98) 
+>>>> bond: CG(98)  CD(99) 
+>>>> bond: CD(99)  NE(100) 
+>>>> bond: NE(100)  CZ(101) 
+>>>> bond: CZ(101)  NH1(102) 
+>>>> bond: CZ(101)  NH2(103) 
+>>>> bond: C(95)  N(104) 
+>>>> bond: N(104)  CA(105) 
+>>>> bond: CA(105)  C(106) 
+>>>> bond: C(106)  O(107) 
+>>>> bond: CA(105)  CB(108) 
+>>>> bond: CB(108)  CG1(109) 
+>>>> bond: CB(108)  CG2(110) 
+>>>> bond: CG1(109)  CD1(111) 
+>>>> bond: C(106)  N(112) 
+>>>> bond: N(112)  CA(113) 
+>>>> bond: CA(113)  C(114) 
+>>>> bond: C(114)  O(115) 
+>>>> bond: CA(113)  CB(116) 
+>>>> bond: CB(116)  CG(117) 
+>>>> bond: CG(117)  CD(118) 
+>>>> bond: CD(118)  OE1(119) 
+>>>> bond: CD(118)  NE2(120) 
+>>>> bond: C(114)  N(121) 
+>>>> bond: N(121)  CA(122) 
+>>>> bond: CA(122)  C(123) 
+>>>> bond: C(123)  O(124) 
+>>>> bond: CA(122)  CB(125) 
+>>>> bond: CB(125)  CG(126) 
+>>>> bond: CG(126)  CD(127) 
+>>>> bond: CD(127)  CE(128) 
+>>>> bond: CE(128)  NZ(129) 
+>>>> bond: C(123)  N(130) 
+>>>> bond: N(130)  CA(131) 
+>>>> bond: CA(131)  C(132) 
+>>>> bond: C(132)  O(133) 
+>>>> bond: CA(131)  CB(134) 
+>>>> bond: CB(134)  OG1(135) 
+>>>> bond: CB(134)  CG2(136) 
+>>>> bond: C(132)  N(137) 
+>>>> bond: N(137)  CA(138) 
+>>>> bond: CA(138)  C(139) 
+>>>> bond: C(139)  O(140) 
+>>>> bond: CA(138)  CB(141) 
+>>>> bond: CB(141)  CG1(142) 
+>>>> bond: CB(141)  CG2(143) 
+>>>> bond: CG1(142)  CD1(144) 
+>>>> bond: C(139)  N(145) 
+>>>> bond: N(145)  CA(146) 
+>>>> bond: CA(146)  C(147) 
+>>>> bond: C(147)  O(148) 
+>>>> bond: CA(146)  CB(149) 
+>>>> bond: CB(149)  CG(150) 
+>>>> bond: CG(150)  CD(151) 
+>>>> bond: CD(151)  NE(152) 
+>>>> bond: NE(152)  CZ(153) 
+>>>> bond: CZ(153)  NH1(154) 
+>>>> bond: CZ(153)  NH2(155) 
+>>>> bond: C(147)  N(156) 
+>>>> bond: N(156)  CA(157) 
+>>>> bond: CA(157)  C(158) 
+>>>> bond: C(158)  O(159) 
+>>>> bond: C(158)  N(160) 
+>>>> bond: N(160)  CA(161) 
+>>>> bond: CA(161)  C(162) 
+>>>> bond: C(162)  O(163) 
+>>>> bond: CA(161)  CB(164) 
+>>>> bond: CB(164)  CG(165) 
+>>>> bond: CG(165)  CD1(166) 
+>>>> bond: CD1(166)  NE1(168) 
+>>>> bond: NE1(168)  CE2(169) 
+>>>> bond: CE2(169)  CZ2(171) 
+>>>> bond: CZ2(171)  CH2(173) 
+>>>> bond: CH2(173)  CZ3(172) 
+>>>> bond: CZ3(172)  CE3(170) 
+>>>> bond: CE3(170)  CD2(167) 
+>>>> bond: CD2(167)  CE2(169) 
+>>>> bond: CD2(167)  CG(165) 
+>>>> bond: C(162)  N(174) 
+>>>> bond: N(174)  CA(175) 
+>>>> bond: CA(175)  C(176) 
+>>>> bond: C(176)  O(177) 
+>>>> bond: CA(175)  CB(178) 
+>>>> bond: CB(178)  CG(179) 
+>>>> bond: CG(179)  CD1(180) 
+>>>> bond: CG(179)  CD2(181) 
+>>>> bond: C(176)  N(182) 
+>>>> bond: N(182)  CA(183) 
+>>>> bond: CA(183)  C(184) 
+>>>> bond: C(184)  O(185) 
+>>>> bond: CA(183)  CB(186) 
+>>>> bond: CB(186)  CG(187) 
+>>>> bond: CG(187)  CD1(188) 
+>>>> bond: CG(187)  CD2(189) 
+>>>> bond: C(184)  N(190) 
+>>>> bond: N(190)  CA(191) 
+>>>> bond: CA(191)  C(192) 
+>>>> bond: C(192)  O(193) 
+>>>> bond: CA(191)  CB(194) 
+>>>> bond: CB(194)  CG(195) 
+>>>> bond: CG(195)  CD(196) 
+>>>> bond: CD(196)  NE(197) 
+>>>> bond: NE(197)  CZ(198) 
+>>>> bond: CZ(198)  NH1(199) 
+>>>> bond: CZ(198)  NH2(200) 
+>>>> bond: C(192)  N(201) 
+>>>> bond: N(201)  CA(202) 
+>>>> bond: CA(202)  C(203) 
+>>>> bond: C(203)  O(204) 
+>>>> bond: CA(202)  CB(205) 
+>>>> bond: CB(205)  CG(206) 
+>>>> bond: CG(206)  CD(207) 
+>>>> bond: CD(207)  CE(208) 
+>>>> bond: CE(208)  NZ(209) 
+>>>> bond: C(203)  N(210) 
+>>>> bond: N(210)  CA(211) 
+>>>> bond: CA(211)  C(212) 
+>>>> bond: C(212)  O(213) 
+>>>> bond: CA(211)  CB(214) 
+>>>> bond: CB(214)  CG(215) 
+>>>> bond: CG(215)  CD(216) 
+>>>> bond: CD(216)  NE(217) 
+>>>> bond: NE(217)  CZ(218) 
+>>>> bond: CZ(218)  NH1(219) 
+>>>> bond: CZ(218)  NH2(220) 
+>>>> bond: C(212)  N(221) 
+>>>> bond: N(221)  CA(222) 
+>>>> bond: CA(222)  C(223) 
+>>>> bond: C(223)  O(224) 
+>>>> bond: CA(222)  CB(225) 
+>>>> bond: CB(225)  CG(226) 
+>>>> bond: CG(226)  CD1(227) 
+>>>> bond: CD1(227)  CE1(229) 
+>>>> bond: CE1(229)  CZ(231) 
+>>>> bond: CZ(231)  OH(232) 
+>>>> bond: CZ(231)  CE2(230) 
+>>>> bond: CE2(230)  CD2(228) 
+>>>> bond: CD2(228)  CG(226) 
+>>>> bond: C(223)  N(233) 
+>>>> bond: N(233)  CA(234) 
+>>>> bond: CA(234)  C(235) 
+>>>> bond: C(235)  O(236) 
+>>>> bond: CA(234)  CB(237) 
+>>>> bond: CB(237)  CG(238) 
+>>>> bond: CG(238)  CD1(239) 
+>>>> bond: CG(238)  CD2(240) 
+>>>> bond: C(235)  N(241) 
+>>>> bond: N(241)  CA(242) 
+>>>> bond: CA(242)  C(243) 
+>>>> bond: C(243)  O(244) 
+>>>> bond: CA(242)  CB(245) 
+>>>> bond: CB(245)  SG(246) 
+---- chain A ---- 
+>>>> geom [domain[iq1:A]bonds] 
+>>>> num bonds [1177] 
+>>>> bond: N(247)  CA(248) 
+>>>> bond: CA(248)  C(249) 
+>>>> bond: C(249)  O(250) 
+>>>> bond: CA(248)  CB(251) 
+>>>> bond: C(249)  N(252) 
+>>>> bond: N(252)  CA(253) 
+>>>> bond: CA(253)  C(254) 
+>>>> bond: C(254)  O(255) 
+>>>> bond: CA(253)  CB(256) 
+>>>> bond: CB(256)  CG(257) 
+>>>> bond: CG(257)  OD1(258) 
+>>>> bond: CG(257)  OD2(259) 
+>>>> bond: C(254)  N(260) 
+>>>> bond: N(260)  CA(261) 
+>>>> bond: CA(261)  C(262) 
+>>>> bond: C(262)  O(263) 
+>>>> bond: CA(261)  CB(264) 
+>>>> bond: CB(264)  CG(265) 
+>>>> bond: CG(265)  CD(266) 
+>>>> bond: CD(266)  OE1(267) 
+>>>> bond: CD(266)  NE2(268) 
+>>>> bond: C(262)  N(269) 
+>>>> bond: N(269)  CA(270) 
+>>>> bond: CA(270)  C(271) 
+>>>> bond: C(271)  O(272) 
+>>>> bond: CA(270)  CB(273) 
+>>>> bond: CB(273)  CG(274) 
+>>>> bond: CG(274)  CD1(275) 
+>>>> bond: CG(274)  CD2(276) 
+>>>> bond: C(271)  N(277) 
+>>>> bond: N(277)  CA(278) 
+>>>> bond: CA(278)  C(279) 
+>>>> bond: C(279)  O(280) 
+>>>> bond: CA(278)  CB(281) 
+>>>> bond: CB(281)  OG1(282) 
+>>>> bond: CB(281)  CG2(283) 
+>>>> bond: C(279)  N(284) 
+>>>> bond: N(284)  CA(285) 
+>>>> bond: CA(285)  C(286) 
+>>>> bond: C(286)  O(287) 
+>>>> bond: CA(285)  CB(288) 
+>>>> bond: CB(288)  CG(289) 
+>>>> bond: CG(289)  CD(290) 
+>>>> bond: CD(290)  OE1(291) 
+>>>> bond: CD(290)  OE2(292) 
+>>>> bond: C(286)  N(293) 
+>>>> bond: N(293)  CA(294) 
+>>>> bond: CA(294)  C(295) 
+>>>> bond: C(295)  O(296) 
+>>>> bond: CA(294)  CB(297) 
+>>>> bond: CB(297)  CG(298) 
+>>>> bond: CG(298)  CD(299) 
+>>>> bond: CD(299)  OE1(300) 
+>>>> bond: CD(299)  OE2(301) 
+>>>> bond: C(295)  N(302) 
+>>>> bond: N(302)  CA(303) 
+>>>> bond: CA(303)  C(304) 
+>>>> bond: C(304)  O(305) 
+>>>> bond: CA(303)  CB(306) 
+>>>> bond: CB(306)  CG(307) 
+>>>> bond: CG(307)  CD(308) 
+>>>> bond: CD(308)  OE1(309) 
+>>>> bond: CD(308)  NE2(310) 
+>>>> bond: C(304)  N(311) 
+>>>> bond: N(311)  CA(312) 
+>>>> bond: CA(312)  C(313) 
+>>>> bond: C(313)  O(314) 
+>>>> bond: CA(312)  CB(315) 
+>>>> bond: CB(315)  CG1(316) 
+>>>> bond: CB(315)  CG2(317) 
+>>>> bond: CG1(316)  CD1(318) 
+>>>> bond: C(313)  N(319) 
+>>>> bond: N(319)  CA(320) 
+>>>> bond: CA(320)  C(321) 
+>>>> bond: C(321)  O(322) 
+>>>> bond: CA(320)  CB(323) 
+>>>> bond: C(321)  N(324) 
+>>>> bond: N(324)  CA(325) 
+>>>> bond: CA(325)  C(326) 
+>>>> bond: C(326)  O(327) 
+>>>> bond: CA(325)  CB(328) 
+>>>> bond: CB(328)  CG(329) 
+>>>> bond: CG(329)  CD(330) 
+>>>> bond: CD(330)  OE1(331) 
+>>>> bond: CD(330)  OE2(332) 
+>>>> bond: C(326)  N(333) 
+>>>> bond: N(333)  CA(334) 
+>>>> bond: CA(334)  C(335) 
+>>>> bond: C(335)  O(336) 
+>>>> bond: CA(334)  CB(337) 
+>>>> bond: CB(337)  CG(338) 
+>>>> bond: CG(338)  CD1(339) 
+>>>> bond: CD1(339)  CE1(341) 
+>>>> bond: CE1(341)  CZ(343) 
+>>>> bond: CZ(343)  CE2(342) 
+>>>> bond: CE2(342)  CD2(340) 
+>>>> bond: CG(338)  CD2(340) 
+>>>> bond: C(335)  N(344) 
+>>>> bond: N(344)  CA(345) 
+>>>> bond: CA(345)  C(346) 
+>>>> bond: C(346)  O(347) 
+>>>> bond: CA(345)  CB(348) 
+>>>> bond: CB(348)  CG(349) 
+>>>> bond: CG(349)  CD(350) 
+>>>> bond: CD(350)  CE(351) 
+>>>> bond: CE(351)  NZ(352) 
+>>>> bond: C(346)  N(353) 
+>>>> bond: N(353)  CA(354) 
+>>>> bond: CA(354)  C(355) 
+>>>> bond: C(355)  O(356) 
+>>>> bond: CA(354)  CB(357) 
+>>>> bond: CB(357)  CG(358) 
+>>>> bond: CG(358)  CD(359) 
+>>>> bond: CD(359)  OE1(360) 
+>>>> bond: CD(359)  OE2(361) 
+>>>> bond: C(355)  N(362) 
+>>>> bond: N(362)  CA(363) 
+>>>> bond: CA(363)  C(364) 
+>>>> bond: C(364)  O(365) 
+>>>> bond: CA(363)  CB(366) 
+>>>> bond: C(364)  N(367) 
+>>>> bond: N(367)  CA(368) 
+>>>> bond: CA(368)  C(369) 
+>>>> bond: C(369)  O(370) 
+>>>> bond: CA(368)  CB(371) 
+>>>> bond: CB(371)  CG(372) 
+>>>> bond: CG(372)  CD1(373) 
+>>>> bond: CD1(373)  CE1(375) 
+>>>> bond: CE1(375)  CZ(377) 
+>>>> bond: CZ(377)  CE2(376) 
+>>>> bond: CE2(376)  CD2(374) 
+>>>> bond: CG(372)  CD2(374) 
+>>>> bond: C(369)  N(378) 
+>>>> bond: N(378)  CA(379) 
+>>>> bond: CA(379)  C(380) 
+>>>> bond: C(380)  O(381) 
+>>>> bond: CA(379)  CB(382) 
+>>>> bond: CB(382)  OG(383) 
+>>>> bond: C(380)  N(384) 
+>>>> bond: N(384)  CA(385) 
+>>>> bond: CA(385)  C(386) 
+>>>> bond: C(386)  O(387) 
+>>>> bond: CA(385)  CB(388) 
+>>>> bond: CB(388)  CG(389) 
+>>>> bond: CG(389)  CD1(390) 
+>>>> bond: CG(389)  CD2(391) 
+>>>> bond: C(386)  N(392) 
+>>>> bond: N(392)  CA(393) 
+>>>> bond: CA(393)  C(394) 
+>>>> bond: C(394)  O(395) 
+>>>> bond: CA(393)  CB(396) 
+>>>> bond: CB(396)  CG(397) 
+>>>> bond: CG(397)  CD1(398) 
+>>>> bond: CD1(398)  CE1(400) 
+>>>> bond: CE1(400)  CZ(402) 
+>>>> bond: CZ(402)  CE2(401) 
+>>>> bond: CE2(401)  CD2(399) 
+>>>> bond: CG(397)  CD2(399) 
+>>>> bond: C(394)  N(403) 
+>>>> bond: N(403)  CA(404) 
+>>>> bond: CA(404)  C(405) 
+>>>> bond: C(405)  O(406) 
+>>>> bond: CA(404)  CB(407) 
+>>>> bond: CB(407)  CG(408) 
+>>>> bond: CG(408)  OD1(409) 
+>>>> bond: CG(408)  OD2(410) 
+>>>> bond: C(405)  N(411) 
+>>>> bond: N(411)  CA(412) 
+>>>> bond: CA(412)  C(413) 
+>>>> bond: C(413)  O(414) 
+>>>> bond: CA(412)  CB(415) 
+>>>> bond: CB(415)  CG(416) 
+>>>> bond: CG(416)  CD(417) 
+>>>> bond: CD(417)  CE(418) 
+>>>> bond: CE(418)  NZ(419) 
+>>>> bond: C(413)  N(420) 
+>>>> bond: N(420)  CA(421) 
+>>>> bond: CA(421)  C(422) 
+>>>> bond: C(422)  O(423) 
+>>>> bond: CA(421)  CB(424) 
+>>>> bond: CB(424)  CG(425) 
+>>>> bond: CG(425)  OD1(426) 
+>>>> bond: CG(425)  OD2(427) 
+>>>> bond: C(422)  N(428) 
+>>>> bond: N(428)  CA(429) 
+>>>> bond: CA(429)  C(430) 
+>>>> bond: C(430)  O(431) 
+>>>> bond: C(430)  N(432) 
+>>>> bond: N(432)  CA(433) 
+>>>> bond: CA(433)  C(434) 
+>>>> bond: C(434)  O(435) 
+>>>> bond: CA(433)  CB(436) 
+>>>> bond: CB(436)  CG(437) 
+>>>> bond: CG(437)  OD1(438) 
+>>>> bond: CG(437)  OD2(439) 
+>>>> bond: C(434)  N(440) 
+>>>> bond: N(440)  CA(441) 
+>>>> bond: CA(441)  C(442) 
+>>>> bond: C(442)  O(443) 
+>>>> bond: C(442)  N(444) 
+>>>> bond: N(444)  CA(445) 
+>>>> bond: CA(445)  C(446) 
+>>>> bond: C(446)  O(447) 
+>>>> bond: CA(445)  CB(448) 
+>>>> bond: CB(448)  OG1(449) 
+>>>> bond: CB(448)  CG2(450) 
+>>>> bond: C(446)  N(451) 
+>>>> bond: N(451)  CA(452) 
+>>>> bond: CA(452)  C(453) 
+>>>> bond: C(453)  O(454) 
+>>>> bond: CA(452)  CB(455) 
+>>>> bond: CB(455)  CG1(456) 
+>>>> bond: CB(455)  CG2(457) 
+>>>> bond: CG1(456)  CD1(458) 
+>>>> bond: C(453)  N(459) 
+>>>> bond: N(459)  CA(460) 
+>>>> bond: CA(460)  C(461) 
+>>>> bond: C(461)  O(462) 
+>>>> bond: CA(460)  CB(463) 
+>>>> bond: CB(463)  OG1(464) 
+>>>> bond: CB(463)  CG2(465) 
+>>>> bond: C(461)  N(466) 
+>>>> bond: N(466)  CA(467) 
+>>>> bond: CA(467)  C(468) 
+>>>> bond: C(468)  O(469) 
+>>>> bond: CA(467)  CB(470) 
+>>>> bond: CB(470)  OG1(471) 
+>>>> bond: CB(470)  CG2(472) 
+>>>> bond: C(468)  N(473) 
+>>>> bond: N(473)  CA(474) 
+>>>> bond: CA(474)  C(475) 
+>>>> bond: C(475)  O(476) 
+>>>> bond: CA(474)  CB(477) 
+>>>> bond: CB(477)  CG(478) 
+>>>> bond: CG(478)  CD(479) 
+>>>> bond: CD(479)  CE(480) 
+>>>> bond: CE(480)  NZ(481) 
+>>>> bond: C(475)  N(482) 
+>>>> bond: N(482)  CA(483) 
+>>>> bond: CA(483)  C(484) 
+>>>> bond: C(484)  O(485) 
+>>>> bond: CA(483)  CB(486) 
+>>>> bond: CB(486)  CG(487) 
+>>>> bond: CG(487)  CD(488) 
+>>>> bond: CD(488)  OE1(489) 
+>>>> bond: CD(488)  OE2(490) 
+>>>> bond: C(484)  N(491) 
+>>>> bond: N(491)  CA(492) 
+>>>> bond: CA(492)  C(493) 
+>>>> bond: C(493)  O(494) 
+>>>> bond: CA(492)  CB(495) 
+>>>> bond: CB(495)  CG(496) 
+>>>> bond: CG(496)  CD1(497) 
+>>>> bond: CG(496)  CD2(498) 
+>>>> bond: C(493)  N(499) 
+>>>> bond: N(499)  CA(500) 
+>>>> bond: CA(500)  C(501) 
+>>>> bond: C(501)  O(502) 
+>>>> bond: C(501)  N(503) 
+>>>> bond: N(503)  CA(504) 
+>>>> bond: CA(504)  C(505) 
+>>>> bond: C(505)  O(506) 
+>>>> bond: CA(504)  CB(507) 
+>>>> bond: CB(507)  OG1(508) 
+>>>> bond: CB(507)  CG2(509) 
+>>>> bond: C(505)  N(510) 
+>>>> bond: N(510)  CA(511) 
+>>>> bond: CA(511)  C(512) 
+>>>> bond: C(512)  O(513) 
+>>>> bond: CA(511)  CB(514) 
+>>>> bond: CB(514)  CG1(515) 
+>>>> bond: CB(514)  CG2(516) 
+>>>> bond: C(512)  N(517) 
+>>>> bond: N(517)  CA(518) 
+>>>> bond: CA(518)  C(519) 
+>>>> bond: C(519)  O(520) 
+>>>> bond: CA(518)  CB(521) 
+>>>> bond: CB(521)  CG(522) 
+>>>> bond: CG(522)  SD(523) 
+>>>> bond: SD(523)  CE(524) 
+>>>> bond: C(519)  N(525) 
+>>>> bond: N(525)  CA(526) 
+>>>> bond: CA(526)  C(527) 
+>>>> bond: C(527)  O(528) 
+>>>> bond: CA(526)  CB(529) 
+>>>> bond: CB(529)  CG(530) 
+>>>> bond: CG(530)  CD(531) 
+>>>> bond: CD(531)  NE(532) 
+>>>> bond: NE(532)  CZ(533) 
+>>>> bond: CZ(533)  NH1(534) 
+>>>> bond: CZ(533)  NH2(535) 
+>>>> bond: C(527)  N(536) 
+>>>> bond: N(536)  CA(537) 
+>>>> bond: CA(537)  C(538) 
+>>>> bond: C(538)  O(539) 
+>>>> bond: CA(537)  CB(540) 
+>>>> bond: CB(540)  OG(541) 
+>>>> bond: C(538)  N(542) 
+>>>> bond: N(542)  CA(543) 
+>>>> bond: CA(543)  C(544) 
+>>>> bond: C(544)  O(545) 
+>>>> bond: CA(543)  CB(546) 
+>>>> bond: CB(546)  CG(547) 
+>>>> bond: CG(547)  CD1(548) 
+>>>> bond: CG(547)  CD2(549) 
+>>>> bond: C(544)  N(550) 
+>>>> bond: N(550)  CA(551) 
+>>>> bond: CA(551)  C(552) 
+>>>> bond: C(552)  O(553) 
+>>>> bond: C(552)  N(554) 
+>>>> bond: N(554)  CA(555) 
+>>>> bond: CA(555)  C(556) 
+>>>> bond: C(556)  O(557) 
+>>>> bond: CA(555)  CB(558) 
+>>>> bond: CB(558)  CG(559) 
+>>>> bond: CG(559)  CD(560) 
+>>>> bond: CD(560)  OE1(561) 
+>>>> bond: CD(560)  NE2(562) 
+>>>> bond: C(556)  N(563) 
+>>>> bond: N(563)  CA(564) 
+>>>> bond: CA(564)  C(565) 
+>>>> bond: C(565)  O(566) 
+>>>> bond: CA(564)  CB(567) 
+>>>> bond: CB(567)  CG(568) 
+>>>> bond: CG(568)  OD1(569) 
+>>>> bond: CG(568)  ND2(570) 
+>>>> bond: C(565)  N(571) 
+>>>> bond: N(571)  CA(572) 
+>>>> bond: CA(572)  C(573) 
+>>>> bond: C(573)  O(574) 
+>>>> bond: CA(572)  CB(575) 
+>>>> bond: CB(575)  CG(576) 
+>>>> bond: CD(577)  CG(576) 
+>>>> bond: CD(577)  N(571) 
+>>>> bond: C(573)  N(578) 
+>>>> bond: N(578)  CA(579) 
+>>>> bond: CA(579)  C(580) 
+>>>> bond: C(580)  O(581) 
+>>>> bond: CA(579)  CB(582) 
+>>>> bond: CB(582)  OG1(583) 
+>>>> bond: CB(582)  CG2(584) 
+>>>> bond: C(580)  N(585) 
+>>>> bond: N(585)  CA(586) 
+>>>> bond: CA(586)  C(587) 
+>>>> bond: C(587)  O(588) 
+>>>> bond: CA(586)  CB(589) 
+>>>> bond: CB(589)  CG(590) 
+>>>> bond: CG(590)  CD(591) 
+>>>> bond: CD(591)  OE1(592) 
+>>>> bond: CD(591)  OE2(593) 
+>>>> bond: C(587)  N(594) 
+>>>> bond: N(594)  CA(595) 
+>>>> bond: CA(595)  C(596) 
+>>>> bond: C(596)  O(597) 
+>>>> bond: CA(595)  CB(598) 
+>>>> bond: C(596)  N(599) 
+>>>> bond: N(599)  CA(600) 
+>>>> bond: CA(600)  C(601) 
+>>>> bond: C(601)  O(602) 
+>>>> bond: CA(600)  CB(603) 
+>>>> bond: CB(603)  CG(604) 
+>>>> bond: CG(604)  CD(605) 
+>>>> bond: CD(605)  OE1(606) 
+>>>> bond: CD(605)  OE2(607) 
+>>>> bond: C(601)  N(608) 
+>>>> bond: N(608)  CA(609) 
+>>>> bond: CA(609)  C(610) 
+>>>> bond: C(610)  O(611) 
+>>>> bond: CA(609)  CB(612) 
+>>>> bond: CB(612)  CG(613) 
+>>>> bond: CG(613)  CD1(614) 
+>>>> bond: CG(613)  CD2(615) 
+>>>> bond: C(610)  N(616) 
+>>>> bond: N(616)  CA(617) 
+>>>> bond: CA(617)  C(618) 
+>>>> bond: C(618)  O(619) 
+>>>> bond: CA(617)  CB(620) 
+>>>> bond: CB(620)  CG(621) 
+>>>> bond: CG(621)  CD(622) 
+>>>> bond: CD(622)  OE1(623) 
+>>>> bond: CD(622)  NE2(624) 
+>>>> bond: C(618)  N(625) 
+>>>> bond: N(625)  CA(626) 
+>>>> bond: CA(626)  C(627) 
+>>>> bond: C(627)  O(628) 
+>>>> bond: CA(626)  CB(629) 
+>>>> bond: CB(629)  CG(630) 
+>>>> bond: CG(630)  OD1(631) 
+>>>> bond: CG(630)  OD2(632) 
+>>>> bond: C(627)  N(633) 
+>>>> bond: N(633)  CA(634) 
+>>>> bond: CA(634)  C(635) 
+>>>> bond: C(635)  O(636) 
+>>>> bond: CA(634)  CB(637) 
+>>>> bond: CB(637)  CG(638) 
+>>>> bond: CG(638)  SD(639) 
+>>>> bond: SD(639)  CE(640) 
+>>>> bond: C(635)  N(641) 
+>>>> bond: N(641)  CA(642) 
+>>>> bond: CA(642)  C(643) 
+>>>> bond: C(643)  O(644) 
+>>>> bond: CA(642)  CB(645) 
+>>>> bond: CB(645)  CG1(646) 
+>>>> bond: CB(645)  CG2(647) 
+>>>> bond: CG1(646)  CD1(648) 
+>>>> bond: C(643)  N(649) 
+>>>> bond: N(649)  CA(650) 
+>>>> bond: CA(650)  C(651) 
+>>>> bond: C(651)  O(652) 
+>>>> bond: CA(650)  CB(653) 
+>>>> bond: CB(653)  CG(654) 
+>>>> bond: CG(654)  OD1(655) 
+>>>> bond: CG(654)  ND2(656) 
+>>>> bond: C(651)  N(657) 
+>>>> bond: N(657)  CA(658) 
+>>>> bond: CA(658)  C(659) 
+>>>> bond: C(659)  O(660) 
+>>>> bond: CA(658)  CB(661) 
+>>>> bond: CB(661)  CG(662) 
+>>>> bond: CG(662)  CD(663) 
+>>>> bond: CD(663)  OE1(664) 
+>>>> bond: CD(663)  OE2(665) 
+>>>> bond: C(659)  N(666) 
+>>>> bond: N(666)  CA(667) 
+>>>> bond: CA(667)  C(668) 
+>>>> bond: C(668)  O(669) 
+>>>> bond: CA(667)  CB(670) 
+>>>> bond: CB(670)  CG1(671) 
+>>>> bond: CB(670)  CG2(672) 
+>>>> bond: C(668)  N(673) 
+>>>> bond: N(673)  CA(674) 
+>>>> bond: CA(674)  C(675) 
+>>>> bond: C(675)  O(676) 
+>>>> bond: CA(674)  CB(677) 
+>>>> bond: CB(677)  CG(678) 
+>>>> bond: CG(678)  OD1(679) 
+>>>> bond: CG(678)  OD2(680) 
+>>>> bond: C(675)  N(681) 
+>>>> bond: N(681)  CA(682) 
+>>>> bond: CA(682)  C(683) 
+>>>> bond: C(683)  O(684) 
+>>>> bond: CA(682)  CB(685) 
+>>>> bond: C(683)  N(686) 
+>>>> bond: N(686)  CA(687) 
+>>>> bond: CA(687)  C(688) 
+>>>> bond: C(688)  O(689) 
+>>>> bond: CA(687)  CB(690) 
+>>>> bond: CB(690)  CG(691) 
+>>>> bond: CG(691)  OD1(692) 
+>>>> bond: CG(691)  OD2(693) 
+>>>> bond: C(688)  N(694) 
+>>>> bond: N(694)  CA(695) 
+>>>> bond: CA(695)  C(696) 
+>>>> bond: C(696)  O(697) 
+>>>> bond: C(696)  N(698) 
+>>>> bond: N(698)  CA(699) 
+>>>> bond: CA(699)  C(700) 
+>>>> bond: C(700)  O(701) 
+>>>> bond: CA(699)  CB(702) 
+>>>> bond: CB(702)  CG(703) 
+>>>> bond: CG(703)  OD1(704) 
+>>>> bond: CG(703)  ND2(705) 
+>>>> bond: C(700)  N(706) 
+>>>> bond: N(706)  CA(707) 
+>>>> bond: CA(707)  C(708) 
+>>>> bond: C(708)  O(709) 
+>>>> bond: C(708)  N(710) 
+>>>> bond: N(710)  CA(711) 
+>>>> bond: CA(711)  C(712) 
+>>>> bond: C(712)  O(713) 
+>>>> bond: CA(711)  CB(714) 
+>>>> bond: CB(714)  OG1(715) 
+>>>> bond: CB(714)  CG2(716) 
+>>>> bond: C(712)  N(717) 
+>>>> bond: N(717)  CA(718) 
+>>>> bond: CA(718)  C(719) 
+>>>> bond: C(719)  O(720) 
+>>>> bond: CA(718)  CB(721) 
+>>>> bond: CB(721)  CG1(722) 
+>>>> bond: CB(721)  CG2(723) 
+>>>> bond: CG1(722)  CD1(724) 
+>>>> bond: C(719)  N(725) 
+>>>> bond: N(725)  CA(726) 
+>>>> bond: CA(726)  C(727) 
+>>>> bond: C(727)  O(728) 
+>>>> bond: CA(726)  CB(729) 
+>>>> bond: CB(729)  CG(730) 
+>>>> bond: CG(730)  OD1(731) 
+>>>> bond: CG(730)  OD2(732) 
+>>>> bond: C(727)  N(733) 
+>>>> bond: N(733)  CA(734) 
+>>>> bond: CA(734)  C(735) 
+>>>> bond: C(735)  O(736) 
+>>>> bond: CA(734)  CB(737) 
+>>>> bond: CB(737)  CG(738) 
+>>>> bond: CG(738)  CD1(739) 
+>>>> bond: CD1(739)  CE1(741) 
+>>>> bond: CE1(741)  CZ(743) 
+>>>> bond: CZ(743)  CE2(742) 
+>>>> bond: CE2(742)  CD2(740) 
+>>>> bond: CG(738)  CD2(740) 
+>>>> bond: C(735)  N(744) 
+>>>> bond: N(744)  CA(745) 
+>>>> bond: CA(745)  C(746) 
+>>>> bond: C(746)  O(747) 
+>>>> bond: CA(745)  CB(748) 
+>>>> bond: CB(748)  CG(749) 
+>>>> bond: CD(750)  CG(749) 
+>>>> bond: CD(750)  N(744) 
+>>>> bond: C(746)  N(751) 
+>>>> bond: N(751)  CA(752) 
+>>>> bond: CA(752)  C(753) 
+>>>> bond: C(753)  O(754) 
+>>>> bond: CA(752)  CB(755) 
+>>>> bond: CB(755)  CG(756) 
+>>>> bond: CG(756)  CD(757) 
+>>>> bond: CD(757)  OE1(758) 
+>>>> bond: CD(757)  OE2(759) 
+>>>> bond: C(753)  N(760) 
+>>>> bond: N(760)  CA(761) 
+>>>> bond: CA(761)  C(762) 
+>>>> bond: C(762)  O(763) 
+>>>> bond: CA(761)  CB(764) 
+>>>> bond: CB(764)  CG(765) 
+>>>> bond: CG(765)  CD1(766) 
+>>>> bond: CD1(766)  CE1(768) 
+>>>> bond: CE1(768)  CZ(770) 
+>>>> bond: CZ(770)  CE2(769) 
+>>>> bond: CE2(769)  CD2(767) 
+>>>> bond: CG(765)  CD2(767) 
+>>>> bond: C(762)  N(771) 
+>>>> bond: N(771)  CA(772) 
+>>>> bond: CA(772)  C(773) 
+>>>> bond: C(773)  O(774) 
+>>>> bond: CA(772)  CB(775) 
+>>>> bond: CB(775)  CG(776) 
+>>>> bond: CG(776)  CD1(777) 
+>>>> bond: CG(776)  CD2(778) 
+>>>> bond: C(773)  N(779) 
+>>>> bond: N(779)  CA(780) 
+>>>> bond: CA(780)  C(781) 
+>>>> bond: C(781)  O(782) 
+>>>> bond: CA(780)  CB(783) 
+>>>> bond: CB(783)  OG1(784) 
+>>>> bond: CB(783)  CG2(785) 
+>>>> bond: C(781)  N(786) 
+>>>> bond: N(786)  CA(787) 
+>>>> bond: CA(787)  C(788) 
+>>>> bond: C(788)  O(789) 
+>>>> bond: CA(787)  CB(790) 
+>>>> bond: CB(790)  CG(791) 
+>>>> bond: CG(791)  SD(792) 
+>>>> bond: SD(792)  CE(793) 
+>>>> bond: C(788)  N(794) 
+>>>> bond: N(794)  CA(795) 
+>>>> bond: CA(795)  C(796) 
+>>>> bond: C(796)  O(797) 
+>>>> bond: CA(795)  CB(798) 
+>>>> bond: CB(798)  CG(799) 
+>>>> bond: CG(799)  SD(800) 
+>>>> bond: SD(800)  CE(801) 
+>>>> bond: C(796)  N(802) 
+>>>> bond: N(802)  CA(803) 
+>>>> bond: CA(803)  C(804) 
+>>>> bond: C(804)  O(805) 
+>>>> bond: CA(803)  CB(806) 
+>>>> bond: C(804)  N(807) 
+>>>> bond: N(807)  CA(808) 
+>>>> bond: CA(808)  C(809) 
+>>>> bond: C(809)  O(810) 
+>>>> bond: CA(808)  CB(811) 
+>>>> bond: CB(811)  CG(812) 
+>>>> bond: CG(812)  CD(813) 
+>>>> bond: CD(813)  NE(814) 
+>>>> bond: NE(814)  CZ(815) 
+>>>> bond: CZ(815)  NH1(816) 
+>>>> bond: CZ(815)  NH2(817) 
+>>>> bond: C(809)  N(818) 
+>>>> bond: N(818)  CA(819) 
+>>>> bond: CA(819)  C(820) 
+>>>> bond: C(820)  O(821) 
+>>>> bond: CA(819)  CB(822) 
+>>>> bond: CB(822)  CG(823) 
+>>>> bond: CG(823)  CD(824) 
+>>>> bond: CD(824)  CE(825) 
+>>>> bond: CE(825)  NZ(826) 
+>>>> bond: C(820)  N(827) 
+>>>> bond: N(827)  CA(828) 
+>>>> bond: CA(828)  C(829) 
+>>>> bond: C(829)  O(830) 
+>>>> bond: CA(828)  CB(831) 
+>>>> bond: CB(831)  CG(832) 
+>>>> bond: CG(832)  SD(833) 
+>>>> bond: SD(833)  CE(834) 
+>>>> bond: C(829)  N(835) 
+>>>> bond: N(835)  CA(836) 
+>>>> bond: CA(836)  C(837) 
+>>>> bond: C(837)  O(838) 
+>>>> bond: CA(836)  CB(839) 
+>>>> bond: CB(839)  CG(840) 
+>>>> bond: CG(840)  CD(841) 
+>>>> bond: CD(841)  CE(842) 
+>>>> bond: CE(842)  NZ(843) 
+>>>> bond: C(837)  N(844) 
+>>>> bond: N(844)  CA(845) 
+>>>> bond: CA(845)  C(846) 
+>>>> bond: C(846)  O(847) 
+>>>> bond: CA(845)  CB(848) 
+>>>> bond: CB(848)  CG(849) 
+>>>> bond: CG(849)  OD1(850) 
+>>>> bond: CG(849)  OD2(851) 
+>>>> bond: C(846)  N(852) 
+>>>> bond: N(852)  CA(853) 
+>>>> bond: CA(853)  C(854) 
+>>>> bond: C(854)  O(855) 
+>>>> bond: CA(853)  CB(856) 
+>>>> bond: CB(856)  OG1(857) 
+>>>> bond: CB(856)  CG2(858) 
+>>>> bond: C(854)  N(859) 
+>>>> bond: N(859)  CA(860) 
+>>>> bond: CA(860)  C(861) 
+>>>> bond: C(861)  O(862) 
+>>>> bond: CA(860)  CB(863) 
+>>>> bond: CB(863)  CG(864) 
+>>>> bond: CG(864)  OD1(865) 
+>>>> bond: CG(864)  OD2(866) 
+>>>> bond: C(861)  N(867) 
+>>>> bond: N(867)  CA(868) 
+>>>> bond: CA(868)  C(869) 
+>>>> bond: C(869)  O(870) 
+>>>> bond: CA(868)  CB(871) 
+>>>> bond: CB(871)  OG(872) 
+>>>> bond: C(869)  N(873) 
+>>>> bond: N(873)  CA(874) 
+>>>> bond: CA(874)  C(875) 
+>>>> bond: C(875)  O(876) 
+>>>> bond: CA(874)  CB(877) 
+>>>> bond: CB(877)  CG(878) 
+>>>> bond: CG(878)  CD(879) 
+>>>> bond: CD(879)  OE1(880) 
+>>>> bond: CD(879)  OE2(881) 
+>>>> bond: C(875)  N(882) 
+>>>> bond: N(882)  CA(883) 
+>>>> bond: CA(883)  C(884) 
+>>>> bond: C(884)  O(885) 
+>>>> bond: CA(883)  CB(886) 
+>>>> bond: CB(886)  CG(887) 
+>>>> bond: CG(887)  CD(888) 
+>>>> bond: CD(888)  OE1(889) 
+>>>> bond: CD(888)  OE2(890) 
+>>>> bond: C(884)  N(891) 
+>>>> bond: N(891)  CA(892) 
+>>>> bond: CA(892)  C(893) 
+>>>> bond: C(893)  O(894) 
+>>>> bond: CA(892)  CB(895) 
+>>>> bond: CB(895)  CG(896) 
+>>>> bond: CG(896)  CD(897) 
+>>>> bond: CD(897)  OE1(898) 
+>>>> bond: CD(897)  OE2(899) 
+>>>> bond: C(893)  N(900) 
+>>>> bond: N(900)  CA(901) 
+>>>> bond: CA(901)  C(902) 
+>>>> bond: C(902)  O(903) 
+>>>> bond: CA(901)  CB(904) 
+>>>> bond: CB(904)  CG1(905) 
+>>>> bond: CB(904)  CG2(906) 
+>>>> bond: CG1(905)  CD1(907) 
+>>>> bond: C(902)  N(908) 
+>>>> bond: N(908)  CA(909) 
+>>>> bond: CA(909)  C(910) 
+>>>> bond: C(910)  O(911) 
+>>>> bond: CA(909)  CB(912) 
+>>>> bond: CB(912)  CG(913) 
+>>>> bond: CG(913)  CD(914) 
+>>>> bond: CD(914)  NE(915) 
+>>>> bond: NE(915)  CZ(916) 
+>>>> bond: CZ(916)  NH1(917) 
+>>>> bond: CZ(916)  NH2(918) 
+>>>> bond: C(910)  N(919) 
+>>>> bond: N(919)  CA(920) 
+>>>> bond: CA(920)  C(921) 
+>>>> bond: C(921)  O(922) 
+>>>> bond: CA(920)  CB(923) 
+>>>> bond: CB(923)  CG(924) 
+>>>> bond: CG(924)  CD(925) 
+>>>> bond: CD(925)  OE1(926) 
+>>>> bond: CD(925)  OE2(927) 
+>>>> bond: C(921)  N(928) 
+>>>> bond: N(928)  CA(929) 
+>>>> bond: CA(929)  C(930) 
+>>>> bond: C(930)  O(931) 
+>>>> bond: CA(929)  CB(932) 
+>>>> bond: C(930)  N(933) 
+>>>> bond: N(933)  CA(934) 
+>>>> bond: CA(934)  C(935) 
+>>>> bond: C(935)  O(936) 
+>>>> bond: CA(934)  CB(937) 
+>>>> bond: CB(937)  CG(938) 
+>>>> bond: CG(938)  CD1(939) 
+>>>> bond: CD1(939)  CE1(941) 
+>>>> bond: CE1(941)  CZ(943) 
+>>>> bond: CZ(943)  CE2(942) 
+>>>> bond: CE2(942)  CD2(940) 
+>>>> bond: CG(938)  CD2(940) 
+>>>> bond: C(935)  N(944) 
+>>>> bond: N(944)  CA(945) 
+>>>> bond: CA(945)  C(946) 
+>>>> bond: C(946)  O(947) 
+>>>> bond: CA(945)  CB(948) 
+>>>> bond: CB(948)  CG(949) 
+>>>> bond: CG(949)  CD(950) 
+>>>> bond: CD(950)  NE(951) 
+>>>> bond: NE(951)  CZ(952) 
+>>>> bond: CZ(952)  NH1(953) 
+>>>> bond: CZ(952)  NH2(954) 
+>>>> bond: C(946)  N(955) 
+>>>> bond: N(955)  CA(956) 
+>>>> bond: CA(956)  C(957) 
+>>>> bond: C(957)  O(958) 
+>>>> bond: CA(956)  CB(959) 
+>>>> bond: CB(959)  CG1(960) 
+>>>> bond: CB(959)  CG2(961) 
+>>>> bond: C(957)  N(962) 
+>>>> bond: N(962)  CA(963) 
+>>>> bond: CA(963)  C(964) 
+>>>> bond: C(964)  O(965) 
+>>>> bond: CA(963)  CB(966) 
+>>>> bond: CB(966)  CG(967) 
+>>>> bond: CG(967)  CD1(968) 
+>>>> bond: CD1(968)  CE1(970) 
+>>>> bond: CE1(970)  CZ(972) 
+>>>> bond: CZ(972)  CE2(971) 
+>>>> bond: CE2(971)  CD2(969) 
+>>>> bond: CG(967)  CD2(969) 
+>>>> bond: C(964)  N(973) 
+>>>> bond: N(973)  CA(974) 
+>>>> bond: CA(974)  C(975) 
+>>>> bond: C(975)  O(976) 
+>>>> bond: CA(974)  CB(977) 
+>>>> bond: CB(977)  CG(978) 
+>>>> bond: CG(978)  OD1(979) 
+>>>> bond: CG(978)  OD2(980) 
+>>>> bond: C(975)  N(981) 
+>>>> bond: N(981)  CA(982) 
+>>>> bond: CA(982)  C(983) 
+>>>> bond: C(983)  O(984) 
+>>>> bond: CA(982)  CB(985) 
+>>>> bond: CB(985)  CG(986) 
+>>>> bond: CG(986)  CD(987) 
+>>>> bond: CD(987)  CE(988) 
+>>>> bond: CE(988)  NZ(989) 
+>>>> bond: C(983)  N(990) 
+>>>> bond: N(990)  CA(991) 
+>>>> bond: CA(991)  C(992) 
+>>>> bond: C(992)  O(993) 
+>>>> bond: CA(991)  CB(994) 
+>>>> bond: CB(994)  CG(995) 
+>>>> bond: CG(995)  OD1(996) 
+>>>> bond: CG(995)  OD2(997) 
+>>>> bond: C(992)  N(998) 
+>>>> bond: N(998)  CA(999) 
+>>>> bond: CA(999)  C(1000) 
+>>>> bond: C(1000)  O(1001) 
+>>>> bond: C(1000)  N(1002) 
+>>>> bond: N(1002)  CA(1003) 
+>>>> bond: CA(1003)  C(1004) 
+>>>> bond: C(1004)  O(1005) 
+>>>> bond: CA(1003)  CB(1006) 
+>>>> bond: CB(1006)  CG(1007) 
+>>>> bond: CG(1007)  OD1(1008) 
+>>>> bond: CG(1007)  ND2(1009) 
+>>>> bond: C(1004)  N(1010) 
+>>>> bond: N(1010)  CA(1011) 
+>>>> bond: CA(1011)  C(1012) 
+>>>> bond: C(1012)  O(1013) 
+>>>> bond: C(1012)  N(1014) 
+>>>> bond: N(1014)  CA(1015) 
+>>>> bond: CA(1015)  C(1016) 
+>>>> bond: C(1016)  O(1017) 
+>>>> bond: CA(1015)  CB(1018) 
+>>>> bond: CB(1018)  CG(1019) 
+>>>> bond: CG(1019)  CD1(1020) 
+>>>> bond: CD1(1020)  CE1(1022) 
+>>>> bond: CE1(1022)  CZ(1024) 
+>>>> bond: CZ(1024)  OH(1025) 
+>>>> bond: CZ(1024)  CE2(1023) 
+>>>> bond: CE2(1023)  CD2(1021) 
+>>>> bond: CD2(1021)  CG(1019) 
+>>>> bond: C(1016)  N(1026) 
+>>>> bond: N(1026)  CA(1027) 
+>>>> bond: CA(1027)  C(1028) 
+>>>> bond: C(1028)  O(1029) 
+>>>> bond: CA(1027)  CB(1030) 
+>>>> bond: CB(1030)  CG1(1031) 
+>>>> bond: CB(1030)  CG2(1032) 
+>>>> bond: CG1(1031)  CD1(1033) 
+>>>> bond: C(1028)  N(1034) 
+>>>> bond: N(1034)  CA(1035) 
+>>>> bond: CA(1035)  C(1036) 
+>>>> bond: C(1036)  O(1037) 
+>>>> bond: CA(1035)  CB(1038) 
+>>>> bond: CB(1038)  OG(1039) 
+>>>> bond: C(1036)  N(1040) 
+>>>> bond: N(1040)  CA(1041) 
+>>>> bond: CA(1041)  C(1042) 
+>>>> bond: C(1042)  O(1043) 
+>>>> bond: CA(1041)  CB(1044) 
+>>>> bond: C(1042)  N(1045) 
+>>>> bond: N(1045)  CA(1046) 
+>>>> bond: CA(1046)  C(1047) 
+>>>> bond: C(1047)  O(1048) 
+>>>> bond: CA(1046)  CB(1049) 
+>>>> bond: C(1047)  N(1050) 
+>>>> bond: N(1050)  CA(1051) 
+>>>> bond: CA(1051)  C(1052) 
+>>>> bond: C(1052)  O(1053) 
+>>>> bond: CA(1051)  CB(1054) 
+>>>> bond: CB(1054)  CG(1055) 
+>>>> bond: CG(1055)  CD(1056) 
+>>>> bond: CD(1056)  OE1(1057) 
+>>>> bond: CD(1056)  OE2(1058) 
+>>>> bond: C(1052)  N(1059) 
+>>>> bond: N(1059)  CA(1060) 
+>>>> bond: CA(1060)  C(1061) 
+>>>> bond: C(1061)  O(1062) 
+>>>> bond: CA(1060)  CB(1063) 
+>>>> bond: CB(1063)  CG(1064) 
+>>>> bond: CG(1064)  CD1(1065) 
+>>>> bond: CG(1064)  CD2(1066) 
+>>>> bond: C(1061)  N(1067) 
+>>>> bond: N(1067)  CA(1068) 
+>>>> bond: CA(1068)  C(1069) 
+>>>> bond: C(1069)  O(1070) 
+>>>> bond: CA(1068)  CB(1071) 
+>>>> bond: CB(1071)  CG(1072) 
+>>>> bond: CG(1072)  CD(1073) 
+>>>> bond: CD(1073)  NE(1074) 
+>>>> bond: NE(1074)  CZ(1075) 
+>>>> bond: CZ(1075)  NH1(1076) 
+>>>> bond: CZ(1075)  NH2(1077) 
+>>>> bond: C(1069)  N(1078) 
+>>>> bond: N(1078)  CA(1079) 
+>>>> bond: CA(1079)  C(1080) 
+>>>> bond: C(1080)  O(1081) 
+>>>> bond: CA(1079)  CB(1082) 
+>>>> bond: CB(1082)  CG(1083) 
+>>>> bond: CG(1083)  ND1(1084) 
+>>>> bond: ND1(1084)  CE1(1086) 
+>>>> bond: CE1(1086)  NE2(1087) 
+>>>> bond: NE2(1087)  CD2(1085) 
+>>>> bond: CD2(1085)  CG(1083) 
+>>>> bond: C(1080)  N(1088) 
+>>>> bond: N(1088)  CA(1089) 
+>>>> bond: CA(1089)  C(1090) 
+>>>> bond: C(1090)  O(1091) 
+>>>> bond: CA(1089)  CB(1092) 
+>>>> bond: CB(1092)  CG1(1093) 
+>>>> bond: CB(1092)  CG2(1094) 
+>>>> bond: C(1090)  N(1095) 
+>>>> bond: N(1095)  CA(1096) 
+>>>> bond: CA(1096)  C(1097) 
+>>>> bond: C(1097)  O(1098) 
+>>>> bond: CA(1096)  CB(1099) 
+>>>> bond: CB(1099)  CG(1100) 
+>>>> bond: CG(1100)  SD(1101) 
+>>>> bond: SD(1101)  CE(1102) 
+>>>> bond: C(1097)  N(1103) 
+>>>> bond: N(1103)  CA(1104) 
+>>>> bond: CA(1104)  C(1105) 
+>>>> bond: C(1105)  O(1106) 
+>>>> bond: CA(1104)  CB(1107) 
+>>>> bond: CB(1107)  OG1(1108) 
+>>>> bond: CB(1107)  CG2(1109) 
+>>>> bond: C(1105)  N(1110) 
+>>>> bond: N(1110)  CA(1111) 
+>>>> bond: CA(1111)  C(1112) 
+>>>> bond: C(1112)  O(1113) 
+>>>> bond: CA(1111)  CB(1114) 
+>>>> bond: CB(1114)  CG(1115) 
+>>>> bond: CG(1115)  OD1(1116) 
+>>>> bond: CG(1115)  ND2(1117) 
+>>>> bond: C(1112)  N(1118) 
+>>>> bond: N(1118)  CA(1119) 
+>>>> bond: CA(1119)  C(1120) 
+>>>> bond: C(1120)  O(1121) 
+>>>> bond: CA(1119)  CB(1122) 
+>>>> bond: CB(1122)  CG(1123) 
+>>>> bond: CG(1123)  CD1(1124) 
+>>>> bond: CG(1123)  CD2(1125) 
+>>>> bond: C(1120)  N(1126) 
+>>>> bond: N(1126)  CA(1127) 
+>>>> bond: CA(1127)  C(1128) 
+>>>> bond: C(1128)  O(1129) 
+>>>> bond: C(1128)  N(1130) 
+>>>> bond: N(1130)  CA(1131) 
+>>>> bond: CA(1131)  C(1132) 
+>>>> bond: C(1132)  O(1133) 
+>>>> bond: CA(1131)  CB(1134) 
+>>>> bond: CB(1134)  CG(1135) 
+>>>> bond: CG(1135)  CD(1136) 
+>>>> bond: CD(1136)  OE1(1137) 
+>>>> bond: CD(1136)  OE2(1138) 
+>>>> bond: C(1132)  N(1139) 
+>>>> bond: N(1139)  CA(1140) 
+>>>> bond: CA(1140)  C(1141) 
+>>>> bond: C(1141)  O(1142) 
+>>>> bond: CA(1140)  CB(1143) 
+>>>> bond: CB(1143)  CG(1144) 
+>>>> bond: CG(1144)  CD(1145) 
+>>>> bond: CD(1145)  CE(1146) 
+>>>> bond: CE(1146)  NZ(1147) 
+>>>> bond: C(1141)  N(1148) 
+>>>> bond: N(1148)  CA(1149) 
+>>>> bond: CA(1149)  C(1150) 
+>>>> bond: C(1150)  O(1151) 
+>>>> bond: CA(1149)  CB(1152) 
+>>>> bond: CB(1152)  CG(1153) 
+>>>> bond: CG(1153)  CD1(1154) 
+>>>> bond: CG(1153)  CD2(1155) 
+>>>> bond: C(1150)  N(1156) 
+>>>> bond: N(1156)  CA(1157) 
+>>>> bond: CA(1157)  C(1158) 
+>>>> bond: C(1158)  O(1159) 
+>>>> bond: CA(1157)  CB(1160) 
+>>>> bond: CB(1160)  OG1(1161) 
+>>>> bond: CB(1160)  CG2(1162) 
+>>>> bond: C(1158)  N(1163) 
+>>>> bond: N(1163)  CA(1164) 
+>>>> bond: CA(1164)  C(1165) 
+>>>> bond: C(1165)  O(1166) 
+>>>> bond: CA(1164)  CB(1167) 
+>>>> bond: CB(1167)  CG(1168) 
+>>>> bond: CG(1168)  OD1(1169) 
+>>>> bond: CG(1168)  OD2(1170) 
+>>>> bond: C(1165)  N(1171) 
+>>>> bond: N(1171)  CA(1172) 
+>>>> bond: CA(1172)  C(1173) 
+>>>> bond: C(1173)  O(1174) 
+>>>> bond: CA(1172)  CB(1175) 
+>>>> bond: CB(1175)  CG(1176) 
+>>>> bond: CG(1176)  CD(1177) 
+>>>> bond: CD(1177)  OE1(1178) 
+>>>> bond: CD(1177)  OE2(1179) 
+>>>> bond: C(1173)  N(1180) 
+>>>> bond: N(1180)  CA(1181) 
+>>>> bond: CA(1181)  C(1182) 
+>>>> bond: C(1182)  O(1183) 
+>>>> bond: CA(1181)  CB(1184) 
+>>>> bond: CB(1184)  CG(1185) 
+>>>> bond: CG(1185)  CD(1186) 
+>>>> bond: CD(1186)  OE1(1187) 
+>>>> bond: CD(1186)  OE2(1188) 
+>>>> bond: C(1182)  N(1189) 
+>>>> bond: N(1189)  CA(1190) 
+>>>> bond: CA(1190)  C(1191) 
+>>>> bond: C(1191)  O(1192) 
+>>>> bond: CA(1190)  CB(1193) 
+>>>> bond: CB(1193)  CG1(1194) 
+>>>> bond: CB(1193)  CG2(1195) 
+>>>> bond: C(1191)  N(1196) 
+>>>> bond: N(1196)  CA(1197) 
+>>>> bond: CA(1197)  C(1198) 
+>>>> bond: C(1198)  O(1199) 
+>>>> bond: CA(1197)  CB(1200) 
+>>>> bond: CB(1200)  CG(1201) 
+>>>> bond: CG(1201)  OD1(1202) 
+>>>> bond: CG(1201)  OD2(1203) 
+>>>> bond: C(1198)  N(1204) 
+>>>> bond: N(1204)  CA(1205) 
+>>>> bond: CA(1205)  C(1206) 
+>>>> bond: C(1206)  O(1207) 
+>>>> bond: CA(1205)  CB(1208) 
+>>>> bond: CB(1208)  CG(1209) 
+>>>> bond: CG(1209)  CD(1210) 
+>>>> bond: CD(1210)  OE1(1211) 
+>>>> bond: CD(1210)  OE2(1212) 
+>>>> bond: C(1206)  N(1213) 
+>>>> bond: N(1213)  CA(1214) 
+>>>> bond: CA(1214)  C(1215) 
+>>>> bond: C(1215)  O(1216) 
+>>>> bond: CA(1214)  CB(1217) 
+>>>> bond: CB(1217)  CG(1218) 
+>>>> bond: CG(1218)  SD(1219) 
+>>>> bond: SD(1219)  CE(1220) 
+>>>> bond: C(1215)  N(1221) 
+>>>> bond: N(1221)  CA(1222) 
+>>>> bond: CA(1222)  C(1223) 
+>>>> bond: C(1223)  O(1224) 
+>>>> bond: CA(1222)  CB(1225) 
+>>>> bond: CB(1225)  CG1(1226) 
+>>>> bond: CB(1225)  CG2(1227) 
+>>>> bond: CG1(1226)  CD1(1228) 
+>>>> bond: C(1223)  N(1229) 
+>>>> bond: N(1229)  CA(1230) 
+>>>> bond: CA(1230)  C(1231) 
+>>>> bond: C(1231)  O(1232) 
+>>>> bond: CA(1230)  CB(1233) 
+>>>> bond: CB(1233)  CG(1234) 
+>>>> bond: CG(1234)  CD(1235) 
+>>>> bond: CD(1235)  NE(1236) 
+>>>> bond: NE(1236)  CZ(1237) 
+>>>> bond: CZ(1237)  NH1(1238) 
+>>>> bond: CZ(1237)  NH2(1239) 
+>>>> bond: C(1231)  N(1240) 
+>>>> bond: N(1240)  CA(1241) 
+>>>> bond: CA(1241)  C(1242) 
+>>>> bond: C(1242)  O(1243) 
+>>>> bond: CA(1241)  CB(1244) 
+>>>> bond: CB(1244)  CG(1245) 
+>>>> bond: CG(1245)  CD(1246) 
+>>>> bond: CD(1246)  OE1(1247) 
+>>>> bond: CD(1246)  OE2(1248) 
+>>>> bond: C(1242)  N(1249) 
+>>>> bond: N(1249)  CA(1250) 
+>>>> bond: CA(1250)  C(1251) 
+>>>> bond: C(1251)  O(1252) 
+>>>> bond: CA(1250)  CB(1253) 
+>>>> bond: C(1251)  N(1254) 
+>>>> bond: N(1254)  CA(1255) 
+>>>> bond: CA(1255)  C(1256) 
+>>>> bond: C(1256)  O(1257) 
+>>>> bond: CA(1255)  CB(1258) 
+>>>> bond: CB(1258)  CG(1259) 
+>>>> bond: CG(1259)  OD1(1260) 
+>>>> bond: CG(1259)  OD2(1261) 
+>>>> bond: C(1256)  N(1262) 
+>>>> bond: N(1262)  CA(1263) 
+>>>> bond: CA(1263)  C(1264) 
+>>>> bond: C(1264)  O(1265) 
+>>>> bond: CA(1263)  CB(1266) 
+>>>> bond: CB(1266)  CG1(1267) 
+>>>> bond: CB(1266)  CG2(1268) 
+>>>> bond: CG1(1267)  CD1(1269) 
+>>>> bond: C(1264)  N(1270) 
+>>>> bond: N(1270)  CA(1271) 
+>>>> bond: CA(1271)  C(1272) 
+>>>> bond: C(1272)  O(1273) 
+>>>> bond: CA(1271)  CB(1274) 
+>>>> bond: CB(1274)  CG(1275) 
+>>>> bond: CG(1275)  OD1(1276) 
+>>>> bond: CG(1275)  OD2(1277) 
+>>>> bond: C(1272)  N(1278) 
+>>>> bond: N(1278)  CA(1279) 
+>>>> bond: CA(1279)  C(1280) 
+>>>> bond: C(1280)  O(1281) 
+>>>> bond: C(1280)  N(1282) 
+>>>> bond: N(1282)  CA(1283) 
+>>>> bond: CA(1283)  C(1284) 
+>>>> bond: C(1284)  O(1285) 
+>>>> bond: CA(1283)  CB(1286) 
+>>>> bond: CB(1286)  CG(1287) 
+>>>> bond: CG(1287)  OD1(1288) 
+>>>> bond: CG(1287)  OD2(1289) 
+>>>> bond: C(1284)  N(1290) 
+>>>> bond: N(1290)  CA(1291) 
+>>>> bond: CA(1291)  C(1292) 
+>>>> bond: C(1292)  O(1293) 
+>>>> bond: C(1292)  N(1294) 
+>>>> bond: N(1294)  CA(1295) 
+>>>> bond: CA(1295)  C(1296) 
+>>>> bond: C(1296)  O(1297) 
+>>>> bond: CA(1295)  CB(1298) 
+>>>> bond: CB(1298)  CG(1299) 
+>>>> bond: CG(1299)  CD(1300) 
+>>>> bond: CD(1300)  OE1(1301) 
+>>>> bond: CD(1300)  NE2(1302) 
+>>>> bond: C(1296)  N(1303) 
+>>>> bond: N(1303)  CA(1304) 
+>>>> bond: CA(1304)  C(1305) 
+>>>> bond: C(1305)  O(1306) 
+>>>> bond: CA(1304)  CB(1307) 
+>>>> bond: CB(1307)  CG1(1308) 
+>>>> bond: CB(1307)  CG2(1309) 
+>>>> bond: C(1305)  N(1310) 
+>>>> bond: N(1310)  CA(1311) 
+>>>> bond: CA(1311)  C(1312) 
+>>>> bond: C(1312)  O(1313) 
+>>>> bond: CA(1311)  CB(1314) 
+>>>> bond: CB(1314)  CG(1315) 
+>>>> bond: CG(1315)  OD1(1316) 
+>>>> bond: CG(1315)  ND2(1317) 
+>>>> bond: C(1312)  N(1318) 
+>>>> bond: N(1318)  CA(1319) 
+>>>> bond: CA(1319)  C(1320) 
+>>>> bond: C(1320)  O(1321) 
+>>>> bond: CA(1319)  CB(1322) 
+>>>> bond: CB(1322)  CG(1323) 
+>>>> bond: CG(1323)  CD1(1324) 
+>>>> bond: CD1(1324)  CE1(1326) 
+>>>> bond: CE1(1326)  CZ(1328) 
+>>>> bond: CZ(1328)  OH(1329) 
+>>>> bond: CZ(1328)  CE2(1327) 
+>>>> bond: CE2(1327)  CD2(1325) 
+>>>> bond: CD2(1325)  CG(1323) 
+>>>> bond: C(1320)  N(1330) 
+>>>> bond: N(1330)  CA(1331) 
+>>>> bond: CA(1331)  C(1332) 
+>>>> bond: C(1332)  O(1333) 
+>>>> bond: CA(1331)  CB(1334) 
+>>>> bond: CB(1334)  CG(1335) 
+>>>> bond: CG(1335)  CD(1336) 
+>>>> bond: CD(1336)  OE1(1337) 
+>>>> bond: CD(1336)  OE2(1338) 
+>>>> bond: C(1332)  N(1339) 
+>>>> bond: N(1339)  CA(1340) 
+>>>> bond: CA(1340)  C(1341) 
+>>>> bond: C(1341)  O(1342) 
+>>>> bond: CA(1340)  CB(1343) 
+>>>> bond: CB(1343)  CG(1344) 
+>>>> bond: CG(1344)  CD(1345) 
+>>>> bond: CD(1345)  OE1(1346) 
+>>>> bond: CD(1345)  OE2(1347) 
+>>>> bond: C(1341)  N(1348) 
+>>>> bond: N(1348)  CA(1349) 
+>>>> bond: CA(1349)  C(1350) 
+>>>> bond: C(1350)  O(1351) 
+>>>> bond: CA(1349)  CB(1352) 
+>>>> bond: CB(1352)  CG(1353) 
+>>>> bond: CG(1353)  CD1(1354) 
+>>>> bond: CD1(1354)  CE1(1356) 
+>>>> bond: CE1(1356)  CZ(1358) 
+>>>> bond: CZ(1358)  CE2(1357) 
+>>>> bond: CE2(1357)  CD2(1355) 
+>>>> bond: CG(1353)  CD2(1355) 
+>>>> bond: C(1350)  N(1359) 
+>>>> bond: N(1359)  CA(1360) 
+>>>> bond: CA(1360)  C(1361) 
+>>>> bond: C(1361)  O(1362) 
+>>>> bond: CA(1360)  CB(1363) 
+>>>> bond: CB(1363)  CG1(1364) 
+>>>> bond: CB(1363)  CG2(1365) 
+>>>> bond: C(1361)  N(1366) 
+>>>> bond: N(1366)  CA(1367) 
+>>>> bond: CA(1367)  C(1368) 
+>>>> bond: C(1368)  O(1369) 
+>>>> bond: CA(1367)  CB(1370) 
+>>>> bond: CB(1370)  CG(1371) 
+>>>> bond: CG(1371)  CD(1372) 
+>>>> bond: CD(1372)  OE1(1373) 
+>>>> bond: CD(1372)  NE2(1374) 
+>>>> bond: C(1368)  N(1375) 
+>>>> bond: N(1375)  CA(1376) 
+>>>> bond: CA(1376)  C(1377) 
+>>>> bond: C(1377)  O(1378) 
+>>>> bond: CA(1376)  CB(1379) 
+>>>> bond: CB(1379)  CG(1380) 
+>>>> bond: CG(1380)  SD(1381) 
+>>>> bond: SD(1381)  CE(1382) 
+>>>> bond: C(1377)  N(1383) 
+>>>> bond: N(1383)  CA(1384) 
+>>>> bond: CA(1384)  C(1385) 
+>>>> bond: C(1385)  O(1386) 
+>>>> bond: CA(1384)  CB(1387) 
+>>>> bond: CB(1387)  CG(1388) 
+>>>> bond: CG(1388)  SD(1389) 
+>>>> bond: SD(1389)  CE(1390) 
+>>>> bond: C(1385)  N(1391) 
+>>>> bond: N(1391)  CA(1392) 
+>>>> bond: CA(1392)  C(1393) 
+>>>> bond: C(1393)  O(1394) 
+>>>> bond: CA(1392)  CB(1395) 
+>>>> bond: CB(1395)  OG1(1396) 
+>>>> bond: CB(1395)  CG2(1397) 
+>>>> bond: C(1393)  N(1398) 
+>>>> bond: N(1398)  CA(1399) 
+>>>> bond: CA(1399)  C(1400) 
+>>>> bond: C(1400)  O(1401) 
+>>>> bond: CA(1399)  CB(1402) 
+>>>> bond: C(1400)  N(1403) 
+>>>> bond: N(1403)  CA(1404) 
+>>>> bond: CA(1404)  C(1405) 
+>>>> bond: C(1405)  O(1406) 
+>>>> bond: CA(1404)  CB(1407) 
+>>>> bond: CB(1407)  CG(1408) 
+>>>> bond: CG(1408)  CD(1409) 
+>>>> bond: CD(1409)  CE(1410) 
+>>>> bond: CE(1410)  NZ(1411) 
+
+**** Error [GrGeometry::setConnData] conn index [2789] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2792] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2794] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2795] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2797] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2798] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2800] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2801] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2804] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2806] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2807] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2809] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2810] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2812] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2813] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2815] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2816] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2818] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2819] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2821] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2822] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2824] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2825] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2827] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2828] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2830] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2831] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2833] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2834] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2836] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2837] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2839] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2840] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2842] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2843] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2845] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2846] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2848] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2849] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2851] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2852] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2854] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2855] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2857] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2858] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2860] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2861] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2863] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2864] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2866] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2867] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2869] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2870] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2872] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2873] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2875] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2876] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2878] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2879] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2881] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2882] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2884] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2885] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2887] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2888] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2890] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2891] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2893] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2894] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2896] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2897] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2899] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2900] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2902] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2903] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2905] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2906] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2908] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2909] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2911] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2912] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2914] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2915] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2917] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2918] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2920] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2921] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2923] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2924] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2926] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2927] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2929] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2930] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2932] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2933] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2935] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2936] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2938] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2939] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2941] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2942] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2944] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2945] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2947] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2948] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2950] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2951] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2953] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2954] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2956] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2957] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2959] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2960] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2962] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2963] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2965] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2966] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2968] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2969] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2971] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2972] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2974] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2975] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2977] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2978] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2980] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2981] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2983] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2984] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2986] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2987] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2989] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2990] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2992] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2993] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2995] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2996] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2998] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [2999] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3001] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3002] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3004] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3005] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3007] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3008] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3010] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3011] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3013] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3014] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3016] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3017] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3019] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3020] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3022] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3023] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3025] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3026] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3028] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3029] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3031] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3032] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3034] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3035] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3037] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3038] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3040] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3041] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3043] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3044] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3046] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3047] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3049] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3050] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3052] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3053] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3055] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3056] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3058] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3059] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3061] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3062] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3064] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3065] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3067] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3068] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3070] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3071] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3073] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3074] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3076] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3077] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3079] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3080] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3082] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3083] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3085] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3086] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3088] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3089] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3091] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3092] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3094] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3095] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3097] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3098] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3100] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3101] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3103] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3104] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3106] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3107] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3109] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3110] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3112] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3113] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3115] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3116] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3118] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3119] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3121] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3122] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3124] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3125] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3127] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3128] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3130] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3131] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3133] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3134] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3136] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3137] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3139] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3140] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3142] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3143] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3145] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3146] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3148] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3149] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3151] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3152] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3154] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3155] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3157] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3158] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3160] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3161] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3163] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3164] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3166] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3167] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3169] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3170] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3172] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3173] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3175] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3176] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3178] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3179] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3181] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3182] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3184] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3185] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3187] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3188] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3190] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3191] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3193] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3194] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3196] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3197] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3199] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3200] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3202] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3203] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3205] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3206] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3208] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3209] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3211] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3212] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3214] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3215] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3217] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3218] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3220] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3221] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3223] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3224] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3226] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3227] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3229] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3230] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3232] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3233] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3235] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3236] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3238] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3239] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3241] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3242] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3244] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3245] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3247] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3248] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3250] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3251] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3253] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3254] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3256] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3257] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3259] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3260] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3262] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3263] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3265] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3266] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3268] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3269] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3271] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3272] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3274] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3275] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3277] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3278] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3280] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3281] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3283] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3284] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3286] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3287] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3289] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3290] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3292] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3293] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3295] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3296] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3298] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3299] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3301] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3302] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3304] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3305] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3307] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3308] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3310] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3311] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3313] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3314] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3316] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3317] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3319] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3320] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3322] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3323] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3325] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3326] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3328] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3329] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3331] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3332] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3334] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3335] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3337] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3338] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3340] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3341] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3343] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3344] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3346] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3347] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3349] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3350] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3352] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3353] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3355] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3356] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3358] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3359] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3361] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3362] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3364] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3365] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3367] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3368] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3370] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3371] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3373] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3374] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3376] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3377] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3379] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3380] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3382] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3383] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3385] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3386] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3388] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3389] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3391] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3392] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3394] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3395] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3397] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3398] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3400] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3401] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3403] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3404] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3406] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3407] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3409] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3410] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3412] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3413] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3415] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3416] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3418] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3419] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3421] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3422] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3424] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3425] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3427] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3428] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3430] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3431] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3433] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3434] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3436] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3437] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3439] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3440] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3442] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3443] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3445] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3446] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3448] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3449] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3451] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3452] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3454] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3455] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3457] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3458] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3460] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3461] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3463] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3464] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3466] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3467] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3469] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3470] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3472] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3473] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3475] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3476] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3478] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3479] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3481] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3482] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3484] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3485] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3487] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3488] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3490] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3491] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3493] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3494] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3496] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3497] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3499] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3500] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3502] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3503] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3505] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3506] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3508] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3509] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3511] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3512] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3514] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3515] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3517] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3518] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3520] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3521] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3523] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3524] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3526] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3527] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3529] out of range.
+
+**** Error [GrGeometry::setConnData] conn index [3530] out of range.
+pm> domain iq1 backbone color = [ 1 0 0 ] width = 2
+pm> #domain iq1a bonds atom_color = element atoms = true show = true
+pm> #domain iq1a atoms color = element show = true
+pm> #domain iq1 atoms color = [ 0 1 0 ] show = true
+
+ >>>>>> GlutWinExpose:  win [104803e8]  g_curr_win [1] 
+q

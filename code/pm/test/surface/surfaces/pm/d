@@ -1,0 +1,39 @@
+
+#------------------------------------------------------#
+# show surface                                         #
+#------------------------------------------------------#
+# Original: Mon Apr  9 15:03:54 PDT 2007               #
+#------------------------------------------------------#
+
+#-------------------------#
+#  set units              #
+#-------------------------#
+
+units
+units scale  name = mass   uname = reducedMass   scale = 1000
+
+graphics background color = [ 0 0.8 0.8 ]
+
+molecule read name = m1 format = pdb  file = iq1.pdb 
+domain create d1 = C
+domain d1 backbone color = [ 1 0.5 0.5 ] width = 2 show
+#domain d1 helix axis show
+domain d1 helix centerline show
+
+domain d1 surface read file = camB_surf.pm
+#domain d1 surface read file = camA_surf.pm
+#domain d1 surface read file = iq1_surf.pm
+
+#domain d1 surface display = solid  show
+#domain d1 surface display = solid  shading = color show
+domain d1 surface display = line color = [ 0.5 0.5 0.5 ] show
+#domain d1 surface display = point color = [ 0.5 0.5 0.5 ] show
+
+domain d1 surface properties 
+
+domains pick
+graphics pick  size = 0.2  width = 3  color = [ 1 1 0 ]
+graphics  center  domain = d1 
+
+graphics  point  name = center1  type = cross pos = [ 8.389949 4.598528 0.026972 ] 
+

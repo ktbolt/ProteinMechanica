@@ -1,0 +1,27 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing domain atom bonds.                             #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name=neckDb format=pdb  file=iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name=neckMol  database=neckDb  type=protein
+molecule neckMol print 
+
+# create neck domain
+#-------------------
+domain  create  neckHeavyChain=C[760-780]  molecule=neckMol
+
+# visualize atoms using bonds
+#----------------------------
+domain neckHeavyChain  bonds  atoms=true atom_color=element   show=true
+
+# visualize using backbone 
+#--------------------------
+domain neckHeavyChain  backbone  color=[1 1 0]  width=3  show=true
+

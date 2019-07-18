@@ -1,0 +1,82 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Head-Neck Model                              #
+#                                                           #
+# Fit models of neck onto models of the myosin V head in    #
+# pre- and post-powerstroke states.                         #
+#-----------------------------------------------------------#
+
+#-----------------------------------------------------------#
+#                 create post-stroke monomer model          #
+#-----------------------------------------------------------#
+# read post head model
+#---------------------
+database open name=postDb type=pdb file=../pdb_structures/headPost.pdb 
+molecule read name=postMol database=postDb
+molecule postMol print 
+molecule postMol xform rotate=[0 -90 0] 
+
+domain create postHead=C
+domain postHead backbone color=[0.5 0.5 1] width=3 show=true
+domain create postCam=A
+domain postCam backbone color=[0 0.5 1] width=3 show=true
+
+# read neck model
+#----------------
+database open name=neckDb type=pdb file=neck_model.pdb 
+molecule read name=neckMol database=neckDb
+molecule neckMol print 
+domain create postNeck=CABDEFG
+
+# fit neck onto the end of head
+#------------------------------
+variable fs1=C[756-769]
+domain postNeck fit sequence=${fs1} \
+   destination=postHead             \ 
+   destination_sequence=${fs1}
+domain postNeck backbone color=[1 0.7 0.7] width=3 show=true
+
+# write complete model 
+#---------------------
+variable fn=postMonomer.pdb
+domains write  atoms list={postHead} chains={C[2-758]}    file=${fn}
+domains append atoms list={postNeck} chains={C[759-923]}  file=${fn}
+domains append atoms list={postNeck} chains={A B D E F G} file=${fn}
+
+#-----------------------------------------------------------#
+#                 create pre-stroke monomer model           #
+#-----------------------------------------------------------#
+# read post head model
+#---------------------
+database open name=preDb type=pdb file=../pdb_structures/headPre.pdb 
+molecule read name=preMol database=preDb
+molecule preMol print 
+molecule preMol xform rotate=[0 -90 0] 
+
+domain create preHead=C
+domain preHead backbone color=[0.5 0.5 1] width=3 show=true
+
+# read neck model
+#----------------
+database open name=neckDb type=pdb file=neck_model.pdb 
+molecule read name=neckMol database=neckDb
+molecule neckMol print 
+domain create  preNeck=CABDEFG
+
+# fit neck onto the end of head
+#------------------------------
+domain preNeck fit sequence=${fs1} \
+   destination=preHead             \ 
+   destination_sequence=${fs1}
+domain preNeck backbone color=[1 0.7 0.7] width=3 show=true
+
+# write complete model 
+#---------------------
+variable fn1=preMonomer.pdb
+domains write  atoms list={preHead} chains={C[2-758]}     file=${fn1}
+domains append atoms list={preNeck} chains={C[759-923]}   file=${fn1}
+domains append atoms list={preNeck} chains={A B D E F G}  file=${fn1}
+

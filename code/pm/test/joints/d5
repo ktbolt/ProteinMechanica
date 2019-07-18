@@ -1,0 +1,95 @@
+
+#============================================================*
+#                test universal joints                       *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# read molecule 
+#--------------
+database open name = neck   format = pdb  file = ../data/neck_xform.pdb
+molecule read  name = protein  database = neck
+molecule protein xform rotation = [ -20 -40 20  ] 
+domain create hc = C
+
+# create domains
+#---------------
+#domain create iq1 = AC[760-788]
+#domain iq1 backbone color = [ 0.7 0 0 ] width = 3 show
+#domain iq1 atoms color = [ 0.7 0 0 ] show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0.7 0 0 ] width = 3 show
+#domain iq2 atoms color = [ 0.7 0 0 ] display = point show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0.7 0 ] width = 3 show
+#domain iq3 atoms color = [ 0 0.7 0 ] show
+
+
+# create bodies from domains
+#---------------------------
+body create  name = ground    type = ground
+body create  name = iq1_body  type = rigid   domain = iq2
+body create  name = iq2_body  type = rigid   domain = iq3
+
+# 1st joint 
+# ---------
+#joint create  name = jnt1   type = hinge domain = hc  res = C814  use = CA \
+              use_pca = true pca_res = C[788-814]  axis1 = pca2  
+
+#joint create  name = jnt1           \
+              type = universal      \
+              domain = hc           \
+              res = C[814]          \
+              use = CA              \
+              use_pca = true        \
+              pca_res = C[7880-814]  \
+              axis1 = pca2          \
+              axis2 = pca3
+
+joint create  name = jnt1   type = ball domain = hc    res = C[814]     use = CA  \
+              use_pca = true  pca_res = C[788-814]  axis1 = pca1  axis2 = pca2  \
+              axis3 = pca3 force_const1 = 1.0  force_const2 = 2.0 force_const3 = 2.0
+
+
+joint jnt1 bodies = { ground iq1_body }
+joint jnt1 color = [ 1 0 1 ] msize = 0.1 shading = color show = true 
+
+
+#----------------------------#
+# create a rigid simulation  #
+#----------------------------#
+
+simulation create name = rsim  type = rigid
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground  iq1_body iq2_body }
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 }
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create name = force1  type = explicit point = [ 0 0 0 ] direction = [ 1 0 0 ]  
+simulation rsim add force = force1 body = iq2_body  time = { 0 1 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+# step simulation
+#----------------
+#simulation rsim step = 200
+
+
+graphics background color = [ 1 1 1 ]

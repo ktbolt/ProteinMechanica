@@ -1,0 +1,51 @@
+#------------------------------------------------------#
+# fit m6 trimer to actin                               #
+#------------------------------------------------------#
+system echo=off
+system verbose=false
+
+# read m6
+#--------
+database open name=m6Db format=pdb file=../m6-780-2R-4gsg-trimer.pdb
+molecule read name=m6Mol database=m6Db
+domain create trimer=ABC
+
+# read actin
+#-----------
+database open name=actinDb format=pdb file=${dpath}/actin/actinFilament25_md.pdb 
+molecule read name=actinMol database=actinDb
+domain create actin1=ACEGIKMOQSUWY 
+domain actin1 backbone color=[0.8 0.8 0] width=1 show=true
+domain create actin2=BDFHJLNPRTVX  
+domain actin2 backbone color=[0.0 0.8 0.5] width=1 show=true
+
+# read m6 rigor model docked to actin
+#------------------------------------
+database open name=rigorDockedDb format=pdb file=${dpath}/myosinVI/rigor/docked-to-actin/m6Rigor_dockedActin.pdb
+molecule read name=rigorDockedMol database=rigorDockedDb
+domain create rigorDocked=AW
+
+# fit rigor-actin model to actin filament 
+#----------------------------------------
+variable fs=[302-348]
+
+domain rigorDocked fit sequence=W${fs} \
+       destination=actin2 destination_sequence=T${fs}
+
+domain rigorDocked backbone color=[0.5 0.5 0.5] width=1 show=true
+
+# fit trimer to rigor-actin model 
+#-------------------------------
+variable m6fs=[515-520,528-535,541-552]
+
+domain trimer fit sequence=A${m6fs} \
+       destination=rigorDocked destination_sequence=A${m6fs}
+
+domain trimer backbone color=[1 0.5 0.5] width=1 show=true
+
+# write trimer 
+#------------
+domains write atoms list={trimer} file=m6-780-2R-4gsg-trimer-dockedActin.pdb
+
+graphics center point=actin1:G[13]
+

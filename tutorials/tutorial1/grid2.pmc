@@ -1,0 +1,15 @@
+#============================================================#
+# Tutorial 1 - Basics                                        #
+#                                                            #
+# Visualizing volumes using volume sampling.                 #
+#============================================================#
+
+# read grid
+#----------
+grid read name=myosinV format=pm file=emd_1201.pm
+
+# display volume using sampleing 
+#-------------------------------
+grid myosinV volume vmin=0.3  vmax=0.7  samples=4 show=true
+
+

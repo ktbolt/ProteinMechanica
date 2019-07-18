@@ -1,0 +1,143 @@
+#============================================================*
+#                     test mass spring with spheres          *
+#============================================================*
+
+system echo = off
+system verbose = false
+
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 100.0
+
+
+# create two spheres
+#-------------------
+solid create  name = sp1  type = sphere radius = 0.4 center = [ 0.0 0.0 0.0 ] 
+solid  sp1  color = [ 0 1 0 ]  
+
+solid create  name = sp2  type = sphere radius = 0.8  center = [ 10.0 0.0 0.0 ] 
+
+solid create  name = sp3  type = sphere radius = 0.8  center = [ 20.0 0.0 0.0 ] 
+solid  sp3  color = [ 1 0 0 ]  display = line 
+
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = sp1b  type = static solid = sp1
+body create  name = sp2b  type = rigid  solid = sp2
+body create  name = sp3b  type = static solid = sp3
+
+body sp2b   damping = 0.1 
+
+
+#----- ground joint -----#
+joint create  name = groundJnt  type = ball  solid = sp1  
+joint groundJnt color = [ 1 1 1 ] msize = 0.08 shading = color show = true
+joint groundJnt bodies = { ground sp1b }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+
+# set solver
+#-----------
+simulation rsim solver = ode
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = all 
+simulation rsim add joints = all 
+
+
+# add potential 
+#--------------
+solid  sp1  define region = sp1Rgn   use_center = true
+solid  sp2  define region = sp2Rgn   use_center = true
+
+body sp1b  add potential = sp1Pot type = spring  region = sp1Rgn  \
+               geometry = points  color = [ 0 1 0 ]               \
+               force_const = 8.0  cutoff = 20.8   show = true 
+
+body sp2b  add potential = sp2Pot  type = spring  region = sp2Rgn  \
+               geometry = points   color = [ 0 1 0 ]               \
+               force_const = 8.0   cutoff = 20.8   show = true 
+
+simulation rsim add interaction = sp1Sp2Pot          \
+                    body1 = sp1b potential1 = sp1Pot \
+                    body2 = sp2b potential2 = sp2Pot \
+                    time = { 0.0 1000.0 }
+
+
+# add forces
+#-----------
+force create  name = force1  type = explicit point = [ 0 0 0 ]       \
+              direction = [ -18 0 0 ]  scale = 1.0
+#simulation rsim add force = force1   body = sp2b   time = { 0 4.0 }
+
+#force create  name = force2  type = explicit point = [ 0 0 0 ]       \
+              direction = [  8 0 0 ]  scale = 1.0
+#simulation rsim add force = force2   body = sp2b   time = { 0 4.0 }
+
+
+# add restraint
+#--------------
+solid sp2  define  region = sp2Rgn  use_center = true
+solid sp3  define  region = sp3Rgn  use_center = true
+
+simulation rsim add restraint = res1                         \
+                    body1 = sp2b  region1 = sp2Rgn           \
+                    body2 = sp3b  region2 = sp3Rgn           \
+                    force_const = 1000.0  distance = 1.0     \
+                    ramp = 10.0                              \
+                    time = { 0 10000 }
+
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step = 0.005
+#simulation rsim time step = 0.002
+#simulation rsim time step = 0.001
+simulation  state  save_frequency = 100
+
+#simulation rsim momentum = on
+simulation rsim momentum = off
+simulation rsim damping = on
+
+
+# add trace
+#----------
+#simulation rsim  add trace  name = trace1  color = [ 1 1 0 ]  \
+           global_frame = false   point = [ 0 0 0 ]           \
+           body = sp2b  show = true
+
+
+# write energy 
+#-------------
+#simulation  rsim  write  energy = true  file_name = rsim
+#simulation  rsim  write  strain = true  file_name = rsim_strain
+#simulation  rsim  write  kinetic_energy = true  file_name = rsim_ke
+#simulation  rsim  write  trace = trace1  file_name = rsim_trace
+
+
+# print body masses
+#------------------
+#body  sp1b  print  properties = mass
+body  sp2b  print  properties = mass
+
+s 1000
+
+wait 
+
+read wrc
+
+
+
+

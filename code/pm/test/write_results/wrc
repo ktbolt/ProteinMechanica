@@ -1,0 +1,6 @@
+
+# write current configuration
+#----------------------------
+simulation  rsim  write  domains = true  file_name = rsim  current = true
+
+

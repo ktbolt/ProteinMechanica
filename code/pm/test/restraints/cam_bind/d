@@ -1,0 +1,31 @@
+
+#============================================================*
+#               test restraints                              *
+#                                                            *
+# look at 2nd structure                                      *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#---------------
+database open name = neck format = pdb  file = ../../data/1M46.pdb                
+
+# read molecule
+#---------------
+molecule read  name = m1   database = neck
+molecule m1  xform transaltion = [ -2.01791 -3.05832 -0.54274 ] 
+domain create hc = A
+
+
+# show all helices
+#-----------------
+domains  create  helices = true  prefix = h color = [ 1 0 0 ] width = 5
+
+# show all sheets
+#----------------
+domains  create  sheets = true  prefix = sh color = [ 0 1 1 ]  width = 8
+

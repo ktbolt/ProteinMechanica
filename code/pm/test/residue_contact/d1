@@ -1,0 +1,37 @@
+
+#============================================================#
+#               test reading 2nd structure                   #
+#                                                            #
+# show topology.                                             #
+#============================================================#
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/2IX7.pdb
+
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1  
+
+# create a some domains
+#----------------------
+domain create cam = A
+domain cam backbone color = [ 1 0 0 ] width = 1 show
+#domain cam bonds atoms = true atom_color = element color = [ 1 0 0 ] width = 1 show
+
+# show contact
+#-------------
+#domain cam contact cutoff = 0.01 use_sidechains = true   use_radii = true
+domain cam contact cutoff = 0.5 atom_nams = { CA } show
+#domain cam contact cutoff = 0.5 show
+
+
+#graphics background color = [ 1 1 1 ]
+
+
+

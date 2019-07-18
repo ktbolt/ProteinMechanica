@@ -1,0 +1,87 @@
+
+#============================================================*
+#               test simulation using ball joints            *
+#                                                            *
+# two bodies with 4 residues each.                           *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../two_necks.pdb 
+
+# read molecule
+molecule read  name = m1   database = neck
+#molecule m1  xform  translation = [ -1.9540  -8.7018  -4.8071 ] 
+
+# create a some domains
+domain create iq = C[760-780]
+domain iq backbone color = [ 0.6 0.6 0.6 ] width = 1 show
+#domain iq bonds bond_color = [ 1 1 1 ] width = 2 show
+
+domain create r1 = C[760-764]
+#domain r1 atoms color = [ 1 0 0 ] display = line show
+#domain r1 bonds atoms = false atom_color = element bond_color = [ 1 0 0 ] width = 2 show
+domain r1 bonds atoms = true  atom_color = element bond_color = [ 1 0 0 ] width = 2 show
+#domain r1 backbone color = [ 1 0 0 ] width = 3 show
+
+domain create r2 = C[764-768]
+#domain r2 atoms color = [ 0 1 0 ] show
+#domain r2 bonds atoms = false atom_color = element bond_color = [ 0 1 0 ] width = 2 show
+domain r2 bonds atoms = true  atom_color = element bond_color = [ 0 1 0 ] width = 2 show
+#domain r2 backbone color = [ 0 1 0 ] width = 3 show
+
+body create  name = ground    type = ground
+body create  name = r1b  type = rigid   domain = r1
+body create  name = r2b  type = rigid   domain = r2
+
+joint create  name = jnt1   type = ball  domain = iq res = C760   use = CA
+joint jnt1 color = [ 1 0 0 ] msize = 0.02 shading = color show = true
+joint jnt1 bodies = { ground r1b }
+
+joint create  name = jnt2   type = ball  domain = iq res = C764   use = CA
+joint jnt2 color = [ 0 1 0 ] msize = 0.02 shading = color show = true
+joint jnt2 bodies = { r1b r2b }
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+
+# add bodies
+#-----------
+simulation rsim add bodies = { ground r1b r2b }
+
+# add joints
+#-----------
+simulation rsim add joints = { jnt1 jnt2 }
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+
+# add forces
+#-----------
+force create  name = force1         \
+              type = explicit         \
+              global_frame = true             \
+              point = [ 0.956219 0.85662 0.291279 ]    \
+              direction = [ .1 0 0 ]  \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = r2b   \
+                    time = { 0 1000 }
+
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+simulation rsim time step = 0.001 
+
+
+graphics center  point = [ 0 0 0 ]

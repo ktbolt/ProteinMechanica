@@ -1,0 +1,30 @@
+#------------------------------------------------------#
+# define springs btween side chain atoms.              #
+#------------------------------------------------------#
+variable map_energy1=true
+variable emin1=0.0
+variable emax1=0.1
+
+variable cutoff1=0.6
+variable pot_k1=1.0
+variable pot_t1=inf
+variable pot_show1=true
+
+domain m1actinin1 define region=m1a1Rgn residues=A[792-804,877-882]
+domain m1actinin2 define region=m1a2Rgn residues=A[883-888,950-962]
+
+body m1actinin1Body add potential_geometry=m1a1a2Geom1 \
+   geometry=points region=m1a1Rgn                      \
+   color=[1 0 0] show=false
+
+body m1actinin2Body add potential_geometry=m1a1a2Geom2 \
+   geometry=points region=m1a2Rgn                      \
+   color=[1 0 1] show=false
+
+simulation rsim1 add interaction=m1a1a2Spings     \
+   type=spring  force_const=${pot_k1}              \
+   ljspring=true                                  \
+   list={m1a1a2Geom1 m1a1a2Geom2}                 \
+   cutoff=${cutoff1} time={0.0 ${pot_t1}}           \
+   map_energy=true  map_scale={ ${emin1} ${emax1} } \
+   color=[0 0 0] show=true

@@ -1,0 +1,25 @@
+#============================================================#
+# visualize domain atoms: show differnt groups               #
+#============================================================#
+
+# open pdb file
+#--------------
+database open name = neck format = pdb  file = ../data/iq123.pdb
+
+# read molecule
+#--------------
+molecule read  name = m1   database = neck
+
+# create a domain
+#----------------
+domain create helix = C
+
+# display sidechain atoms
+#------------------------
+domain helix atoms  atom_names = sc color = [ 0.6 0.6 0.6 ] show = true
+
+# display mainchain atoms using an added "name"
+#----------------------------------------------
+domain helix atoms  name = mc atom_names = mc color = [ 0.6 0 0 ] show = true
+
+

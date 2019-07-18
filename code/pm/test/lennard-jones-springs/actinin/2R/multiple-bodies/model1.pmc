@@ -1,0 +1,73 @@
+#------------------------------------------------------#
+# define model of 2R actinin                           #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+#database open name=actininDb1 format=pdb file=em_protn_A.pdb
+database open name=actininDb1 format=pdb file=aactinin2R_xform.pdb
+molecule read name=actininHeadMol1 database=actininDb1
+
+# create domains and bodies
+#--------------------------
+multibody create name=a1b type=domains                                  \
+   bodies={ A[748-791], A[791-796], A[796-800], A[800-808], A[808-817], \ 
+            A[817-828], A[828-839], A[839-842], A[842-848], A[848-857], \
+            A[857-878], A[878-880], A[880-886], A[886-897], A[897-907], \
+            A[907-912], A[912-916], A[916-927], A[927-956], A[956-958], \
+            A[958-963], A[963-971], A[971-978], A[978-1000] }           \
+   domain_color=[0.5 0 0] \
+   joint_type=ball      \
+   joints={ A[791] A[796] A[800] A[808] A[817] A[828] A[839] A[842] A[848] \
+            A[857] A[878] A[880] A[886] A[897] A[907] A[912] A[916] A[927] \
+            A[956] A[958] A[963] A[971] A[978] }                           \
+   joint_color=[1 0 1] msize=0.05
+
+#domain a1b3  atoms color=element show=true  
+#domain a1b13 atoms color=element show=true  
+#domain a1b20 atoms color=element show=true  
+#domain a1b21 atoms color=element show=true  
+
+body create name=ground1 type=ground
+
+# create joints
+#--------------
+variable gtype=weld 
+joint create name=a1GroundJoint type=${gtype} position=a1b1:A[748]:CA  \
+   color=[1 0 0] msize=0.18 shading=color show=true  \
+   bodies={ground1 a1b1Body}
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim1 type=rigid
+simulation rsim1 solver=ode
+simulation rsim1 momentum=on
+simulation rsim1 damping=on
+
+# add bodies and joints
+#----------------------
+simulation rsim1 add bodies=prefix  prefix=a1
+simulation rsim1 add body=ground1 
+simulation rsim1 add joints=prefix  prefix=a1
+
+# initialize the simulation
+#--------------------------
+simulation rsim1 initialize
+simulation rsim1 time step=0.002
+simulation rsim1 state save_frequency=100
+
+# apply forces 
+#-------------
+force create name=a1force1 type=explicit  \
+   global_frame=true point=a1b24:A[1000]  \
+   direction=[0 4 0] scale=1.0            \
+   color=[1 0 0] show=true
+simulation rsim1 add force=a1force1 body=a1b24Body time={0 500}
+
+# add trace
+#----------
+simulation rsim1  add trace name=trace1  \
+           global_frame=true    \
+           point=a1b24:A[1000] color=[1 0 0]  \
+           body=a1b24Body  width=2 show=true
+
+simulation rsim1 write energy=true state=true file_name=rsim1

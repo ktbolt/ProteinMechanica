@@ -1,0 +1,11 @@
+
+# create cylinder
+#----------------
+solid create  name = cyl1  type = cylinder  \
+              radius = 0.5   \
+              length = 2.0  \
+              center = [ 0 1 0 ]  \
+              axis = [ 0 1 0 ]  \
+              color = [ 1 0 0 ] \
+              show = true
+

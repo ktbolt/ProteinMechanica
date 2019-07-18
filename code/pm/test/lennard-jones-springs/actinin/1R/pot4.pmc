@@ -1,0 +1,35 @@
+#------------------------------------------------------#
+# define springs between side chain atoms.             #
+#------------------------------------------------------#
+variable map_energy4=true
+variable emin4=0.0
+variable emax4=1.0
+
+variable cutoff4=0.6
+variable pot_k4=1.0
+variable pot_cak4=100.0
+variable pot_t4=inf
+variable pot_show4=true
+
+#variable spring_atoms4=atom_names={CA}
+variable spring_atoms4=atom_names={sc}
+
+simulation rsim4 add interaction=a4Spings               \
+   type=spring  force_const=${pot_k4}  ${spring_atoms4} \
+   association=full                                     \
+   ljspring=true                                        \
+   bodies={a4b1Body a4b2Body a4b3Body a4b4Body a4b5Body a4b6Body a4b7Body a4b8Body \
+           a4b9Body a4b10Body a4b11Body a4b12Body } \ 
+   cutoff=${cutoff4} time={0.0 ${pot_t4}}           \
+   map_energy=true  map_scale={ ${emin4} ${emax4} } \
+   color=[0 0 0] show=true 
+
+#simulation rsim4 add interaction=a4CaSpings               \
+   type=spring  force_const=${pot_cak4}  atom_names={CA}  \
+   bodies={a4b1Body a4b2Body a4b3Body a4b4Body a4b5Body a4b6Body a4b7Body a4b8Body \
+           a4b9Body a4b10Body a4b11Body a4b12Body }  \
+   cutoff=${cutoff4} time={0.0 ${pot_t4}}            \
+   map_energy=true   map_scale={ ${emin4} ${emax4} } \
+   color=[1 1 0] width=2 show=true
+
+

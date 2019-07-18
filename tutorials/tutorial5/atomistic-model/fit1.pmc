@@ -1,0 +1,55 @@
+#-----------------------------------------------------------#
+# Tutorial 5 - Molecular Motor Actin-Binding Simulations    #
+#                                                           #
+# Building Atomistic Models of the Myosin V Dimer           #
+#                                                           #
+# Building the Neck Model                                   #
+#                                                           #
+# Extend the 2ix7 structure.                                #
+#-----------------------------------------------------------#
+
+# read 2ix7 model
+#----------------
+database open name=2ix7Db type=pdb file=../pdb_structures/2ix7.pdb 
+molecule read name=2ix7Mol database=2ix7Db
+molecule 2ix7Mol print 
+molecule 2ix7Mol xform rotate=[0 120 -15] 
+
+domain create  2ix7C=C
+domain 2ix7C  backbone color=[0.7 0.7 0.7] width=2 show=true
+domain create  2ix7A=A
+domain 2ix7A  backbone color=[0.7 0 0] width=2 show=true
+domain create  2ix7B=B
+domain 2ix7B  backbone color=[0 0.7 0] width=2 show=true
+
+domain create helix=C[780-800]
+domain helix backbone color=[ 1 0 1 ] width=6 show=true
+
+domain create fitNterm=C[780-800]
+domain create fitCterm=C[780-800]
+
+# fit helix onto the n-term of 2ix7
+#----------------------------------
+domain fitNterm fit sequence=C[795-800]         \
+                    destination=2ix7C           \ 
+                    destination_sequence=C[767-772] 
+
+domain fitCterm fit sequence=C[780-784]         \
+                    destination=2ix7C           \ 
+                    destination_sequence=C[810-814] 
+
+domain fitNterm  backbone color=[ 1 1 0 ] width=2 show=true
+domain fitCterm  backbone color=[ 0 1 1 ] width=2 show=true
+
+# write extended structure
+#-------------------------
+variable fn=2ix7_ext.pdb
+domains write  atoms list={ fitNterm } chains={ C[782-794]=C[754] }  file=${fn}
+domains append atoms list={ 2ix7C }    chains={ C[767-809] }         file=${fn}
+domains append atoms list={ fitCterm } chains={ C[780-800]=C[810] }  file=${fn}
+domains append atoms list={ 2ix7A    }                                 file=${fn}
+domains append atoms list={ 2ix7B    }                                 file=${fn}
+
+graphics  scale=1.4
+
+

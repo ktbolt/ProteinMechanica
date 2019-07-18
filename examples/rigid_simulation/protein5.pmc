@@ -1,0 +1,254 @@
+#============================================================#
+# rigid body simulation of a protein.                        #
+#                                                            #
+# use hinge joints with springs.                             #
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#---------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=neck format=pdb  file=../data/iq123.pdb
+molecule read name=m1 database=neck
+
+#============================================================#
+#            simulation 1                                    #
+#============================================================#
+
+# create a some domains
+#----------------------
+domain create s1iq1=AC[760-788]
+domain create s1iq2=BC[788-814]
+domain create s1iq3=DC[814-836]
+domain s1iq1 backbone color=[0.7 0.5 0.5] width=1 show=true
+domain s1iq2 backbone color=[0.7 0.5 0.5] width=1 show=true
+domain s1iq3 backbone color=[0.7 0.5 0.5] width=1 show=true
+
+
+# domain for creating joints
+#---------------------------
+domain create hc=C
+
+# create bodies
+#--------------
+body create  name=ground   type=ground
+body create  name=s1iq1Body  type=rigid   domain=s1iq1
+body create  name=s1iq2Body  type=rigid   domain=s1iq2
+body create  name=s1iq3Body  type=rigid   domain=s1iq3
+
+# create joints
+#--------------
+variable fc=0    
+
+joint create  name=s1jnt1   type=weld position=hc:C[760]:CA   \
+      bodies={ ground s1iq1Body }                             \
+      color=[ 1 1 1 ] msize=0.4 shading=color show=true
+
+joint create name=s1jnt2 type=hinge position=hc:C[788]:CA  \
+      use_pca=true  pca_res=hc:C[784-792]:CA axis=pca2     \
+      force_const =${fc}                                   \
+      bodies={ s1iq1Body s1iq2Body }                       \
+      color=[ 1 1 1 ] msize=0.4 shading=color show=true
+
+joint create  name=s1jnt3   type=hinge    position=hc:C[814]:CA \
+      use_pca=true  pca_res=hc:C[808-818]:CA axis=pca2          \
+      force_const =${fc}                                        \
+      bodies={s1iq2Body s1iq3Body}                              \
+      color=[1 1 1] msize=0.4 shading=color show=true
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim1  type=rigid
+
+# add bodies
+#-----------
+simulation rsim1 add body=ground
+simulation rsim1 add body=s1iq1Body
+simulation rsim1 add body=s1iq2Body
+simulation rsim1 add body=s1iq3Body
+
+variable damp=50.0
+body s1iq1Body damping=${damp}
+body s1iq2Body damping=${damp}
+body s1iq3Body damping=${damp}
+
+# add joints
+#-----------
+simulation rsim1 add joint=s1jnt1 
+simulation rsim1 add joint=s1jnt2 
+simulation rsim1 add joint=s1jnt3 
+
+# set solver
+#-----------
+simulation rsim1 solver=ode
+simulation rsim1 damping=on                  
+#simulation rsim1 momentum=off
+simulation rsim1 state save_frequency=1
+
+
+# add spring pot
+#---------------
+variable map_energy=true
+variable emin=0.0
+variable emax=0.1
+variable cutoff=0.6
+variable pot_k=1.0
+variable pot_t=inf
+variable pot_show=true
+variable spring_atoms=use_sidechains=false
+
+simulation rsim1 add interaction=a1a2Spings            \
+   type=spring  force_const=${pot_k}  ${spring_atoms} \
+   ljspring=true                                      \
+   bodies={s1iq1Body s1iq2Body} \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+simulation rsim1 add interaction=a2a3Spings            \
+   type=spring  force_const=${pot_k}  ${spring_atoms} \
+   ljspring=true                                      \
+   bodies={s1iq2Body s1iq3Body} \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+
+# add forces
+#-----------
+variable fs=100.0
+force create  name=s1force1  type=random                        \
+      global_frame=true  point=[0 0 0]   seed=193741 mean=0  sd=${fs} \
+      color=[ 0 1 0] show=true
+simulation rsim1 add force=s1force1  body=s1iq3Body  time={ 0 inf }
+
+
+# add trace
+#----------
+simulation rsim1 add trace  name=s1trace1  color=[ 1 0 0 ]  \
+           global_frame=true  point=s1iq3                  \
+           body=s1iq3Body width=2  show=true
+
+simulation rsim1 add trace  name=s1trace2  color=[ 1 0 0 ]  \
+           global_frame=true  point=s1iq2                  \
+           body=s1iq2Body width=2  show=true
+
+
+# initialize simulation
+#----------------------
+simulation rsim1 initialize
+simulation rsim1 time step=0.01
+
+#============================================================#
+#            simulation 2                                    #
+#============================================================#
+
+# create a some domains
+#----------------------
+domain create s2iq1=AC[760-788]
+domain create s2iq2=BC[788-814]
+domain create s2iq3=DC[814-836]
+domain s2iq1 backbone color=[ 0.5 0.7 0.5 ] width=1 show=true
+domain s2iq2 backbone color=[ 0.5 0.7 0.5 ] width=1 show=true
+domain s2iq3 backbone color=[ 0.5 0.7 0.5 ] width=1 show=true
+
+# create bodies
+#--------------
+body create  name=s2iq1Body  type=rigid   domain=s2iq1
+body create  name=s2iq2Body  type=rigid   domain=s2iq2
+body create  name=s2iq3Body  type=rigid   domain=s2iq3
+
+joint create  name=s2jnt1   type=weld   position=hc:C[760]:CA   \
+      bodies={ ground s2iq1Body }                               \
+      color=[ 0 1 0 ] msize=0.1 shading=color show=true
+
+joint create  name=s2jnt2   type=ball position=hc:C[788]:CA  \
+      bodies={ s2iq1Body s2iq2Body }                                    \
+      color=[ 0 1 0 ] msize=0.1 shading=color show=true
+
+joint create  name=s2jnt3   type=ball     position=hc:C[814]:CA \
+      bodies={ s2iq2Body s2iq3Body }                                      \
+      color=[ 0 1 0 ] msize=0.1 shading=color show=true
+
+# create a rigid simulation  
+#--------------------------
+simulation create name=rsim2  type=rigid
+
+# add bodies
+#-----------
+simulation rsim2 add body=ground
+simulation rsim2 add body=s2iq1Body
+simulation rsim2 add body=s2iq2Body
+simulation rsim2 add body=s2iq3Body
+
+body s2iq1Body damping=${damp}
+body s2iq2Body damping=${damp}
+body s2iq3Body damping=${damp}
+
+# add joints
+#-----------
+simulation rsim2 add joint=s2jnt1 
+simulation rsim2 add joint=s2jnt2 
+simulation rsim2 add joint=s2jnt3 
+
+# set solver
+#-----------
+simulation rsim2 solver=ode
+simulation rsim2 damping=on                  
+#simulation rsim1 momentum=off
+simulation rsim2 state save_frequency=1
+
+# add forces
+#-----------
+force create  name=s2force1  type=random                        \
+      global_frame=true  point=[0 0 0]   seed=193741 mean=0  sd=${fs} \
+      color=[ 0 1 0] show=true
+simulation rsim2 add force=s2force1  body=s2iq3Body  time={ 0 inf }
+
+
+# add trace
+#----------
+simulation rsim2 add trace  name=s2trace1  color=[ 0 1 0 ]  \
+           global_frame=true  point=s2iq3                  \
+           body=s2iq3Body width=2  show=true
+
+simulation rsim2 add trace  name=s2trace2  color=[ 0 1 0 ]  \
+           global_frame=true  point=s2iq2                  \
+           body=s2iq2Body width=2  show=true
+
+simulation rsim2 add interaction=a1a2Spings            \
+   type=spring  force_const=${pot_k}  ${spring_atoms} \
+   ljspring=true                                      \
+   bodies={s2iq1Body s2iq2Body} \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+simulation rsim2 add interaction=a2a3Spings            \
+   type=spring  force_const=${pot_k}  ${spring_atoms} \
+   ljspring=true                                      \
+   bodies={s2iq2Body s2iq3Body} \
+   cutoff=${cutoff} time={0.0 ${pot_t}}           \
+   map_energy=true  map_scale={ ${emin} ${emax} } \
+   color=[0 0 0] show=true
+
+
+# initialize simulation
+#----------------------
+simulation rsim2 initialize
+simulation rsim2 time step=0.01
+
+
+# step simulations
+#-----------------
+simulation rsim1 step=10000
+simulation rsim2 step=10000
+
+
+
+
+

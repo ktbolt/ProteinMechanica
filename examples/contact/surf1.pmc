@@ -1,0 +1,133 @@
+#============================================================#
+# protein domain conact: domain surface contact              #   
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck format=pdb file=../data/twoIq123.pdb 
+
+# read molecule
+#--------------
+molecule read database=neck name=m1 model=1 type=protein
+
+# create domains 
+#---------------
+domain create hc=C
+domain hc backbone color=[0.6 0.6 0.6] width=2 show=true
+
+# C-chain
+#--------
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[1 0 0] width=2 show=true
+
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[0 1 0] width=2 show=true
+
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[0 0 1] width=2 show=true
+domain iq3 surface read format=pm file=../data/camD_surf.pm
+domain iq3 surface color=[0.3 0.3 1.0] display=line show
+
+# J-chain
+#--------
+domain create hcj=J
+domain hcj backbone color=[0.0 0.6 0.6] width=2 show=true
+
+domain create iq4=IJ[760-788]
+domain iq4 backbone color=[1 0 0.5] width=2 show=true
+
+domain create iq5=KJ[788-814]
+domain iq5 backbone color=[0.7 0 0] width=2 show=true
+domain iq5 surface read format=pm file=../data/camK_surf.pm
+domain iq5 surface color=[0.7 0 0] display=line show=true
+
+domain create iq6=LJ[814-836]
+domain iq6 backbone color=[0.5 0 1] width=2 show=true
+
+# create bodies 
+#--------------
+# 1st group
+body create name=ground  type=ground
+body create name=iq1Body type=rigid domain=iq1
+body create name=iq2Body type=rigid domain=iq2
+body create name=iq3Body type=rigid domain=iq3
+# 2nd group
+body create name=iq4Body type=rigid domain=iq4
+body create name=iq5Body type=rigid domain=iq5
+body create name=iq6Body type=rigid domain=iq6
+
+#body iq1Body  print  properties=mass 
+
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+simulation rsim add body=iq3Body
+simulation rsim add body=iq4Body
+simulation rsim add body=iq5Body
+simulation rsim add body=iq6Body
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             point=[0 0 0]         \
+             direction=[ 5 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=iq3Body   \
+                    time={ 0 2 }
+
+#------------------------#
+# add contact potentials #
+#------------------------#
+variable fs=1.0
+
+# define contact for c-term lobe of cam
+#---------------------------------------
+domain iq3 define region=iq3_rgn  \
+   residues=D[120-140] use_surface=true  tolerance=0.10
+
+body iq3Body add potential_geometry=iq3_contact  \
+   region=iq3_rgn geometry=points                \
+   color=[1 1 1] show=true               
+
+domain iq5 define region=iq5_rgn  residues=K[10-80] \
+   use_surface=true tolerance=0.10
+
+body iq5Body add potential_geometry=iq5_contact  \
+   region=iq5_rgn geometry=points                \
+   color=[1 1 1] show=true  
+
+simulation rsim add interaction=contact1 \
+   type=contact strength=${fs}           \
+   list={iq3_contact iq5_contact}        \ 
+   time={0.0 10.0}
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.01
+
+# step simulation
+#----------------
+#simulation rsim step=1000
+

@@ -1,0 +1,35 @@
+#------------------------------------------------------#
+# execute simulation                                   #
+#------------------------------------------------------#
+
+# initialize the simulation
+#--------------------------
+simulation ${simulation_name} initialize
+simulation ${simulation_name} time step=0.001
+simulation ${simulation_name} solver  quick_step=true
+simulation state save_frequency=500
+
+# read state from previous simulation
+#------------------------------------
+#variable t=${simulation_state_file_name}.pm
+
+ifdef ${simulation_state_file_name}
+  simulation ${simulation_name} read state=true file_name=${simulation_state_file_name} \
+     time=last
+end ifdef
+
+# output simulation results
+#--------------------------
+simulation ${simulation_name} write energy=true state=true \
+   file_name=${simulation_file_name}
+
+#graphics center point=rigorCc2:A[955]
+graphics background color=[0.5 0.5 0.7] 
+
+#simulation ${simulation_name} step=400000
+
+#wait 
+
+#quit
+ 
+

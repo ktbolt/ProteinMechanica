@@ -1,0 +1,23 @@
+
+#============================================================*
+#               test picking xforme geom                     *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/two_necks.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create domains
+domain create hc = C
+domain hc  backbone  color = [ 0.6 0.6 0.6 ] width = 2 show
+
+domain create hcx = C
+domain hcx  xform translation = [ 5 0 0 ] 
+domain hcx  backbone  color = [ 1 0 0 ] width = 2 show
+

@@ -1,0 +1,35 @@
+
+#------------------------------------------------------#
+#------------------------------------------------------#
+
+#-------------------------#
+#  set units              #
+#-------------------------#
+
+units
+units scale  name = mass   uname = reducedMass   scale = 1000
+
+molecule read name = m1 format = pdb  file = neck_xform.pdb 
+domain create da = A
+domain create db = b
+domain create dd = d
+
+domain create di = i
+domain create dj = j
+domain create dk = k
+domain create dl = l
+
+domains atoms write file = camA.pdb list = { da }
+domains atoms write file = camB.pdb list = { db }
+domains atoms write file = camD.pdb list = { dd }
+
+domains atoms write file = camI.pdb list = { di }
+domains atoms write file = camK.pdb list = { dk }
+domains atoms write file = camL.pdb list = { dl }
+
+domains pick
+graphics pick  size = 0.2  width = 3  color = [ 1 1 0 ]
+graphics  center  domain = protein 
+
+
+

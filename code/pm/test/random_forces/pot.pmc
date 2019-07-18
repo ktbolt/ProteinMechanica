@@ -1,0 +1,53 @@
+#============================================================*
+#                  define potential                          *
+#============================================================*
+
+# add interaction potentials
+#---------------------------
+
+domain iq1 define region = iq1_rgn  residues = A[7-19]    atom_names = { CA }
+domain iq2 define region = iq2_rgn  residues = B[102-113] atom_names = { CA }
+domain iq2 define region = iq2_hrgn residues = C[809-813] atom_names = { CA }
+domain iq3 define region = iq3_hrgn residues = C[814-818] atom_names = { CA }
+
+body iq1_body add potential = iq1_spring         \
+                  type = spring                  \
+                  region = iq1_rgn               \ 
+                  geometry = points              \
+                  force_const = 5.0              \
+                  cutoff = 2.0                   \
+                  show = true               
+
+body iq2_body add potential = iq2_spring         \
+                  type = spring                  \
+                  region = iq2_rgn               \
+                  geometry = points              \
+                  force_const = 2.0              \
+                  show = true
+
+body iq2_body add potential = iq2_spring_h       \
+                  type = spring                  \
+                  region = iq2_hrgn              \
+                  geometry = points              \
+                  force_const = 2.0              \
+                  show = true
+
+body iq3_body add potential = iq3_spring_h       \
+                  type = spring                  \
+                  region = iq3_hrgn              \
+                  geometry = points              \
+                  force_const = 2.0              \
+                  show = true
+
+simulation rsim add interaction = spring1                       \
+                    body1 = iq1_body  potential1 = iq1_spring   \ 
+                    body2 = iq2_body  potential2 = iq2_spring   \ 
+                    time = { 0.0 1000.0 }
+
+simulation rsim add interaction = hspring1                       \
+                    body1 = iq2_body  potential1 = iq2_spring_h  \
+                    body2 = iq3_body  potential2 = iq3_spring_h  \
+                    time = { 0.0 1000.0 }
+
+
+

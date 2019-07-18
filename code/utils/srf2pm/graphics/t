@@ -1,0 +1,208 @@
+/*------------------------------------------------------------*
+ *                                                            *
+ *                      ****  PolyReorient  ****              *
+ *                                                            *
+ *------------------------------------------------------------*/
+
+void 
+PolyReorient (DmObj *geom)
+  {
+
+  int num_verts;
+
+  DmPoint3 *verts;
+
+  int num_polys;
+ 
+  int *conn, *pconn; 
+
+  int n, ne;
+
+  int i, j;
+
+  int n1, n2, first_node, min_n, nlist[10];
+
+  int nn1, nn2;
+
+  GeomPolygonEdge **edge_table, *ptr, *nptr;
+
+  int size;
+
+  int hgeom;
+
+  int *poly_table;
+
+  int *poly_proc;
+
+  int p, pn, pcount;
+
+  static char *fn = "GeomIndexPolygonsOrient";
+
+ /**************
+  ***  body  ***
+  **************/
+
+  fprintf (stderr, "\n---------- PolyReorient ---------- \n");
+
+  gr_GeomIndexPolygonsGet (geom, &num_verts, &verts, &num_polys, &conn);
+
+  hgeom = DM_TRUE;
+  n = 3;
+
+  edge_table = dm_MemAlloc(0, GeomPolygonEdge*, num_verts);
+
+  for (i = 0; i < num_verts; i++) {
+    edge_table[i] = DmNil(GeomPolygonEdge*);
+    }
+
+  for (i = 0; i < num_polys; i++) {
+    g_plist[i] = -1;
+    }
+
+  poly_proc = dm_MemAlloc(0, int, num_polys);
+
+  for (i = 0; i < num_polys; i++) {
+    poly_proc[i] = 0;
+    }
+
+
+  /*  compute poly edge list.  */
+
+  if (!hgeom) { 
+    poly_table = dm_MemAlloc(0, int, num_polys);
+    }
+
+  pconn = conn;
+
+  for (i = 0; i < num_polys; i++) {
+    if (!hgeom) { 
+      n = *pconn;
+      pconn++;
+
+      if (i == 0) {
+        poly_table[i] = 0;
+        }
+      else {
+        poly_table[i] = poly_table[i-1] + n + 1;
+        }
+      }
+
+    first_node = *pconn;
+
+    for (j = 0; j < n; j++) {
+      n1 = *pconn;
+      pconn++;
+
+      if (j == n - 1) {
+        n2 = first_node;
+        }
+      else {
+        n2 = *pconn;
+        }
+
+      min_n = dm_MinVal (n1, n2); 
+      ptr = dm_MemAlloc(0, GeomPolygonEdge, 1);
+      ptr->poly = i;
+      ptr->node1 = n1;
+      ptr->node2 = n2;
+      ptr->next = edge_table[min_n]; 
+      edge_table[min_n] = ptr; 
+      }
+    }
+
+#ifdef dbg_GeomIndexPolygonsOrient 
+  fprintf (stderr, "\n------- edge table ------- \n");
+  for (i = 0; i < num_verts; i++) {
+    fprintf (stderr, "%d: ", i);
+    ptr = edge_table[i];
+
+    while (ptr) { 
+      fprintf (stderr, "%d(%d %d) ", ptr->poly, ptr->node1, ptr->node2);
+      ptr = ptr->next;
+      }
+    fprintf (stderr, "\n");
+    }
+
+  {
+  FILE *fp;
+  int m;
+  fp = fopen ("dbg", "w");
+  fprintf (fp, "\n------- edge table ------- \n");
+  for (i = 0; i < num_verts; i++) {
+    fprintf (fp, "%d: ", i);
+    ptr = edge_table[i];
+    m = 0;
+
+    while (ptr) { 
+      fprintf (fp, "%d(%d %d) ", ptr->poly, ptr->node1, ptr->node2);
+      ptr = ptr->next;
+      m ++;
+      if (m == 7) {
+        fprintf (fp, "\n    ");
+        m = 0;
+        }
+      }
+    fprintf (fp, "\n\n");
+    }
+
+   fclose (fp);
+   }
+
+#endif
+
+
+  for (i = 0; i < num_verts; i++) {
+    ptr = edge_table[i];
+    ne = 0;
+
+    while (ptr) { 
+      ptr = ptr->next;
+      ne += 1;
+      }
+
+    if (ne == 1) {
+      fprintf (stderr, "\n\n ***** poly not closed ***** \n"); 
+      break;
+      } 
+    }
+
+  p = 4873;
+  p = 11451;
+  poly_proc[p] = 1;
+
+  GeomIndexPolygonsOrientTrav (p, num_polys, conn, edge_table, hgeom, n, poly_table,
+                               poly_proc);
+
+
+#ifdef dbg_GeomIndexPolygonsOrient 
+  fprintf (stderr, "\n---------- new conn -----\n", i);
+
+  for (i = 0; i < num_polys; i++) {
+    if (!hgeom) { 
+      n = *conn;
+      conn++;
+      }
+
+    fprintf (stderr, "%d: ", i);
+
+    for (j = 0; j < n; j++) {
+      fprintf (stderr, "%d ", *conn);
+      conn++;
+      }
+
+    fprintf (stderr, "\n");
+    }
+#endif
+
+  for (i = 0; i < num_polys; i++) {
+    if (poly_proc[i] == 0) {
+      /*
+    if (g_plist[i] == -1) {
+      fprintf (stderr, "%d: %d ", i, poly_proc[i]);
+      */
+      fprintf (stderr, "%d ", i);
+      }
+    }
+
+  dm_MemFree (0, edge_table);
+  }

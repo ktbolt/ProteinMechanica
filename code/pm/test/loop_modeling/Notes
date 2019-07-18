@@ -1,0 +1,25 @@
+Thu Dec 11 14:23:20 PST 2008
+----------------------------
+
+  test simulating protein loops.
+
+
+1)  script d1
+
+    define ball joints btw every two residues.
+
+
+2)  script d2
+
+    define domains consisting of peptide and sidechain groups.
+
+    use hinge joints.                                          
+
+
+3)  script d3
+
+    define domains consisting of peptide and sidechain groups.
+
+    use multibody command.                                    
+
+

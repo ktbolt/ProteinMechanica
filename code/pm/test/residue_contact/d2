@@ -1,0 +1,47 @@
+
+#============================================================#
+#               test reading 2nd structure                   #
+#                                                            #
+# show topology.                                             #
+#============================================================#
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+#--------------
+database open name = db1  format = pdb  file = ../data/neck_xform.pdb
+
+
+# read molecule
+#--------------
+molecule read  name = m1   database = db1  
+
+
+# create a helix domain
+#----------------------
+domain create helix = C
+domain helix backbone color = [ 1 0 0 ] width = 1 show
+
+# show contact
+#-------------
+#domain helix contact cutoff = 0.5 atom_names = { CA } show
+
+
+# create cam domain
+#-------------------
+domain create d1 = ABD
+domain d1 backbone color = [ 1 1 0 ] width = 1 show
+
+# show contact
+#-------------
+domain d1 contact cutoff = 0.1 use_sidechains = true   use_radii = true
+#domain d1 contact cutoff = 1.0 use_sidechains = true 
+#domain d1 contact cutoff = 0.5 atom_names = { CA } show
+
+
+#graphics background color = [ 1 1 1 ]
+
+
+

@@ -1,0 +1,133 @@
+#============================================================*
+#            test simulation of dna using cylinders          *
+#============================================================*
+
+# set units
+#----------
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+
+# open pdb file
+#--------------
+database open name = dna  format = pdb  file = dna_strand.pdb 
+
+# read molecule
+#--------------
+molecule read  database = dna name = m1  model = 1  type = dna 
+
+# create domains 
+#---------------
+domain create helix = CD
+# translate domain so that ground joint will be (0,0,0)
+#domain helix xform translation = [ 2.58377 -4.18649 -1.90172 ] 
+#domain helix backbone color = [ 1 0 0 ] show = true
+#domain helix bonds atoms = true  bond_color = element show = true
+
+domain create dna_a = C
+#domain dna_a xform translation = [ 2.58377 -4.18649 -1.90172 ] 
+domain dna_a backbone color = [ 1 0 0 ] width = 1 show = true
+domain dna_a bonds atoms = false bond_color = element show = true
+
+domain create dna_b = D
+#domain dna_b xform translation = [ 2.58377 -4.18649 -1.90172 ] 
+domain dna_b backbone color = [ 0 1 0 ] width = 1 show = true
+domain dna_b bonds atoms = false bond_color = element show = true
+
+
+# create cylinders
+#-----------------
+solid create  name = cyl1  type = cylinder  \
+              domain = helix                \
+              region = C[1-10]D[1-10]       \
+              color = [ 1 0 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl2  type = cylinder  \
+              domain = helix                \
+              region = C[10-19]D[10-19]     \
+              allign = cyl1                 \
+              allign_point =  1.0           \
+              color = [ 0 1 0 ]             \
+              display = line                \
+              show = true
+
+solid create  name = cyl3  type = cylinder  \
+              domain = helix                \
+              region = C[19-28]D[19-28]     \
+              allign = cyl2                 \
+              allign_point = 1.0            \
+              color = [ 0 0 1 ]             \
+              display = line                \
+              show = true
+
+
+# create bodies
+#--------------
+body create  name = ground    type = ground
+body create  name = cyl1_body type = rigid  solid = cyl1
+body create  name = cyl2_body type = rigid  solid = cyl2
+body create  name = cyl3_body type = rigid  solid = cyl3
+#body create  name = cyl4_body type = rigid  solid = cyl4
+#body create  name = cyl5_body type = rigid  solid = cyl5
+
+
+# create joints
+#--------------
+
+joint create  name = jnt1  type = ball  cylinder = cyl1  distance = 0.0
+joint jnt1 color = [ 1 1 1 ] msize = 0.1 shading = color show = true
+joint jnt1 bodies = { ground cyl1_body }
+
+joint create  name = jnt2  type = ball cylinder = cyl2  distance = 0.0
+joint jnt2 color = [ 1 0 0 ] msize = 0.1 shading = color show = true
+joint jnt2 bodies = { cyl1_body cyl2_body }
+
+joint create  name = jnt3  type = ball cylinder = cyl3  distance = 0.0
+joint jnt3 color = [ 0 1 0 ] msize = 0.1 shading = color show = true
+joint jnt3 bodies = { cyl2_body cyl3_body }
+
+
+# create a rigid simulation
+#--------------------------
+simulation create name = rsim  type = rigid
+
+# set solver
+#-----------
+simulation rsim solver = ode
+simulation rsim solver finite_rotation = on
+simulation rsim momentum = on 
+
+
+# add bodies
+#-----------
+simulation rsim add bodys = all
+
+# add joints
+#-----------
+simulation rsim add joints = all 
+
+# add forces
+#-----------
+force create  name = force1           \
+              type = explicit         \
+              point = [ 0 0 0 ]       \
+              direction = [ 0 10 0 ]   \
+              scale = 1.0
+
+simulation rsim add force = force1    \
+                    body = cyl3_body  \
+                    time = { 0 1000 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+
+# step simulation
+#----------------
+#simulation rsim step = 500
+
+
+
+#graphics background color = [ 1 1 1 ]

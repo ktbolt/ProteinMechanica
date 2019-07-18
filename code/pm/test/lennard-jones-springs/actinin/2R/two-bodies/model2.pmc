@@ -1,0 +1,72 @@
+#------------------------------------------------------#
+# define model of 2R actinin                           #
+#------------------------------------------------------#
+# read actinin model
+#-------------------
+database open name=actininDb format=pdb file=aactinin2R_xform.pdb
+molecule read name=actininHeadMol database=actininDb
+
+# create domains
+#---------------
+domain create m2actinin=A
+#domain actinin backbone color=[0.5 0.5 0.5] width=1
+
+domain create m2actinin1=A[748-882]
+domain m2actinin1 backbone color=[0 0.5 0] width=2
+domain create m2actinin1a=A[792-804,877-882]
+#domain m2actinin1a bonds atoms=true atom_color=[0 0.5 0.8] bond_color=[0 0.5 0.8]
+
+domain create m2actinin2=A[882-1010]
+domain m2actinin2 backbone color=[0 1.0 0] width=2
+domain create m2actinin2a=A[883-888,950-962]
+#domain m2actinin2a bonds atoms=true atom_color=[0.8 0.5 0] bond_color=[0.8 0.5 0]
+
+# create bodies
+#--------------
+body create name=ground2 type=ground
+body create type=rigid name=m2actinin1Body domain=m2actinin1 
+body create type=rigid name=m2actinin2Body domain=m2actinin2 
+
+# create joints
+#--------------
+joint create name=m2gjoint type=weld position=m2actinin1:A[748]:CA  \
+              color=[1 1 1] msize=0.05 shading=color show=true  \
+              bodies={ground2 m2actinin1Body}
+
+joint create name=m2joint1 type=ball position=m2actinin1:A[882]:CA  \
+              color=[1 1 1] msize=0.05 shading=color show=true  \
+              bodies={m2actinin1Body m2actinin2Body}
+
+#  create a rigid simulation
+#----------------------------
+simulation create name=rsim2 type=rigid
+simulation rsim2 solver=ode
+simulation rsim2 momentum=on
+simulation rsim2 damping=on
+
+# add bodies and joints
+#----------------------
+simulation rsim2 add body=ground2
+simulation rsim2 add bodies=prefix  prefix=m2
+simulation rsim2 add joints=prefix  prefix=m2
+
+# initialize the simulation
+#--------------------------
+simulation rsim2 initialize
+simulation rsim2 time step=0.01
+#simulation  state  save_frequency = 100
+
+# apply forces 
+#-------------
+force create name=m2force1 type=explicit       \
+   global_frame=true point=m2actinin2:A[1008]  \
+   direction=[0 4 0] scale=1.0               \
+   color=[1 0 0] show=true
+simulation rsim2 add force=m2force1 body=m2actinin2Body time={0 500}
+
+# add trace
+#----------
+simulation rsim2  add trace name=trace2            \
+           global_frame=true                       \
+           point=m2actinin2:A[1009] color=[0 1 0]  \
+           body=m2actinin2Body show=true

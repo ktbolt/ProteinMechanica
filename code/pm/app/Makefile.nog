@@ -1,0 +1,37 @@
+#----------------------------------------------#
+# pm no graphics makefile                      #
+#----------------------------------------------#
+
+cwd = `pwd`
+
+src = \
+      main.cpp
+obj = $(src:.cpp=.o)
+
+# define include dirs
+#--------------------
+pm_dir = ../src/
+inc = -I$(pm_dir)  -I../include   -I../../common/include
+
+# define libs
+#------------
+sw_libs = -L../../lib/ -lpm_core_nog -lpm_common
+libs = $(sw_libs) -lm
+
+copt = -O2
+copt = -g
+
+# windows flags
+wflags = -mno-cygwin  
+wflags = -mno-cygwin  -DWIN32
+flags = $(inc)  $(wflags)
+
+exe = pnog
+
+$(exe): $(obj) 
+	g++ -o $(exe) $(obj) $(libs) -mno-cygwin
+	@cp $(exe) $(HOME)/bin
+
+.cpp.o:
+	g++ $(copt) $(flags) -c $<
+

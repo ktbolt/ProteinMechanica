@@ -1,0 +1,39 @@
+#============================================================#
+#                  test macros                               #
+#                                                            #
+# test using a variable in a macro.                          #
+#============================================================#
+system echo=off
+system verbose=false
+
+# read molecule
+#--------------
+database open name=molDb format=pdb file=../data/neck_xform.pdb 
+molecule read database=molDb name=m1 
+
+# define macro
+#-------------
+macro createDomain (id, seq)
+  domain create dom${id}=${seq}           
+  domain dom${id} backbone color=${color} show=true
+end macro
+
+# define color variable
+#----------------------
+variable color=[1 0 0]
+
+
+# define id variable; macro argument should overide it
+#-----------------------------------------------------
+variable id=10
+
+createDomain(1, C[760-770])
+
+color=[0 1 0]
+
+createDomain(2, C[770-780])
+
+color=[1 1 0]
+
+createDomain(3, C[780-790])
+

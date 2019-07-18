@@ -1,0 +1,64 @@
+#============================================================*
+#               test write atoms                             *
+#============================================================*
+
+# open pdb file
+database open name = neck format = pdb  file = ../data/neck_xform.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+#----------------------
+domain create iq1 = AC[760-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-814]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+domain create iq3 = DC[814-836]
+domain iq3 backbone color = [ 0 0 1 ] width = 2 show
+
+domain create hc = C
+
+
+# output all chains
+#------------------ 
+domains write atoms list = { iq1 }  file = t1.pdb
+
+
+# output chain A  only
+#--------------------- 
+domains write atoms list = { iq1 }  chains = { A } file = t2.pdb
+domains write atoms list = { iq1 }  chains = { A[148] } file = t3.pdb
+domains write atoms list = { iq1 }  chains = { A[148]=D } file = t4.pdb
+domains write atoms list = { iq1 }  chains = { A[148]=D[1] } file = t5.pdb
+
+
+# output chain A only and change chain id to D
+#--------------------------------------------- 
+domains write atoms list = { iq1 }  chains = { A=D } file = t6.pdb
+domains write atoms list = { iq1 }  chains = { A=D[20] } file = t7.pdb
+
+
+# output all chains with different chain ids 
+#------------------------------------------- 
+domains write atoms list = { iq1 }  chains = { A=D C=E } file = t8.pdb
+
+
+# output chains with renumbered seq
+#---------------------------------- 
+domains write atoms list = { iq1 }  chains = { A[10] C=E[20] } file = t9.pdb
+
+
+# output chains with renumbered seq
+#---------------------------------- 
+domains write atoms list = { iq1 }  chains = { A[10-20]=D[1] } file = t10.pdb
+domains write atoms list = { iq1 }  chains = { A[10-20]=D } file = t11.pdb
+
+
+# output chains with single chain id
+#----------------------------------- 
+domains write atoms list = { iq1 }  one_chain = A[10] file = t12.pdb
+
+

@@ -1,0 +1,119 @@
+#============================================================#
+# Tutorial 4 - Interactions                                  #
+#                                                            #
+# protein domain spring potential.                           # 
+#                                                            # 
+# define springs for all atoms between two domains.          # 
+#============================================================#
+system echo=off
+system verbose=false
+
+# set units
+#----------
+units scale  name=mass   uname=reducedMass   value=10000.0
+
+# open pdb file
+#--------------
+database open name=neck  format=pdb file=twoIq123.pdb 
+
+# read molecule
+#--------------
+molecule read  database=neck  name=m1  model=1  type=protein
+
+# create domains
+#---------------
+domain create hc=C
+domain create iq1=AC[760-788]
+domain iq1 backbone color=[ 1 0 0 ] width=2 show=true
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0 1 0 ] width=2 show=true
+
+# create bodies 
+#--------------
+# 1st group
+body create  name=ground    type=ground
+body create  name=iq1Body  type=rigid   domain=iq1
+body create  name=iq2Body  type=rigid   domain=iq2
+
+# create joints 
+#--------------
+joint create  name=jnt1   type=weld position=hc:C[760]:CA \
+      bodies={ ground iq1Body }                              \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true  
+
+joint create  name=jnt2   type=ball  position=hc:C[788]:CA \
+      bodies={ iq1Body iq2Body }                             \
+      color=[ 1 1 1 ] msize=0.1 shading=color show=true
+
+# create a rigid simulation 
+#--------------------------
+simulation create name=rsim  type=rigid
+
+# add bodies
+#-----------
+simulation rsim add body=ground
+simulation rsim add body=iq1Body
+simulation rsim add body=iq2Body
+
+# add joints
+#-----------
+simulation rsim add joint=jnt1
+simulation rsim add joint=jnt2
+
+# set solver
+#-----------
+simulation rsim solver=ode
+simulation rsim solver finite_rotation=on
+
+# add sprint potential     
+#---------------------
+# define regions containing all the atoms for domains A, B
+domain iq1 define region=iq1Rgn  residues=A
+domain iq2 define region=iq2Rgn  residues=B
+
+body iq1Body add potential_geometry=iq1Spring  \
+   region=iq1Rgn geometry=points               \
+   color=[ 0.7 0 0 ]   show=true
+
+body iq2Body add potential_geometry=iq2Spring  \
+     region=iq2Rgn geometry=points             \
+     color=[ 0 1 0] show=true 
+
+simulation rsim add interaction=iq1Iq2Spring   \
+   type=spring  cutoff=0.8                     \
+   list={iq1Spring iq2Spring}                  \
+   show=true time={ 0.0 1000.0 }
+
+# print interaction info
+#-----------------------
+simulation  rsim  interactions  print=true
+
+# add forces
+#-----------
+force create name=force1           \
+             type=explicit         \
+             world_frame=true      \
+             point=iq2:B           \
+             direction=[ 2 0 0 ]   \
+             scale=1.0
+
+simulation rsim add force=force1    \
+                    body=iq2Body   \
+                    time={ 0 4 }
+
+# initialize simulation
+#----------------------
+simulation rsim initialize
+simulation rsim time step=0.005
+#simulation state  save_frequency=20 
+
+# scale and translate the graphics scene
+#---------------------------------------
+graphics  scale=2.0  translate=[ 0 3 0 ]
+
+
+# step simulation
+#----------------
+simulation rsim step=10000
+
+

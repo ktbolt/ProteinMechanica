@@ -1,0 +1,25 @@
+#============================================================#
+#                  test graphics rotate                      #
+#============================================================#
+
+# set units
+#----------
+units scale name=mass uname=reducedMass value=10000.0
+
+# read molecule
+#--------------
+database open name=neck_xform format=pdb file= ../data/neck_xform.pdb
+molecule read database=neck_xform name=m1 model=1 type=protein
+
+# create domains
+#---------------
+domain create hc=C
+domain create iq2=BC[788-814]
+domain iq2 backbone color=[ 0.7 0 0 ] width=2 show=true
+domain create iq2h=C[788-814]
+domain create iq3=DC[814-836]
+domain iq3 backbone color=[ 0 0.7 0 ] width=2 show=true
+
+graphics rotate=[ 0 0 90 ]
+
+

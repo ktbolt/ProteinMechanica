@@ -1,0 +1,27 @@
+
+# open pdb file
+database open name = neck format = pdb  file = iq.pdb
+
+# read molecule
+molecule read  name = m1   database = neck
+
+# create a some domains
+
+domain create iq1 = AC[762-788]
+domain iq1 backbone color = [ 1 0 0 ] width = 2 show
+
+domain create iq2 = BC[788-813]
+domain iq2 backbone color = [ 0 1 0 ] width = 2 show
+
+
+# create a course-grain model
+
+model create name = model_1
+
+
+# create bodies
+
+body create  name = 1   type = rigid  domain = iq1
+body create  name = 2   type = rigid  domain = iq2
+
+

@@ -1,0 +1,17 @@
+
+#============================================================*
+#               test reading 2nd structure                   *
+#                                                            *
+# test building loops.                                       *
+#============================================================*
+
+# set units
+units
+units scale  name = mass   uname = reducedMass   value = 10000.0
+
+# open pdb file
+database open name = db1  format = pdb  file = 1W7I.pdb
+
+# read molecule
+molecule read  name = m1   database = db1  
+
