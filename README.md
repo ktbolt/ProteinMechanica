@@ -11,6 +11,7 @@ This Protein Mechanica is an interactive application that allows users to genera
 # References
 Parker D, Bryant Z, Delp SL. Coarse-Grained Structural Modeling of Molecular Motors Using Multibody Dynamics. Cell Mol Bioeng. 2009;2(3):366‐374. 
 
+Parker D, Coarse-grained Structural Modeling of Molecular Motors, Stanford University, 2011
+
 Chen L, Nakamura M, Schindler TD, Parker D, Bryant Z. Engineering controllable bidirectional molecular motors based on myosin. Nat Nanotechnol. 2012;7(4):252‐256.
 
-Parker D, Coarse-grained Structural Modeling of Molecular Motors, Stanford University, 2011
