@@ -35,6 +35,27 @@ The fundamental structural unit in Protein Mechanica is the *domain*, which we d
 *Domain definition and molecular representations.*
 
 
+# Simulating Coarse-Grainded Models
+Simulations of coarse-grained models in Protein Mechanica are performed using multibody methods. These methods numerically solve the equations of motion used to describe the dynamic behavior of a system of rigid bodies connected by joints.
+
+## Rigid Bodies
+Coarse-grained mechanical models are derived by mapping molecular domains, surfaces and parametric solids into rigid bodies. The mass, center of mass and moments of inertia are computed based on the geometric model. Mass properties are computed for each molecular domain using the mass and coordinates of its atoms. For a surface bounding a solid, inertial properties are computed using a given density and equating the surface integrals over its closed polygon mesh with volume integrals using Gauss's Theorem.
+
+## Joints
+The relative displacements and rotations between two rigid bodies are constrained by a joint. A joint is located at a common point (called an anchor point) within the bodies it connects and is constrained to remain fixed in each body as the bodies move. For molecular domains a joint can be positioned at a common Cα backbone atom to ensure continuity between the domains as they move during a simulation.
+
+The data needed to define a joint’s location and axes for molecular structures is specified using the chain identifiers, residue numbering and atom names read in from atomic coordinate files.
+
+## Modeling Physical Interactions
+Protein Mechanica models several types of physical interactions: excluded volume, elasticity and electrostatics. The interactions that model these properties can be defined for molecular domains at multiple resolutions, from a detailed atomic level to simple geometric representations, such as spheres or ellipsoids. Interactions between domains must be explicitly defined and may be restricted to specified regions (e.g. amino acid subsets) within each domain. This approach increases computational efficiency and provides the flexibility to define interactions where they are needed.
+
+Interactions can be defined between rigid bodies derived from molecular domains, surfaces, particles and parametric solids. For example, a molecular domain can interact with a surface or particles obtained from a cryo-electron microscopy density map. This provides a general mechanism to model the interaction of a molecular system with lower-resolution data or even structural geometry from engineering nanodevices.
+
+<img style="margin:0px auto;display:block" src="images/contact.png" />
+
+*Contact geometry. Two rigid domains (colored red and green) are shown using Cα backbone and atom-bonds representations. (A) Contact defined for each atom in a region of the lower domain are shown as purple spheres and defined for each side chain in a region for the upper domain. (B) Sphere geometries defined for the entire lower domain and a small region of the upper domain are shown as purple spheres. (C) Ellipsoid geometries defined for the entire lower domain and a smaller region of the upper domain shown in purple provide a closer fit to domain geometry.*
+
+
 
 # References
 Parker D, Bryant Z, Delp SL. Coarse-Grained Structural Modeling of Molecular Motors Using Multibody Dynamics. Cell Mol Bioeng. 2009;2(3):366‐374. 
