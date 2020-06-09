@@ -5,9 +5,9 @@ Protein Mechanica provides an interactive environment executing on a personal co
 
 
 
-<img style="margin:0px auto;display:block" src="images/myosin5.jpg" class="center"/>
+<img style="margin:0px auto;display:block" src="images/myosinv-sim.png">
 
-*Simulation of a myosin V dimer binding to actin.*
+*Conformations of an 8IQ neck myosin V dimer spanning different numbers of actin binding sites.*
 
 
 
@@ -31,6 +31,9 @@ To create models of molecular structures at atomic resolution, Protein Mechanica
 The fundamental structural unit in Protein Mechanica is the *domain*, which we define generally in this context to mean a user-specified set of amino acid residues selected from one or more polypeptide chains. Domains are the basis for substructuring a molecule for coarse-graining.
 
 <img style="margin:0px auto;display:block" src="images/domains.png" />
+
+*Domain definition and molecular representations.*
+
 
 
 # References
